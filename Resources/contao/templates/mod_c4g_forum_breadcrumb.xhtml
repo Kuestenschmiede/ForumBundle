@@ -1,0 +1,40 @@
+<?php
+
+echo '<div class="'.$this->class.' mod_c4g_forum block"'.$this->cssID; 
+if ($this->style): 
+  echo 'style="'.$this->style.'"';
+endif; 
+echo '>';
+
+?>
+<script>
+
+(function() {
+if (typeof(jQuery)=='undefined') {
+  window.setTimeout( "document.getElementById('<?php echo $this->c4gdata['div']; ?>').innerHTML = '<h1>jQuery missing</h1>'", 500);
+  return;
+} else {
+	jQuery(document).ready(function() {
+		<?php
+		if ($this->c4gdata['div']!='') {
+			echo "jQuery('div#". $this->c4gdata['div']."' ).c4gGui({".
+				"id: ".$this->c4gdata['id'].", ".
+				"initData: " . $this->c4gdata['initData'] .", ".
+				"jquiBreadcrumb: '" . $this->c4gdata['jquiBreadcrumb'] ."', ".
+				"jquiButtons: false, ".
+				"jquiEmbeddedDialogs: false, ".
+				"breadcrumbDelim: '" . $this->c4gdata['breadcrumbDelim'] ."', ".
+				"navPanel: false ".			
+			"});";
+		}	
+		?>
+	});
+}	
+})();
+</script>
+<div id="<?php echo $this->c4gdata['div']; ?>"></div>
+<br />
+<?php
+echo '</div>';
+?>
+

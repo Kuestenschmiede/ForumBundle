@@ -1,0 +1,24 @@
+<div id="modal-inbox">
+    <table class="pn display c4gGuiDataTable dataTable no-footer">
+        <tr>
+            <th class="sorting ui-state-default"><?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['subject'];?></th>
+            <th class="sorting ui-state-default" style="width: 160px;"><?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['sender'];?></th>
+            <th class="sorting ui-state-default" style="width: 120px;"><?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['dt_created'];?></th>
+            <th class="ui-state-default" style="width: 64px;"><?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['action'];?></th>
+        </tr>
+
+    <?php foreach($this->pns as $pn): ?>
+        <?php $class = ($class == "odd")?"even":"odd";?>
+        <tr id="message-<?php echo $pn['id'];?>" class="<?php echo $class; ?> <?php echo ($pn['status'] == '0')?"unread":"read"; ?>" ondblclick="C4gPn.openModal('view', { id: '<?php echo $pn['id'];?>',sid: '<?php echo $pn['sender_id'];?>'});return false;"">
+            <td><?php echo $pn['subject'];?></td>
+            <td><?php echo $pn['sender']['username'];?></td>
+            <td><?php echo date("d.m.Y H:i",$pn['dt_created']);?></td>
+            <td>
+                <a href="#" onclick="C4gPn.openModal('view', { id: '<?php echo $pn['id'];?>',sid: '<?php echo $pn['sender_id'];?>'}, C4GLANG.reply);return false;"><i class="fa fa-search" style="font-size: 1.3em;"></i></a><span style="color:#ccc;display:inline-block;margin-left:10px;margin-right:10px;">|</span>
+                <a href="#" onclick="C4gPn.deleteMessage('<?php echo $pn['id'];?>');return false;"><i class="fa fa-2x fa-trash" style="font-size: 1.3em;"></i></a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </table>
+
+</div>

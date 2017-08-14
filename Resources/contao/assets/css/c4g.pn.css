@@ -1,0 +1,60 @@
+.unread td{
+    font-weight: bold;
+}
+
+#modal-inbox{
+    padding:0;
+}
+
+#modal-inbox table span {
+    display:none!important;
+}
+
+.mod_c4g_forum_pncenter .blockbody a{
+    display:block;
+    margin-bottom:15px;
+    margin-top:12px;
+    text-decoration: none;
+    margin-left:10px;
+}
+
+.mod_c4g_forum_pncenter .blockhead{
+    font-size: 1.2em;
+}
+
+.mod_c4g_forum_pncenter .blockbody hr{
+    background: #ddd;
+    height:1px;
+    border: none;
+}
+
+#modal-view,
+#modal-compose
+{
+    background: #efefef;
+}
+
+#modal-compose td input.text
+{
+    width: 310px;
+}
+
+#modal-view .subtitle{
+    font-style: italic;
+    color:#aaa;
+}
+
+#modal-view #message-pane{
+    display: block;
+    margin:0;
+    margin-top:10px;
+    min-height:260px;
+    padding:10px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+p.user_data_pn a{
+    text-decoration: none;
+    font-size: 10px;
+}

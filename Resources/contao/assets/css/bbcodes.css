@@ -1,0 +1,100 @@
+/* Style BBCode-Links */
+a.bbcode_url:link, a.bbcode_url:visited {
+	color: lightgray;
+	text-decoration: none;
+}
+a.bbcode_url:hover, a.bbcode_url:active, a.bbcode_url:focus {
+	color: gray;
+	text-decoration: underline;
+}
+
+/* Add a dashed underline to acronyms. */
+span.bbcode_acronym { 
+	border-bottom:1px dashed gray;
+}
+span.bbcode_acronym:hover { 
+	color: gray; 
+	border-bottom:1px dashed lightgray; 
+	cursor:help;
+}
+
+/*Make sure, lists have a style-type*/
+div.BBCode-Area ul, div.BBCode-Area ol{
+	padding-left: 20px; 
+}
+div.BBCode-Area ul {
+	list-style-type: disc;
+}
+div.BBCode-Area ol {
+	list-style-type: decimal; 
+}
+
+/* Make spoilers invisible, so that you need to select them with the mouse. */
+span.bbcode_spoiler { 
+	background-color: black; 
+	color: black;
+}
+
+/* Align columns to the top, and add some space between them. */
+table.bbcode_columns { 
+	border-collapse: collapse;
+    margin-top: 1em; 
+    margin-bottom: 1em;
+}
+table.bbcode_columns td.bbcode_column { 
+	padding: 0 1em; 
+	vertical-align: top;
+}
+table.bbcode_columns td.bbcode_firstcolumn { 
+	border-left: 0; 
+	padding-left: 0;
+}
+
+/* Wrap quotes in a big gray box. */
+div.bbcode_quote { 
+	border: 1px solid gray; 
+	margin: 0.5em 0;
+}
+div.bbcode_quote_head { 
+	background-color: rgba(255,255,255,0.2); 
+	color: white;
+    font-weight: bold; 
+    padding: 0.25em 0.5em;
+}
+div.bbcode_quote_head a:link { 
+	color: darkgray;
+}
+div.bbcode_quote_head a:visited { 
+	color: darkgray;
+}
+div.bbcode_quote_head a:hover { 
+	color: white; 
+	text-decoration: underline;
+}
+div.bbcode_quote_head a:active { 
+	color: white; 
+	text-decoration: underline;
+}
+div.bbcode_quote_body { 
+	background-color: rgba(255,255,255,0.2); 
+    color: black; 
+    padding: 0.5em 1em;
+}
+
+/* Wrap code in a big gray box. */
+div.bbcode_code { 
+	border: 1px solid gray; 
+	margin: 0.5em 0;
+}
+div.bbcode_code_head { 
+	background-color: rgba(255,255,255,0.2); 
+	color: white;
+    font-weight: bold; 
+    padding: 0.25em 0.5em;
+}
+div.bbcode_code_body { 
+	background-color: rgba(255,255,255,0.2); 
+	color: black;
+    font: 10pt monospace; 
+    padding: 0.5em 1em;
+}

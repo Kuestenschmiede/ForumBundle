@@ -1,0 +1,52 @@
+<?php if (FE_USER_LOGGED_IN): ?>
+
+    <script src="system/modules/con4gis_core/assets/vendor/ckeditor/ckeditor.js"></script>
+    <script src="system/modules/con4gis_forum/assets/js/c4g.pn.js"></script>
+    <link rel="stylesheet" href="system/modules/con4gis_forum/assets/css/c4g.pn.css">
+    <link rel="stylesheet" href="system/modules/con4gis_core/assets/vendor/font-awesome/css/font-awesome.min.css">
+    <div class="mod_article first last block" id="linke-spalte">
+
+        <!-- indexer::stop -->
+        <div class="mod_c4g_forum_pncenter one_column tableless logout block">
+
+            <div class="block">
+                <?php if ($this->headline): ?>
+                <div class="blockhead"><<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>></div>
+                <?php endif; ?>
+                <div class="blockbody">
+                    <a href="#" onclick="C4gPn.openModal('inbox',undefined,'<?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['inbox']; ?>'); return false;"><i class="fa fa-inbox"></i> <?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['inbox']; ?> <?php echo $this->count_unread; ?>/<?php echo $this->count_all; ?></a>
+                    <hr>
+                    <a href="#" onclick="C4gPn.openModal('compose', undefined, '<?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['compose']; ?>'); return false;"><i class="fa fa-file-o"></i> <?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['compose']; ?></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- indexer::continue -->
+    <script>
+        (function() {
+            if (typeof(jQuery)=='undefined') {
+                window.setTimeout( "document.getElementById('<?php echo $this->c4gdata['div']; ?>').innerHTML = '<h1>jQuery missing</h1>'", 500);
+                return;
+            } else {
+              jQuery(document).ready(function() {
+                    <?php if ($this->c4gdata['div']!='') {
+                        echo "jQuery('div#". $this->c4gdata['div']."' ).c4gGui({".
+                        "id: ".$this->c4gdata['id'].", ".
+                        "initData: " . $this->c4gdata['initData'] .", ".
+                        "jquiButtons: false, ".
+                        "jquiEmbeddedDialogs: false, ".
+                        "navPanel: false ".
+                        "});";
+                    }?>
+                });
+
+                if(!jQuery(document).dialog){
+                      jQuery('.mod_c4g_forum_pncenter').remove();
+                      return;
+                };
+            }})();
+    </script>
+<?php echo $this->c4g_pn_js; ?>
+<?php endif; ?>

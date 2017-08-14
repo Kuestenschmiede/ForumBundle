@@ -1,0 +1,440 @@
+/*!
+ *  based on:
+ *  Font Awesome 4.6.3 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ */
+
+@font-face {
+	font-family: 'FontAwesome';
+	src: url('../../../con4gis_core/assets/vendor/font-awesome/fonts/fontawesome-webfont.eot?v=4.6.3');
+	src: url('../../../con4gis_core/assets/vendor/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.6.3') format('embedded-opentype'),
+	url('../../../con4gis_core/assets/vendor/font-awesome/fonts/fontawesome-webfont.woff?v=4.6.3') format('woff'),
+	url('../../../con4gis_core/assets/vendor/font-awesome/fonts/fontawesome-webfont.ttf?v=4.6.3') format('truetype'),
+	url('../../../con4gis_core/assets/vendor/font-awesome/fonts/fontawesome-webfont.svg?v=4.6.3#fontawesomeregular') format('svg');
+	font-weight: 100;
+	font-style: normal;
+}
+
+.mod_c4g_forum, .c4gGuiDialogWrapper {
+	padding: 2px;
+}
+
+.mod_c4g_forum .ui-widget,.c4gGuiDialogWrapper.ui-widget,.dataTables_wrapper {
+	font-size: 12px;
+}
+
+.mod_c4g_forum .ui-button {
+	overflow: visible;
+}
+
+.c4gGuiContentWrapper, .c4gGuiNavigation, .c4gGuiButtons {
+	padding-top: 10px;
+}
+
+.c4gForumBoxes {
+	overflow: auto;
+}
+
+.c4gForumBox {
+    box-sizing: border-box;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	width: 170px;
+	height: 170px;
+	float: left;
+	cursor: pointer;
+	position: relative;
+}
+
+.c4gForumBoxWithoutImage.c4gForumBoxNoJqui {
+	border: 1px solid black;
+}
+.c4gForumBoxWithImage {
+	padding: 1px;
+}
+
+.c4gForumBoxText {
+	position: absolute;
+	margin-top: 20px;
+	margin-left: -50%;
+	left: 50%;
+	width: 100%;
+	text-align: center;
+	z-index: 2;
+}
+
+.c4gForumBoxSubtext {
+	position: absolute;
+	margin-top: 50px;
+	margin-left: -50%;
+	left: 50%;
+	width: 100%;
+	text-align: center;
+	font-size: 80%;
+	z-index: 2;
+}
+
+.c4gForumBox img {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	opacity: 0.5;
+
+}
+
+.c4gForumBoxLastPost {
+	float: bottom;
+	text-align: center;
+	font-size: 70%;
+	position: absolute;
+	bottom: 0px;
+	margin: 10px;
+	z-index: 2;
+}
+
+
+.c4gForumBoxLastDate, .c4gForumBoxLastThread, .c4gForumBoxLastAuthor {
+	font-weight: bold;
+}
+
+
+.c4gForumBoxWithImage {
+	color: #000;
+	text-shadow: 1px 1px 1px #FFF;
+}
+
+.c4gForumBoxWithImageHover img {
+	opacity: 1.0;
+}
+
+.c4gForumBoxWithImageHover {
+	color: #FFF;
+	text-shadow: 1px 1px 1px #000;
+}
+
+.c4gForumPost .ui-button .ui-button-text, .c4gForumThread .ui-button .ui-button-text,
+.c4gForumEditPost .ui-button .ui-button-text, .c4gForumEditThread .ui-button .ui-button-text  {
+	line-height: 1.0;
+}
+
+.c4gForumNewPostSubject input, .c4gForumNewThreadName input,
+.c4gForumEditPostSubject input, .c4gForumEditThreadName input  {
+	width: 100%;
+}
+
+.c4gForumNewPost textarea, .c4gForumNewThread textarea, .c4gForumEditPost textarea, .c4gForumEditThread textarea   {
+	width: 100%;
+}
+
+.c4gForumPostBody {
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.c4gForumPostBody:after {
+	clear: both;
+	content: " ";
+	display: table;
+}
+
+.c4gForumPostHeader, .c4gForumPostText, .c4g_forum_post_user_data {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.c4gForumPostHeader.ui-widget, .c4gForumPostText.ui-widget {
+	padding: 10px;
+}
+
+.c4gForumPostBody .signature_wrapper {
+	clear: both;
+	float: right;
+	font-style: italic;
+	opacity: .7;
+	filter: alpha(opacity=7);
+	width: 78%;
+}
+
+.c4gForumPostBody .c4gForumPostText {
+	float: right;
+	width: 78%;
+}
+
+/* User information in forum post */
+.c4g_forum_post_user_data {
+    float: left;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	width: 18%;
+}
+
+.c4g_forum_post_user_data .user_name {
+	display: block;
+	font-size: 1.2em;
+	margin-bottom: 10px;
+}
+
+.c4g_forum_post_user_data .user_image {
+	height: auto;
+	max-width: 100%;
+}
+
+.c4g_forum_post_user_data .online_status {
+	border-radius: 50%;
+	cursor: default;
+	display: inline-block;
+	height: 8px;
+	margin-left: 5px;
+	padding: 0;
+	width: 8px;
+}
+
+.c4g_forum_post_user_data .online_status.online {
+	background: limegreen;
+}
+
+/* User rank */
+.user_rank {
+	display: block;
+	margin-bottom: 3px;
+}
+
+/* User links */
+.user_social_links {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.user_social_links li {
+	margin-bottom: 3px;
+}
+
+
+
+.c4gForumPostHeader.ui-widget {
+	margin-top: 10px;
+}
+
+.c4gForumPostHeaderNoJqui a, .c4gForumPostHeaderNoJqui span {
+	margin-right: 5px;
+}
+
+.c4gForumPostHeaderChangeButton, .c4gForumPostHeaderAll {
+	float: right;
+}
+
+.c4gForumThreadHeader {
+	margin-bottom: 10px;
+}
+.c4gForumThreadHeader h3.ui-accordion-header {
+	outline: none;
+	margin: 0;
+}
+.c4gForumThreadHeaderDesc {
+	border: none;
+}
+
+.c4g_forum_header_center {
+	margin-top: 10px;
+	text-align: center;
+	font-size: 1.25em;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.c4gGuiDialogContentNoJqui, .c4gGuiDialogButtonsNoJqui {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.c4gGuiDialogContent {
+	margin-top: 10px;
+	margin-bottom: 10px;
+
+}
+.c4gForumPostMap {
+	height: 300px;
+	width: 300px;
+}
+
+.olPopup, .olPopup a {
+	color: #000000;
+}
+
+.olPopup a {
+	text-decoration: underline;
+}
+
+.c4gForumColumn1 {
+	display: inline-block;
+	width: 150px;
+}
+
+.c4g_pagination{
+    margin: 5px 0;
+}
+
+.c4g_pagination a{
+    min-width: 16px;
+    height: 16px;
+    padding: 5px;
+    text-decoration: none;
+    margin-right: 2px;
+}
+#pagination a,
+#pagination span,
+#pagination em{
+    margin-right:5px;
+}
+/**
+* RATING
+*/
+
+
+/*fieldset, label {*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+/*}*/
+
+/*body {*/
+    /*margin: 20px;*/
+/*}*/
+
+/*h1 {*/
+    /*font-size: 1.5em;*/
+    /*margin: 10px;*/
+/*}*/
+
+/****** Style Star Rating Widget *****/
+
+
+
+.reset_rating{
+    display:inline-block;
+    padding-top: 2px;
+    padding-left: 8px;
+}
+
+
+.rating ,
+.c4gForumPostHeader .rating_static {
+    border: none;
+    float: left;
+    padding:0 !important;
+}
+
+.c4gForumPostHeader .rating_wrapper .score{
+    padding-top: 6px;
+    padding-left:6px;
+    display:inline-block;
+    color:#aaa;
+    font-size: 10px;
+}
+
+.c4gGuiDataTable .rating_static {
+	border: none;
+	float: left;
+	padding-top: 0px;
+	font-size: 12px;
+}
+
+.c4gGuiDataTable .rating_wrapper .score{
+	padding-top: 6px;
+	padding-left:6px;
+	display:inline-block;
+	color:#aaa;
+	font-size: 12px;
+}
+
+.rating > input {
+    display: none;
+}
+
+.rating > label:before ,
+.rating_static > label:before {
+    margin: 4px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+/*.rating_static > label:before {*/
+    /*font-size: 1.25em;*/
+/*}*/
+
+.rating > .half:before ,
+.rating_static > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label ,
+.rating_static > label {
+    color: #ddd;
+    float: right;
+    width:auto !important;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label {
+    color: #2c3e50;
+}
+
+
+
+.rating_static > span.checked ~ label, /* show gold star when clicked */
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label {
+    color: #2c3e50;
+}
+
+
+.rating_static > span.checked ~ label{
+    color: #6d98c5;
+}
+
+
+
+/* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label {
+    color: #6d98c5;
+}
+
+
+.rating_wrapper{
+    overflow: hidden;
+}
+
+
+
+/* jScrollPane */
+/* prevent horizontal scroll bar for dialogs in jScrollPane */
+.jspPane * {
+    box-sizing: border-box;
+}
+
+
+label.search-label{
+	width: inherit;
+}
+
+.search-results{
+	padding:5px;
+}
+
+.search-results div{
+	margin-top:4px;
+	margin-bottom:4px;
+}

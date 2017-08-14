@@ -1,0 +1,49 @@
+<?php
+
+echo '<div class="'.$this->class.' block"'.$this->cssID; 
+if ($this->style): 
+  echo 'style="'.$this->style.'"';
+endif; 
+echo '>';
+
+?>
+
+<script>
+
+(function() {
+if (typeof(jQuery)=='undefined') {
+  window.setTimeout( "document.getElementById('<?php echo $this->c4gdata['div']; ?>').innerHTML = '<h1>jQuery missing</h1>'", 500);
+  return;
+} else {
+	jQuery(document).ready(function() {
+		<?php
+		echo "jQuery('div#". $this->c4gdata['div']."' ).c4gGui({".
+				"id: ".$this->c4gdata['id'].", ".
+				"height: '" . $this->c4gdata['height'] ."', ".
+				"width: '" . $this->c4gdata['width'] ."', ".
+				"ajaxUrl: '" . $this->c4gdata['forumAjaxUrl'] . "', ".
+				"ajaxData: '" . $this->c4gdata['ajaxData'] ."', ".
+				"initData: " . $this->c4gdata['initData'] .", ".
+				"jquiBreadcrumb: '" . $this->c4gdata['jquiBreadcrumb'] ."', ".
+				"jquiButtons: '" . $this->c4gdata['jquiButtons'] ."', ".
+				"breadcrumbDelim: '" . $this->c4gdata['breadcrumbDelim'] ."', ".
+				"embedDialogs: '" . $this->c4gdata['embedDialogs'] ."', ".
+				"jquiEmbeddedDialogs: '" . $this->c4gdata['jquiEmbeddedDialogs'] ."', ";
+		if ($this->c4gdata['navPanel']) {
+			echo "navPanel: true";
+		}
+		else {
+			echo "navPanel: false";			
+		}
+		echo "});";
+		?>
+	});
+}	
+})();
+</script>
+<div id="<?php echo $this->c4gdata['div']; ?>"></div>
+<br />
+
+<?php
+	echo '</div>';
+?>

@@ -1,0 +1,10 @@
+<div id="modal-view">
+    <h3 class="subject"><?php echo $this->pn->getSubject();?></h3>
+    <span class="subtitle"><?php echo $this->pn->getSender()['username'];?> - <?php echo date("d.m.Y H:i", $this->pn->getDtCreated());?></span>
+    <p id="message-pane"><?php echo $this->pn->getMessage();?></p>
+    <script>
+       C4gPn.parseBBCode("#message-pane");
+       C4gPn.markAsRead('<?php echo $this->pn->getId();?>');
+    </script>
+</div>
+
