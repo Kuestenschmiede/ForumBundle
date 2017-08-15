@@ -59,6 +59,14 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         (
             'sql'                     => "int(10) NOT NULL default '0'"
         ),
+        'owner' => array
+        (
+            'sql'                     => "int(10) NOT NULL default '0'"
+        ),
+        'recipient' => array
+        (
+            'sql'                     => "int(10) NOT NULL default '0'"
+        ),
         'creation' => array
         (
             'sql'                     => "int(10) NOT NULL default '0'"

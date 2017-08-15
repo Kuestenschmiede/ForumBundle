@@ -574,7 +574,7 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_smileys_url'],
         'exclude'   => true,
-        'default'   => 'system/modules/con4gis_forum/assets/images/smileys',
+        'default'   => 'src/con4gis/ForumBundle/Resources/public/images/smileys',
         'inputType' => 'text',
         'eval'      => array('maxlength' => 128, "style" => 'width: 200px'),
         'sql'       => "char(128) NOT NULL default 'system/modules/con4gis_core/assets/vendor/wswgEditor/images/smilies'"

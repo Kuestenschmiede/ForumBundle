@@ -33,7 +33,7 @@ array_insert( $GLOBALS['BE_MOD']['con4gis'], 5, array
     (
 		'tables' 		=> array('tl_c4g_forum'),
 		'build_index' 	=> array('con4gis\ForumBundle\Resources\contao\classes\C4GForumBackend', 'buildIndex'),
- 		'icon'	 		=> 'system/modules/con4gis_forum/assets/forumicon.png'
+ 		'icon'	 		=> 'bundles/con4gisforum/forumicon.png'
 	)
 ));
 

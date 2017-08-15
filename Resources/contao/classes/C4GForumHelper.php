@@ -3242,6 +3242,9 @@ class C4GForumHelper extends \System
         if($forumType =='QUESTIONS' && $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS'][$lngStrg]){
             $sTitle = $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS'][$lngStrg];
         }
+        else if($forumType =='TICKET' && $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET'][$lngStrg]){
+            $sTitle = $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET'][$lngStrg];
+        }
         //ToDo check unused cased and remove language file entries
 //        switch ($lngStrg) {
 //            case 'FORUM':

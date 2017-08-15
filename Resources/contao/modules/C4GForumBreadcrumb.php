@@ -165,7 +165,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                     $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'system/modules/con4gis_core/assets/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
                 }
 
-                $GLOBALS ['TL_CSS'] [] = 'system/modules/con4gis_forum/assets/css/c4gForum.css';
+                $GLOBALS ['TL_CSS'] [] = 'src/con4gis/ForumBundle/Resources/public/css/c4gForum.css';
 
             }
 

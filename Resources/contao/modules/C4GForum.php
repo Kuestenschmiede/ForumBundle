@@ -186,7 +186,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 $GLOBALS ['TL_HEAD'] [] = '<style>.rating_static > span.checked ~ label{color:#' . $this->c4g_forum_rating_color . ' !important;}</style>';
             }
 
-            $GLOBALS ['TL_CSS'] [] = 'system/modules/con4gis_forum/assets/css/c4gForum.css';
+            $GLOBALS ['TL_CSS'] [] = 'bundles/con4gisforum/css/c4gForum.css';
             //$GLOBALS ['TL_CSS'] [] = 'system/modules/con4gis_forum/html/css/bbcodes.css';
             $data['id']      = $this->id;
             //check if we need contao 4 routing
@@ -281,8 +281,8 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             }
 
             if($this->c4g_forum_pagination_active == "1") {
-                $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/con4gis_forum/assets/js/jquery.pagination.min.js";
-                $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/con4gis_forum/assets/js/jquery.hashchange.min.js";
+                $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/js/jquery.pagination.min.js";
+                $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/js/jquery.hashchange.min.js";
             }
 
             if ($enableMaps) {
