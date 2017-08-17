@@ -162,6 +162,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['right_mapedit_style'] 	= 'Kartendaten editi
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_search'] 		= 'Suchen';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_latestthreads']	= 'Neue Themen';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_alllanguages']	= 'Alle Sprachen editieren (Mehrsprachigkeit)';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_tickettomember']	= 'Tickets an einzelne Mitglieder oder Moderatoren schicken';
 
 /**
  * Fulltext Indexing Configuration Texts

@@ -15,11 +15,13 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
     use c4g\Maps\C4gMapsModel;
     use c4g\Maps\ResourceLoader;
+    use c4g\MemberModel;
     use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
     use con4gis\ForumBundle\Resources\contao\classes\C4GUtils;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPost;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumSession;
+    use Contao\FrontendUser;
     use Contao\Module;
 
     $GLOBALS['c4gForumErrors']           = array();
@@ -668,7 +670,18 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
             $threads = $this->helper->getThreadsFromDB($id);
             $forum   = $this->helper->getForumFromDB($id);
+            $user = FrontendUser::getInstance();
+            $userData = $user->getData();
+            $userId = $userData['id'];
+
             foreach ($threads AS $thread) {
+                if($this->c4g_forum_type =="TICKET"){
+                    $threadOwner = $thread['owner'];
+                    $threadRecipient = array_flip(unserialize($thread['recipient']));
+                    if(!($userId == $threadOwner || array_key_exists($userId,$threadRecipient))){
+                        continue;
+                    }
+                }
                 switch ($this->c4g_forum_threadclick) {
                     case 'LPOST':
                         $threadAction = 'readlastpost:' . $thread['id'];
@@ -1799,6 +1812,40 @@ JSPAGINATE;
 
                     $inputThreadname .
                     '</div>';
+           if($this->c4g_forum_type =="TICKET"){
+               $user = FrontendUser::getInstance();
+               $groups = $this->helper->getMemberGroupsForForum($forumId,$user->getData()['id']);
+
+               if($this->helper->checkPermission($forumId,'tickettomember')){
+                   $data .= '<select name="recipient_member" class="formdata ui-corner-all">';
+
+                   $allMembers = $this->Database->prepare(
+                       $select ="SELECT id,username,groups
+                FROM tl_member")->execute()->fetchAllAssoc();
+                   foreach($allMembers as $member){
+                       $member['groups'] = unserialize($member['groups']);
+                       $member['groups'] = array_flip($member['groups']);
+                       foreach($groups as $group){
+                           if(array_key_exists($group['id'],$member['groups'])){
+                               $data .= '<option value="'.$member['id'].'">'.$member['username'].'</option>';
+                           }
+                       }
+                   }
+               }
+               else{
+                   $data .= '<select name="recipient_group" class="formdata ui-corner-all">';
+                   foreach($groups as $group){
+                       $selects =$this->Database->prepare("SELECT id,name
+                FROM tl_member_group
+                WHERE id=?")->execute($group['id'])->fetchAllAssoc();
+                       foreach($selects as $select){
+                           $data .= '<option value="'.$select['id'].'">'.$select['name'].'</option>';
+                       }
+                   }
+
+               }
+               $data .='</select>';
+           }
 
             $data .= $this->getThreadDescForForm('c4gForumNewThreadDesc', $forumId, 'newthread', '');
             $data .= $this->getThreadSortForForm('c4gForumNewThreadSort', $forumId, 'newthread', '999');
@@ -2212,6 +2259,7 @@ JSPAGINATE;
             $sUrl = $this->putVars['site'];
             $sHashedUrl = $this->putVars['hsite'];
             $sUrlCheckValue =  md5($sUrl . \Config::get('encryptionKey'));
+            $user = FrontendUser::getInstance();
 
             if($sUrlCheckValue !== $sHashedUrl) {
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'ERROR_SAVE_POST');
@@ -2267,10 +2315,25 @@ JSPAGINATE;
                     $this->putVars['thread'] == $this->putVars['thread_'.$this->c4g_forum_language_temp];
                 }
             }
+            if(isset($this->putVars['recipient_member'])){
+                $recipient = serialize($this->putVars['recipient_member']);
+            }
+            else if(isset($this->putVars['recipient_group'])){
+                $allMembers = $this->Database->prepare(
+                    $select ="SELECT id, groups
+                FROM tl_member")->execute()->fetchAllAssoc();
+                foreach($allMembers as $allMember){
+                    $allMember['groups'] = array_flip(unserialize($allMember['groups']));
+                    if(array_key_exists($this->putVars['recipient_group'],$allMember['groups'])){
+                        $recipient[] = $allMember['id'];
+                    }
+                }
+                $recipient = serialize($recipient);
+            }
 
             $result = $this->helper->insertThreadIntoDB($forumId, $this->putVars['thread'], $this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
                                                         $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
-                                                        $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId']);
+                                                        $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient);
             if (!$result) {
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'ERROR_SAVE_THREAD');
             } else {
@@ -5538,7 +5601,6 @@ JSPAGINATE;
         public function performAction($action)
         {
             $this->setTempLanguage();
-
             //delete cache -- Übergangslösung bis alles läuft.
 //            \c4g\Core\C4GAutomator::purgeApiCache();
 

@@ -577,7 +577,7 @@ class C4GForumHelper extends \System
 		}
 		$threads = $this->Database->prepare(
 				"SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,".
-		               "c.creation AS lastPost, " . $sqlLastUser . " AS lastUsername ".
+		               "c.creation AS lastPost, " . $sqlLastUser . " AS lastUsername, a.recipient,a.owner ".
 				"FROM tl_c4g_forum_thread a ".
 				"LEFT JOIN tl_member b ON b.id = a.author ".
 				"LEFT JOIN tl_c4g_forum_post c ON c.id = a.last_post_id ".
@@ -2240,7 +2240,7 @@ class C4GForumHelper extends \System
          * @return bool
          * @throws \Exception
          */
-        public function insertThreadIntoDB($forumId, $threadname, $userId, $threaddesc, $sort, $post, $tags, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id, $rating = 0 )
+        public function insertThreadIntoDB($forumId, $threadname, $userId, $threaddesc, $sort, $post, $tags, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id, $recipient, $owner = 0, $rating = 0)
 	    {
 		$this->Database->beginTransaction();
 		try {
@@ -2254,6 +2254,8 @@ class C4GForumHelper extends \System
 			$set['sort'] = $sort;
 			$set['name'] = C4GUtils::secure_ugc($threadname);
 		    $set['threaddesc'] = nl2br(C4GUtils::secure_ugc($threaddesc));
+		    $set['recipient'] = $recipient;
+		    $set['owner'] = $owner;
             if(!empty($tags)) {
                 $set['tags'] = implode(", ",$tags);
             }
@@ -2371,19 +2373,41 @@ class C4GForumHelper extends \System
 	 * @param int $forumId
 	 * @return array
 	 */
-	public function getMemberGroupsForForum($forumId)
+	public function getMemberGroupsForForum($forumId, $frontendUser)
 	{
 		$forum = $this->Database->prepare(
-			"SELECT member_groups FROM tl_c4g_forum WHERE id=?")
+			"SELECT member_groups, admin_groups FROM tl_c4g_forum WHERE id=?")
 	 					 ->execute($forumId)->fetchAssoc();
 
-		$forumGroups = deserialize($forum['member_groups'], true);
+		$forumMemGroups = deserialize($forum['member_groups'], true);
+		$forumAdGroups = deserialize($forum['admin_groups'], true);
 
 		$memGroups = $this->Database->prepare(
-			"SELECT id,name FROM tl_member_group WHERE id IN (".implode(',',$forumGroups).")")
+			"SELECT id,name FROM tl_member_group WHERE id IN (".implode(',',$forumMemGroups).")")
 	 					 ->execute()->fetchAllAssoc();
-		return $memGroups;
+		$adGroups = $this->Database->prepare(
+			"SELECT id,name FROM tl_member_group WHERE id IN (".implode(',',$forumAdGroups).")")
+	 					 ->execute()->fetchAllAssoc();
+		$user = $this->Database->prepare(
+            "SELECT id,groups FROM tl_member WHERE id =?")
+            ->execute($frontendUser)->fetchAssoc();
+		$user['groups'] = unserialize($user['groups']);
+		foreach($user['groups'] as $key){
+		    if(in_array($key,$memGroups['0']) && in_array($key,$adGroups['0'])){
+		        $memGroups .= $adGroups;
+		        $return = $memGroups;
+		        break;
+            }
+            elseif(in_array($key,$memGroups['0'])){
+		            $return = $adGroups;
+            }
+            else{
+                $return = $memGroups;
+            }
+        }
+		return $return;
 	}
+
 
 	/**
 	 *
@@ -2722,7 +2746,7 @@ class C4GForumHelper extends \System
 	 * @return array
 	 */
 	public function getMemberDefaultRights() {
-		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads');
+		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads','tickettomember');
 		return $this->executePermissionHook($return, 'member');
 	}
 
@@ -2732,7 +2756,7 @@ class C4GForumHelper extends \System
 	 */
 	public function getAdminDefaultRights() {
 		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','threadsort','editownpost','editpost',
-					 'editownthread','editthread','delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages');
+					 'editownthread','editthread','delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember');
 		return $this->executePermissionHook($return,'admin');
 	}
 
