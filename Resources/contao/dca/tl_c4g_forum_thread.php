@@ -61,7 +61,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         ),
         'owner' => array
         (
-            'sql'                     => "int(10) NOT NULL default '0'"
+            'sql'                     => "blob"
         ),
         'recipient' => array
         (

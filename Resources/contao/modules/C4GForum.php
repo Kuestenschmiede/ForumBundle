@@ -2038,6 +2038,9 @@ JSPAGINATE;
                      '<textarea' . $editorId . ' name="post" cols="80" rows="15" class="formdata ui-corner-all"></textarea>' .
                      '</div>';
 
+            $data .= '<input type="hidden" class=formdata ui-corner-all name="recipient" value="' . htmlspecialchars($thread['owner']) . '">
+                      <input type="hidden" class=formdata ui-corner-all name="owner" value="' . htmlspecialchars($thread['recipient']) . '">';
+
             $data .= $this->getPostlinkForForm('c4gForumNewPostPostLink', $thread['forumid'], 'newpost', '', '');
             $locstyle = "";
             if ($this->map_enabled($thread['forumid'])) {
@@ -2126,7 +2129,7 @@ JSPAGINATE;
             $this->putVars['osmId'] = $this->putVars['osmIdType'] . '.' . $this->putVars['osmId'];
             $result                 = $this->helper->insertPostIntoDB($threadId, $this->User->id, $this->putVars['subject'], $this->putVars['post'], $this->putVars['tags'], $this->putVars['rating'],
                                                                       $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'],
-                                                                      $this->putVars['locstyle'], $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId']);
+                                                                      $this->putVars['locstyle'], $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'],$this->putVars['recipient'],$this->putVars['owner']);
 
             if (!$result) {
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'ERROR_SAVE_POST');
@@ -2333,7 +2336,7 @@ JSPAGINATE;
 
             $result = $this->helper->insertThreadIntoDB($forumId, $this->putVars['thread'], $this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
                                                         $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
-                                                        $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient);
+                                                        $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient,serialize($user->getData()['id']));
             if (!$result) {
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'ERROR_SAVE_THREAD');
             } else {

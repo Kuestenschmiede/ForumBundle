@@ -1726,7 +1726,7 @@ class C4GForumHelper extends \System
 	public function getThreadAndForumNameFromDB($threadId)
 	{
 		return $this->Database->prepare(
-				"SELECT a.name AS threadname, b.name AS forumname,b.optional_names AS optional_forumnames, a.pid AS forumid FROM tl_c4g_forum_thread a ".
+				"SELECT a.name AS threadname, b.name AS forumname, a.recipient, a.owner, b.optional_names AS optional_forumnames, a.pid AS forumid FROM tl_c4g_forum_thread a ".
 				"INNER JOIN tl_c4g_forum b ON b.id = a.pid ".
 				"WHERE a.id=?")
 				->execute($threadId)->fetchAssoc();
@@ -1870,7 +1870,7 @@ class C4GForumHelper extends \System
          *
          * @return bool
          */
-        protected function insertPostIntoDBInternal($threadId, $userId, $subject, $post, $tags, $rating = 0, $forumId, $post_number, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id)
+        protected function insertPostIntoDBInternal($threadId, $userId, $subject, $post, $tags, $rating = 0, $forumId, $post_number, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id, $recipient, $owner)
 	{
 		$set = array();
 		$set['pid'] = $threadId;
@@ -1880,6 +1880,8 @@ class C4GForumHelper extends \System
 		$set['subject'] = C4GUtils::secure_ugc($subject);
 		$set['forum_id'] = $forumId;
 		$set['post_number'] = $post_number;
+		$set2['recipient'] = $recipient;
+		$set2['owner'] = $owner;
 		if ($linkname!=NULL) {
 			$set['linkname'] = C4GUtils::secure_ugc($linkname);
 		}
@@ -1923,6 +1925,9 @@ class C4GForumHelper extends \System
 		$objInsertStmt = $this->Database->prepare("INSERT INTO tl_c4g_forum_post %s")
 										->set($set)
 										->execute();
+        $varSQL = $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")
+            ->set($set2)
+            ->execute($threadId);
 
 		if (!$objInsertStmt->affectedRows)
 		{
@@ -2167,7 +2172,7 @@ class C4GForumHelper extends \System
 	 * @param string $loc_tooltip
 	 * @throws Exception
 	 */
-	public function insertPostIntoDB($threadId, $userId, $subject, $post, $tags, $rating = 0, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id)
+	public function insertPostIntoDB($threadId, $userId, $subject, $post, $tags, $rating = 0, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id, $recipient, $owner)
 	{
 		$this->Database->beginTransaction();
 		try {
@@ -2176,7 +2181,7 @@ class C4GForumHelper extends \System
 		   		"FROM tl_c4g_forum_thread a, tl_c4g_forum b WHERE ".
 		   		"a.id=? AND b.id = a.pid")->execute($threadId);
 			$result = $this->insertPostIntoDBInternal($threadId, $userId, $subject, $post, $tags, $rating, $thread->forum_id, $thread->threadposts + 1,
-													  $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id);
+													  $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id, $recipient, $owner);
 			if (!$result)
 			{
 				$this->Database->rollbackTransaction();
