@@ -1925,6 +1925,7 @@ class C4GForumHelper extends \System
 		$objInsertStmt = $this->Database->prepare("INSERT INTO tl_c4g_forum_post %s")
 										->set($set)
 										->execute();
+        $result['post_id'] = $objInsertStmt->insertId;
         $varSQL = $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")
             ->set($set2)
             ->execute($threadId);
@@ -1934,7 +1935,7 @@ class C4GForumHelper extends \System
 			return false;
 		}
 		//update thread and forum
-		$result['post_id'] = $objInsertStmt->insertId;
+
 		//update index
 		$this->createIndex('post', $result['post_id']);
 		$this->createIndex('tag', $result['post_id']);
@@ -2751,7 +2752,7 @@ class C4GForumHelper extends \System
 	 * @return array
 	 */
 	public function getMemberDefaultRights() {
-		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads','tickettomember');
+		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads','tickettomember','showsentthreads');
 		return $this->executePermissionHook($return, 'member');
 	}
 
@@ -2761,7 +2762,7 @@ class C4GForumHelper extends \System
 	 */
 	public function getAdminDefaultRights() {
 		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','threadsort','editownpost','editpost',
-					 'editownthread','editthread','delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember');
+					 'editownthread','editthread','delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember','showsentthreads');
 		return $this->executePermissionHook($return,'admin');
 	}
 

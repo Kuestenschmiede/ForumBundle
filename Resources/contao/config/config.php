@@ -32,8 +32,21 @@ array_insert($GLOBALS['BE_MOD']['con4gis_bricks'],2, array(
     (
         'tables' 		=> array('tl_c4g_forum'),
         'build_index' 	=> array('con4gis\ForumBundle\Resources\contao\classes\C4GForumBackend', 'buildIndex')
+    ),
+    'c4g_forum_thread' => array
+    (
+        'tables'        => array('tl_c4g_forum_thread'),
+        'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
+    ),
+    'c4g_forum_post' => array
+    (
+        'tables'        => array('tl_c4g_forum_post'),
+        'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
     )
 ));
+
+	
+
 
 
 /**
@@ -50,6 +63,11 @@ $GLOBALS['BE_FFL']['avatar'] = 'Avatar';
  * Hooks
  */
 $GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper','removeOldFeedsHook');
+
+/**
+ * CSS
+ */
+$GLOBALS['TL_CSS']['c4g_forum_backend'] = 'bundles/con4gisforum/css/c4gForumBackend.css';
 
 /**
  * Rest-API

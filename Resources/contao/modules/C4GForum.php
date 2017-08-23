@@ -676,9 +676,11 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
             foreach ($threads AS $thread) {
                 if($this->c4g_forum_type =="TICKET"){
-                    $threadOwner = $thread['owner'];
+                    if($this->helper->checkPermission($id,'showsentthreads')){
+                        $threadOwner = array_flip(unserialize($thread['owner']));
+                    }
                     $threadRecipient = array_flip(unserialize($thread['recipient']));
-                    if(!($userId == $threadOwner || array_key_exists($userId,$threadRecipient))){
+                    if(!(array_key_exists($userId,$threadOwner) || array_key_exists($userId,$threadRecipient))){
                         continue;
                     }
                 }
@@ -2748,7 +2750,7 @@ JSPAGINATE;
             );
 
             if ($this->c4g_forum_navigation == 'TREE') {
-                $return['treedata'] = $this->getForumTree($forumId, 0);
+                $return['treedata'] = $this->FgetForumTree($forumId, 0);
             }
 
             return $return;

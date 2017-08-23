@@ -1,0 +1,5 @@
+
+/** BACKEND **/
+.c4g_forum_thread, .c4g_forum_post {
+    display: none!important;
+}

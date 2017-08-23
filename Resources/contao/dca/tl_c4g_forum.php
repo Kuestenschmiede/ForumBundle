@@ -22,6 +22,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 	(
 	    'label'                       => $GLOBALS['TL_CONFIG']['websiteTitle'],
 	    'dataContainer'               => 'Table',
+		'ctable'                      => array('tl_c4g_forum_thread'),
 		'enableVersioning'            => true,
 	    'onload_callback'			  => array(
 											array('tl_c4g_forum', 'updateDCA')
@@ -111,6 +112,13 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
 			),
+			'thread' => array
+            (
+                'label'               => "Tickets",//@Todo
+                'href'                => 'do=c4g_forum_thread&amp;table=tl_c4g_forum_thread',
+                'icon'	 		      => 'bundles/con4gisforum/icons/table.png',
+                'button_callback'     => array('tl_c4g_forum','forumThread')
+            ),
 			'toggle' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['toggle'],
@@ -752,6 +760,12 @@ class tl_c4g_forum extends \Backend
 		}
 		return $return;
 	}
+    public function forumThread($row, $href, $label, $title, $icon)
+    {
+
+        $href .= "&amp;id=".$row['id'];
+        return '<a href="' . $this->addToUrl($href) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ';
+    }
 
 	/**
 	 * Return the "toggle visibility" button
