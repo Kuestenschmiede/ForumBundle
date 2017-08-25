@@ -3,7 +3,7 @@
 /**
  * con4gis - the gis-kit
  *
- * @version   php 5
+ * @version   php 7
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
@@ -125,15 +125,15 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
         ),
         'text' => array
         (
-            'label'					=> &$GLOBALS['TL_LANG']['tl_c4g_forum_post']['text'],
-            'search'				=> true,
-            'inputType'				=> 'textarea',
-            'eval'					=> array('rte'=>'tinyMCE'),
-            'sql'                   => "text NULL"
+            'label'					  => &$GLOBALS['TL_LANG']['tl_c4g_forum_post']['text'],
+            'search'				  => true,
+            'inputType'				  => 'textarea',
+            'eval'					  => array('rte'=>'tinyMCE'),
+            'sql'                     => "mediumtext NULL"
         ),
         'subject' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['name'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_post']['subject'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
@@ -230,7 +230,9 @@ class tl_c4g_forum_post extends \Backend{
         {
             return;
         }
-
+        $forumId = $this->Database->prepare("SELECT pid FROM tl_c4g_forum_thread WHERE id=?")->execute($dc->activeRecord->pid)->fetchAssoc();
+        $arrSet['forum_id'] = $forumId['pid'];
+        $arrSet['author'] = $this->Database->prepare("SELECT default_author FROM tl_c4g_forum WHERE id=?")->execute($forumId['pid'])->fetchAssoc()['default_author'];
         $arrSet['creation'] = time();
         //@ToDo ForumId,author hinzufügen
         $arrSetParent['last_post_id'] = $dc->id;

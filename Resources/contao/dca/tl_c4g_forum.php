@@ -114,7 +114,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			),
 			'thread' => array
             (
-                'label'               => "Tickets",//@Todo
+                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['thread'],
                 'href'                => 'do=c4g_forum_thread&amp;table=tl_c4g_forum_thread',
                 'icon'	 		      => 'bundles/con4gisforum/icons/table.png',
                 'button_callback'     => array('tl_c4g_forum','forumThread')
@@ -162,7 +162,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 	),
 
 	'subpalettes' => array(
-		'define_groups'				  => 'member_groups,admin_groups',
+		'define_groups'				  => 'member_groups,admin_groups,default_author',
 		'define_rights'				  => 'guest_rights,member_rights,admin_rights',
 		'enable_maps'			  	  => 'map_type,map_id,map_location_label,map_override_locstyles,map_label,map_tooltip,map_popup,map_link',
 	),
@@ -619,6 +619,13 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             ),
             'eval'                    => array("rows" => 15, "cols" => 60, "style" => "height:300px !important;"),
             'sql'                     => "text NULL"
+		),
+        'default_author' => array
+		(
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'],
+            'inputType'               => 'select',
+            'foreignKey'              => 'tl_member.username',
+            'sql'                     => "int(10)"
 		),
 
 	)

@@ -3,7 +3,7 @@
 /**
  * con4gis - the gis-kit
  *
- * @version   php 5
+ * @version   php 7
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
@@ -80,7 +80,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             ),
             'post' => array
             (
-                'label'               => "Einträge",//@Todo
+                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['post'],
                 'href'                => 'do=c4g_forum_post&amp;table=tl_c4g_forum_post',
                 'icon'	 		      => 'bundles/con4gisforum/icons/table.png',
                 'button_callback'     => array('tl_c4g_forum_thread','forumPost')
@@ -132,7 +132,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         ),
         'name' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['name'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['name'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
@@ -140,7 +140,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         ),
         'state' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['state'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['state'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'sql'                     => "varchar(255) NOT NULL default ''"
@@ -222,6 +222,10 @@ class tl_c4g_forum_thread extends \Backend{
         {
             return;
         }
+
+        $author = $this->Database->prepare("SELECT default_author FROM tl_c4g_forum WHERE id=?")->execute($dc->activeRecord->pid)->fetchAssoc();
+
+        $arrSet['author'] = $author['default_author'];
 
         $arrSet['creation'] = time();
 
