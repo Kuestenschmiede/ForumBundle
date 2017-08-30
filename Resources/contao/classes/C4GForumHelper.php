@@ -257,6 +257,7 @@ class C4GForumHelper extends \System
 			case 'sendthread':
 			case 'previewthread':
 			case 'cancelthread':
+			case 'ticket':
 				return 'newthread';
 
 			case 'newpost':
@@ -543,6 +544,7 @@ class C4GForumHelper extends \System
 			return null;
 		}
 	}
+
 
 
 	/**
@@ -2246,14 +2248,16 @@ class C4GForumHelper extends \System
          * @return bool
          * @throws \Exception
          */
-        public function insertThreadIntoDB($forumId, $threadname, $userId, $threaddesc, $sort, $post, $tags, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id, $recipient, $owner = 0, $rating = 0)
+        public function insertThreadIntoDB($forumId, $threadname, $userId, $threaddesc, $sort, $post, $tags, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id, $recipient, $owner = 0, $id = null, $rating = 0)
 	    {
 		$this->Database->beginTransaction();
 		try {
 			$forum = $this->Database->prepare(
 		   		"SELECT threads, posts FROM tl_c4g_forum WHERE id=?")->execute($forumId);
 
-
+            if($id){
+                $set['id'] = $id;
+            }
 			$set['pid'] = $forumId;
 			$set['author'] = $userId;
 			$set['creation'] = time();
@@ -2281,7 +2285,7 @@ class C4GForumHelper extends \System
 			$savePost = ($post || $linkname || $linkurl);
 
 			if ($savePost) {
-				$result = $this->insertPostIntoDBInternal($objInsertStmt->insertId, $userId, $threadname, $post,$tags, $rating, $forumId, 1, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id);
+				$result = $this->insertPostIntoDBInternal($objInsertStmt->insertId, $userId, $threadname, $post,$tags, $rating, $forumId, 1, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id,$recipient,$owner);
 				if (!$result)
 				{
 					$this->Database->rollbackTransaction();
@@ -3153,6 +3157,20 @@ class C4GForumHelper extends \System
 		}
 		return false;
 	}
+	public function createNewSubforum($forumId, $groupId)
+    {
+	    $set['name'] = 'Ticketsystem '.$this->User->username;
+	    $set['pid'] = $forumId;
+	    $set['published'] = 1;
+	    $groupArray[] = $groupId;
+	    $set['member_groups'] = serialize($groupArray);
+	    $set['member_id'] = $groupId;
+	    $set['tstamp'] = time();
+
+	    $this->Database->prepare('INSERT INTO tl_c4g_forum %s')->set($set)->execute();
+	    return $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id =?')->execute($forumId,$groupId)->fetchAssoc();
+
+    }
 
 	/**
 	 * Create XML sitemap

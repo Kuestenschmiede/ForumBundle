@@ -90,6 +90,16 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
         protected $c4g_forum_language_temp = '';
 
         /**
+         * C4GForum constructor.
+         */
+        public function __construct($objModule,$strColumn='main')
+        {
+            parent::__construct($objModule,$strColumn='main');
+            $this->helper = new C4GForumHelper($this->Database, null,FrontendUser::getInstance());
+            $this->User = FrontendUser::getInstance();
+        }
+
+        /**
          * Display a wildcard in the back end
          *
          * @return string
@@ -1267,9 +1277,31 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $text = $post['text'];
             // Handle BBCodes, if activated
             if ($this->c4g_forum_bbcodes) {
-                $textClass .= ' BBCode-Area';
+                //$textClass .= ' BBCode-Area';
                 //$text = preg_replace('#<br? ?/>#', '', $text);
                 //$text = $bbcode->Parse($text);
+                $find = array(
+                    '~\[b\](.*?)\[/b\]~s',
+                    '~\[i\](.*?)\[/i\]~s',
+                    '~\[u\](.*?)\[/u\]~s',
+                    '~\[quote\](.*?)\[/quote\]~s',
+                    '~\[url=(.*?)\](.*?)\[/url\]~s',
+                    '~\[size=(.*?)\](.*?)\[/size\]~s',
+                    '~\[color=(.*?)\](.*?)\[/color\]~s',
+                    '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s'
+                );
+                // HTML tags to replace BBcode
+                $replace = array(
+                    '<b>$1</b>',
+                    '<i>$1</i>',
+                    '<span style="text-decoration:underline;">$1</span>',
+                    '<pre>$1</'.'pre>',
+                    '<a href="$1">$2</a>',
+                    '<span style="font-size:$1px;">$2</span>',
+                    '<span style="color:$1;">$2</span>',
+                    '<img src="$1" alt="" />'
+                );
+                $text = preg_replace($find,$replace,$text);
             }else{
                 $text = html_entity_decode($text);
             }
@@ -1785,7 +1817,7 @@ JSPAGINATE;
          *
          * @return array
          */
-        public function generateNewThreadForm($forumId)
+        public function generateNewThreadForm($forumId, $insertId = null)
         {
 
             list($access, $message) = $this->checkPermission($forumId);
@@ -1851,6 +1883,10 @@ JSPAGINATE;
 
             $data .= $this->getThreadDescForForm('c4gForumNewThreadDesc', $forumId, 'newthread', '');
             $data .= $this->getThreadSortForForm('c4gForumNewThreadSort', $forumId, 'newthread', '999');
+            if($insertId){
+                $data .= '<input name="id" type="hidden" value="'.$insertId.'" class ="formdata"';
+            }
+
             $editorId = '';
 
             if ($this->c4g_forum_editor === "bb") {
@@ -2335,10 +2371,17 @@ JSPAGINATE;
                 }
                 $recipient = serialize($recipient);
             }
+            if($this->putVars['id'] ){
+                $result = $this->helper->insertThreadIntoDB($forumId, $this->putVars['thread'], $this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
+                    $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
+                    $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient,serialize($user->getData()['id']),$this->putVars['id']);
+            }
+            else{
+                $result = $this->helper->insertThreadIntoDB($forumId, $this->putVars['thread'], $this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
+                    $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
+                    $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient,serialize($user->getData()['id']));
+            }
 
-            $result = $this->helper->insertThreadIntoDB($forumId, $this->putVars['thread'], $this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
-                                                        $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
-                                                        $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient,serialize($user->getData()['id']));
             if (!$result) {
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'ERROR_SAVE_THREAD');
             } else {
@@ -5809,6 +5852,23 @@ JSPAGINATE;
                     $return = $this->getThreadlist($values[1]);
                     break;
                 default:
+                    break;
+                case 'ticket':
+                    $memberId = $this->User->id;
+                    $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($values[1],$values['3'])->fetchAssoc();
+                    if(!$subforum){
+                        $subforum = $this->helper->createNewSubforum($values[1],$values['3']);
+                    }
+                    $threads = $this->helper->getThreadsFromDB($subforum['id']);
+                    foreach($threads as $thread){
+                        if($thread['id'] === $values[2]){
+                            $return = $this->getThreadAsHtml($values[2]);
+                        }
+                    }
+                    if(!$return){
+                        $return = $this->generateNewThreadForm($values[1],$values[2]);
+                    }
+
                     break;
             }
             // HOOK: for enhancements to change the result

@@ -30,7 +30,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
                 'pid' => 'index'
             )
         ),
-        'onsubmit_callback' =>array(array('tl_c4g_forum_post','saveDefault'))
+        'onsubmit_callback' =>array(array('tl_c4g_forum_post','saveDefault')),
+        'onload_callback'   =>array(array('tl_c4g_forum_post', 'loadPost'))
 
     ),
     'list' => array
@@ -239,6 +240,35 @@ class tl_c4g_forum_post extends \Backend{
 
         $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($arrSet)->execute($dc->id);
         $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSetParent)->execute($dc->activeRecord->pid);
+    }
+    public function loadPost(DataContainer $dc)
+    {
+        if(!$dc->activeRecord){
+            return;
+        }
+        $find = array(
+            '~\[b\](.*?)\[/b\]~s',
+            '~\[i\](.*?)\[/i\]~s',
+            '~\[u\](.*?)\[/u\]~s',
+            '~\[quote\](.*?)\[/quote\]~s',
+            '~\[url=(.*?)\](.*?)\[/url\]~s',
+            '~\[size=(.*?)\](.*?)\[/size\]~s',
+            '~\[color=(.*?)\](.*?)\[/color\]~s',
+            '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s'
+        );
+        // HTML tags to replace BBcode
+        $replace = array(
+            '<b>$1</b>',
+            '<i>$1</i>',
+            '<span style="text-decoration:underline;">$1</span>',
+            '<pre>$1</'.'pre>',
+            '<a href="$1">$2</a>',
+            '<span style="font-size:$1px;">$2</span>',
+            '<span style="color:$1;">$2</span>',
+            '<img src="$1" alt="" />'
+        );
+        $text = array('text' =>'Hallo');//preg_replace($find,$replace,$dc->activeRecord->text));
+        $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($text)->execute($dc->activeRecord->id);
     }
 
 }
