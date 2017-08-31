@@ -12,6 +12,7 @@
  */
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
+use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
 
 /**
  * Class C4GUtils
@@ -38,6 +39,10 @@ class C4GUtils {
 		return trim(htmlspecialchars($result));
 
 	}
+	public static function create_ticket($forumId, $groupId,$subject,$text,$ticketId){
+        $forum = new C4GForum(\ModuleModel::findByPk($forumId));
+        $forum->autoTicket($forumId, $groupId,$subject,$text,$ticketId);
+    }
 
 	/**
 	 *

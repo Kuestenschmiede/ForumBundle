@@ -5919,6 +5919,26 @@ JSPAGINATE;
             }
             return $return;
         }
+        public function autoTicket($forumId, $groupId,$subject,$text,$ticketId)
+        {
+            $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId,$groupId)->fetchAssoc();
+            if(!$subforum){
+                $subforum = $this->helper->createNewSubforum($forumId,$groupId);
+            }
+            $author =$subforum['default_author'];
+            $recipient = serialize(array($groupId));
+            $owner = serialize(array($subforum['default_author']));
+            $threads = $this->helper->getThreadsFromDB($subforum['id']);
+            foreach($threads as $thread){
+                if($thread['id'] === $ticketId){
+                    $return = $this->helper->insertPostIntoDB($ticketId,$author,$subject,$text,null,null,null,null,null,null,null,null,null,null,null,$recipient,$owner);
+                }
+            }
+            if(!$return){
+                $return = $this->helper->insertThreadIntoDB($subforum['id'],$subject,$author,null,'999',$text,null,null,null,null,null,null,null,null,null,null,$recipient,$owner,$ticketId);
+            }
+            return $return;
+        }
 
 
         /**

@@ -3169,6 +3169,7 @@ class C4GForumHelper extends \System
 	    $set['member_rights'] = $parentForum['member_rights'];
 	    $set['admin_rights'] = $parentForum['admin_rights'];
 	    $set['member_id'] = $groupId;
+	    $set['default_author'] = $parentForum['default_author'];
 	    $set['tstamp'] = time();
 
 	    $this->Database->prepare('INSERT INTO tl_c4g_forum %s')->set($set)->execute();
