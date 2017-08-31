@@ -1817,7 +1817,7 @@ JSPAGINATE;
          *
          * @return array
          */
-        public function generateNewThreadForm($forumId, $insertId = null)
+        public function generateNewThreadForm($forumId, $insertId = null, $insertSubject = null)
         {
 
             list($access, $message) = $this->checkPermission($forumId);
@@ -1836,9 +1836,13 @@ JSPAGINATE;
                 }
             }
 
-            if (!$inputThreadname) {
+            if (!$inputThreadname && !$insertSubject) {
                $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ':<br/>' .
                    '<input name="thread" type="text" class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
+            }
+            elseif(!$inputThreadname){
+                $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ':<br/>' .
+                    '<input name="thread" type="text" value="'.$insertSubject.'"class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
             }
 
             $data = '<div class="c4gForumNewThread">' .
@@ -5854,21 +5858,7 @@ JSPAGINATE;
                 default:
                     break;
                 case 'ticket':
-                    $memberId = $this->User->id;
-                    $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($values[1],$values['3'])->fetchAssoc();
-                    if(!$subforum){
-                        $subforum = $this->helper->createNewSubforum($values[1],$values['3']);
-                    }
-                    $threads = $this->helper->getThreadsFromDB($subforum['id']);
-                    foreach($threads as $thread){
-                        if($thread['id'] === $values[2]){
-                            $return = $this->getThreadAsHtml($values[2]);
-                        }
-                    }
-                    if(!$return){
-                        $return = $this->generateNewThreadForm($values[1],$values[2]);
-                    }
-
+                    $return = $this->ticket($values[1],$values[2],$values[3],$values[4]);
                     break;
             }
             // HOOK: for enhancements to change the result
@@ -5911,6 +5901,23 @@ JSPAGINATE;
 
             return $result;
 
+        }
+        public function ticket($forumId,$ticketId,$groupId,$subject = null)
+        {
+            $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId,$groupId)->fetchAssoc();
+            if(!$subforum){
+                $subforum = $this->helper->createNewSubforum($forumId,$groupId);
+            }
+            $threads = $this->helper->getThreadsFromDB($subforum['id']);
+            foreach($threads as $thread){
+                if($thread['id'] === $ticketId){
+                    $return = $this->getThreadAsHtml($ticketId);
+                }
+            }
+            if(!$return){
+                $return = $this->generateNewThreadForm($subforum['id'],$ticketId,$subject);
+            }
+            return $return;
         }
 
 

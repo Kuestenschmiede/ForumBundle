@@ -3159,11 +3159,15 @@ class C4GForumHelper extends \System
 	}
 	public function createNewSubforum($forumId, $groupId)
     {
+        $parentForum = $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE id=?')->execute($forumId)->fetchAssoc();
 	    $set['name'] = 'Ticketsystem '.$this->User->username;
 	    $set['pid'] = $forumId;
 	    $set['published'] = 1;
 	    $groupArray[] = $groupId;
 	    $set['member_groups'] = serialize($groupArray);
+	    $set['admin_groups'] = $parentForum['admin_groups'];
+	    $set['member_rights'] = $parentForum['member_rights'];
+	    $set['admin_rights'] = $parentForum['admin_rights'];
 	    $set['member_id'] = $groupId;
 	    $set['tstamp'] = time();
 
