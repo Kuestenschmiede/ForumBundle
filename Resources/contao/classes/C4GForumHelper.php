@@ -578,7 +578,7 @@ class C4GForumHelper extends \System
 				break;
 		}
 		$threads = $this->Database->prepare(
-				"SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,".
+				"SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,a.concerning,".
 		               "c.creation AS lastPost, " . $sqlLastUser . " AS lastUsername, a.recipient,a.owner ".
 				"FROM tl_c4g_forum_thread a ".
 				"LEFT JOIN tl_member b ON b.id = a.author ".
@@ -1882,6 +1882,10 @@ class C4GForumHelper extends \System
 		$set['subject'] = C4GUtils::secure_ugc($subject);
 		$set['forum_id'] = $forumId;
 		$set['post_number'] = $post_number;
+		$set['tstamp'] = time();
+		$set['state'] = 1;
+		$set2['state'] = 1;
+		$set2['tstamp'] = time();
 		$set2['recipient'] = $recipient;
 		$set2['owner'] = $owner;
 		if ($linkname!=NULL) {
@@ -2248,15 +2252,15 @@ class C4GForumHelper extends \System
          * @return bool
          * @throws \Exception
          */
-        public function insertThreadIntoDB($forumId, $threadname, $userId, $threaddesc, $sort, $post, $tags, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id, $recipient, $owner = 0, $id = null, $rating = 0)
+        public function insertThreadIntoDB($forumId, $threadname, $userId, $threaddesc, $sort, $post, $tags, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id, $recipient, $owner = 0, $ticketId = null, $rating = 0)
 	    {
 		$this->Database->beginTransaction();
 		try {
 			$forum = $this->Database->prepare(
 		   		"SELECT threads, posts FROM tl_c4g_forum WHERE id=?")->execute($forumId);
 
-            if($id){
-                $set['id'] = $id;
+            if($ticketId){
+                $set['concerning'] = $ticketId;
             }
 			$set['pid'] = $forumId;
 			$set['author'] = $userId;
@@ -2266,6 +2270,8 @@ class C4GForumHelper extends \System
 		    $set['threaddesc'] = nl2br(C4GUtils::secure_ugc($threaddesc));
 		    $set['recipient'] = $recipient;
 		    $set['owner'] = $owner;
+		    $set['tstamp'] = time();
+		    $set['state'] = 1;
             if(!empty($tags)) {
                 $set['tags'] = implode(", ",$tags);
             }
@@ -3160,7 +3166,8 @@ class C4GForumHelper extends \System
 	public function createNewSubforum($forumId, $groupId)
     {
         $parentForum = $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE id=?')->execute($forumId)->fetchAssoc();
-	    $set['name'] = 'Ticketsystem '.$this->User->username;
+	    $group = $this->Database->prepare('SELECT name FROM tl_member_group WHERE id=?')->execute($groupId)->fetchAssoc();
+        $set['name'] = 'Ticketsystem: '.$group['name'];
 	    $set['pid'] = $forumId;
 	    $set['published'] = 1;
 	    $groupArray[] = $groupId;

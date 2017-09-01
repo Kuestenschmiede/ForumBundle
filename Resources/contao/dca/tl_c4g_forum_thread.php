@@ -40,12 +40,12 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'mode'                    => 1,
             'fields'                  => array('creation'),
             'panelLayout'             => 'sort,filter;search,limit',
-            'flag'                    => 1
+            'flag'                    => 6
         ),
         'label' => array
         (
-            'fields'                  => array('name','state'),
-            'format'                  => '%s,   %s'
+            'fields'                  => array('name'),
+            'label_callback'          => array('tl_c4g_forum_thread','get_label'),
         ),
         'global_operations' => array
         (
@@ -134,6 +134,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['name'],
             'exclude'                 => true,
+            'search'                  => true,
             'inputType'               => 'text',
             'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
             'sql'                     => "varchar(255) NOT NULL default ''"
@@ -142,8 +143,12 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['state'],
             'exclude'                 => true,
-            'inputType'               => 'text',
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'inputType'               => 'select',
+            'foreignKey'              => 'tl_c4g_forum_state.state',
+            #'options_callback'        => array('tl_c4g_forum_thread','get_options'),
+            'filter'                  => true,
+            'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-'),
+            'sql'                     => "int(10)"
         ),
         'sort' => array
         (
@@ -163,6 +168,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'inputType'               => 'select',
             'foreignKey'              => 'tl_member.username',
             //'options_callback'      => array('CLASS', 'METHOD'),
+            'filter'                  => true,
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
             'sql'                     => "blob"
         ),
@@ -174,6 +180,9 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             //'options_callback'      => array('CLASS', 'METHOD'),
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
             'sql'                     => "blob",
+        ),
+        'concerning' => array(
+            'sql'                     => 'int(10)'
         ),
         'creation' => array
         (
@@ -231,5 +240,19 @@ class tl_c4g_forum_thread extends \Backend{
 
         $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSet)->execute($dc->id);
     }
+    public function get_label($arrRow)
+    {
+        $result = '[Ticket #'.sprintf('%04d', $arrRow['id']).'] #'.sprintf('%04d', $arrRow['concerning']).' ';
+        $result .= $arrRow['name'].': ';
+        $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp']));
+        $state = $this->Database->prepare('SELECT state FROM tl_c4g_forum_state WHERE id=?')->execute($arrRow['state'])->fetchAssoc();
+        if($state)
+        {
+            $result .=' : (<b>'.$state['state'].'</b>)';
+        }
+
+        return $result;
+    }
+
 
 }

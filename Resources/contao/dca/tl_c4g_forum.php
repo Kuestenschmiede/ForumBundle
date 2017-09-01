@@ -58,6 +58,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 		(
 			'fields'                  => array('name'),
 			'format'                  => '%s',
+            'label_callback'          => array('tl_c4g_forum','get_label')
 		),
 		'global_operations' => array
 		(
@@ -211,6 +212,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['name'],
 			'exclude'                 => true,
 			'inputType'               => 'text',
+            'search'                  => 'true',
+			'sorting'                 => 'true',
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
             'sql'                     => "varchar(255) NOT NULL default ''"
 		),
@@ -929,6 +932,23 @@ class tl_c4g_forum extends \Backend
 		}
 		return $return;
 	}
+	public function get_label($arrRow)
+    {
+        $threads = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE pid=?')->execute($arrRow['id'])->fetchAllAssoc();
+        $unreadTickets = false;
+        foreach($threads as $thread){
+            if($thread['state'] == 1){
+                $unreadTickets = true;
+            }
+        }
+        if($unreadTickets){
+            $return = $arrRow['name'].' <b>(ungelesene Tickets)</b>';
+        }
+        else{
+            $return = $arrRow['name'];
+        }
+        return $return;
+    }
 
 
 }

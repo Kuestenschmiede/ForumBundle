@@ -1842,7 +1842,7 @@ JSPAGINATE;
             }
             elseif(!$inputThreadname){
                 $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ':<br/>' .
-                    '<input name="thread" type="text" value="'.$insertSubject.'"class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
+                    '<input name="thread" type="text" value="'.$insertSubject.' "readonly class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
             }
 
             $data = '<div class="c4gForumNewThread">' .
@@ -5910,8 +5910,8 @@ JSPAGINATE;
             }
             $threads = $this->helper->getThreadsFromDB($subforum['id']);
             foreach($threads as $thread){
-                if($thread['id'] === $ticketId){
-                    $return = $this->getThreadAsHtml($ticketId);
+                if($thread['concerning'] === $ticketId){
+                    $return = $this->getThreadAsHtml($thread['id']);
                 }
             }
             if(!$return){
@@ -5926,12 +5926,13 @@ JSPAGINATE;
                 $subforum = $this->helper->createNewSubforum($forumId,$groupId);
             }
             $author =$subforum['default_author'];
-            $recipient = serialize(array($groupId));
             $owner = serialize(array($subforum['default_author']));
             $threads = $this->helper->getThreadsFromDB($subforum['id']);
+            $group = $this->Database->prepare('SELECT cg_member FROM tl_member_group WHERE id=?')->execute($groupId)->fetchAssoc();
+            $recipient = $group['cg_member'];
             foreach($threads as $thread){
-                if($thread['id'] === $ticketId){
-                    $return = $this->helper->insertPostIntoDB($ticketId,$author,$subject,$text,null,null,null,null,null,null,null,null,null,null,null,$recipient,$owner);
+                if($thread['concerning'] == $ticketId){
+                    $return = $this->helper->insertPostIntoDB($thread['id'],$author,$subject,$text,null,null,null,null,null,null,null,null,null,null,null,$recipient,$owner);
                 }
             }
             if(!$return){
