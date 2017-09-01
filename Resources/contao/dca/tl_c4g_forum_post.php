@@ -41,7 +41,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             'mode'                    => 1,
             'fields'                  => array('creation'),
             'panelLayout'             => 'sort,filter;search,limit',
-            'flag'                    => 1
+            'flag'                    => 6
         ),
         'label' => array
         (
@@ -104,7 +104,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
     'palettes' => array
     (
         '__selector__'                => array(''),
-        'default'                     => '{title_legend},title, price;{description_legend},description,subject,text;'
+        'default'                     => '{title_legend},title, price;{description_legend},description,subject,text,state;'
     ),
 
     // Subpalettes
@@ -137,8 +137,16 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_post']['subject'],
             'exclude'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
+            'eval'                    => array('maxlength'=>255 ),
             'sql'                     => "varchar(100) NOT NULL default ''"
+        ),
+        'state' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['state'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'foreignKey'              => 'tl_c4g_forum_state.state',
+            'sql'                     => "int(10)"
         ),
 
         'tags' => array
@@ -231,12 +239,21 @@ class tl_c4g_forum_post extends \Backend{
         {
             return;
         }
-        $forumId = $this->Database->prepare("SELECT pid FROM tl_c4g_forum_thread WHERE id=?")->execute($dc->activeRecord->pid)->fetchAssoc();
-        $arrSet['forum_id'] = $forumId['pid'];
+        $thread = $this->Database->prepare("SELECT pid,last_post_id FROM tl_c4g_forum_thread WHERE id=?")->execute($dc->activeRecord->pid)->fetchAssoc();
+        $lastPost = $this->Database->prepare('SELECT post_number FROM tl_c4g_forum_post WHERE id=?')->execute($thread['last_post_id'])->fetchAssoc();
+        $arrSet['forum_id'] = $thread['pid'];
         $arrSet['author'] = $this->Database->prepare("SELECT default_author FROM tl_c4g_forum WHERE id=?")->execute($forumId['pid'])->fetchAssoc()['default_author'];
         $arrSet['creation'] = time();
+        $arrSet['post_number'] = $lastPost['post_number'];
+
         //@ToDo ForumId,author hinzufügen
         $arrSetParent['last_post_id'] = $dc->id;
+        $arrSetParent['creation'] = time();
+        $arrSetParent['state'] = $dc->activeRecord->state;
+
+        if($dc->activeRecord->subject == ''){
+            $arrSet['subject'] = 'Statusänderung: '.$dc->activeRecord->state;
+        }
 
         $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($arrSet)->execute($dc->id);
         $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSetParent)->execute($dc->activeRecord->pid);
@@ -270,5 +287,4 @@ class tl_c4g_forum_post extends \Backend{
         $text = array('text' =>'Hallo');//preg_replace($find,$replace,$dc->activeRecord->text));
         $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($text)->execute($dc->activeRecord->id);
     }
-
 }

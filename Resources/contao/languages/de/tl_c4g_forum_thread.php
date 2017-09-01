@@ -23,6 +23,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['recipient'] 			= array('Empfänger',
  * Buttons
  */
 $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['delete']              = array('Ticket löschen','Löschen des Tickets');
+$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['new']                 = array('Ticket erstellen','Erstellen eines Tickets');
 $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['edit']                = array('Ticket bearbeiten','Bearbeiten des Tickets');
 $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['copy']                = array('Ticket duplizieren', 'Duplizieren des Tickets');
 $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['delete']              = array('Ticket löschen','Löschen des Tickets');

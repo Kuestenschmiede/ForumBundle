@@ -21,6 +21,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum_post']['text'] 			    = array('Text', 'Text de
  * Buttons
  */
 $GLOBALS['TL_LANG']['tl_c4g_forum_post']['delete']              = array('Eintrag löschen','Löschen des Eintrags');
+$GLOBALS['TL_LANG']['tl_c4g_forum_post']['new']                 = array('Antworten','Erstelle einen Beitrag');
 $GLOBALS['TL_LANG']['tl_c4g_forum_post']['edit']                = array('Eintrag bearbeiten','Bearbeiten des Eintrags');
 $GLOBALS['TL_LANG']['tl_c4g_forum_post']['copy']                = array('Eintrag duplizieren', 'Duplizieren des Eintrags');
 $GLOBALS['TL_LANG']['tl_c4g_forum_post']['delete']              = array('Eintrag löschen','Löschen des Eintrags');
