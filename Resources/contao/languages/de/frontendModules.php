@@ -137,6 +137,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['memberGooglePlusLink']       = 'Google+';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NEW_THREAD_TITLE'] = 'Neues Thema im Bereich "%s"';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_THREAD_TITLE'] = 'Neues Ticket im Bereich "%s"';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NEW_POST_TITLE']   = 'Antwort im Thema "%s" (Bereich "%s")';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_POST_TITLE']        = 'Antwort im Ticket "%s" (Bereich "%s")';
 
@@ -152,6 +153,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUCCESS_SAVE_POST']   = 'Ihre Antwort wurde gespeichert!';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ERROR_SAVE_THREAD']   = 'Fehler beim Anlegen des Themas! Versuchen Sie es noch einmal, oder wenden Sie sich an eine Kontaktperson des Forums!';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUCCESS_SAVE_THREAD'] = 'Neues Thema erfolgreich angelegt!';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUCCESS_SAVE_THREAD']     = 'Neues Ticket erfolgreich angelegt!';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['BOX_LAST_POST'] = 'Letzter Beitrag am %s von %s im Thema %s';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['BOX_LAST_POST'] = 'Letzte Antwort am %s von %s im Thema %s';

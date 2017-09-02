@@ -2776,7 +2776,7 @@ class C4GForumHelper extends \System
 	 * @return array
 	 */
 	public function getMemberDefaultRights() {
-		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads','tickettomember','showsentthreads');
+		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads','tickettomember',);
 		return $this->executePermissionHook($return, 'member');
 	}
 
@@ -2786,7 +2786,7 @@ class C4GForumHelper extends \System
 	 */
 	public function getAdminDefaultRights() {
 		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','threadsort','editownpost','editpost',
-					 'editownthread','editthread','delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember','showsentthreads');
+					 'editownthread','editthread','delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember',);
 		return $this->executePermissionHook($return,'admin');
 	}
 

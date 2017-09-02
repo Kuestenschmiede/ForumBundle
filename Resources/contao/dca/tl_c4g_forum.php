@@ -25,7 +25,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 		'ctable'                      => array('tl_c4g_forum_thread'),
 		'enableVersioning'            => true,
 	    'onload_callback'			  => array(
-											array('tl_c4g_forum', 'updateDCA')
+											array('tl_c4g_forum', 'updateDCA'),
+                                            array('tl_c4g_forum', 'loadStates')
 										 ),
 	    'onsubmit_callback'           => array(
 	        //array('\c4g\Core\C4GAutomator', 'purgeApiCache'),
@@ -949,7 +950,23 @@ class tl_c4g_forum extends \Backend
         }
         return $return;
     }
+    public function loadStates($arrRow)
+    {
+        $state = $this->Database->prepare('SELECT * FROM tl_c4g_forum_state ')->execute()->fetchAssoc();
 
-
+        if(!$state['state'])
+        {
+            $arrSet = array(
+                array('id'=>1,'state'=>'Ungelesen'),
+                array('id'=>2,'state'=>'Gelesen'),
+                array('id'=>3,'state'=>'Geschlossen'),
+                array('id'=>4,'state'=>'Neu'),
+            );
+            foreach($arrSet as $set){
+                $set['tstamp'] = time();
+                $this->Database->prepare('INSERT INTO tl_c4g_forum_state %s')->set($set)->execute();
+            }
+        }
+    }
 }
 ?>

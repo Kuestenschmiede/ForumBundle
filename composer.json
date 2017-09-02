@@ -27,14 +27,11 @@
       "con4gis\\ForumBundle\\": ""
     },
     "classmap": [
-      "Resources/contao/classes",
-      "Resources/contao/models",
-      "Resources/contao/modules",
-      "Resources/contao/widgets",
-      "Resources/contao/dca"
+      "Resources/contao/"
     ],
     "exclude-from-classmap": [
       "Resources/contao/config/",
+      "Resources/contao/dca/",
       "Resources/contao/languages/",
       "Resources/contao/templates/"
     ]
@@ -43,11 +40,6 @@
     "preferred-install": "dist"
   },
   "extra": {
-    "contao": {
-      "sources": {
-        "": "Resources/contao"
-      },
-      "contao-manager-plugin": "con4gis\\ForumBundle\\ContaoManager\\Plugin"
-    }
+    "contao-manager-plugin": "con4gis\\ForumBundle\\ContaoManager\\Plugin"
   }
 }

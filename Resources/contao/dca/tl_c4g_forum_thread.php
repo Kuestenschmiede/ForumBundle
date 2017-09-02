@@ -221,11 +221,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
 class tl_c4g_forum_thread extends \Backend{
     public function forumPost($row, $href, $label, $title, $icon)
     {
-        //Status des Tickets auf gelesen ändern
-        if($row['state'] == 1){
-            $set['state'] = 2;
-            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($set)->execute($row['id']);
-        }
         $href .= "&amp;id=".$row['id'];
         return '<a href="' . $this->addToUrl($href) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ';
     }
@@ -249,8 +244,8 @@ class tl_c4g_forum_thread extends \Backend{
         $result = '[Ticket #'.sprintf('%04d', $arrRow['id']).'] ';
         $author = $this->Database->prepare('SELECT * FROM tl_member WHERE id=?')->execute($arrRow['author'])->fetchAssoc();
         $result .= $arrRow['name'].': ';
-        $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp'])).' ';
         $result .= date($GLOBALS['TL_CONFIG']['dateFormat'], intval($arrRow['tstamp'])).' ';
+        $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp'])).' ';
         $result .= $author['username'];
         $state = $this->Database->prepare('SELECT state FROM tl_c4g_forum_state WHERE id=?')->execute($arrRow['state'])->fetchAssoc();
         if($state)
