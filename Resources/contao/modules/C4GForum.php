@@ -685,15 +685,18 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $userId = $userData['id'];
 
             foreach ($threads AS $thread) {
-                if($this->c4g_forum_type =="TICKET"){
-                    if($this->helper->checkPermission($id,'showsentthreads')){
-                        $threadOwner = array_flip(unserialize($thread['owner']));
-                    }
-                    $threadRecipient = array_flip(unserialize($thread['recipient']));
-                    if(!(array_key_exists($userId,$threadOwner) || array_key_exists($userId,$threadRecipient))){
-                        continue;
-                    }
-                }
+                /**
+                 * @Todo fix Owner/Recipient
+                 */
+//                if($this->c4g_forum_type =="TICKET"){
+//                    if($this->helper->checkPermission($id,'showsentthreads')){
+//                        $threadOwner = array_flip(unserialize($thread['owner']));
+//                    }
+//                    $threadRecipient = array_flip(unserialize($thread['recipient']));
+//                    if(!(array_key_exists($userId,$threadOwner) || array_key_exists($userId,$threadRecipient))){
+//                        continue;
+//                    }
+//                }
                 switch ($this->c4g_forum_threadclick) {
                     case 'LPOST':
                         $threadAction = 'readlastpost:' . $thread['id'];
@@ -5927,7 +5930,7 @@ JSPAGINATE;
                 }
             }
             if(!$return){
-                $subject = '['.$subject.'#'.sprintf('%04d',$concerning).']';
+                $subject = $subject.'#'.sprintf('%04d',$concerning);
                 $return = $this->generateNewThreadForm($subforum['id'],$concerning,$subject);
             }
             return $return;

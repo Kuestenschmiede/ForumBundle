@@ -31,7 +31,11 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             )
         ),
         'onsubmit_callback' =>array(array('tl_c4g_forum_post','saveDefault')),
-        'onload_callback'   =>array(array('tl_c4g_forum_post', 'loadPost'))
+        'onload_callback'   =>array(
+                                    array('tl_c4g_forum_post', 'loadPost') ,
+                                    array('tl_c4g_forum_post','loadLabel')
+
+        ),
 
     ),
     'list' => array
@@ -46,7 +50,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
         'label' => array
         (
             'fields'                  => array('subject','text'),
-            'format'                  => '%s, %s'
+            'format'                  => '%s, %s',
+            #'label_callback'          => array('tl_c4g_forum_post','loadLabel')
         ),
         'global_operations' => array
         (
@@ -284,7 +289,18 @@ class tl_c4g_forum_post extends \Backend{
             '<span style="color:$1;">$2</span>',
             '<img src="$1" alt="" />'
         );
+        //Status des Tickets auf gelesen ändern
+
         $text = array('text' =>'Hallo');//preg_replace($find,$replace,$dc->activeRecord->text));
         $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($text)->execute($dc->activeRecord->id);
+    }
+    public function loadLabel ($arrRow)
+    {
+        //Status des Tickets auf gelesen ändern
+        $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($arrRow->activeRecord['pid'])->fetchAssoc();
+        if($thread['state'] == 1){
+            $set['state'] = 2;
+            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($set)->execute($arrRow->activeRecord['pid']);
+        }
     }
 }
