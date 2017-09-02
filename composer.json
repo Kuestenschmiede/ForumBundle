@@ -28,7 +28,19 @@
   "autoload": {
     "psr-4": {
       "con4gis\\ForumBundle\\": ""
-    }
+    },
+    "classmap": [
+      "Resources/contao/classes",
+      "Resources/contao/models",
+      "Resources/contao/modules",
+      "Resources/contao/widgets",
+      "Resources/contao/dca"
+    ],
+    "exclude-from-classmap": [
+      "Resources/contao/config/",
+      "Resources/contao/languages/",
+      "Resources/contao/templates/"
+    ]
   },
   "config": {
     "preferred-install": "dist"

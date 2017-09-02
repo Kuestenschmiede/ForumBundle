@@ -118,6 +118,7 @@
 
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_COUNT']          = ' Beitrag <b %s>#%d</b> von <b %s>%d</b> ';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POST_HEADER_COUNT']              = ' Antwort <b %s>#%d</b> von <b %s>%d</b> ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['COMMENT_HEADER_COUNT']       = ' Kommentar <b %s>#%d</b> von <b %s>%d</b> ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_CREATED']        = 'Erstellt von <b %s>%s</b> am <b %s>%s</b>';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_CREATED_AUTHOR'] = 'Erstellt von <b %s>%s</b>';
@@ -153,6 +154,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUCCESS_SAVE_THREAD'] = 'Neues Thema erfolgreich angelegt!';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['BOX_LAST_POST'] = 'Letzter Beitrag am %s von %s im Thema %s';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['BOX_LAST_POST'] = 'Letzte Antwort am %s von %s im Thema %s';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['USER_NOT_LOGGED_IN'] = 'Mitglied ist nicht angemeldet.';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_PERMISSION']      = 'Keine Berechtigung.';
