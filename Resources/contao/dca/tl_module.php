@@ -1009,6 +1009,18 @@ if (method_exists('\System', 'getContainer')) {
         'sql'       => "char(1) NOT NULL default '0'"
     );
 
+    $GLOBALS['TL_DCA']['tl_module']['fields']['ticketredirectsite'] = array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['ticketredirectsite'],
+        'default'                 => '0',
+        'exclude'                 => true,
+        'inputType'               => 'pageTree',
+        'foreignKey'              => 'tl_page.title',
+        'eval'                    => array('mandatory'=>false, 'fieldType'=>'radio', 'tl_class'=>'clr'),
+        'sql'                     => "int(10) unsigned NOT NULL default '0'",
+        'relation'                => array('type'=>'hasOne', 'load'=>'eager')
+    );
+
 //    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_enable_maps'] = array
 //    (
 //        'sql' => "char(1) NOT NULL default ''"

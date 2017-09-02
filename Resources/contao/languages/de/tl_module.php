@@ -221,6 +221,11 @@
         'Wählen Sie hier die Seite aus, auf der sich das Frontend-Modul mit dem Forum befindet.'
     );
 
+    $GLOBALS['TL_LANG']['tl_module']['ticketredirectsite'] = array(
+        'Weiterleitungsseite Ticket',
+        'Wählen Sie hier die Seite aus, auf die für die Ticketerstellung weitergeleitet werden soll.'
+    );
+
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_last_post_on_new'] = array("Beim Neuanlegen letzten Post anzeigen", "");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_enabled'] = array("Bewertungen aktivieren", "Zeigt ein fünf Sterne Bewertungssystem beim schreiben von Beiträgen an.");
