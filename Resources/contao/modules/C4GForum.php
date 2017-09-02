@@ -757,7 +757,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 }
 
                 if($this->c4g_forum_type == "TICKET"){
-                    $title = $this->helper->getTicketTitle($thread['id']);
+                    $title = $this->helper->getTicketTitle($thread['id'],$this->c4g_forum_type);
                 }
                 else{
                     $title = $thread['name'];
@@ -1792,7 +1792,7 @@ JSPAGINATE;
                 $threadname = $thread['name'];
             }
             if($this->c4g_forum_type == "TICKET"){
-                $title = $this->helper->getTicketTitle($thread['id']);
+                $title = $this->helper->getTicketTitle($thread['id'],$this->c4g_forum_type);
             }
             else{
                 $title = C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . $threadname;
@@ -2104,7 +2104,7 @@ JSPAGINATE;
             $data .=
                 '<input name="parentDialog" type="hidden" class="formdata" value="' . $parentDialog . '"></input>' .
                 '</div>';
-            $title = $this->helper->getTicketTitle($threadId);
+            $title = $this->helper->getTicketTitle($threadId,$this->c4g_forum_type);
 
 
             $return = array(
@@ -5914,7 +5914,7 @@ JSPAGINATE;
             return $result;
 
         }
-        public function ticket($forumId,$ticketId,$groupId,$subject = null)
+        public function ticket($forumId,$concerning,$groupId,$subject)
         {
             $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId,$groupId)->fetchAssoc();
             if(!$subforum){
@@ -5922,12 +5922,13 @@ JSPAGINATE;
             }
             $threads = $this->helper->getThreadsFromDB($subforum['id']);
             foreach($threads as $thread){
-                if($thread['concerning'] === $ticketId){
+                if($thread['concerning'] === $concerning){
                     $return = $this->getThreadAsHtml($thread['id']);
                 }
             }
             if(!$return){
-                $return = $this->generateNewThreadForm($subforum['id'],$ticketId,$subject);
+                $subject = '['.$subject.'#'.sprintf('%04d',$concerning).']';
+                $return = $this->generateNewThreadForm($subforum['id'],$concerning,$subject);
             }
             return $return;
         }

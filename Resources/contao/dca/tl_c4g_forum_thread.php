@@ -246,9 +246,12 @@ class tl_c4g_forum_thread extends \Backend{
     }
     public function get_label($arrRow)
     {
-        $result = '[Ticket #'.sprintf('%04d', $arrRow['id']).'] #'.sprintf('%04d', $arrRow['concerning']).' ';
+        $result = '[Ticket #'.sprintf('%04d', $arrRow['id']).'] ';
+        $author = $this->Database->prepare('SELECT * FROM tl_member WHERE id=?')->execute($arrRow['author'])->fetchAssoc();
         $result .= $arrRow['name'].': ';
-        $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp']));
+        $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp'])).' ';
+        $result .= date($GLOBALS['TL_CONFIG']['dateFormat'], intval($arrRow['tstamp'])).' ';
+        $result .= $author['username'];
         $state = $this->Database->prepare('SELECT state FROM tl_c4g_forum_state WHERE id=?')->execute($arrRow['state'])->fetchAssoc();
         if($state)
         {
