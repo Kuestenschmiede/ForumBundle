@@ -5930,7 +5930,6 @@ JSPAGINATE;
                 }
             }
             if(!$return){
-                $subject = $subject.'#'.sprintf('%04d',$concerning);
                 $return = $this->generateNewThreadForm($subforum['id'],$concerning,$subject);
             }
             return $return;

@@ -32,8 +32,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
         ),
         'onsubmit_callback' =>array(array('tl_c4g_forum_post','saveDefault')),
         'onload_callback'   =>array(
-                                    array('tl_c4g_forum_post', 'loadPost') ,
-                                    array('tl_c4g_forum_post','loadLabel')
+                                    array('tl_c4g_forum_post', 'loadPost')
 
         ),
 
@@ -51,7 +50,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
         (
             'fields'                  => array('subject','text'),
             'format'                  => '%s, %s',
-            #'label_callback'          => array('tl_c4g_forum_post','loadLabel')
+            'label_callback'          => array('tl_c4g_forum_post','loadLabel')
         ),
         'global_operations' => array
         (
