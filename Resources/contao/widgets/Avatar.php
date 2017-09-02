@@ -58,7 +58,7 @@ class Avatar extends \Widget implements \uploadable
 	{
 		parent::__construct($arrAttributes);
 
-		$this->objUploader = new C4gForumSingleFileUpload();
+		$this->objUploader = new \con4gis\ForumBundle\Resources\contao\classes\C4gForumSingleFileUpload();
 		$this->objUploader->setName($this->strName);
 	}
 
