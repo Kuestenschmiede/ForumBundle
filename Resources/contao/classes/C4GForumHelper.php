@@ -257,6 +257,7 @@ class C4GForumHelper extends \System
 			case 'sendthread':
 			case 'previewthread':
 			case 'cancelthread':
+			case 'ticket':
 				return 'newthread';
 
 			case 'newpost':
@@ -545,6 +546,7 @@ class C4GForumHelper extends \System
 	}
 
 
+
 	/**
 	 *
 	 * Give back all threads of a given forum id from DB as array.
@@ -576,8 +578,8 @@ class C4GForumHelper extends \System
 				break;
 		}
 		$threads = $this->Database->prepare(
-				"SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,".
-		               "c.creation AS lastPost, " . $sqlLastUser . " AS lastUsername ".
+				"SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,a.concerning,".
+		               "c.creation AS lastPost, " . $sqlLastUser . " AS lastUsername, a.recipient,a.owner ".
 				"FROM tl_c4g_forum_thread a ".
 				"LEFT JOIN tl_member b ON b.id = a.author ".
 				"LEFT JOIN tl_c4g_forum_post c ON c.id = a.last_post_id ".
@@ -1726,7 +1728,7 @@ class C4GForumHelper extends \System
 	public function getThreadAndForumNameFromDB($threadId)
 	{
 		return $this->Database->prepare(
-				"SELECT a.name AS threadname, b.name AS forumname,b.optional_names AS optional_forumnames, a.pid AS forumid FROM tl_c4g_forum_thread a ".
+				"SELECT a.name AS threadname, b.name AS forumname, a.recipient, a.owner, b.optional_names AS optional_forumnames, a.pid AS forumid FROM tl_c4g_forum_thread a ".
 				"INNER JOIN tl_c4g_forum b ON b.id = a.pid ".
 				"WHERE a.id=?")
 				->execute($threadId)->fetchAssoc();
@@ -1870,7 +1872,7 @@ class C4GForumHelper extends \System
          *
          * @return bool
          */
-        protected function insertPostIntoDBInternal($threadId, $userId, $subject, $post, $tags, $rating = 0, $forumId, $post_number, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id)
+        protected function insertPostIntoDBInternal($threadId, $userId, $subject, $post, $tags, $rating = 0, $forumId, $post_number, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id, $recipient, $owner)
 	{
 		$set = array();
 		$set['pid'] = $threadId;
@@ -1880,6 +1882,12 @@ class C4GForumHelper extends \System
 		$set['subject'] = C4GUtils::secure_ugc($subject);
 		$set['forum_id'] = $forumId;
 		$set['post_number'] = $post_number;
+		$set['tstamp'] = time();
+		$set['state'] = 1;
+		$set2['state'] = 1;
+		$set2['tstamp'] = time();
+		$set2['recipient'] = $recipient;
+		$set2['owner'] = $owner;
 		if ($linkname!=NULL) {
 			$set['linkname'] = C4GUtils::secure_ugc($linkname);
 		}
@@ -1923,13 +1931,17 @@ class C4GForumHelper extends \System
 		$objInsertStmt = $this->Database->prepare("INSERT INTO tl_c4g_forum_post %s")
 										->set($set)
 										->execute();
+        $result['post_id'] = $objInsertStmt->insertId;
+        $varSQL = $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")
+            ->set($set2)
+            ->execute($threadId);
 
 		if (!$objInsertStmt->affectedRows)
 		{
 			return false;
 		}
 		//update thread and forum
-		$result['post_id'] = $objInsertStmt->insertId;
+
 		//update index
 		$this->createIndex('post', $result['post_id']);
 		$this->createIndex('tag', $result['post_id']);
@@ -2167,7 +2179,7 @@ class C4GForumHelper extends \System
 	 * @param string $loc_tooltip
 	 * @throws Exception
 	 */
-	public function insertPostIntoDB($threadId, $userId, $subject, $post, $tags, $rating = 0, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id)
+	public function insertPostIntoDB($threadId, $userId, $subject, $post, $tags, $rating = 0, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id, $recipient, $owner)
 	{
 		$this->Database->beginTransaction();
 		try {
@@ -2176,7 +2188,7 @@ class C4GForumHelper extends \System
 		   		"FROM tl_c4g_forum_thread a, tl_c4g_forum b WHERE ".
 		   		"a.id=? AND b.id = a.pid")->execute($threadId);
 			$result = $this->insertPostIntoDBInternal($threadId, $userId, $subject, $post, $tags, $rating, $thread->forum_id, $thread->threadposts + 1,
-													  $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id);
+													  $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id, $recipient, $owner);
 			if (!$result)
 			{
 				$this->Database->rollbackTransaction();
@@ -2240,20 +2252,26 @@ class C4GForumHelper extends \System
          * @return bool
          * @throws \Exception
          */
-        public function insertThreadIntoDB($forumId, $threadname, $userId, $threaddesc, $sort, $post, $tags, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id, $rating = 0 )
+        public function insertThreadIntoDB($forumId, $threadname, $userId, $threaddesc, $sort, $post, $tags, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id, $recipient, $owner = 0, $ticketId = null, $rating = 0)
 	    {
 		$this->Database->beginTransaction();
 		try {
 			$forum = $this->Database->prepare(
 		   		"SELECT threads, posts FROM tl_c4g_forum WHERE id=?")->execute($forumId);
 
-
+            if($ticketId){
+                $set['concerning'] = $ticketId;
+            }
 			$set['pid'] = $forumId;
 			$set['author'] = $userId;
 			$set['creation'] = time();
 			$set['sort'] = $sort;
 			$set['name'] = C4GUtils::secure_ugc($threadname);
 		    $set['threaddesc'] = nl2br(C4GUtils::secure_ugc($threaddesc));
+		    $set['recipient'] = $recipient;
+		    $set['owner'] = $owner;
+		    $set['tstamp'] = time();
+		    $set['state'] = 1;
             if(!empty($tags)) {
                 $set['tags'] = implode(", ",$tags);
             }
@@ -2273,7 +2291,7 @@ class C4GForumHelper extends \System
 			$savePost = ($post || $linkname || $linkurl);
 
 			if ($savePost) {
-				$result = $this->insertPostIntoDBInternal($objInsertStmt->insertId, $userId, $threadname, $post,$tags, $rating, $forumId, 1, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id);
+				$result = $this->insertPostIntoDBInternal($objInsertStmt->insertId, $userId, $threadname, $post,$tags, $rating, $forumId, 1, $linkname, $linkurl, $geox, $geoy, $locstyle, $label, $tooltip, $geodata, $loc_osm_id,$recipient,$owner);
 				if (!$result)
 				{
 					$this->Database->rollbackTransaction();
@@ -2371,19 +2389,41 @@ class C4GForumHelper extends \System
 	 * @param int $forumId
 	 * @return array
 	 */
-	public function getMemberGroupsForForum($forumId)
+	public function getMemberGroupsForForum($forumId, $frontendUser)
 	{
 		$forum = $this->Database->prepare(
-			"SELECT member_groups FROM tl_c4g_forum WHERE id=?")
+			"SELECT member_groups, admin_groups FROM tl_c4g_forum WHERE id=?")
 	 					 ->execute($forumId)->fetchAssoc();
 
-		$forumGroups = deserialize($forum['member_groups'], true);
+		$forumMemGroups = deserialize($forum['member_groups'], true);
+		$forumAdGroups = deserialize($forum['admin_groups'], true);
 
 		$memGroups = $this->Database->prepare(
-			"SELECT id,name FROM tl_member_group WHERE id IN (".implode(',',$forumGroups).")")
+			"SELECT id,name FROM tl_member_group WHERE id IN (".implode(',',$forumMemGroups).")")
 	 					 ->execute()->fetchAllAssoc();
-		return $memGroups;
+		$adGroups = $this->Database->prepare(
+			"SELECT id,name FROM tl_member_group WHERE id IN (".implode(',',$forumAdGroups).")")
+	 					 ->execute()->fetchAllAssoc();
+		$user = $this->Database->prepare(
+            "SELECT id,groups FROM tl_member WHERE id =?")
+            ->execute($frontendUser)->fetchAssoc();
+		$user['groups'] = unserialize($user['groups']);
+		foreach($user['groups'] as $key){
+		    if(in_array($key,$memGroups['0']) && in_array($key,$adGroups['0'])){
+		        $memGroups .= $adGroups;
+		        $return = $memGroups;
+		        break;
+            }
+            elseif(in_array($key,$memGroups['0'])){
+		            $return = $adGroups;
+            }
+            else{
+                $return = $memGroups;
+            }
+        }
+		return $return;
 	}
+
 
 	/**
 	 *
@@ -2722,7 +2762,7 @@ class C4GForumHelper extends \System
 	 * @return array
 	 */
 	public function getMemberDefaultRights() {
-		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads');
+		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads','tickettomember','showsentthreads');
 		return $this->executePermissionHook($return, 'member');
 	}
 
@@ -2732,7 +2772,7 @@ class C4GForumHelper extends \System
 	 */
 	public function getAdminDefaultRights() {
 		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','threadsort','editownpost','editpost',
-					 'editownthread','editthread','delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages');
+					 'editownthread','editthread','delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember','showsentthreads');
 		return $this->executePermissionHook($return,'admin');
 	}
 
@@ -3123,6 +3163,26 @@ class C4GForumHelper extends \System
 		}
 		return false;
 	}
+	public function createNewSubforum($forumId, $groupId)
+    {
+        $parentForum = $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE id=?')->execute($forumId)->fetchAssoc();
+	    $group = $this->Database->prepare('SELECT name FROM tl_member_group WHERE id=?')->execute($groupId)->fetchAssoc();
+        $set['name'] = 'Ticketsystem: '.$group['name'];
+	    $set['pid'] = $forumId;
+	    $set['published'] = 1;
+	    $groupArray[] = $groupId;
+	    $set['member_groups'] = serialize($groupArray);
+	    $set['admin_groups'] = $parentForum['admin_groups'];
+	    $set['member_rights'] = $parentForum['member_rights'];
+	    $set['admin_rights'] = $parentForum['admin_rights'];
+	    $set['member_id'] = $groupId;
+	    $set['default_author'] = $parentForum['default_author'];
+	    $set['tstamp'] = time();
+
+	    $this->Database->prepare('INSERT INTO tl_c4g_forum %s')->set($set)->execute();
+	    return $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id =?')->execute($forumId,$groupId)->fetchAssoc();
+
+    }
 
 	/**
 	 * Create XML sitemap
@@ -3241,6 +3301,9 @@ class C4GForumHelper extends \System
         $sTitle = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION'][$lngStrg];
         if($forumType =='QUESTIONS' && $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS'][$lngStrg]){
             $sTitle = $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS'][$lngStrg];
+        }
+        else if($forumType =='TICKET' && $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET'][$lngStrg]){
+            $sTitle = $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET'][$lngStrg];
         }
         //ToDo check unused cased and remove language file entries
 //        switch ($lngStrg) {

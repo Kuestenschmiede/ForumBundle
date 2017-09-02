@@ -3,7 +3,7 @@
 /**
  * con4gis - the gis-kit
  *
- * @version   php 5
+ * @version   php 7
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
@@ -12,6 +12,7 @@
  */
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
+use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
 
 /**
  * Class C4GUtils
@@ -38,6 +39,10 @@ class C4GUtils {
 		return trim(htmlspecialchars($result));
 
 	}
+	public static function create_ticket($forumId, $groupId,$subject,$text,$ticketId){
+        $forum = new C4GForum(\ModuleModel::findByPk($forumId));
+        $forum->autoTicket($forumId, $groupId,$subject,$text,$ticketId);
+    }
 
 	/**
 	 *

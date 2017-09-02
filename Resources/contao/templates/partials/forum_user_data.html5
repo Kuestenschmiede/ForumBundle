@@ -1,4 +1,4 @@
-<script src="system/modules/con4gis_forum/assets/js/c4g.pn.js"></script>
+<script src="bundles/con4gisforum/js/c4g.pn.js"></script>
 
 <div class="c4g_forum_post_user_data">
     <strong class="user_name"><?php echo $this->sUserName; ?><?php if ($this->bShowOnlineStatus): ?> <i class="online_status <?php if ($this->bIsOnline): ?>online<?php else: ?>offline<?php endif; ?> ui-button ui-widget ui-state-default"></i><?php endif; ?></strong>

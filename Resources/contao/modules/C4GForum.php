@@ -15,11 +15,13 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
     use c4g\Maps\C4gMapsModel;
     use c4g\Maps\ResourceLoader;
+    use c4g\MemberModel;
     use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
     use con4gis\ForumBundle\Resources\contao\classes\C4GUtils;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPost;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumSession;
+    use Contao\FrontendUser;
     use Contao\Module;
 
     $GLOBALS['c4gForumErrors']           = array();
@@ -86,6 +88,16 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
         protected static $useMaps = false;
 
         protected $c4g_forum_language_temp = '';
+
+        /**
+         * C4GForum constructor.
+         */
+        public function __construct($objModule,$strColumn='main')
+        {
+            parent::__construct($objModule,$strColumn='main');
+            $this->helper = new C4GForumHelper($this->Database, null,FrontendUser::getInstance());
+            $this->User = FrontendUser::getInstance();
+        }
 
         /**
          * Display a wildcard in the back end
@@ -186,7 +198,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 $GLOBALS ['TL_HEAD'] [] = '<style>.rating_static > span.checked ~ label{color:#' . $this->c4g_forum_rating_color . ' !important;}</style>';
             }
 
-            $GLOBALS ['TL_CSS'] [] = 'system/modules/con4gis_forum/assets/css/c4gForum.css';
+            $GLOBALS ['TL_CSS'] [] = 'bundles/con4gisforum/css/c4gForum.css';
             //$GLOBALS ['TL_CSS'] [] = 'system/modules/con4gis_forum/html/css/bbcodes.css';
             $data['id']      = $this->id;
             //check if we need contao 4 routing
@@ -281,8 +293,8 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             }
 
             if($this->c4g_forum_pagination_active == "1") {
-                $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/con4gis_forum/assets/js/jquery.pagination.min.js";
-                $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/con4gis_forum/assets/js/jquery.hashchange.min.js";
+                $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/js/jquery.pagination.min.js";
+                $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/js/jquery.hashchange.min.js";
             }
 
             if ($enableMaps) {
@@ -668,7 +680,20 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
             $threads = $this->helper->getThreadsFromDB($id);
             $forum   = $this->helper->getForumFromDB($id);
+            $user = FrontendUser::getInstance();
+            $userData = $user->getData();
+            $userId = $userData['id'];
+
             foreach ($threads AS $thread) {
+                if($this->c4g_forum_type =="TICKET"){
+                    if($this->helper->checkPermission($id,'showsentthreads')){
+                        $threadOwner = array_flip(unserialize($thread['owner']));
+                    }
+                    $threadRecipient = array_flip(unserialize($thread['recipient']));
+                    if(!(array_key_exists($userId,$threadOwner) || array_key_exists($userId,$threadRecipient))){
+                        continue;
+                    }
+                }
                 switch ($this->c4g_forum_threadclick) {
                     case 'LPOST':
                         $threadAction = 'readlastpost:' . $thread['id'];
@@ -1252,9 +1277,31 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $text = $post['text'];
             // Handle BBCodes, if activated
             if ($this->c4g_forum_bbcodes) {
-                $textClass .= ' BBCode-Area';
+                //$textClass .= ' BBCode-Area';
                 //$text = preg_replace('#<br? ?/>#', '', $text);
                 //$text = $bbcode->Parse($text);
+                $find = array(
+                    '~\[b\](.*?)\[/b\]~s',
+                    '~\[i\](.*?)\[/i\]~s',
+                    '~\[u\](.*?)\[/u\]~s',
+                    '~\[quote\](.*?)\[/quote\]~s',
+                    '~\[url=(.*?)\](.*?)\[/url\]~s',
+                    '~\[size=(.*?)\](.*?)\[/size\]~s',
+                    '~\[color=(.*?)\](.*?)\[/color\]~s',
+                    '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s'
+                );
+                // HTML tags to replace BBcode
+                $replace = array(
+                    '<b>$1</b>',
+                    '<i>$1</i>',
+                    '<span style="text-decoration:underline;">$1</span>',
+                    '<pre>$1</'.'pre>',
+                    '<a href="$1">$2</a>',
+                    '<span style="font-size:$1px;">$2</span>',
+                    '<span style="color:$1;">$2</span>',
+                    '<img src="$1" alt="" />'
+                );
+                $text = preg_replace($find,$replace,$text);
             }else{
                 $text = html_entity_decode($text);
             }
@@ -1770,7 +1817,7 @@ JSPAGINATE;
          *
          * @return array
          */
-        public function generateNewThreadForm($forumId)
+        public function generateNewThreadForm($forumId, $insertId = null, $insertSubject = null)
         {
 
             list($access, $message) = $this->checkPermission($forumId);
@@ -1789,9 +1836,13 @@ JSPAGINATE;
                 }
             }
 
-            if (!$inputThreadname) {
+            if (!$inputThreadname && !$insertSubject) {
                $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ':<br/>' .
                    '<input name="thread" type="text" class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
+            }
+            elseif(!$inputThreadname){
+                $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ':<br/>' .
+                    '<input name="thread" type="text" value="'.$insertSubject.' "readonly class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
             }
 
             $data = '<div class="c4gForumNewThread">' .
@@ -1799,9 +1850,47 @@ JSPAGINATE;
 
                     $inputThreadname .
                     '</div>';
+           if($this->c4g_forum_type =="TICKET"){
+               $user = FrontendUser::getInstance();
+               $groups = $this->helper->getMemberGroupsForForum($forumId,$user->getData()['id']);
+
+               if($this->helper->checkPermission($forumId,'tickettomember')){
+                   $data .= '<select name="recipient_member" class="formdata ui-corner-all">';
+
+                   $allMembers = $this->Database->prepare(
+                       $select ="SELECT id,username,groups
+                FROM tl_member")->execute()->fetchAllAssoc();
+                   foreach($allMembers as $member){
+                       $member['groups'] = unserialize($member['groups']);
+                       $member['groups'] = array_flip($member['groups']);
+                       foreach($groups as $group){
+                           if(array_key_exists($group['id'],$member['groups'])){
+                               $data .= '<option value="'.$member['id'].'">'.$member['username'].'</option>';
+                           }
+                       }
+                   }
+               }
+               else{
+                   $data .= '<select name="recipient_group" class="formdata ui-corner-all">';
+                   foreach($groups as $group){
+                       $selects =$this->Database->prepare("SELECT id,name
+                FROM tl_member_group
+                WHERE id=?")->execute($group['id'])->fetchAllAssoc();
+                       foreach($selects as $select){
+                           $data .= '<option value="'.$select['id'].'">'.$select['name'].'</option>';
+                       }
+                   }
+
+               }
+               $data .='</select>';
+           }
 
             $data .= $this->getThreadDescForForm('c4gForumNewThreadDesc', $forumId, 'newthread', '');
             $data .= $this->getThreadSortForForm('c4gForumNewThreadSort', $forumId, 'newthread', '999');
+            if($insertId){
+                $data .= '<input name="id" type="hidden" value="'.$insertId.'" class ="formdata"';
+            }
+
             $editorId = '';
 
             if ($this->c4g_forum_editor === "bb") {
@@ -1991,6 +2080,9 @@ JSPAGINATE;
                      '<textarea' . $editorId . ' name="post" cols="80" rows="15" class="formdata ui-corner-all"></textarea>' .
                      '</div>';
 
+            $data .= '<input type="hidden" class=formdata ui-corner-all name="recipient" value="' . htmlspecialchars($thread['owner']) . '">
+                      <input type="hidden" class=formdata ui-corner-all name="owner" value="' . htmlspecialchars($thread['recipient']) . '">';
+
             $data .= $this->getPostlinkForForm('c4gForumNewPostPostLink', $thread['forumid'], 'newpost', '', '');
             $locstyle = "";
             if ($this->map_enabled($thread['forumid'])) {
@@ -2079,7 +2171,7 @@ JSPAGINATE;
             $this->putVars['osmId'] = $this->putVars['osmIdType'] . '.' . $this->putVars['osmId'];
             $result                 = $this->helper->insertPostIntoDB($threadId, $this->User->id, $this->putVars['subject'], $this->putVars['post'], $this->putVars['tags'], $this->putVars['rating'],
                                                                       $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'],
-                                                                      $this->putVars['locstyle'], $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId']);
+                                                                      $this->putVars['locstyle'], $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'],$this->putVars['recipient'],$this->putVars['owner']);
 
             if (!$result) {
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'ERROR_SAVE_POST');
@@ -2212,6 +2304,7 @@ JSPAGINATE;
             $sUrl = $this->putVars['site'];
             $sHashedUrl = $this->putVars['hsite'];
             $sUrlCheckValue =  md5($sUrl . \Config::get('encryptionKey'));
+            $user = FrontendUser::getInstance();
 
             if($sUrlCheckValue !== $sHashedUrl) {
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'ERROR_SAVE_POST');
@@ -2267,10 +2360,32 @@ JSPAGINATE;
                     $this->putVars['thread'] == $this->putVars['thread_'.$this->c4g_forum_language_temp];
                 }
             }
+            if(isset($this->putVars['recipient_member'])){
+                $recipient = serialize($this->putVars['recipient_member']);
+            }
+            else if(isset($this->putVars['recipient_group'])){
+                $allMembers = $this->Database->prepare(
+                    $select ="SELECT id, groups
+                FROM tl_member")->execute()->fetchAllAssoc();
+                foreach($allMembers as $allMember){
+                    $allMember['groups'] = array_flip(unserialize($allMember['groups']));
+                    if(array_key_exists($this->putVars['recipient_group'],$allMember['groups'])){
+                        $recipient[] = $allMember['id'];
+                    }
+                }
+                $recipient = serialize($recipient);
+            }
+            if($this->putVars['id'] ){
+                $result = $this->helper->insertThreadIntoDB($forumId, $this->putVars['thread'], $this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
+                    $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
+                    $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient,serialize($user->getData()['id']),$this->putVars['id']);
+            }
+            else{
+                $result = $this->helper->insertThreadIntoDB($forumId, $this->putVars['thread'], $this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
+                    $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
+                    $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient,serialize($user->getData()['id']));
+            }
 
-            $result = $this->helper->insertThreadIntoDB($forumId, $this->putVars['thread'], $this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
-                                                        $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
-                                                        $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId']);
             if (!$result) {
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'ERROR_SAVE_THREAD');
             } else {
@@ -2682,7 +2797,7 @@ JSPAGINATE;
             );
 
             if ($this->c4g_forum_navigation == 'TREE') {
-                $return['treedata'] = $this->getForumTree($forumId, 0);
+                $return['treedata'] = $this->FgetForumTree($forumId, 0);
             }
 
             return $return;
@@ -5538,7 +5653,6 @@ JSPAGINATE;
         public function performAction($action)
         {
             $this->setTempLanguage();
-
             //delete cache -- Übergangslösung bis alles läuft.
 //            \c4g\Core\C4GAutomator::purgeApiCache();
 
@@ -5743,6 +5857,9 @@ JSPAGINATE;
                     break;
                 default:
                     break;
+                case 'ticket':
+                    $return = $this->ticket($values[1],$values[2],$values[3],$values[4]);
+                    break;
             }
             // HOOK: for enhancements to change the result
             if (isset($GLOBALS['TL_HOOKS']['C4gForumAfterAction']) && is_array($GLOBALS['TL_HOOKS']['C4gForumAfterAction'])) {
@@ -5784,6 +5901,44 @@ JSPAGINATE;
 
             return $result;
 
+        }
+        public function ticket($forumId,$ticketId,$groupId,$subject = null)
+        {
+            $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId,$groupId)->fetchAssoc();
+            if(!$subforum){
+                $subforum = $this->helper->createNewSubforum($forumId,$groupId);
+            }
+            $threads = $this->helper->getThreadsFromDB($subforum['id']);
+            foreach($threads as $thread){
+                if($thread['concerning'] === $ticketId){
+                    $return = $this->getThreadAsHtml($thread['id']);
+                }
+            }
+            if(!$return){
+                $return = $this->generateNewThreadForm($subforum['id'],$ticketId,$subject);
+            }
+            return $return;
+        }
+        public function autoTicket($forumId, $groupId,$subject,$text,$ticketId)
+        {
+            $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId,$groupId)->fetchAssoc();
+            if(!$subforum){
+                $subforum = $this->helper->createNewSubforum($forumId,$groupId);
+            }
+            $author =$subforum['default_author'];
+            $owner = serialize(array($subforum['default_author']));
+            $threads = $this->helper->getThreadsFromDB($subforum['id']);
+            $group = $this->Database->prepare('SELECT cg_member FROM tl_member_group WHERE id=?')->execute($groupId)->fetchAssoc();
+            $recipient = $group['cg_member'];
+            foreach($threads as $thread){
+                if($thread['concerning'] == $ticketId){
+                    $return = $this->helper->insertPostIntoDB($thread['id'],$author,$subject,$text,null,null,null,null,null,null,null,null,null,null,null,$recipient,$owner);
+                }
+            }
+            if(!$return){
+                $return = $this->helper->insertThreadIntoDB($subforum['id'],$subject,$author,null,'999',$text,null,null,null,null,null,null,null,null,null,null,$recipient,$owner,$ticketId);
+            }
+            return $return;
         }
 
 
