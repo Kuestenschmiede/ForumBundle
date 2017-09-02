@@ -29,7 +29,6 @@ class Plugin implements BundlePluginInterface
         return [
             BundleConfig::create(con4gisForumBundle::class)
                 ->setLoadAfter([con4gisCoreBundle::class])
-                ->setReplace(['Forum']),
         ];
     }
 }
