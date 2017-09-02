@@ -28,7 +28,10 @@
   "autoload": {
     "psr-4": {
       "con4gis\\ForumBundle\\": ""
-    }
+    },
+    "classmap": [
+      "Resources/contao/"
+    ]
   },
   "config": {
     "preferred-install": "dist"
