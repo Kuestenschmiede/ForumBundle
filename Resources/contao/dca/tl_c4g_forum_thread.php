@@ -221,7 +221,11 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
 class tl_c4g_forum_thread extends \Backend{
     public function forumPost($row, $href, $label, $title, $icon)
     {
-
+        //Status des Tickets auf gelesen ändern
+        if($row['state'] == 1){
+            $set['state'] = 2;
+            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($set)->execute($row['id']);
+        }
         $href .= "&amp;id=".$row['id'];
         return '<a href="' . $this->addToUrl($href) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ';
     }
