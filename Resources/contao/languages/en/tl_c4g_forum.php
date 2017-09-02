@@ -164,6 +164,9 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['right_mapedit'] 			= 'Edit maps: Location s
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_search'] 			= 'Search';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_latestthreads']		= 'Latest threads';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_alllanguages']	    = 'Edit all languages (multilingual)';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_tickettomember']     = 'Send tickets to single admins or members';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_showsentthreads']	= 'Show sent tickets';
+
 
 /**
  * Fulltext Indexing Configuration Texts

@@ -22,6 +22,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 	(
 	    'label'                       => $GLOBALS['TL_CONFIG']['websiteTitle'],
 	    'dataContainer'               => 'Table',
+		'ctable'                      => array('tl_c4g_forum_thread'),
 		'enableVersioning'            => true,
 	    'onload_callback'			  => array(
 											array('tl_c4g_forum', 'updateDCA')
@@ -57,6 +58,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 		(
 			'fields'                  => array('name'),
 			'format'                  => '%s',
+            'label_callback'          => array('tl_c4g_forum','get_label')
 		),
 		'global_operations' => array
 		(
@@ -111,6 +113,13 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
 			),
+			'thread' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['thread'],
+                'href'                => 'do=c4g_forum_thread&amp;table=tl_c4g_forum_thread',
+                'icon'	 		      => 'bundles/con4gisforum/icons/table.png',
+                'button_callback'     => array('tl_c4g_forum','forumThread')
+            ),
 			'toggle' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['toggle'],
@@ -154,7 +163,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 	),
 
 	'subpalettes' => array(
-		'define_groups'				  => 'member_groups,admin_groups',
+		'define_groups'				  => 'member_groups,admin_groups,default_author',
 		'define_rights'				  => 'guest_rights,member_rights,admin_rights',
 		'enable_maps'			  	  => 'map_type,map_id,map_location_label,map_override_locstyles,map_label,map_tooltip,map_popup,map_link',
 	),
@@ -203,6 +212,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['name'],
 			'exclude'                 => true,
 			'inputType'               => 'text',
+            'search'                  => 'true',
+			'sorting'                 => 'true',
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
             'sql'                     => "varchar(255) NOT NULL default ''"
 		),
@@ -612,6 +623,17 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'eval'                    => array("rows" => 15, "cols" => 60, "style" => "height:300px !important;"),
             'sql'                     => "text NULL"
 		),
+        'default_author' => array
+		(
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'],
+            'inputType'               => 'select',
+            'foreignKey'              => 'tl_member.username',
+            'sql'                     => "int(10)"
+		),
+        'member_id' => array
+        (
+            'sql'                     =>'int(10) default "0"'
+        )
 
 	)
 );
@@ -752,6 +774,12 @@ class tl_c4g_forum extends \Backend
 		}
 		return $return;
 	}
+    public function forumThread($row, $href, $label, $title, $icon)
+    {
+
+        $href .= "&amp;id=".$row['id'];
+        return '<a href="' . $this->addToUrl($href) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ';
+    }
 
 	/**
 	 * Return the "toggle visibility" button
@@ -904,6 +932,23 @@ class tl_c4g_forum extends \Backend
 		}
 		return $return;
 	}
+	public function get_label($arrRow)
+    {
+        $threads = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE pid=?')->execute($arrRow['id'])->fetchAllAssoc();
+        $unreadTickets = false;
+        foreach($threads as $thread){
+            if($thread['state'] == 1){
+                $unreadTickets = true;
+            }
+        }
+        if($unreadTickets){
+            $return = $arrRow['name'].' <b>(ungelesene Tickets)</b>';
+        }
+        else{
+            $return = $arrRow['name'];
+        }
+        return $return;
+    }
 
 
 }

@@ -84,6 +84,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['link_newwindow'] 			= array('Links in neuem
 																		'Links nicht im selben Fenster, sondern in einem neuen Fenster öffnen.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['sitemap_exclude'] 			= array('Nicht in XML-Sitemap aufnehmen',
 																		'Den Forenbereich und die Themen nicht in die Google XML-Sitemap aufnehmen (die Sitemap wird im Frontend-Modul aktiviert)');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'] 			= array('Autor für Backend', 'Benutzer, der als Autor angezeigt werden soll, wenn es Forenelement im Backend erstellt wird.');
 
 /**
  * Legends
@@ -111,6 +112,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['delete'] 		= array('Forenbereich löschen',
 $GLOBALS['TL_LANG']['tl_c4g_forum']['toggle'] 		= array('Forenbereich veröffentlichen/unveröffentlichen', 'Forenbereich ID %s veröffentlichen/unveröffentlichen');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['show']   		= array('Details', 'Die Details des Forenbereichs ID %s anzeigen');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['index']   		= array('Indizieren', 'Indiziert das komplette Forum');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['thread']  		= array('Themen', 'Zeigt die Kinder des Forenbereichs an');
 
 /**
  * Links
@@ -162,6 +164,8 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['right_mapedit_style'] 	= 'Kartendaten editi
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_search'] 		= 'Suchen';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_latestthreads']	= 'Neue Themen';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_alllanguages']	= 'Alle Sprachen editieren (Mehrsprachigkeit)';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_tickettomember']	= 'Tickets an einzelne Mitglieder oder Moderatoren schicken';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_showsentthreads']= 'Abgeschickte Tickets weiter anzeigen';
 
 /**
  * Fulltext Indexing Configuration Texts

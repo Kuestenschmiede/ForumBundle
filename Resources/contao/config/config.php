@@ -25,17 +25,29 @@ $GLOBALS['FE_MOD']['con4gis']['c4g_forum_breadcrumb'] = 'con4gis\ForumBundle\Res
 $GLOBALS['FE_MOD']['con4gis']['c4g_forum_pncenter'] = 'con4gis\ForumBundle\Resources\contao\modules\C4GForumPNCenter';
 
 /**
- * Backend Modules
+ * Backend modules
  */
-array_insert( $GLOBALS['BE_MOD']['con4gis'], 5, array
-(
+array_insert($GLOBALS['BE_MOD']['con4gis_bricks'],2, array(
     'c4g_forum' => array
     (
-		'tables' 		=> array('tl_c4g_forum'),
-		'build_index' 	=> array('con4gis\ForumBundle\Resources\contao\classes\C4GForumBackend', 'buildIndex'),
- 		'icon'	 		=> 'system/modules/con4gis_forum/assets/forumicon.png'
-	)
+        'tables' 		=> array('tl_c4g_forum'),
+        'build_index' 	=> array('con4gis\ForumBundle\Resources\contao\classes\C4GForumBackend', 'buildIndex')
+    ),
+    'c4g_forum_thread' => array
+    (
+        'tables'        => array('tl_c4g_forum_thread'),
+        'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
+    ),
+    'c4g_forum_post' => array
+    (
+        'tables'        => array('tl_c4g_forum_post'),
+        'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
+    )
 ));
+
+	
+
+
 
 /**
  * Add frontend form field for memberImage (Avatar)
@@ -51,6 +63,11 @@ $GLOBALS['BE_FFL']['avatar'] = 'Avatar';
  * Hooks
  */
 $GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper','removeOldFeedsHook');
+
+/**
+ * CSS
+ */
+$GLOBALS['TL_CSS']['c4g_forum_backend'] = 'bundles/con4gisforum/css/c4gForumBackend.css';
 
 /**
  * Rest-API

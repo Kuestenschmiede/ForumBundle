@@ -24,7 +24,8 @@
     "contao": {
       "sources": {
         "": "Resources/contao"
-      }
+      },
+      "contao-manager-plugin": "con4gis\\ForumBundle\\ContaoManager\\Plugin"
     }
   }
 }

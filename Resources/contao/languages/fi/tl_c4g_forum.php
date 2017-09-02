@@ -160,6 +160,9 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['right_mapedit'] 			= 'Muokkaa karttoja: Sij
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_search'] 			= 'Etsi';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_latestthreads']		= 'Viimeisimmät threadit';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_alllanguages']	    = 'Edit all languages (multilingual)';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_tickettomember']     = 'Send tickets to single admins or members';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_showsentthreads']	= 'Show sent tickets';
+
 
 /**
  * Fulltext Indexing Configuration Texts
