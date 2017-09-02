@@ -2,7 +2,7 @@
   "name": "con4gis/forum",
   "description": "Forum module for contao",
   "keywords": ["con4gis", "forum", "discussion", "panel", "board", "contao", "c4g", "forumbundle", "con4gisforum"],
-  "type": "contao-module",
+  "type": "contao-bundle",
   "homepage": "https://con4gis.org",
   "license": "LGPL-3.0+",
   "authors":[
