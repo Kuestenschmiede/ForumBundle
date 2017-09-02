@@ -1803,6 +1803,17 @@ class C4GForumHelper extends \System
 
         return $result->name;
 	}
+	public function getTicketTitle($ticketId){
+	    $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($ticketId)->fetchAssoc();
+        $title = C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ' #'.sprintf('%04d',$thread['id']).' #';
+        $title .= sprintf('%04d',$thread['concerning']) .' '. $thread['name'] .' '.date($GLOBALS['TL_CONFIG']['timeFormat'], intval($thread['tstamp']));
+        if($thread['state'])
+        {
+            $state = $this->Database->prepare('SELECT state FROM tl_c4g_forum_state WHERE id=?')->execute($thread['state'])->fetchAssoc();
+            $title .=': (<b>'.$state['state'].'</b>)';
+        }
+        return $title;
+    }
 
 	/**
 	 *

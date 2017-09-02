@@ -137,6 +137,7 @@
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NEW_THREAD_TITLE'] = 'Neues Thema im Bereich "%s"';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NEW_POST_TITLE']   = 'Antwort im Thema "%s" (Bereich "%s")';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_POST_TITLE']        = 'Antwort im Ticket "%s" (Bereich "%s")';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_MISSING']       = 'Bitte Beitrag verfassen!';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['NEW_THREAD_TITLE'] = 'Neue Frage im Bereich "%s"';

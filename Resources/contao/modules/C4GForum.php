@@ -756,20 +756,25 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                     $tooltip .= ' [...]';
                 }
 
-
+                if($this->c4g_forum_type == "TICKET"){
+                    $title = $this->helper->getTicketTitle($thread['id']);
+                }
+                else{
+                    $title = $thread['name'];
+                }
                 $plainHtmlData = false;
                 if ($this->plainhtml) {
                     // for search engines: only show threadnames
                     if ($this->c4g_forum_multilingual) {
-                        $plainHtmlData = $this->helper->translateThreadField($thread['id'], 'name', $this->c4g_forum_language_temp, $this->helper->checkThreadname($thread['name'])) . '<br/>';
+                        $plainHtmlData = $this->helper->translateThreadField($thread['id'], 'name', $this->c4g_forum_language_temp, $this->helper->checkThreadname($title)) . '<br/>';
                     } else {
-                        $plainHtmlData .= $this->helper->checkThreadname($thread['name']) . '<br/>';
+                        $plainHtmlData .= $this->helper->checkThreadname($title) . '<br/>';
                     }
                 } else {
                     if ($this->c4g_forum_multilingual) {
-                        $threadname = $this->helper->translateThreadField($thread['id'], 'name', $this->c4g_forum_language_temp, $thread['name']);
+                        $threadname = $this->helper->translateThreadField($thread['id'], 'name', $this->c4g_forum_language_temp, $title);
                     } else {
-                        $threadname = $thread['name'];
+                        $threadname = $title;
                     }
 
                     $aaData = array(
@@ -1786,6 +1791,12 @@ JSPAGINATE;
             } else {
                 $threadname = $thread['name'];
             }
+            if($this->c4g_forum_type == "TICKET"){
+                $title = $this->helper->getTicketTitle($thread['id']);
+            }
+            else{
+                $title = C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . $threadname;
+            }
 
             $return = array(
                 "dialogstate"   => $this->c4g_forum_param_forum.':' . $thread['forumid'] . ";readthread:" . $id,
@@ -1794,7 +1805,7 @@ JSPAGINATE;
                 "dialogid"      => 'thread' . $id,
                 "dialogbuttons" => $dialogbuttons,
                 "dialogoptions" => $this->addDefaultDialogOptions(array(
-                                                                      "title" => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ': ' . $threadname
+                                                                      "title" => $title
                                                                   ))
             );
 
@@ -2093,6 +2104,7 @@ JSPAGINATE;
             $data .=
                 '<input name="parentDialog" type="hidden" class="formdata" value="' . $parentDialog . '"></input>' .
                 '</div>';
+            $title = $this->helper->getTicketTitle($threadId);
 
 
             $return = array(
@@ -2118,7 +2130,7 @@ JSPAGINATE;
                     )
                 ),
                 "dialogoptions" => $this->addDefaultDialogOptions(array(
-                                                                      "title" => sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'NEW_POST_TITLE'), $thread['threadname'], $thread['forumname']),
+                                                                      "title" => sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'NEW_POST_TITLE'), $title, $thread['forumname']),
                                                                       "modal" => true
                                                                   ))
             );
@@ -5919,7 +5931,7 @@ JSPAGINATE;
             }
             return $return;
         }
-        public function autoTicket($forumId, $groupId,$subject,$text,$ticketId)
+        public function autoTicket($forumId, $groupId, $subject,$text ,$concerning)
         {
             $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId,$groupId)->fetchAssoc();
             if(!$subforum){
@@ -5931,12 +5943,12 @@ JSPAGINATE;
             $group = $this->Database->prepare('SELECT cg_member FROM tl_member_group WHERE id=?')->execute($groupId)->fetchAssoc();
             $recipient = $group['cg_member'];
             foreach($threads as $thread){
-                if($thread['concerning'] == $ticketId){
+                if($thread['concerning'] == $concerning){
                     $return = $this->helper->insertPostIntoDB($thread['id'],$author,$subject,$text,null,null,null,null,null,null,null,null,null,null,null,$recipient,$owner);
                 }
             }
             if(!$return){
-                $return = $this->helper->insertThreadIntoDB($subforum['id'],$subject,$author,null,'999',$text,null,null,null,null,null,null,null,null,null,null,$recipient,$owner,$ticketId);
+                $return = $this->helper->insertThreadIntoDB($subforum['id'],$subject,$author,null,'999',$text,null,null,null,null,null,null,null,null,null,null,$recipient,$owner,$concerning);
             }
             return $return;
         }
