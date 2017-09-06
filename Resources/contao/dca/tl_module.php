@@ -87,9 +87,10 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_size'],
         'exclude'   => true,
+        'default'   => '0',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
-        'eval'      => array('rgxp' => 'digit'),
+        'eval'      => array('rgxp' => 'digit','mandatory'=> false),
         'sql'       => "varchar(255) NOT NULL default ''"
     );
 
@@ -97,9 +98,10 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_scroll'],
         'exclude'   => true,
+        'default'   => '0',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
-        'eval'      => array('rgxp' => 'digit'),
+        'eval'      => array('rgxp' => 'digit','mandatory'=> false),
         'sql'       => "varchar(255) NOT NULL default ''"
     );
 
@@ -315,7 +317,7 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_avatars'],
         'exclude'   => true,
-        'default'   => true,
+        'default'   => false,
         'inputType' => 'checkbox',
         'eval'      => array('submitOnChange' => true),
         'sql'       => "char(1) NOT NULL default ''"
@@ -325,6 +327,7 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_avatar_size'],
         'exclude'   => true,
+        'default'   => '0',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
         'eval'      => array('rgxp' => 'digit'),
@@ -682,6 +685,7 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_dialogsize'],
         'exclude'   => true,
+        'default'   => '2',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
         'eval'      => array('rgxp' => 'digit'),

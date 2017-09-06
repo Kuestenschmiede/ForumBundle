@@ -20,7 +20,7 @@
      */
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_type']              = array(
         'Forum type',
-        'Change type to change the wording. On informations threads are questions and posts are comments.'
+        'Change type to change the wording. On informations threads are questions and posts are comments. Ticketsystem changes the forum to a closed ticketsystem.'
     );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_size']              = array(
         'Size (width, height)',
@@ -273,6 +273,7 @@
      */
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['DISCUSSIONS'] = 'Discussions (threads & posts)';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['QUESTIONS']   = 'Informations (questions & comments)';
+    $GLOBALS['TL_LANG']['tl_module']['c4g_references']['TICKETS']   = 'Ticketsystem';
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['TREE']  = 'Tree';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['BOXES'] = 'Boxes';

@@ -18,7 +18,7 @@
      */
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_type']              = array(
         'Forenart',
-        'Die Forenart beeinflusst die Beschriftungen. Bei Informationen werden Themen zu Fragen und Beiträge zu Kommentaren.'
+        'Die Forenart beeinflusst die Beschriftungen. Bei Informationen werden Themen zu Fragen und Beiträge zu Kommentaren. Ticketsystem verändert das Forum zu einem geschlossenem Ticketsystem.'
     );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_size']              = array(
         'Größe (Breite, Höhe)',
