@@ -2776,7 +2776,7 @@ class C4GForumHelper extends \System
 	 * @return array
 	 */
 	public function getMemberDefaultRights() {
-		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads','tickettomember',);
+		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads');
 		return $this->executePermissionHook($return, 'member');
 	}
 
