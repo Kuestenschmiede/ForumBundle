@@ -415,7 +415,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 array_insert($buttons, 0, array(
                     array(
                         "id"   => 'addmemberdialog:' . $forumId,
-                        "text" => $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['ADD_MEMBER']
+                        "text" => C4GForumHelper::getTypeText($this->c4g_forum_type,'ADD_MEMBER')
                     )
                 ));
             }
@@ -1283,36 +1283,8 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             }
 
             $text = $post['text'];
-            // Handle BBCodes, if activated
-            if ($this->c4g_forum_bbcodes) {
-                //$textClass .= ' BBCode-Area';
-                //$text = preg_replace('#<br? ?/>#', '', $text);
-                //$text = $bbcode->Parse($text);
-                $find = array(
-                    '~\[b\](.*?)\[/b\]~s',
-                    '~\[i\](.*?)\[/i\]~s',
-                    '~\[u\](.*?)\[/u\]~s',
-                    '~\[quote\](.*?)\[/quote\]~s',
-                    '~\[url=(.*?)\](.*?)\[/url\]~s',
-                    '~\[size=(.*?)\](.*?)\[/size\]~s',
-                    '~\[color=(.*?)\](.*?)\[/color\]~s',
-                    '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s'
-                );
-                // HTML tags to replace BBcode
-                $replace = array(
-                    '<b>$1</b>',
-                    '<i>$1</i>',
-                    '<span style="text-decoration:underline;">$1</span>',
-                    '<pre>$1</'.'pre>',
-                    '<a href="$1">$2</a>',
-                    '<span style="font-size:$1px;">$2</span>',
-                    '<span style="color:$1;">$2</span>',
-                    '<img src="$1" alt="" />'
-                );
-                $text = preg_replace($find,$replace,$text);
-            }else{
-                $text = html_entity_decode($text);
-            }
+            $text = html_entity_decode($text);
+
 
             // search in the forum text for lib and replace by assets/vendor (file download compatibility)
             $text = str_replace('/lib', '/assets/vendor', $text);
@@ -2246,8 +2218,8 @@ JSPAGINATE;
             $post             = array();
             $post['username'] = $this->User->username;
             $post['creation'] = time();
-            $post['subject']  = nl2br(C4GUtils::secure_ugc($this->putVars['subject']));
-            $post['text']     = nl2br(C4GUtils::secure_ugc($this->putVars['post']));
+            $post['subject']  = C4GUtils::secure_ugc($this->putVars['subject']);
+            $post['text']     = C4GUtils::secure_ugc($this->putVars['post']);
             $post['linkname'] = C4GUtils::secure_ugc($this->putVars['linkname']);
             $post['linkurl']  = C4GUtils::secure_ugc($this->putVars['linkurl']);
             $data             = $this->generatePostAsHtml($post, false, true);
@@ -2503,9 +2475,9 @@ JSPAGINATE;
             $post             = array();
             $post['username'] = $this->User->username;
             $post['creation'] = time();
-            $post['subject']  = nl2br(C4GUtils::secure_ugc($threadname));
-            $post['tags']     = nl2br(C4GUtils::secure_ugc($this->putVars['tags']));
-            $post['text']     = nl2br(C4GUtils::secure_ugc($this->putVars['post']));
+            $post['subject']  = C4GUtils::secure_ugc($threadname);
+            $post['tags']     = C4GUtils::secure_ugc($this->putVars['tags']);
+            $post['text']     = C4GUtils::secure_ugc($this->putVars['post']);
             $post['linkname'] = C4GUtils::secure_ugc($this->putVars['linkname']);
             $post['linkurl']  = C4GUtils::secure_ugc($this->putVars['linkurl']);
             $data .= $this->generatePostAsHtml($post, false, true);
@@ -2655,7 +2627,7 @@ JSPAGINATE;
                         $divClass .= " c4gForumBoxNoJqui";
                     }
                 }
-                $data .= '<div class="' . $divClass . '" id="' . $divId . '" title="' . nl2br(C4GUtils::secure_ugc($this->getForumLanguageConfig($forum,'description'))) . '" data-action="' . $action . '" data-hoverclass="' . $hoverClass . '"' . $href . '>';
+                $data .= '<div class="' . $divClass . '" id="' . $divId . '" title="' . C4GUtils::secure_ugc($this->getForumLanguageConfig($forum,'description')) . '" data-action="' . $action . '" data-hoverclass="' . $hoverClass . '"' . $href . '>';
                 $break = false;
 // TODO
                 if ($forum['box_imagesrc']) { // check if bin is empty !!!!
@@ -5872,7 +5844,7 @@ JSPAGINATE;
                     break;
                 default:
                     break;
-                case 'ticket':
+                case 'ticketcall':
                     $return = $this->ticket($values[1],$values[2],$values[3],$values[4]);
                     break;
             }
@@ -5919,6 +5891,7 @@ JSPAGINATE;
         }
         public function ticket($forumId,$concerning,$groupId,$subject)
         {
+            $this->action = 'newthread';
             $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId,$groupId)->fetchAssoc();
             if(!$subforum){
                 $subforum = $this->helper->createNewSubforum($forumId,$groupId);

@@ -957,8 +957,8 @@ class tl_c4g_forum extends \Backend
         if(!$state['state'])
         {
             $arrSet = array(
-                array('id'=>1,'state'=>'Ungelesen'),
-                array('id'=>2,'state'=>'Gelesen'),
+                array('id'=>1,'state'=>'Backoffice Ungelesen'),
+                array('id'=>2,'state'=>'Backoffice Gelesen'),
                 array('id'=>3,'state'=>'Geschlossen'),
                 array('id'=>4,'state'=>'Neu'),
             );

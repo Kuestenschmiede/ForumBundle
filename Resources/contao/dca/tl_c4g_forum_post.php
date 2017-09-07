@@ -296,10 +296,11 @@ class tl_c4g_forum_post extends \Backend{
     public function loadLabel ($arrRow)
     {
         //Status des Tickets auf gelesen ändern
-        $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($arrRow->activeRecord['pid'])->fetchAssoc();
+        $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($arrRow['pid'])->fetchAssoc();
         if($thread['state'] == 1){
             $set['state'] = 2;
-            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($set)->execute($arrRow->activeRecord['pid']);
+            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($set)->execute($arrRow['pid']);
         }
+        return $arrRow['text'];
     }
 }

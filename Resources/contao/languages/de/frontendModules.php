@@ -45,11 +45,11 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['LAST_POST']                = 'Letzter Kommentar';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['NEW_POST']                 = 'Neuer Kommentar';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['NEW_POST_PREVIEW']         = 'Vorschau - Neuer Kommentar';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POST']                        = 'Antwort';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POSTS']                       = 'Antworten';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['LAST_POST']                   = 'Letzte Antwort';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_POST']                    = 'Neue Antwort';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_POST_PREVIEW']            = 'Vorschau - Neue Antwort';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POST']                        = 'Ihre Nachricht';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POSTS']                       = 'Ihre Nachrichten';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['LAST_POST']                   = 'Letzte Nachricht';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_POST']                    = 'Neue Nachricht';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_POST_PREVIEW']            = 'Vorschau - Neue Nachricht';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALL_POSTS']               = 'Alle';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SINGLE_POST']             = 'Einzeln';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBJECT']                 = 'Betreff';
@@ -125,7 +125,7 @@
 
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_COUNT']          = ' Beitrag <b %s>#%d</b> von <b %s>%d</b> ';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POST_HEADER_COUNT']              = ' Antwort <b %s>#%d</b> von <b %s>%d</b> ';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POST_HEADER_COUNT']              = ' Nachricht <b %s>#%d</b> von <b %s>%d</b> ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['COMMENT_HEADER_COUNT']       = ' Kommentar <b %s>#%d</b> von <b %s>%d</b> ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_CREATED']        = 'Erstellt von <b %s>%s</b> am <b %s>%s</b>';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_CREATED_AUTHOR'] = 'Erstellt von <b %s>%s</b>';
@@ -146,7 +146,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NEW_THREAD_TITLE'] = 'Neues Thema im Bereich "%s"';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_THREAD_TITLE'] = 'Neues Ticket im Bereich "%s"';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NEW_POST_TITLE']   = 'Antwort im Thema "%s" (Bereich "%s")';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_POST_TITLE']        = 'Antwort im Ticket "%s" (Bereich "%s")';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_POST_TITLE']        = 'Nachricht im Ticket "%s" (Bereich "%s")';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_MISSING']       = 'Bitte Beitrag verfassen!';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['NEW_THREAD_TITLE'] = 'Neue Frage im Bereich "%s"';
@@ -183,11 +183,11 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['DEL_THREAD_SUCCESS']  = 'Frage erfolgreich gelöscht.';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['THREADNAME_MISSING']  = 'Bitte Name des Tickets eingeben!';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['ERROR_SAVE_POST']    = 'Fehler beim Anlegen der Antwort! Versuchen Sie es noch einmal, oder wenden Sie sich an eine Kontaktperson der Website!';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUCCESS_SAVE_POST']  = 'Neue Antwort erfolgreich angelegt!';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['ERROR_SAVE_POST']    = 'Fehler beim Anlegen der Nachricht! Versuchen Sie es noch einmal, oder wenden Sie sich an eine Kontaktperson der Website!';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUCCESS_SAVE_POST']  = 'Neue Nachricht erfolgreich angelegt!';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['ERROR_SAVE_THREAD']   = 'Fehler beim Anlegen des Tickets! Versuchen Sie es noch einmal, oder wenden Sie sich an eine Kontaktperson der Website!';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUCCESS_SAVE_THREAD'] = 'Neues Ticket erfolgreich angelegt!';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['BOX_LAST_POST']      = 'Letzte Antwort am %s von %s in Ticket %s';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['BOX_LAST_POST']      = 'Letzte Nachricht am %s von %s in Ticket %s';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_THREAD_WARNING']  = 'Möchten Sie das Ticket <b>%s</b> aus <b>%s</b> wirklich unwiderruflich löschen?';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_THREAD_ERROR']    = 'Fehler beim Löschen des Tickets!';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_THREAD_SUCCESS']  = 'Ticket erfolgreich gelöscht.';
@@ -226,7 +226,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_THREAD_ERROR']                 = 'Fehler beim Abonnieren der Tickets!';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_THREAD_SUCCESS']               = 'Ticket erfolgreich abonniert.';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_SUBFORUM_ONLY_THREADS']        = 'nur bei neuen Tickets benachrichtigen';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_SUBFORUM_POSTS']              = 'mit Antworten';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_SUBFORUM_POSTS']              = 'mit Nachrichten';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_THREAD_MAIL_SUBJECT']          = "Ihre abonniertes Ticket auf '%2$s' (%1$s)";
 
 
@@ -289,13 +289,13 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBSCRIPTION_MAIL_ACTION_EDIT_POST_WITH_SUBJECT'] = "Kommentar mit dem Betreff '%s' bearbeitet";
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBSCRIPTION_MAIL_ACTION_DEL_POST_WITH_SUBJECT']  = "Kommentar mit dem Betreff '%s' gelöscht";
 
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_NEW_POST']  = "Antwort erstellt";
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_EDIT_POST'] = "Antwort bearbeitet";
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_DEL_POST']  = "Antwort gelöscht";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_NEW_POST']  = "Nachricht erstellt";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_EDIT_POST'] = "Nachricht bearbeitet";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_DEL_POST']  = "Nachricht gelöscht";
 
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_NEW_POST_WITH_SUBJECT']  = "Antwort mit dem Betreff '%s' erstellt";
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_EDIT_POST_WITH_SUBJECT'] = "Antwort mit dem Betreff '%s' bearbeitet";
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_DEL_POST_WITH_SUBJECT']  = "Antwort mit dem Betreff '%s' gelöscht";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_NEW_POST_WITH_SUBJECT']  = "Nachricht mit dem Betreff '%s' erstellt";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_EDIT_POST_WITH_SUBJECT'] = "Nachricht mit dem Betreff '%s' bearbeitet";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_MAIL_ACTION_DEL_POST_WITH_SUBJECT']  = "Nachricht mit dem Betreff '%s' gelöscht";
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBSCRIPTION_MAIL_ACTION_THREAD_PRE']               = "ein";
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBSCRIPTION_MAIL_ACTION_NEW_THREAD']               = "Thema erstellt";
@@ -379,15 +379,15 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['MOVE_THREAD_NO_FORUMS'] = 'Kein Forum gefunden, für die Sie die Berechtigung haben, ein Ticket hinzuverschieben.';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDIT_THREAD_ERROR']     = 'Fehler beim Speichern des geänderten Tickets!';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDIT_THREAD_SUCCESS']   = 'Ticket erfolgreich geändert.';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_POST_WARNING']     = 'Möchten Sie die gewählten Antwort wirklich unwiderruflich löschen?<br/>' .
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_POST_WARNING']     = 'Möchten Sie die gewählten Nachricht wirklich unwiderruflich löschen?<br/>' .
         'Bereich: <b>%s</b><br/>' .
         'Ticket: <b>%s</b><br/>' .
-        'Antwort von: <b>%s</b><br/>' .
+        'Nachricht von: <b>%s</b><br/>' .
         'Betreff: <b>%s</b><br/>';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_POST_ERROR']    = 'Fehler beim Löschen der Antwort!';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_POST_SUCCESS']  = 'Antwort erfolgreich gelöscht.';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDIT_POST_ERROR']   = 'Fehler beim Speichern der geänderten Antwort!';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDIT_POST_SUCCESS'] = 'Antwort erfolgreich geändert.';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_POST_ERROR']    = 'Fehler beim Löschen der Nachricht!';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_POST_SUCCESS']  = 'Nachricht erfolgreich gelöscht.';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDIT_POST_ERROR']   = 'Fehler beim Speichern der geänderten Nachricht!';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDIT_POST_SUCCESS'] = 'Nachricht erfolgreich geändert.';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LINKNAME']       = 'Beschreibung des Links';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LINKURL']        = 'URL des Links';
@@ -397,6 +397,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADSORT'] = 'Sortierung';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ADD_MEMBER']           = 'Mitglied in Bereich aufnehmen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['ADD_MEMBER']               = 'Mitglied hinzufügen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['MEMBER_GROUP']         = 'Mitgliedergruppe';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['MEMBER']               = 'Mitglied';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['MEMBER_GROUP_MISSING'] = 'Mitgliedergruppe fehlt';
@@ -448,8 +449,8 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_LBL_SEARCH_ALL_THEMES_QUESTIONS'] = 'Durchsuche alle Fragen ab';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKETS']['SEARCHDIALOG_HEADLINE']              = 'Suche';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKETS']['SEARCHDIALOG_CB_ONLYTHREADS']        = "Nur in Tickets suchen (Antworten ignorieren)";
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKETS']['SEARCHDIALOG_LBL_DISPLAY_ONLY']      = 'Zeige nur Tickets mit Antworten von:';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKETS']['SEARCHDIALOG_CB_ONLYTHREADS']        = "Nur in Tickets suchen (Nachrichten ignorieren)";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKETS']['SEARCHDIALOG_LBL_DISPLAY_ONLY']      = 'Zeige nur Tickets mit Nachrichten von:';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKETS']['SEARCHDIALOG_LBL_SEARCH_ALL_THEMES_TICKETS'] = 'Durchsuche alle Tickets ab';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH_MESSAGE_NO_SEARCH_ENTRY'] = 'Bitte geben Sie einen Suchbegriff ein';
