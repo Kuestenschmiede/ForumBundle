@@ -1839,9 +1839,12 @@ JSPAGINATE;
            if($this->c4g_forum_type =="TICKET"){
                $user = FrontendUser::getInstance();
                $groups = $this->helper->getMemberGroupsForForum($forumId,$user->getData()['id']);
+               $counterRecipient = 0;
+               $options ='';
+
 
                if($this->helper->checkPermission($forumId,'tickettomember')){
-                   $data .= '<select name="recipient_member" class="formdata ui-corner-all">';
+                   $data .= '<select name="recipient_member" class="formdata ui-corner-all"';
 
                    $allMembers = $this->Database->prepare(
                        $select ="SELECT id,username,groups
@@ -1851,24 +1854,39 @@ JSPAGINATE;
                        $member['groups'] = array_flip($member['groups']);
                        foreach($groups as $group){
                            if(array_key_exists($group['id'],$member['groups'])){
-                               $data .= '<option value="'.$member['id'].'">'.$member['username'].'</option>';
+                               $options .= '<option value="'.$member['id'].'">'.$member['username'].'</option>';
+                               $counterRecipient = $counterRecipient + 1;
                            }
                        }
                    }
+                   if($counterRecipient == 1){
+                       $data .= ' style="visibility:hidden" value="'.$member['id'].'"';
+                   }
+                   elseif($counterRecipient == 0){
+                       return null;
+                   }
                }
                else{
-                   $data .= '<select name="recipient_group" class="formdata ui-corner-all">';
+                   $data .= '<select name="recipient_group" class="formdata ui-corner-all"';
                    foreach($groups as $group){
                        $selects =$this->Database->prepare("SELECT id,name
                 FROM tl_member_group
                 WHERE id=?")->execute($group['id'])->fetchAllAssoc();
                        foreach($selects as $select){
-                           $data .= '<option value="'.$select['id'].'">'.$select['name'].'</option>';
+                           $options .= '<option value="'.$select['id'].'">'.$select['name'].'</option>';
+                           $counterRecipient = $counterRecipient +1;
                        }
                    }
-
+                   if($counterRecipient == 1){
+                       $data .= ' style="visibility:hidden" value="'.select['id'].'"';
+                   }
+                   elseif($counterRecipient == 0){
+                       return null;
+                   }
                }
-               $data .='</select>';
+
+
+               $data .='>'.$options.'</select>';
            }
 
             $data .= $this->getThreadDescForForm('c4gForumNewThreadDesc', $forumId, 'newthread', '');
