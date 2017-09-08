@@ -1812,8 +1812,8 @@ class C4GForumHelper extends \System
         }
         if($thread['state'])
         {
-            $state = $this->Database->prepare('SELECT state FROM tl_c4g_forum_state WHERE id=?')->execute($thread['state'])->fetchAssoc();
-            $title .=': (<b>'.$state['state'].'</b>)';
+            $state = C4GForumTicketStatus::getState($thread['state']);
+            $title .=': (<b>'.$state.'</b>)';
         }
         return $title;
     }

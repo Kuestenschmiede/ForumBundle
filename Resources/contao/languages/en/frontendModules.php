@@ -444,6 +444,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_CB_ONLYTHREADS']                = "Search only questions (ignore comments)";
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_LBL_DISPLAY_ONLY_THREADS']      = 'Only display questions with comments from user:';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_LBL_SEARCH_ALL_THEMES_THREADS'] = 'Search through all questions starting from';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_CB_ONLYTHREADS']                = "Search only tickets (ignore messages)";
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH_MESSAGE_NO_SEARCH_ENTRY'] = 'Please enter a searchstring.';
 
@@ -478,4 +479,12 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RESET_RATING']     = "Reset rating";
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_MULTIPLE'] = "Ratings";
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_SINGLE']   = "Rating";
+
+    /**
+     * States
+    */
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][1]      = "Backoffice Unread";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][2]      = "Backoffice Read";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][3]      = "Closed";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][4]      = "New";
 ?>

@@ -185,8 +185,6 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['fail']				= array("FEHLER: ",
 																"Bei der Indizierung kam es zu einer Zeitüberschreitung!");
 
 
-
-
     $GLOBALS['TL_LANG']['tl_c4g_forum']['default_subscription_text'] = <<<TEXT
 Hallo ##USERNAME##,
 

@@ -144,8 +144,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['state'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'foreignKey'              => 'tl_c4g_forum_state.state',
-            #'options_callback'        => array('tl_c4g_forum_thread','get_options'),
+            'options_callback'        => array('tl_c4g_forum_thread','get_options'),
             'filter'                  => true,
             'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-'),
             'sql'                     => "int(10)"
@@ -247,13 +246,22 @@ class tl_c4g_forum_thread extends \Backend{
         $result .= date($GLOBALS['TL_CONFIG']['dateFormat'], intval($arrRow['tstamp'])).' ';
         $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp'])).' ';
         $result .= $author['username'];
-        $state = $this->Database->prepare('SELECT state FROM tl_c4g_forum_state WHERE id=?')->execute($arrRow['state'])->fetchAssoc();
+        $state = \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState($arrRow['state']);
         if($state)
         {
-            $result .=' : (<b>'.$state['state'].'</b>)';
+            $result .=' : (<b>'.$state.'</b>)';
         }
 
         return $result;
+    }
+    public function get_options(DataContainer $dc)
+    {
+        return array(
+            1 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(1),
+            2 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(2),
+            3 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(3),
+            4 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(4)
+            );
     }
 
 
