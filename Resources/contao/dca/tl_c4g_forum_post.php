@@ -149,7 +149,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['state'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'foreignKey'              => 'tl_c4g_forum_state.state',
+            'options_callback'        => array('tl_c4g_forum_post','get_options'),
             'sql'                     => "int(10)"
         ),
 
@@ -302,5 +302,14 @@ class tl_c4g_forum_post extends \Backend{
             $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($set)->execute($arrRow['pid']);
         }
         return $arrRow['text'];
+    }
+    public function get_options(DataContainer $dc)
+    {
+        return array(
+            1 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(1),
+            2 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(2),
+            3 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(3),
+            4 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(4)
+        );
     }
 }

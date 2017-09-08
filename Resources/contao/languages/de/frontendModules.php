@@ -19,7 +19,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBFORUM']                 = 'FAQ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBFORUMS']                = 'FAQ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBFORUM']                    = 'Tickets';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBFORUMS']                   = 'Ticket';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBFORUMS']                   = 'Tickets';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREAD']                  = 'Thema';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['THREAD']                   = 'Frage';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['THREAD']                      = 'Ticket';
@@ -46,7 +46,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['NEW_POST']                 = 'Neuer Kommentar';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['NEW_POST_PREVIEW']         = 'Vorschau - Neuer Kommentar';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POST']                        = 'Ihre Nachricht';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POSTS']                       = 'Ihre Nachrichten';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POSTS']                       = 'Nachrichten';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['LAST_POST']                   = 'Letzte Nachricht';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_POST']                    = 'Neue Nachricht';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_POST_PREVIEW']            = 'Vorschau - Neue Nachricht';
@@ -444,14 +444,14 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHDIALOG_DDL_YEAR']              = 'Jahr(e)';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_HEADLINE']              = 'Suche';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_CB_ONLYTHREADS']                = "Nur in Fragen suchen (Kommentare ignorieren)";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_CB_ONLYTHREADS']        = "Nur in Fragen suchen (Kommentare ignorieren)";
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_LBL_DISPLAY_ONLY']      = 'Zeige nur Fragen mit Kommentaren von:';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_LBL_SEARCH_ALL_THEMES_QUESTIONS'] = 'Durchsuche alle Fragen ab';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_LBL_SEARCH_ALL_THEMES'] = 'Durchsuche alle Fragen ab';
 
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKETS']['SEARCHDIALOG_HEADLINE']              = 'Suche';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKETS']['SEARCHDIALOG_CB_ONLYTHREADS']        = "Nur in Tickets suchen (Nachrichten ignorieren)";
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKETS']['SEARCHDIALOG_LBL_DISPLAY_ONLY']      = 'Zeige nur Tickets mit Nachrichten von:';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKETS']['SEARCHDIALOG_LBL_SEARCH_ALL_THEMES_TICKETS'] = 'Durchsuche alle Tickets ab';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCHDIALOG_HEADLINE']              = 'Suche';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCHDIALOG_CB_ONLYTHREADS']        = "Nur in Tickets suchen (Nachrichten ignorieren)";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCHDIALOG_LBL_DISPLAY_ONLY']      = 'Zeige nur Tickets mit Nachrichten von:';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCHDIALOG_LBL_SEARCH_ALL_THEMES'] = 'Durchsuche alle Tickets ab';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH_MESSAGE_NO_SEARCH_ENTRY'] = 'Bitte geben Sie einen Suchbegriff ein';
 
@@ -484,5 +484,10 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RESET_RATING']     = "Bewertung zurücksetzen";
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_MULTIPLE'] = "Bewertungen";
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_SINGLE']   = "Bewertung";
+
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][1]      = "Backoffice Ungelesen";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][2]      = "In Bearbeitung";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][3]      = "Geschlossen";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][4]      = "Neu";
 
 ?>

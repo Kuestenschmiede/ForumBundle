@@ -29,7 +29,13 @@ $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['copy']                = array('Ticke
 $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['delete']              = array('Ticket löschen','Löschen des Tickets');
 $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['show']                = array('Ticket zeigen','Zeigen des Tickets');
 $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['post']                = array('Einträge zeigen','Zeigen die Einträge des Tickets');
+/**
+ * States
+ */
 
-
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][1]      = "Ungelesen";
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][2]      = "Gelesen";
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][3]      = "Geschlossen";
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][4]      = "Neu";
 
 ?>

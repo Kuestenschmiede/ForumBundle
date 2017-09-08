@@ -28,6 +28,13 @@ $GLOBALS['TL_LANG']['tl_c4g_forum_post']['delete']              = array('Eintrag
 $GLOBALS['TL_LANG']['tl_c4g_forum_post']['show']                = array('Eintrag zeigen','Zeigen des Eintrags');
 
 
+/**
+ * States
+ */
 
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][1]      = "Ungelesen";
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][2]      = "Gelesen";
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][3]      = "Geschlossen";
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][4]      = "Neu";
 
 ?>

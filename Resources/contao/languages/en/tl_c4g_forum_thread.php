@@ -29,6 +29,11 @@ $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['copy']                = array('Dupli
 $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['show']                = array('Show Ticket','Show the ticket');
 $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['post']                = array('Show Posts','Show the posts of the ticket');
 
-
-
+/**
+ * States
+ */
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][1]      = "Backoffice Unread";
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][2]      = "Backoffice Read";
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][3]      = "Closed";
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][4]      = "New";
 ?>
