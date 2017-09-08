@@ -246,7 +246,7 @@ class tl_c4g_forum_post extends \Backend{
         $thread = $this->Database->prepare("SELECT pid,last_post_id FROM tl_c4g_forum_thread WHERE id=?")->execute($dc->activeRecord->pid)->fetchAssoc();
         $lastPost = $this->Database->prepare('SELECT post_number FROM tl_c4g_forum_post WHERE id=?')->execute($thread['last_post_id'])->fetchAssoc();
         $arrSet['forum_id'] = $thread['pid'];
-        $arrSet['author'] = $this->Database->prepare("SELECT default_author FROM tl_c4g_forum WHERE id=?")->execute($forumId['pid'])->fetchAssoc()['default_author'];
+        $arrSet['author'] = $this->Database->prepare("SELECT default_author FROM tl_c4g_forum WHERE id=?")->execute($arrSet['forum_id'])->fetchAssoc()['default_author'];
         $arrSet['creation'] = time();
         $arrSet['post_number'] = $lastPost['post_number'];
 
