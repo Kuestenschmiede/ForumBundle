@@ -1,9 +1,9 @@
 <?php if (FE_USER_LOGGED_IN): ?>
 
-    <script src="system/modules/con4gis_core/assets/vendor/ckeditor/ckeditor.js"></script>
+    <script src="bundles/con4giscore/vendor/ckeditor/ckeditor.js"></script>
     <script src="bundles/con4gisforum/js/c4g.pn.js"></script>
     <link rel="stylesheet" href="bundles/con4gisforum/css/c4g.pn.css">
-    <link rel="stylesheet" href="system/modules/con4gis_core/assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bundles/con4giscore/vendor/font-awesome/css/font-awesome.min.css">
     <div class="mod_article first last block" id="linke-spalte">
 
         <!-- indexer::stop -->

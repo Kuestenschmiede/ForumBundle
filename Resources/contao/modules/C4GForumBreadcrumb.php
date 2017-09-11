@@ -160,9 +160,9 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                     }
                 } else if(!empty($this->forumModule->c4g_forum_uitheme_css_select)) {
                     $theme = $this->forumModule->c4g_forum_uitheme_css_select;
-                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'system/modules/con4gis_core/assets/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
+                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
                 } else {
-                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'system/modules/con4gis_core/assets/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
+                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
                 }
 
                 $GLOBALS ['TL_CSS'] [] = 'src/con4gis/ForumBundle/Resources/public/css/c4gForum.css';

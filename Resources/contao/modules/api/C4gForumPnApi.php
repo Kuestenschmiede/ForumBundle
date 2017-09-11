@@ -38,7 +38,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules\api;
         /**
          * @var string
          */
-        private $_sApiUrl = 'system/modules/con4gis_core/api/index.php';
+        private $_sApiUrl = 'src/con4gis/CoreBundle/Resources/contao/api/index.php';
 
 
         /**

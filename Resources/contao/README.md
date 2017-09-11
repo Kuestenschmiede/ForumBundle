@@ -8,7 +8,7 @@ other things like ratings.
 
 **Requires:**
 - [Contao](https://github.com/contao/core) (***LTS 3.5.x***)
-- [con4gis_core](https://github.com/Kuestenschmiede/con4gis_core) (***1.3.x***)
+- [CoreBundle](https://github.com/Kuestenschmiede/CoreBundle) (***1.3.x***)
 
 **Extendable:**
 - [con4gis_groups](https://github.com/Kuestenschmiede/con4gis_groups) (***1.1.x***)

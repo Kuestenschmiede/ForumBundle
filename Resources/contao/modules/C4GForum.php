@@ -22,6 +22,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPost;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumSession;
     use Contao\FrontendUser;
+    use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
     use Contao\Module;
 
     $GLOBALS['c4gForumErrors']           = array();
@@ -147,7 +148,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 $enableMaps = true;
             }
             // initialize used Javascript Libraries and CSS files
-            \C4GJQueryGUI::initializeLibraries(
+            C4GJQueryGUI::initializeLibraries(
                 true,                                               // add c4gJQuery GUI Core LIB
                 ($this->c4g_forum_jquery_lib == true),              // add JQuery
                 ($this->c4g_forum_jqui_lib == true),                // add JQuery UI
@@ -184,9 +185,9 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 }
             } else if(!empty($this->c4g_forum_uitheme_css_select)) {
                     $theme = $this->c4g_forum_uitheme_css_select;
-                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'system/modules/con4gis_core/assets/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
+                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
             } else {
-                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'system/modules/con4gis_core/assets/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
+                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
             }
 
 
@@ -208,9 +209,9 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/c4g_forum_pn_api';</script>";
                 $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'con4gis/api/fileUpload/';</script>";
             } else {
-                $data['forumAjaxUrl'] = "system/modules/con4gis_core/api/index.php/c4g_forum_ajax";
-                $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'system/modules/con4gis_core/api/index.php/c4g_forum_pn_api';</script>";
-                $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'system/modules/con4gis_core/api/index.php/fileUpload/';</script>";
+                $data['forumAjaxUrl'] = "src/con4gis/CoreBundle/Resources/contao/api/index.php/c4g_forum_ajax";
+                $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'src/con4gis/CoreBundle/Resources/contao/api/index.php/c4g_forum_pn_api';</script>";
+                $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'src/con4gis/CoreBundle/Resources/contao/api/index.php/fileUpload/';</script>";
             }
 
             // $data['ajaxData'] = "action=fmd&id=".$this->id."&language=".$GLOBALS['TL_LANGUAGE']."&page=".$objPage->id;
@@ -229,7 +230,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
             // save forum url for linkbuilding in ajaxrequests
             $aTmpData = $this->Session->getData();
-            if (stristr($aTmpData['referer']['current'], "/con4gis_core/api/") === false) {
+            if (stristr($aTmpData['referer']['current'], "/CoreBundle/Resources/contao/api/") === false) {
                 $aTmpData['current_forum_url'] = $aTmpData['referer']['current'];
                 $this->Session->setData($aTmpData);
             } else {
@@ -278,8 +279,8 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $aToolbarButtons = explode(",", $this->c4g_forum_bbcodes_editor_toolbaritems);
 
 
-            $GLOBALS['TL_CSS'][]        = 'system/modules/con4gis_core/assets/vendor/jQuery/plugins/chosen/chosen.css';
-            $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/con4gis_core/assets/vendor/jQuery/plugins/chosen/chosen.jquery.min.js';
+            $GLOBALS['TL_CSS'][]        = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.css';
+            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.jquery.min.js';
 
             if($this->c4g_forum_bbcodes != "1") {
                 $GLOBALS['TL_HEAD'][] = "<script>var ckRemovePlugins = 'bbcode';</script>";
@@ -289,7 +290,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
             if ($this->c4g_forum_editor === "ck") {
                 $GLOBALS['TL_HEAD'][]       = "<script>var ckEditorItems = ['" . implode("','", $aToolbarButtons) . "'];</script>";
-                $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/con4gis_core/assets/vendor/ckeditor/ckeditor.js';
+                $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4giscore/vendor/ckeditor/ckeditor.js';
             }
 
             if($this->c4g_forum_pagination_active == "1") {

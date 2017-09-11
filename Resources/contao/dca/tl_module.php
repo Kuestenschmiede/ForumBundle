@@ -580,7 +580,7 @@ if (method_exists('\System', 'getContainer')) {
         'default'   => 'src/con4gis/ForumBundle/Resources/public/images/smileys',
         'inputType' => 'text',
         'eval'      => array('maxlength' => 128, "style" => 'width: 200px'),
-        'sql'       => "char(128) NOT NULL default 'system/modules/con4gis_core/assets/vendor/wswgEditor/images/smilies'"
+        'sql'       => "char(128) NOT NULL default 'bundles/con4giscore/vendor/wswgEditor/images/smilies'"
     );
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_autourl'] = array
