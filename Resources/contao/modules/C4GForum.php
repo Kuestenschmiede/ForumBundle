@@ -15,7 +15,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
     use c4g\Maps\C4gMapsModel;
     use c4g\Maps\ResourceLoader;
-    use c4g\MemberModel;
+    use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
     use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
     use con4gis\ForumBundle\Resources\contao\classes\C4GUtils;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
@@ -303,7 +303,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 ResourceLoader::loadTheme();
                 static::$useMaps = $enableMaps;
                 // load core resources for maps
-                \c4g\Core\ResourceLoader::loadResourcesForModule('maps');
+                ResourceLoader::loadResourcesForModule('maps');
             }
 
             $data['breadcrumbDelim'] = $this->c4g_forum_breadcrumb_jqui_layout ? '' : '>';
