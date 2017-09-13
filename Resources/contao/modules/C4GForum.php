@@ -13,8 +13,9 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
-    use c4g\Maps\C4gMapsModel;
-    use c4g\Maps\ResourceLoader;
+    use con4gis\MapsBundle\Resources\contao\classes\MapDataConfigurator;
+    use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+    use con4gis\MapsBundle\Resources\contao\classes\ResourceLoader;
     use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
     use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
     use con4gis\ForumBundle\Resources\contao\classes\C4GUtils;
@@ -204,15 +205,10 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $data['id']      = $this->id;
             //check if we need contao 4 routing
             // set global js var to inidcate api endpoint
-            if (class_exists('\con4gis\ApiBundle\Controller\ApiController') &&  (version_compare( VERSION, '4', '>=' ))) {
-                $data['forumAjaxUrl'] = "con4gis/api/c4g_forum_ajax";
-                $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/c4g_forum_pn_api';</script>";
-                $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'con4gis/api/fileUpload/';</script>";
-            } else {
-                $data['forumAjaxUrl'] = "src/con4gis/CoreBundle/Resources/contao/api/index.php/c4g_forum_ajax";
-                $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'src/con4gis/CoreBundle/Resources/contao/api/index.php/c4g_forum_pn_api';</script>";
-                $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'src/con4gis/CoreBundle/Resources/contao/api/index.php/fileUpload/';</script>";
-            }
+            $data['forumAjaxUrl'] = "con4gis/api/c4g_forum_ajax";
+            $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/c4g_forum_pn_api';</script>";
+            $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'con4gis/api/fileUpload/';</script>";
+
 
             // $data['ajaxData'] = "action=fmd&id=".$this->id."&language=".$GLOBALS['TL_LANGUAGE']."&page=".$objPage->id;
             $data['ajaxData'] = $this->id;
@@ -4421,7 +4417,7 @@ JSPAGINATE;
                 }
             } else {
                 // con4gis-Maps 3
-                $mapData = \c4g\Maps\MapDataConfigurator::prepareMapData($this, $this->Database);
+                $mapData = MapDataConfigurator::prepareMapData($this, $this->Database);
                 if ($forum['map_type'] == 'PICK') {
                     // GEO Picker
                     $mapData['geopicker'] = array
@@ -4550,7 +4546,7 @@ JSPAGINATE;
                 $mapData['div'] = 'c4gForumPostMap';
             } else {
                 // con4gis-Maps 3
-                $mapData = \c4g\Maps\MapDataConfigurator::prepareMapData($this, $this->Database);
+                $mapData = MapDataConfigurator::prepareMapData($this, $this->Database);
                 if (($post['loc_geox'] != '') && ($post['loc_geoy'] != '')) {
                     $mapData['calc_extent'] = 'CENTERZOOM';
                     $mapData['center']['lon'] = $post['loc_geox'];
@@ -4618,7 +4614,7 @@ JSPAGINATE;
                 $mapData['div'] = 'c4gForumPostMap';
             } else {
                 // con4gis-Maps 3
-                $mapData = \c4g\Maps\MapDataConfigurator::prepareMapData($this, $this->Database);
+                $mapData = MapDataConfigurator::prepareMapData($this, $this->Database);
                 $mapData['mapDiv'] = 'c4gForumPostMap';
                 $mapData['addIdToDiv'] = false;
             }
