@@ -13,6 +13,7 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
+    use con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus;
     use con4gis\MapsBundle\Resources\contao\classes\MapDataConfigurator;
     use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
     use con4gis\MapsBundle\Resources\contao\classes\ResourceLoader;
@@ -1627,7 +1628,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 }
             }
 
-            if ($this->helper->checkPermission($thread['forumid'], 'newpost')) {
+            if ($this->helper->checkPermission($thread['forumid'], 'newpost') && $thread['state'] != 3) {
                 array_insert($dialogbuttons, 0,
                              array(
                                  array(
@@ -1636,6 +1637,17 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                                      "text"   => C4GForumHelper::getTypeText($this->c4g_forum_type,'NEW_POST')
                                  )
                              )
+                );
+            }
+            if ($this->helper->checkPermission($thread['forumid'], 'closethread') && $thread['state'] != 3) {
+                array_insert($dialogbuttons, 0,
+                    array(
+                        array(
+                            "action" => 'closethread:' . $id . ':thread' . $id,
+                            "type"   => 'get',
+                            "text"   => C4GForumHelper::getTypeText($this->c4g_forum_type,'CLOSE_THREAD')
+                        )
+                    )
                 );
             }
 
@@ -5857,10 +5869,13 @@ JSPAGINATE;
                 case 'threadlist':
                     $return = $this->getThreadlist($values[1]);
                     break;
-                default:
-                    break;
                 case 'ticketcall':
                     $return = $this->ticket($values[1],$values[2],$values[3],$values[4]);
+                    break;
+                case 'closethread':
+                    $return = $this->closethread($values[1]);
+                    break;
+                default:
                     break;
             }
             // HOOK: for enhancements to change the result
@@ -5913,7 +5928,7 @@ JSPAGINATE;
             }
             $threads = $this->helper->getThreadsFromDB($subforum['id']);
             foreach($threads as $thread){
-                if($thread['concerning'] === $concerning){
+                if($thread['concerning'] === $concerning && $thread['state'] != 3){
                     $return = $this->getThreadAsHtml($thread['id']);
                 }
             }
@@ -5934,7 +5949,7 @@ JSPAGINATE;
             $group = $this->Database->prepare('SELECT cg_member FROM tl_member_group WHERE id=?')->execute($groupId)->fetchAssoc();
             $recipient = $group['cg_member'];
             foreach($threads as $thread){
-                if($thread['concerning'] == $concerning){
+                if($thread['concerning'] == $concerning && $thread['state'] != 3){
                     $return = $this->helper->insertPostIntoDB($thread['id'],$author,$subject,$text,null,null,null,null,null,null,null,null,null,null,null,$recipient,$owner);
                 }
             }
@@ -5942,6 +5957,23 @@ JSPAGINATE;
                 $return = $this->helper->insertThreadIntoDB($subforum['id'],$subject,$author,null,'999',$text,null,null,null,null,null,null,null,null,null,null,$recipient,$owner,$concerning);
             }
             return $return;
+        }
+        public function closethread($threadId)
+        {
+            $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($threadId)->fetchAssoc();
+            $newposts = $thread['posts']+1;
+            $this->Database->prepare('UPDATE tl_c4g_forum_thread SET state = 3, posts ='.$newposts.' WHERE id=?')->execute($threadId);
+            $set = array(
+                'text'      => C4GForumTicketStatus::getState(3),
+                'subject'      => C4GForumTicketStatus::getState(3),
+                'state'     => 3,
+                'creation'  => time(),
+                'pid'       => $threadId,
+                'author'    => $this->User->id,
+                'post_number'     => $newposts
+            );
+            $this->Database->prepare('INSERT INTO tl_c4g_forum_post %s')->set($set)->execute();
+            return $this->getThreadAsHtml($threadId);
         }
 
 

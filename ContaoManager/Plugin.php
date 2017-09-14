@@ -2,9 +2,9 @@
 
 namespace con4gis\ForumBundle\ContaoManager;
 
-use con4gis\ApiBundle\Con4gisApiBundle;
 use con4gis\CoreBundle\con4gisCoreBundle;
 use con4gis\ForumBundle\con4gisForumBundle;
+use con4gis\GroupsBundle\con4gisGroupsBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
@@ -28,7 +28,7 @@ class Plugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create(con4gisForumBundle::class)
-                ->setLoadAfter([con4gisCoreBundle::class])
+                ->setLoadAfter([con4gisCoreBundle::class,con4gisGroupsBundle::class])
         ];
     }
 }
