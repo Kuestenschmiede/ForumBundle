@@ -1457,7 +1457,7 @@ class C4GForumHelper extends \System
 				break;
 		}
 		if($withPosts){
-			$select = "SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,".
+			$select = "SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,a.state,".
 					"c.creation AS lastPost, " . $sqlLastUser . " AS lastUsername ".
 					"FROM tl_c4g_forum_thread a ".
 					"LEFT JOIN tl_member b ON b.id = a.author ".
@@ -1465,7 +1465,7 @@ class C4GForumHelper extends \System
 					"LEFT JOIN tl_member d ON d.id = c.author ".
 					"WHERE a.id = ? ";
 		}else{
-			$select = "SELECT a.id,a.pid AS forumid,a.name,a.threaddesc,a.sort,a.author," . $sqlAuthor . ",a.creation, a.posts ".
+			$select = "SELECT a.id,a.pid AS forumid,a.name,a.threaddesc,a.sort,a.author,a.state," . $sqlAuthor . ",a.creation, a.posts ".
 					"FROM tl_c4g_forum_thread a ".
 					"LEFT JOIN tl_member b ON b.id = a.author ".
 					"WHERE a.id = ? ";
@@ -2786,7 +2786,7 @@ class C4GForumHelper extends \System
 	 */
 	public function getAdminDefaultRights() {
 		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','threadsort','editownpost','editpost', 'editownthread', 'editthread',
-            'delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember');
+            'delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember','closethread');
 		return $this->executePermissionHook($return,'admin');
 	}
 
