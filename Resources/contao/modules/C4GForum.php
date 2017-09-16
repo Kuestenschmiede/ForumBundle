@@ -206,7 +206,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $data['id']      = $this->id;
             //check if we need contao 4 routing
             // set global js var to inidcate api endpoint
-            $data['forumAjaxUrl'] = "con4gis/api/c4g_forum_ajax";
+            $data['forumAjaxUrl'] = "con4gis/api/forumService";
             $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/c4g_forum_pn_api';</script>";
             $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'con4gis/api/fileUpload/';</script>";
 
@@ -1845,39 +1845,39 @@ JSPAGINATE;
 
                     $inputThreadname .
                     '</div>';
-           if($this->c4g_forum_type =="TICKET"){
+           if ($this->c4g_forum_type =="TICKET") {
                $user = FrontendUser::getInstance();
                $groups = $this->helper->getMemberGroupsForForum($forumId,$user->getData()['id']);
                $counterRecipient = 0;
                $options ='';
+               $arrOptions = [];
 
-
-               if($this->helper->checkPermission($forumId,'tickettomember')){
+               if ($this->helper->checkPermission($forumId,'tickettomember')) {
                    $data .= '<select name="recipient_member" class="formdata ui-corner-all"';
 
+                   // only check members other than the current user
                    $allMembers = $this->Database->prepare(
-                       $select ="SELECT id,username,groups
-                FROM tl_member")->execute()->fetchAllAssoc();
-                   foreach($allMembers as $member){
+                       $select ="SELECT id,username,groups FROM tl_member WHERE id != '$user->id'"
+                   )->execute()->fetchAllAssoc();
+                   foreach ($allMembers as $member) {
                        $member['groups'] = unserialize($member['groups']);
                        $member['groups'] = array_flip($member['groups']);
-                       foreach($groups as $group){
-                           if(array_key_exists($group['id'],$member['groups'])){
+                       foreach ($groups as $group) {
+                           if (array_key_exists($group['id'],$member['groups']) && !$arrOptions[$member['id']]) {
                                $options .= '<option value="'.$member['id'].'">'.$member['username'].'</option>';
+                               $arrOptions[$member['id']] = true;
                                $counterRecipient = $counterRecipient + 1;
                            }
                        }
                    }
-                   if($counterRecipient == 1){
+                   if ($counterRecipient == 1) {
                        $data .= ' style="visibility:hidden" value="'.$member['id'].'"';
-                   }
-                   elseif($counterRecipient == 0){
+                   } elseif ($counterRecipient == 0) {
                        return null;
                    }
-               }
-               else{
+               } else {
                    $data .= '<select name="recipient_group" class="formdata ui-corner-all"';
-                   foreach($groups as $group){
+                   foreach ($groups as $group) {
                        $selects =$this->Database->prepare("SELECT id,name
                 FROM tl_member_group
                 WHERE id=?")->execute($group['id'])->fetchAllAssoc();
@@ -1887,7 +1887,7 @@ JSPAGINATE;
                        }
                    }
                    if($counterRecipient == 1){
-                       $data .= ' style="visibility:hidden" value="'.select['id'].'"';
+                       $data .= ' style="visibility:hidden" value="'. $select['id'].'"';
                    }
                    elseif($counterRecipient == 0){
                        return null;
@@ -5940,7 +5940,7 @@ JSPAGINATE;
         public function autoTicket($forumId, $groupId, $subject,$text ,$concerning)
         {
             $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId,$groupId)->fetchAssoc();
-            if(!$subforum){
+            if(!$subforum) {
                 $subforum = $this->helper->createNewSubforum($forumId,$groupId);
             }
             $author =$subforum['default_author'];
@@ -6240,6 +6240,7 @@ JSPAGINATE;
                     $result['cronexec'][] = $sitemapJob;
                 }
             }
+//            return $result;
             if ($this->plainhtml) {
                 return $result;
             } else {

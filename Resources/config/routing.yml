@@ -1,0 +1,8 @@
+con4gisForumBundle:
+    path: /con4gis/api/forumService/{id}/{req}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisForumBundle:Forum:ajax"
+    requirements:
+        id: \d+
+        req: .*

@@ -2423,15 +2423,13 @@ class C4GForumHelper extends \System
             ->execute($frontendUser)->fetchAssoc();
 		$user['groups'] = unserialize($user['groups']);
 		foreach($user['groups'] as $key){
-		    if(in_array($key,$memGroups['0']) && in_array($key,$adGroups['0'])){
-		        $memGroups .= $adGroups;
-		        $return = $memGroups;
+		    if (in_array($key,$memGroups['0']) && in_array($key,$adGroups['0'])) {
+		        // the union operator is used here because array_merge does not handle numeric keys correctly
+		        $return = $memGroups + $adGroups;
 		        break;
-            }
-            elseif(in_array($key,$memGroups['0'])){
+            } elseif (in_array($key,$memGroups['0'])) {
 		            $return = $adGroups;
-            }
-            else{
+            } else{
                 $return = $memGroups;
             }
         }
