@@ -204,10 +204,9 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $GLOBALS ['TL_CSS'] [] = 'bundles/con4gisforum/css/c4gForum.css';
             //$GLOBALS ['TL_CSS'] [] = 'system/modules/con4gis_forum/html/css/bbcodes.css';
             $data['id']      = $this->id;
-            //check if we need contao 4 routing
             // set global js var to inidcate api endpoint
             $data['forumAjaxUrl'] = "con4gis/api/forumService";
-            $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/c4g_forum_pn_api';</script>";
+            $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/forumPnService';</script>";
             $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'con4gis/api/fileUpload/';</script>";
 
 

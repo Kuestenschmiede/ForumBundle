@@ -345,7 +345,7 @@ namespace con4gis\ForumBundle\Resources\contao\models;
 
         /**
          * @param $attributes
-         * @return PN
+         * @return C4gForumPn
          */
         public static function create($attributes){
             $oPn = new C4gForumPn();

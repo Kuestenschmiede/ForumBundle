@@ -69,8 +69,6 @@ $GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('con4gis\ForumBundle\Resources\
 $GLOBALS['TL_CSS']['c4g_forum_backend'] = 'bundles/con4gisforum/css/c4gForumBackend.css';
 
 /**
- * Rest-API
- */
-$GLOBALS['TL_API']['c4g_forum_ajax'] 		= 'con4gis\ForumBundle\Resources\contao\modules\api\C4gForumAjaxApi';
-$GLOBALS['TL_API']['c4g_forum_pn_api'] 		= 'con4gis\ForumBundle\Resources\contao\modules\api\C4gForumPnApi';
+* Models
+*/
 $GLOBALS['TL_MODELS']['tl_c4g_forum']       = 'con4gis\ForumBundle\Resources\contao\models\C4gForumModel';

@@ -12,6 +12,7 @@
  */
 
     namespace con4gis\ForumBundle\Resources\contao\modules;
+    use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
     use Contao\User;
 
@@ -88,16 +89,10 @@
             $sJsLang = $this->getClientLangVars();
 
             $this->Template->c4g_pn_js = $sJsLang;
-
             $data = array();
 
             // set global js var to inidcate api endpoint
-            if (\class_exists('\con4gis\ApiBundle\Controller\ApiController') &&  (version_compare( VERSION, '4', '>=' ))) {
-                $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/c4g_forum_pn_api';</script>";
-            } else {
-                $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'src/con4gis/CoreBundle/Resources/contaoapi/index.php/c4g_forum_pn_api';</script>";
-            }
-
+            $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/forumPnService';</script>";
          
             if (!$_GET['c4g_forum_fmd']) {
                 // try to get parameters from referer, if they don't exist
@@ -118,7 +113,7 @@
                 ->execute($_GET['c4g_forum_fmd']);
 
             // initialize used Javascript Libraries and CSS files
-            \C4GJQueryGUI::initializeLibraries(
+            C4GJQueryGUI::initializeLibraries(
                 true,                                                 // add c4gJQuery GUI Core LIB
                 true,                                                 // add JQuery
                 true,                                                // add JQuery UI

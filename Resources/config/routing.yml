@@ -1,4 +1,4 @@
-con4gisForumBundle:
+forum_ajax:
     path: /con4gis/api/forumService/{id}/{req}
     defaults:
         _scope: frontend
@@ -6,3 +6,11 @@ con4gisForumBundle:
     requirements:
         id: \d+
         req: .*
+
+forum_pn:
+    path: /con4gis/api/forumPnService/{actionFragment}
+    defaults:
+        _scope: frontend
+        _controller: "con4gisForumBundle:Forum:personalMessage"
+    requirements:
+        actionFragment: .*
