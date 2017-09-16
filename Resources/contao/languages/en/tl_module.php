@@ -83,8 +83,8 @@
         ''
     );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes']                       = array(
-        'Use BBCodes',
-        'Deactivate this checkbox, if you do not want to use BBCodes in your forum. Please take note, that deactivating BBCodes after they have already been used, may cause ugly formating-errors.'
+        'Use Editor',
+        'Deactivate this checkbox, if you do not want to use Editor in your forum. Please take note, that deactivating Editor after they have already been used, may cause ugly formating-errors.'
     );
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_last_post_on_new'] = array("Show last post on create new one", "");
@@ -251,7 +251,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_general_legend'] = 'Forum - General';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_legend']         = 'Forum - User settings';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sizes_legend']        = 'Forum - Sizes';
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_legend'] = 'Forum - Editor (BBCodes)';
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_legend'] = 'Forum - Editor';
     //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pn_legend']      = 'Forum - Personal Messaging';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_legend']   = 'Forum - Box navigation settings';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqui_legend']    = 'Forum - Styling (jQuery UI)';
@@ -337,9 +337,9 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['disabled']         = "disabled";
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('WYSIWYG-Editor', '');
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "New WYSIWYG-Editor";
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb']           = "Old WYSIWYG-Editor";
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "No WYSIWYG-Editor";
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "CKEditor";
+    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb']           = "Old WYSIWYG-Editor";
+    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "No WYSIWYG-Editor";
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_appearance_themeroller_css'] = array('jQuery UI ThemeRoller CSS fille', 'select a jQuery UI CSS file.');
 ?>
