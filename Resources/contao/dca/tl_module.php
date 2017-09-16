@@ -494,7 +494,7 @@ if (method_exists('\System', 'getContainer')) {
         'options'   => array(
             'ck' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck'],
             //'bb' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb'],
-            'no' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no'],
+            //'no' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no'],
         ),
         'sql'       => "char(2) NOT NULL default 'ck'"
     );
