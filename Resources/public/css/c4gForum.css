@@ -162,6 +162,10 @@
 	width: 78%;
 }
 
+.c4gForumPostText img {
+	width: auto;
+}
+
 /* User information in forum post */
 .c4g_forum_post_user_data {
     float: left;
