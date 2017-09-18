@@ -25,6 +25,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumSession;
     use Contao\FrontendUser;
     use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
+    use Contao\Input;
     use Contao\Module;
 
     $GLOBALS['c4gForumErrors']           = array();
@@ -6173,6 +6174,13 @@ JSPAGINATE;
 
                 if (($_SERVER['REQUEST_METHOD']) == 'PUT') {
                     parse_str(file_get_contents("php://input"), $this->putVars);
+                    foreach ($this->putVars as $key => $value) {
+                        $tmpVal = Input::xssClean($value, true);
+                        $tmpVal = str_replace('<script>', '', $tmpVal);
+                        $tmpVal = str_replace('</script>', '', $tmpVal);
+                        $tmpVal = str_replace('onclick=', '', $tmpVal);
+                        $this->putVars[$key] = $tmpVal;
+                    }
                 }
 
                 // if there was an initial get parameter "state" then use it for jumping directly
