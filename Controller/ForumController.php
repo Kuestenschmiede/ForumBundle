@@ -9,9 +9,11 @@
 namespace con4gis\ForumBundle\Controller;
 
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
 use Contao\FrontendUser;
+use Contao\Input;
 use Contao\ModuleModel;
 use Contao\System;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,6 +25,14 @@ class ForumController extends Controller
     public function ajaxAction(Request $request, $id, $req)
     {
         $response = new JsonResponse();
+        $post = $request->request->get('post');
+        if ($post) {
+            $post = Input::xssClean($post);
+            $post = str_replace('<script>', '', $post);
+            $post = str_replace('</script>', '', $post);
+            $post = C4GUtils::secure_ugc($post);
+            $request->request->set('post', $post);
+        }
         $feUser = FrontendUser::getInstance();
         $feUser->authenticate();
         if (!isset( $id ) || !is_numeric( $id )) {

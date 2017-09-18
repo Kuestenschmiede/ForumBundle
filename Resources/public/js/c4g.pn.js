@@ -208,7 +208,7 @@
                 height:'360',
                 disableObjectResizing: true,
                 filebrowserImageUploadUrl: "bundles/con4giscore/vendor/imgUpload.php",
-                filebrowserUploadUrl: 'bundles/con4giscore/vendor/fileUpload.php',
+                filebrowserUploadUrl: 'bundles/con4giscore/vendor/C4GFileUpload.php',
                 // codeSnippet_languages: {
                 // }
             });
