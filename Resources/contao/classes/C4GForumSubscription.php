@@ -309,6 +309,7 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
                         "DETAILS_LINK"             => "",
                         "UNSUBSCRIBE_LINK"         => "",
                         "UNSUBSCRIBE_ALL_LINK"     => "",
+                        "LANGUAGE"                 => $subscriber['language'],
                     );
 
                     // check if subscriber still has permission to get subscription mails
@@ -316,43 +317,43 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
                         switch ($sendKind) {
                             case "new" :
                                 $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_NEW'];
-                                $aMailData['ACTION_NAME']              = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . ''];
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '_WITH_SUBJECT'], $this->MailCache ['subject']);
+                                $aMailData['ACTION_NAME']              = $GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . ''];
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '_WITH_SUBJECT'], $this->MailCache ['subject']);
 
                                 break;
                             case "edit" :
                                 $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_EDIT'];
-                                $aMailData['ACTION_NAME']              = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . ''];
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '_WITH_SUBJECT'], $this->MailCache ['subject']);
+                                $aMailData['ACTION_NAME']              = $GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . ''];
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '_WITH_SUBJECT'], $this->MailCache ['subject']);
 
                                 break;
                             case "delete" :
                                 $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_DELETE'];
-                                $aMailData['ACTION_NAME']              = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . ''];
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '_WITH_SUBJECT'], $this->MailCache ['subject']);
+                                $aMailData['ACTION_NAME']              = $GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . ''];
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '_WITH_SUBJECT'], $this->MailCache ['subject']);
 
                                 break;
                             case "delThread" :
                                 $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_DELTHREAD'];
-                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD_WITH_SUBJECT'), $thread['threadname']);
+                                $aMailData['ACTION_NAME']              = \c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(\c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD_WITH_SUBJECT'), $thread['threadname']);
                                 $sActionType                           = "THREAD";
                                 break;
                             case "moveThread" :
                                 $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_MOVETHREAD'];
-                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD_WITH_SUBJECT'), $this->MailCache ['moveThreadOldName'], $thread['threadname']);
+                                $aMailData['ACTION_NAME']              = \c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(\c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD_WITH_SUBJECT'), $this->MailCache ['moveThreadOldName'], $thread['threadname']);
                                 $sActionType                           = "THREAD";
                                 break;
                             case "newThread" : // only subforum
-                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'NEW_THREAD');
-                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD_WITH_SUBJECT'), $thread['threadname']);
+                                $subjectAddition                       = \c4g\Forum\C4GForumHelper::getTypeText($forumType,'NEW_THREAD');
+                                $aMailData['ACTION_NAME']              = \c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(\c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD_WITH_SUBJECT'), $thread['threadname']);
                                 $sActionType                           = "THREAD";
                                 break;
                         }
 
-                        $aMailData['ACTION_PRE'] = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE'];
+                        $aMailData['ACTION_PRE'] = $GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE'];
 
                         \System::log('[C4G] ' . $aMailData['ACTION_NAME'] . " in \"" . $thread['forumname'] . "\": " . $thread['threadname'], __METHOD__, TL_GENERAL);
 
@@ -366,7 +367,7 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
                             $data['from'] = $GLOBALS ['TL_CONFIG'] ['adminEmail'];
                         }
 
-                        $data['subject'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['SUBSCRIPTION_' . $sType . '_MAIL_SUBJECT'], $subjectAddition, $GLOBALS['TL_CONFIG']['websiteTitle'], $thread['forumname'], $thread['threadname']);
+                        $data['subject'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_' . $sType . '_MAIL_SUBJECT'], $subjectAddition, $GLOBALS['TL_CONFIG']['websiteTitle'], $thread['forumname'], $thread['threadname']);
 
                         $aMailData['USERNAME']             = $subscriber['username'];
                         $aMailData['RESPONSIBLE_USERNAME'] = $this->User->username;
@@ -374,6 +375,7 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
                         $aMailData['THREADNAME']           = $thread['threadname'];
 
 
+/*
                         // umformatierung BBC-Quotes
                         $this->MailCache ['post'] = preg_replace('/\[quote=([^\]]+)\]([\s\S]*?)\[\/quote\]/i', '"$2" (Zitat von $1)', $this->MailCache ['post']);
                         $this->MailCache ['post'] = preg_replace('/\[quote\]([\s\S]*?)\[\/quote\]/i', '"$1" (Zitat)', $this->MailCache ['post']);
@@ -385,6 +387,7 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
 
                         // entferne BBCodes
                         $this->MailCache ['post'] = preg_replace('/\[[^\[\]]*\]/i', '', $this->MailCache ['post']);
+*/
 
                         // set post subject and content
                         $aMailData['POST_SUBJECT'] = $this->MailCache ['subject'];
@@ -393,7 +396,7 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
                         // building links
                         if ($sType == "SUBFORUM") {
 
-                            $aMailData['DETAILS_LINK']         = $this->helper->getUrlForForum($thread['forumid'], $sUrl);
+                            $aMailData['DETAILS_LINK']         = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
                             $aMailData['UNSUBSCRIBE_LINK']     = $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl);
                             $aMailData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
 
@@ -439,6 +442,29 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
         {
 
             $sText = html_entity_decode($sText);
+            
+            // first, check if we've got a language part corresponding
+            // to subscriber's language
+            $lang = substr(strtoupper($aData['LANGUAGE']), 0, 2);
+            $langPos = strpos($sText, "##LANGUAGE_START:" . $lang . "##");
+            $langFound = false;
+           if($langPos !== false) {
+
+				// language for subscriber found, get its part
+				// there should be a ##LANGUAGE_END## marker
+				$langPos += 21;
+				$langEnd = strpos($sText, "##LANGUAGE_END##", $langPos);
+				if($langEnd !== false) {
+					$sText = substr($sText, $langPos, $langEnd - $langPos);
+					$langFound = true;
+				}
+			}
+			
+			if(!$langFound) {
+				// language for subscriber not found, just strip ALL
+				// localizations from data
+				$sText = preg_replace('/(##LANGUAGE_START:)(\\s|\\S)*(##LANGUAGE_END##)/', '', $sText);
+			}
 
             foreach ($aData as $key => $value) {
                 $sText = str_replace('##' . $key . '##', $value, $sText);
@@ -469,6 +495,10 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
             //        UNSUBSCRIBE_LINK: ##UNSUBSCRIBE_LINK##
             //
             //        UNSUBSCRIBE_ALL_LINK: ##UNSUBSCRIBE_ALL_LINK##
+            //
+            //        ##LANGUAGE_START:xx##
+            //        ##LANGUAGE_END##
+            //
         }
 
         /**
@@ -572,14 +602,14 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
                 $subscriptionId = $this->getSubforumSubscriptionFromDB($values[0], $member->id);
                 if ($subscriptionId) {
                     if ($this->deleteSubscriptionSubforum($subscriptionId)) {
-                        $message = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['UNSUBSCRIBE_SUBFORUM_LINK_SUCCESS'], $this->helper->getForumNameFromDB($values[0]), $member->username);
+                        $message = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['UNSUBSCRIBE_SUBFORUM_LINK_SUCCESS'], $this->helper->getForumNameFromDB($values[0]), $member->username);
                     }
                 }
 
             }
 
             if (!$message) {
-                $return['message'] = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['UNSUBSCRIBE_SUBFORUM_LINK_FAILED'];
+                $return['message'] = $GLOBALS['TL_LANG']['C4G_FORUM']['UNSUBSCRIBE_SUBFORUM_LINK_FAILED'];
             }
             $return['message'] = $message;
             $return['forumid'] = $values[0];
@@ -597,12 +627,12 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
             $member = $this->Database->prepare("SELECT id,username FROM tl_member " . "WHERE email=?")->execute($email);
             if ($member->id) {
                 if ($this->deleteAllSubscriptions($member->id)) {
-                    return sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['UNSUBSCRIBE_ALL_LINK_SUCCESS'], $member->username);
+                    return sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['UNSUBSCRIBE_ALL_LINK_SUCCESS'], $member->username);
                 }
 
             }
 
-            return $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['UNSUBSCRIBE_ALL_LINK_FAILED'];
+            return $GLOBALS['TL_LANG']['C4G_FORUM']['UNSUBSCRIBE_ALL_LINK_FAILED'];
         }
     }
 

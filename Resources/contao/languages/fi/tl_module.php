@@ -81,8 +81,8 @@
         ''
     );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes']                       = array(
-        'Käytä BBCodea',
-        'Deaktivoi tämä checkbox, jos et halua käyttää BBCodea tällä foorumilla. Huomioi, että BBCoden deaktivointi sen jälkeen, kun sitä on jo käytetty, saattaa aiheuttaa muotoilu-virheitä.'
+        'Use Editor',
+        'Deactivate this checkbox, if you do not want to use Editor in your forum. Please take note, that deactivating Editor after they have already been used, may cause ugly formating-errors.'
     );
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_last_post_on_new'] = array("Näytä viimeisin viesti luo uusi kohdalla", "");
@@ -245,7 +245,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_general_legend'] = 'Foorumi - Yleinen';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_legend']         = 'Foorumi - User settings';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sizes_legend']        = 'Foorumi - Sizes';
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_legend'] = 'Foorumi - Editor (BBCodes)';
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_legend'] = 'Foorumi - Editor';
     //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pn_legend']      = 'Foorumi - Personal Messaging';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_legend']   = 'Foorumi - Boksi navigaatio asetukset';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqui_legend']    = 'Foorumi - Styling (jQuery UI)';
@@ -329,9 +329,9 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['disabled']         = "Poissa käytöstä";
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('WYSIWYG-Editori', '');
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "Uusi WYSIWYG-Editori";
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb']           = "Vanha WYSIWYG-Editor";
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "Ei WYSIWYG-Editoria";
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "CKEditor";
+    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb']           = "Vanha WYSIWYG-Editor";
+    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "Ei WYSIWYG-Editoria";
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_appearance_themeroller_css'] = array('jQuery UI ThemeRoller CSS fille', 'select a jQuery UI CSS file.');
 ?>
