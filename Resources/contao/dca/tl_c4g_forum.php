@@ -729,7 +729,7 @@ class tl_c4g_forum extends \Backend
 	    }
 
 	    // add Maps section if c4gMaps is installed
-	    if ($GLOBALS['con4gis_maps_extension']['installed']) {
+	    if ($GLOBALS['con4gis']['maps']['installed']) {
 	    	$c4gMapsFields = '{maps_legend:hide},enable_maps;';
 	    	$GLOBALS['TL_DCA']['tl_c4g_forum']['palettes']['default'] =
 	    		str_replace('{expert_legend',$c4gMapsFields.'{expert_legend',
