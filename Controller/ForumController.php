@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ForumController extends Controller
 {
-    public function ajaxAction(Request $request, $id, $req)
+    public function ajaxAction(Request $request, $id, $req = '')
     {
         $response = new JsonResponse();
         $post = $request->request->get('post');
