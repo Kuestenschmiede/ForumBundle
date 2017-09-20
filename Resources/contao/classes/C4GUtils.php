@@ -34,7 +34,12 @@ class C4GUtils {
 		// Unerwünschte Unicode Sonderzeichen z.B. zur Umkehrung des Textflusses entfernen
 		$regex = '/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)\w)/i';
 		$result = urldecode(preg_replace($regex,' ',urlencode($result)));
-        
+
+		// Eingangs-Html formatieren und überflüssige Leerzeichen entfernen
+		//return trim(htmlspecialchars($result));
+        // Eingangs-Html formatieren und überflüssige Leerzeichen entfernen
+        // no html conversion here
+//@@		return trim(htmlspecialchars($result));
         return trim($result);
 
 	}
