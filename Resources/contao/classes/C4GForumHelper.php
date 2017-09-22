@@ -220,8 +220,20 @@ class C4GForumHelper extends \System
 		}
 		else {
 			$forum = $this->Database->prepare(
-				"SELECT id, member_groups, admin_groups, guest_rights, member_rights, admin_rights FROM tl_c4g_forum WHERE id=?")
+				"SELECT id, member_groups, admin_groups, guest_rights, member_rights, admin_rights, pid FROM tl_c4g_forum WHERE id=?")
 	 								 ->execute($forumId)->fetchAssoc();
+            $pForum = $this->Database->prepare(
+                "SELECT id, member_groups, admin_groups, guest_rights, member_rights, admin_rights FROM tl_c4g_forum WHERE id=?")
+                ->execute($forum['pid'])->fetchAssoc();
+			if(!$forum['guest_rights']){
+                $forum['guest_rights'] = $pForum['guest_rights'];
+            }
+            if(!$forum['admin_rights']){
+                $forum['admin_rights'] = $pForum['admin_rights'];
+            }
+            if(!$forum['member_rights']){
+                $forum['member_rights'] = $pForum['member_rights'];
+            }
 	 		$this->ForumCache[$forumId] = $forum;
 		}
         //TODO hier fehlt manchmal forumid, weswegen aus der db nix zurückkommt
@@ -3186,8 +3198,8 @@ class C4GForumHelper extends \System
 	    $set['define_rights'] = 1;
 	    $set['member_groups'] = serialize($groupArray);
 	    $set['admin_groups'] = $parentForum['admin_groups'];
-	    $set['member_rights'] = $parentForum['member_rights'];
-	    $set['admin_rights'] = $parentForum['admin_rights'];
+//	    $set['member_rights'] = $parentForum['member_rights'];
+//	    $set['admin_rights'] = $parentForum['admin_rights'];
 	    $set['member_id'] = $groupId;
 	    $set['default_author'] = $parentForum['default_author'];
 	    $set['tstamp'] = time();
