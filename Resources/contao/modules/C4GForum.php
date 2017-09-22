@@ -99,7 +99,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
         public function __construct($objModule,$strColumn='main')
         {
             parent::__construct($objModule,$strColumn='main');
-            $this->helper = new C4GForumHelper($this->Database, null,FrontendUser::getInstance());
+            $this->helper = new C4GForumHelper($this->Database, null,FrontendUser::getInstance(),"","","UU",$this->c4g_forum_type);
             $this->User = FrontendUser::getInstance();
         }
 
