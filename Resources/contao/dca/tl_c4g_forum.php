@@ -633,8 +633,11 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
         'member_id' => array
         (
             'sql'                     =>'int(10) default "0"'
+        ),
+        'concerning' => array
+        (
+            'sql'                     =>'int(10) default "0"'
         )
-
 	)
 );
 

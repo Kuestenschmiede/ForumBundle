@@ -18,7 +18,7 @@
  * Back end modules
  */
 $GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Foren / Ticketsysteme', 'Foren- und Ticketbereiche verwalten.' );
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Übersicht Tickets','Übersicht von Tickets und Themen');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Übersicht Tickets / Themen','Übersicht von Tickets und Themen');
 $GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Übersicht Einträge');
 
 /**

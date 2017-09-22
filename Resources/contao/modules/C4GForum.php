@@ -6053,7 +6053,7 @@ JSPAGINATE;
                 $frontendUrl = $this->Environment->url . TL_PATH . '/' . $session['current_forum_url'];
 
                 $this->helper = new C4GForumHelper($this->Database, $this->Environment, $this->User, $this->headline,
-                                                   $frontendUrl, $this->c4g_forum_show_realname);
+                                                   $frontendUrl, $this->c4g_forum_show_realname,$this->c4g_forum_type);
 
                 if (($_SERVER['REQUEST_METHOD']) == 'PUT') {
                     parse_str(file_get_contents("php://input"), $this->putVars);

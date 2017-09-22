@@ -128,6 +128,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         ),
         'pid' => array
         (
+            'filter'                  => true,
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         'name' => array
@@ -167,7 +168,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'inputType'               => 'select',
             'foreignKey'              => 'tl_member.username',
             //'options_callback'      => array('CLASS', 'METHOD'),
-            'filter'                  => true,
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
             'sql'                     => "blob"
         ),
@@ -240,7 +240,14 @@ class tl_c4g_forum_thread extends \Backend{
     }
     public function get_label($arrRow)
     {
-        $result = '[Ticket #'.sprintf('%04d', $arrRow['id']).'] ';
+        $result ="";
+        if($GLOBALS['TL_CONFIG']['c4g_forum_type'] == "DISCUSSIONS"){
+            $result .= '[Thema #';
+        }
+        else if($GLOBALS['TL_CONFIG']['c4g_forum_type'] == "TICKET"){
+            $result .= '[Ticket #';
+        }
+        $result .=sprintf('%04d', $arrRow['id']).'] ';
         $author = $this->Database->prepare('SELECT * FROM tl_member WHERE id=?')->execute($arrRow['author'])->fetchAssoc();
         $result .= $arrRow['name'].': ';
         $result .= date($GLOBALS['TL_CONFIG']['dateFormat'], intval($arrRow['tstamp'])).' ';

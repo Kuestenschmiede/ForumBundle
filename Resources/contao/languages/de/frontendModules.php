@@ -80,6 +80,8 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['UNSUBSCRIBE_SUBFORUM']        = 'Tickets abbestellen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['DEL_POST']                = 'Löschen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['EDIT_POST']               = 'Bearbeiten';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDIT_POST']                   = 'Antwort bearbeiten';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDIT_POST_PREVIEW']           = 'Vorschau - Antwort bearbeiten';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['EDIT_POST_PREVIEW']       = 'Vorschau - Beitrag bearbeiten';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SAVE_POST_CHANGES']       = 'Speichern';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_COUNT']              = 'Beiträge';
@@ -101,7 +103,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']        = 'Abbruch';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']         = 'Schließen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBMIT']        = 'Übernehmen';
-$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE_THREAD']        = 'Faden schließen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE_THREAD']        = 'Thema schließen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['CLOSE_THREAD']        = 'Ticket schließen';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADS_NODESC']     = 'Keine Beschreibung verfügbar...';
