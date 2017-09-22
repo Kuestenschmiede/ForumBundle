@@ -222,18 +222,23 @@ class C4GForumHelper extends \System
 			$forum = $this->Database->prepare(
 				"SELECT id, member_groups, admin_groups, guest_rights, member_rights, admin_rights, pid FROM tl_c4g_forum WHERE id=?")
 	 								 ->execute($forumId)->fetchAssoc();
-            $pForum = $this->Database->prepare(
-                "SELECT id, member_groups, admin_groups, guest_rights, member_rights, admin_rights FROM tl_c4g_forum WHERE id=?")
-                ->execute($forum['pid'])->fetchAssoc();
-			if(!$forum['guest_rights']){
-                $forum['guest_rights'] = $pForum['guest_rights'];
+			while($forum['pid'])
+            {
+                $pForum = $this->Database->prepare(
+                    "SELECT id, member_groups, admin_groups, guest_rights, member_rights, admin_rights,pid FROM tl_c4g_forum WHERE id=?")
+                    ->execute($forum['pid'])->fetchAssoc();
+                if(!$forum['guest_rights']){
+                    $forum['guest_rights'] = $pForum['guest_rights'];
+                }
+                if(!$forum['admin_rights']){
+                    $forum['admin_rights'] = $pForum['admin_rights'];
+                }
+                if(!$forum['member_rights']){
+                    $forum['member_rights'] = $pForum['member_rights'];
+                }
+                $forum['pid'] = $pForum['pid'];
             }
-            if(!$forum['admin_rights']){
-                $forum['admin_rights'] = $pForum['admin_rights'];
-            }
-            if(!$forum['member_rights']){
-                $forum['member_rights'] = $pForum['member_rights'];
-            }
+
 	 		$this->ForumCache[$forumId] = $forum;
 		}
         //TODO hier fehlt manchmal forumid, weswegen aus der db nix zurückkommt
@@ -590,7 +595,7 @@ class C4GForumHelper extends \System
 				break;
 		}
 		$threads = $this->Database->prepare(
-				"SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,a.concerning,".
+				"SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,".
 		               "c.creation AS lastPost, " . $sqlLastUser . " AS lastUsername, a.recipient,a.owner ".
 				"FROM tl_c4g_forum_thread a ".
 				"LEFT JOIN tl_member b ON b.id = a.author ".
@@ -3195,17 +3200,38 @@ class C4GForumHelper extends \System
 	    $set['pid'] = $forumId;
 	    $set['published'] = 1;
 	    $groupArray[] = $groupId;
-	    $set['define_rights'] = 1;
+//	    $set['define_rights'] = 0;
 	    $set['member_groups'] = serialize($groupArray);
+	    if(!$set['member_groups']){
+	        $set['member_groups']=$parentForum['member_groups'];
+        }
 	    $set['admin_groups'] = $parentForum['admin_groups'];
-//	    $set['member_rights'] = $parentForum['member_rights'];
-//	    $set['admin_rights'] = $parentForum['admin_rights'];
+	    $set['member_rights'] = $parentForum['member_rights'];
+	    $set['admin_rights'] = $parentForum['admin_rights'];
 	    $set['member_id'] = $groupId;
 	    $set['default_author'] = $parentForum['default_author'];
 	    $set['tstamp'] = time();
 
 	    $this->Database->prepare('INSERT INTO tl_c4g_forum %s')->set($set)->execute();
 	    return $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id =?')->execute($forumId,$groupId)->fetchAssoc();
+
+    }
+    public function createNewTicketForum($forumId,$concerning,$subject){
+        $parentForum = $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE id=?')->execute($forumId)->fetchAssoc();
+        $set['name'] = $subject;
+        $set['concerning'] = $concerning;
+        $set['pid'] = $forumId;
+        $set['published'] = 1;
+//      $set['define_rights'] = 1;
+        $set['member_groups'] = $parentForum['member_groups'];
+        $set['admin_groups'] = $parentForum['admin_groups'];
+	    $set['member_rights'] = $parentForum['member_rights'];
+	    $set['admin_rights'] = $parentForum['admin_rights'];
+        $set['default_author'] = $parentForum['default_author'];
+        $set['tstamp'] = time();
+
+        $this->Database->prepare('INSERT INTO tl_c4g_forum %s')->set($set)->execute();
+        return $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE pid=? AND concerning=?')->execute($forumId,$concerning)->fetchAssoc();
 
     }
 

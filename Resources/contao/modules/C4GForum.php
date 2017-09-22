@@ -1798,7 +1798,7 @@ JSPAGINATE;
          *
          * @return array
          */
-        public function generateNewThreadForm($forumId, $insertId = null, $insertSubject = null)
+        public function generateNewThreadForm($forumId)
         {
 
             list($access, $message) = $this->checkPermission($forumId);
@@ -1817,13 +1817,9 @@ JSPAGINATE;
                 }
             }
 
-            if (!$inputThreadname && !$insertSubject) {
+            if (!$inputThreadname) {
                $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ':<br/>' .
                    '<input name="thread" type="text" class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
-            }
-            elseif(!$inputThreadname){
-                $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ':<br/>' .
-                    '<input name="thread" type="text" value="'.$insertSubject.' "readonly class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
             }
 
             $data = '<div class="c4gForumNewThread">' .
@@ -1886,9 +1882,6 @@ JSPAGINATE;
 
             $data .= $this->getThreadDescForForm('c4gForumNewThreadDesc', $forumId, 'newthread', '');
             $data .= $this->getThreadSortForForm('c4gForumNewThreadSort', $forumId, 'newthread', '999');
-            if($insertId){
-                $data .= '<input name="id" type="hidden" value="'.$insertId.'" class ="formdata"';
-            }
 
             $editorId = '';
 
@@ -5822,14 +5815,17 @@ JSPAGINATE;
             if(!$subforum){
                 $subforum = $this->helper->createNewSubforum($forumId,$groupId);
             }
-            $threads = $this->helper->getThreadsFromDB($subforum['id']);
-            foreach($threads as $thread){
-                if($thread['concerning'] === $concerning && $thread['state'] != 3){
-                    $return = $this->getThreadAsHtml($thread['id']);
+            $ticketforums = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=?")->execute($subforum['id'])->fetchAllAssoc();
+            foreach($ticketforums as $ticketforum)
+            {
+                if($ticketforum['concerning'] == $concerning)
+                {
+                    $return = $this->getForumInTable($ticketforum['id']);
                 }
             }
             if(!$return){
-                $return = $this->generateNewThreadForm($subforum['id'],$concerning,$subject);
+                $ticketforum = $this->helper->createNewTicketForum($subforum['id'],$concerning,$subject);
+                $return = $this->generateNewThreadForm($ticketforum['id']);
             }
             return $return;
         }
