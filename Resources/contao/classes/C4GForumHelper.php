@@ -15,12 +15,10 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumMember;
+use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
 use Contao\System;
-
-if (version_compare(VERSION,'3','<')) {
-	include_once "classes/C4GUtils.php";
-}
 
 /**
  * Class C4GForumHelper
@@ -3871,8 +3869,17 @@ class C4GForumHelper extends \System
 
     }
 
-
-
+    /**
+     * @param $forumId
+     * @param $groupId
+     * @param $subject
+     * @param $text
+     * @param $ticketId
+     */
+    public static function create_ticket($forumId, $groupId,$subject,$text,$ticketId){
+        $forum = new C4GForum(\ModuleModel::findByPk($forumId));
+        $forum->autoTicket($forumId, $groupId,$subject,$text,$ticketId);
+    }
 }
 
 ?>

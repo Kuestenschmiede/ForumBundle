@@ -19,7 +19,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
     use con4gis\MapsBundle\Resources\contao\classes\ResourceLoader;
     use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
     use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
-    use con4gis\ForumBundle\Resources\contao\classes\C4GUtils;
+    use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPost;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumSession;
@@ -6059,9 +6059,7 @@ JSPAGINATE;
                     parse_str(file_get_contents("php://input"), $this->putVars);
                     foreach ($this->putVars as $key => $value) {
                         $tmpVal = Input::xssClean($value, true);
-                        $tmpVal = str_replace('<script>', '', $tmpVal);
-                        $tmpVal = str_replace('</script>', '', $tmpVal);
-                        $tmpVal = str_replace('onclick=', '', $tmpVal);
+                        $tmpVal = C4GUtils::cleanHtml($tmpVal);
                         $this->putVars[$key] = $tmpVal;
                     }
                 }
