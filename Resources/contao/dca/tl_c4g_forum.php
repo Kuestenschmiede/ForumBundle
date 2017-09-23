@@ -75,7 +75,11 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 				'href'                => 'act=select',
 				'class'               => 'header_edit_all',
 				'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-			)
+			),
+            'remove_bb' => array
+            (
+                'button_callback'     => array('tl_c4g_forum','remove_bb')
+            )
 		),
 		'operations' => array
 		(
@@ -951,6 +955,40 @@ class tl_c4g_forum extends \Backend
             $return = $arrRow['name'];
         }
         return $return;
+    }
+    public function remove_bb()
+    {
+        $posts = $this->Database->prepare('SELECT id,text FROM tl_c4g_forum_post')->execute()->fetchAllAssoc();
+        // BBCode tags to replace
+        $find = array(
+            '~\[b\](.*?)\[/b\]~s',
+            '~\[i\](.*?)\[/i\]~s',
+            '~\[u\](.*?)\[/u\]~s',
+            '~\[quote\](.*?)\[/quote\]~s',
+            '~\[url=(.*?)\](.*?)\[/url\]~s',
+            '~\[size=(.*?)\](.*?)\[/size\]~s',
+            '~\[color=(.*?)\](.*?)\[/color\]~s',
+            '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s'
+        );
+        // HTML tags to replace BBCode
+        $replace = array(
+            '<b>$1</b>',
+            '<i>$1</i>',
+            '<span style="text-decoration:underline;">$1</span>',
+            '<pre>$1</'.'pre>',
+            '<a href="$1">$2</a>',
+            '<span style="font-size:$1px;">$2</span>',
+            '<span style="color:$1;">$2</span>',
+            '<img src="$1" alt="" />'
+        );
+        foreach($posts as $post)
+        {
+
+            //Status des Tickets auf gelesen ändern
+
+            $set['text'] = preg_replace($find,$replace,$post['text']);
+            $this->Database->prepare('UPDATE tl_c4g_forum_post %s WHERE id=?')->set($set)->execute($post['id']);
+        }
     }
 }
 ?>

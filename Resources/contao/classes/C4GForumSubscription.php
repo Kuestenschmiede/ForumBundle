@@ -335,20 +335,20 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
                                 break;
                             case "delThread" :
                                 $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_DELTHREAD'];
-                                $aMailData['ACTION_NAME']              = \c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(\c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD_WITH_SUBJECT'), $thread['threadname']);
+                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD_WITH_SUBJECT'), $thread['threadname']);
                                 $sActionType                           = "THREAD";
                                 break;
                             case "moveThread" :
                                 $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_MOVETHREAD'];
-                                $aMailData['ACTION_NAME']              = \c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(\c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD_WITH_SUBJECT'), $this->MailCache ['moveThreadOldName'], $thread['threadname']);
+                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD_WITH_SUBJECT'), $this->MailCache ['moveThreadOldName'], $thread['threadname']);
                                 $sActionType                           = "THREAD";
                                 break;
                             case "newThread" : // only subforum
-                                $subjectAddition                       = \c4g\Forum\C4GForumHelper::getTypeText($forumType,'NEW_THREAD');
-                                $aMailData['ACTION_NAME']              = \c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(\c4g\Forum\C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD_WITH_SUBJECT'), $thread['threadname']);
+                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'NEW_THREAD');
+                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD_WITH_SUBJECT'), $thread['threadname']);
                                 $sActionType                           = "THREAD";
                                 break;
                         }
