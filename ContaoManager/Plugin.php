@@ -2,9 +2,9 @@
 
 namespace con4gis\ForumBundle\ContaoManager;
 
-use con4gis\ApiBundle\Con4gisApiBundle;
 use con4gis\CoreBundle\con4gisCoreBundle;
 use con4gis\ForumBundle\con4gisForumBundle;
+use con4gis\GroupsBundle\con4gisGroupsBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
@@ -14,8 +14,18 @@ use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class Plugin implements BundlePluginInterface
+class Plugin implements RoutingPluginInterface, BundlePluginInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
+    {
+        return $resolver
+            ->resolve(__DIR__.'/../Resources/config/routing.yml')
+            ->load(__DIR__.'/../Resources/config/routing.yml')
+            ;
+    }
 
     /**
      * Gets a list of autoload configurations for this bundle.
@@ -28,7 +38,7 @@ class Plugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create(con4gisForumBundle::class)
-                ->setLoadAfter([con4gisCoreBundle::class])
+                ->setLoadAfter([con4gisCoreBundle::class,con4gisGroupsBundle::class])
         ];
     }
 }

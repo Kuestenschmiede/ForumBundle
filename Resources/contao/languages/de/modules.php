@@ -17,15 +17,15 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Foren', 'Foren verwalten.' );
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Übersicht Tickets oder Themen');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Foren / Ticketsysteme', 'Foren- und Ticketbereiche verwalten.' );
+$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Übersicht Tickets / Themen','Übersicht von Tickets und Themen');
 $GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Übersicht Einträge');
 
 /**
  * Frontend modules
  */
-$GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			= array('Forum (con4gis)',
-															    'Mit diesem Modul binden Sie ein Forum ein.');
+$GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			= array('Foren / Tickets',
+															    'Mit diesem Modul binden Sie ein Forum oder Ticketsystem ein.');
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('Forum (con4gis) - Navigationspfad',
 															    'Mit diesem Modul binden Sie einen Navigationspfad für, über ein Forum verlinkte, Seiten ein.');
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter']	= array('Forum (con4gis) - Persönliche Nachrichten',

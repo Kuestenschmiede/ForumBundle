@@ -13,15 +13,19 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
-    use c4g\Maps\C4gMapsModel;
-    use c4g\Maps\ResourceLoader;
-    use c4g\MemberModel;
+    use con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus;
+    use con4gis\MapsBundle\Resources\contao\classes\MapDataConfigurator;
+    use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
+    use con4gis\MapsBundle\Resources\contao\classes\ResourceLoader;
+    use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
     use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
-    use con4gis\ForumBundle\Resources\contao\classes\C4GUtils;
+    use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPost;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumSession;
     use Contao\FrontendUser;
+    use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
+    use Contao\Input;
     use Contao\Module;
 
     $GLOBALS['c4gForumErrors']           = array();
@@ -95,7 +99,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
         public function __construct($objModule,$strColumn='main')
         {
             parent::__construct($objModule,$strColumn='main');
-            $this->helper = new C4GForumHelper($this->Database, null,FrontendUser::getInstance());
+            $this->helper = new C4GForumHelper($this->Database, null,FrontendUser::getInstance(),"","","UU",$this->c4g_forum_type);
             $this->User = FrontendUser::getInstance();
         }
 
@@ -147,7 +151,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 $enableMaps = true;
             }
             // initialize used Javascript Libraries and CSS files
-            \C4GJQueryGUI::initializeLibraries(
+            C4GJQueryGUI::initializeLibraries(
                 true,                                               // add c4gJQuery GUI Core LIB
                 ($this->c4g_forum_jquery_lib == true),              // add JQuery
                 ($this->c4g_forum_jqui_lib == true),                // add JQuery UI
@@ -164,29 +168,15 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
             //Override JQuery UI Default Theme CSS if defined
             if ($this->c4g_forum_uitheme_css_src) {
-                if (version_compare(VERSION, '3.2', '>=')) {
-                    // Contao 3.2.x Format
-                    $objFile                            = \FilesModel::findByUuid($this->c4g_forum_uitheme_css_src);
-                    if (!empty($objFile)) {
-                        $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
-                    }
-                } else {
-                    if (is_numeric($this->c4g_forum_uitheme_css_src)) {
-                        // Contao 3.x Format
-                        $objFile                            = \FilesModel::findByPk($this->c4g_forum_uitheme_css_src);
-                        if (!empty($objFile)) {
-                            $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
-                        }
-                    } else {
-                        // Contao 2 Format
-                        $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $this->c4g_forum_uitheme_css_src;
-                    }
+                $objFile                            = \FilesModel::findByUuid($this->c4g_forum_uitheme_css_src);
+                if (!empty($objFile)) {
+                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
                 }
             } else if(!empty($this->c4g_forum_uitheme_css_select)) {
                     $theme = $this->c4g_forum_uitheme_css_select;
-                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'system/modules/con4gis_core/assets/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
+                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
             } else {
-                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'system/modules/con4gis_core/assets/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
+                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
             }
 
 
@@ -201,17 +191,11 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $GLOBALS ['TL_CSS'] [] = 'bundles/con4gisforum/css/c4gForum.css';
             //$GLOBALS ['TL_CSS'] [] = 'system/modules/con4gis_forum/html/css/bbcodes.css';
             $data['id']      = $this->id;
-            //check if we need contao 4 routing
             // set global js var to inidcate api endpoint
-            if (class_exists('\con4gis\ApiBundle\Controller\ApiController') &&  (version_compare( VERSION, '4', '>=' ))) {
-                $data['forumAjaxUrl'] = "con4gis/api/c4g_forum_ajax";
-                $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/c4g_forum_pn_api';</script>";
-                $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'con4gis/api/fileUpload/';</script>";
-            } else {
-                $data['forumAjaxUrl'] = "system/modules/con4gis_core/api/index.php/c4g_forum_ajax";
-                $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'system/modules/con4gis_core/api/index.php/c4g_forum_pn_api';</script>";
-                $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'system/modules/con4gis_core/api/index.php/fileUpload/';</script>";
-            }
+            $data['forumAjaxUrl'] = "con4gis/api/forumService";
+            $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/forumPnService';</script>";
+            $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'con4gis/api/fileUpload/';</script>";
+
 
             // $data['ajaxData'] = "action=fmd&id=".$this->id."&language=".$GLOBALS['TL_LANGUAGE']."&page=".$objPage->id;
             $data['ajaxData'] = $this->id;
@@ -229,7 +213,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
             // save forum url for linkbuilding in ajaxrequests
             $aTmpData = $this->Session->getData();
-            if (stristr($aTmpData['referer']['current'], "/con4gis_core/api/") === false) {
+            if (stristr($aTmpData['referer']['current'], "/CoreBundle/Resources/contao/api/") === false) {
                 $aTmpData['current_forum_url'] = $aTmpData['referer']['current'];
                 $this->Session->setData($aTmpData);
             } else {
@@ -278,8 +262,8 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $aToolbarButtons = explode(",", $this->c4g_forum_bbcodes_editor_toolbaritems);
 
 
-            $GLOBALS['TL_CSS'][]        = 'system/modules/con4gis_core/assets/vendor/jQuery/plugins/chosen/chosen.css';
-            $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/con4gis_core/assets/vendor/jQuery/plugins/chosen/chosen.jquery.min.js';
+            $GLOBALS['TL_CSS'][]        = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.css';
+            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.jquery.min.js';
 
             if($this->c4g_forum_bbcodes != "1") {
                 $GLOBALS['TL_HEAD'][] = "<script>var ckRemovePlugins = 'bbcode';</script>";
@@ -289,7 +273,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
             if ($this->c4g_forum_editor === "ck") {
                 $GLOBALS['TL_HEAD'][]       = "<script>var ckEditorItems = ['" . implode("','", $aToolbarButtons) . "'];</script>";
-                $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/con4gis_core/assets/vendor/ckeditor/ckeditor.js';
+                $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4giscore/vendor/ckeditor/ckeditor.js';
             }
 
             if($this->c4g_forum_pagination_active == "1") {
@@ -302,7 +286,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 ResourceLoader::loadTheme();
                 static::$useMaps = $enableMaps;
                 // load core resources for maps
-                \c4g\Core\ResourceLoader::loadResourcesForModule('maps');
+                ResourceLoader::loadResourcesForModule('maps');
             }
 
             $data['breadcrumbDelim'] = $this->c4g_forum_breadcrumb_jqui_layout ? '' : '>';
@@ -415,7 +399,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 array_insert($buttons, 0, array(
                     array(
                         "id"   => 'addmemberdialog:' . $forumId,
-                        "text" => $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['ADD_MEMBER']
+                        "text" => C4GForumHelper::getTypeText($this->c4g_forum_type,'ADD_MEMBER')
                     )
                 ));
             }
@@ -685,15 +669,18 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $userId = $userData['id'];
 
             foreach ($threads AS $thread) {
-                if($this->c4g_forum_type =="TICKET"){
-                    if($this->helper->checkPermission($id,'showsentthreads')){
-                        $threadOwner = array_flip(unserialize($thread['owner']));
-                    }
-                    $threadRecipient = array_flip(unserialize($thread['recipient']));
-                    if(!(array_key_exists($userId,$threadOwner) || array_key_exists($userId,$threadRecipient))){
-                        continue;
-                    }
-                }
+                /**
+                 * @Todo fix Owner/Recipient
+                 */
+//                if($this->c4g_forum_type =="TICKET"){
+//                    if($this->helper->checkPermission($id,'showsentthreads')){
+//                        $threadOwner = array_flip(unserialize($thread['owner']));
+//                    }
+//                    $threadRecipient = array_flip(unserialize($thread['recipient']));
+//                    if(!(array_key_exists($userId,$threadOwner) || array_key_exists($userId,$threadRecipient))){
+//                        continue;
+//                    }
+//                }
                 switch ($this->c4g_forum_threadclick) {
                     case 'LPOST':
                         $threadAction = 'readlastpost:' . $thread['id'];
@@ -756,20 +743,25 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                     $tooltip .= ' [...]';
                 }
 
-
+                if($this->c4g_forum_type == "TICKET"){
+                    $title = $this->helper->getTicketTitle($thread['id'],$this->c4g_forum_type);
+                }
+                else{
+                    $title = $thread['name'];
+                }
                 $plainHtmlData = false;
                 if ($this->plainhtml) {
                     // for search engines: only show threadnames
                     if ($this->c4g_forum_multilingual) {
-                        $plainHtmlData = $this->helper->translateThreadField($thread['id'], 'name', $this->c4g_forum_language_temp, $this->helper->checkThreadname($thread['name'])) . '<br/>';
+                        $plainHtmlData = $this->helper->translateThreadField($thread['id'], 'name', $this->c4g_forum_language_temp, $this->helper->checkThreadname($title)) . '<br/>';
                     } else {
-                        $plainHtmlData .= $this->helper->checkThreadname($thread['name']) . '<br/>';
+                        $plainHtmlData .= $this->helper->checkThreadname($title) . '<br/>';
                     }
                 } else {
                     if ($this->c4g_forum_multilingual) {
-                        $threadname = $this->helper->translateThreadField($thread['id'], 'name', $this->c4g_forum_language_temp, $thread['name']);
+                        $threadname = $this->helper->translateThreadField($thread['id'], 'name', $this->c4g_forum_language_temp, $title);
                     } else {
-                        $threadname = $thread['name'];
+                        $threadname = $title;
                     }
 
                     $aaData = array(
@@ -1275,36 +1267,8 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             }
 
             $text = $post['text'];
-            // Handle BBCodes, if activated
-            if ($this->c4g_forum_bbcodes) {
-                //$textClass .= ' BBCode-Area';
-                //$text = preg_replace('#<br? ?/>#', '', $text);
-                //$text = $bbcode->Parse($text);
-                $find = array(
-                    '~\[b\](.*?)\[/b\]~s',
-                    '~\[i\](.*?)\[/i\]~s',
-                    '~\[u\](.*?)\[/u\]~s',
-                    '~\[quote\](.*?)\[/quote\]~s',
-                    '~\[url=(.*?)\](.*?)\[/url\]~s',
-                    '~\[size=(.*?)\](.*?)\[/size\]~s',
-                    '~\[color=(.*?)\](.*?)\[/color\]~s',
-                    '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s'
-                );
-                // HTML tags to replace BBcode
-                $replace = array(
-                    '<b>$1</b>',
-                    '<i>$1</i>',
-                    '<span style="text-decoration:underline;">$1</span>',
-                    '<pre>$1</'.'pre>',
-                    '<a href="$1">$2</a>',
-                    '<span style="font-size:$1px;">$2</span>',
-                    '<span style="color:$1;">$2</span>',
-                    '<img src="$1" alt="" />'
-                );
-                $text = preg_replace($find,$replace,$text);
-            }else{
-                $text = html_entity_decode($text);
-            }
+            $text = html_entity_decode($text);
+
 
             // search in the forum text for lib and replace by assets/vendor (file download compatibility)
             $text = str_replace('/lib', '/assets/vendor', $text);
@@ -1650,7 +1614,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 }
             }
 
-            if ($this->helper->checkPermission($thread['forumid'], 'newpost')) {
+            if ($this->helper->checkPermission($thread['forumid'], 'newpost') && $thread['state'] != 3) {
                 array_insert($dialogbuttons, 0,
                              array(
                                  array(
@@ -1659,6 +1623,17 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                                      "text"   => C4GForumHelper::getTypeText($this->c4g_forum_type,'NEW_POST')
                                  )
                              )
+                );
+            }
+            if ($this->helper->checkPermission($thread['forumid'], 'closethread') && $thread['state'] != 3) {
+                array_insert($dialogbuttons, 0,
+                    array(
+                        array(
+                            "action" => 'closethread:' . $id . ':thread' . $id,
+                            "type"   => 'get',
+                            "text"   => C4GForumHelper::getTypeText($this->c4g_forum_type,'CLOSE_THREAD')
+                        )
+                    )
                 );
             }
 
@@ -1786,6 +1761,12 @@ JSPAGINATE;
             } else {
                 $threadname = $thread['name'];
             }
+            if($this->c4g_forum_type == "TICKET"){
+                $title = $this->helper->getTicketTitle($thread['id'],$this->c4g_forum_type);
+            }
+            else{
+                $title = C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . $threadname;
+            }
 
             $return = array(
                 "dialogstate"   => $this->c4g_forum_param_forum.':' . $thread['forumid'] . ";readthread:" . $id,
@@ -1794,7 +1775,7 @@ JSPAGINATE;
                 "dialogid"      => 'thread' . $id,
                 "dialogbuttons" => $dialogbuttons,
                 "dialogoptions" => $this->addDefaultDialogOptions(array(
-                                                                      "title" => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ': ' . $threadname
+                                                                      "title" => $title
                                                                   ))
             );
 
@@ -1817,7 +1798,7 @@ JSPAGINATE;
          *
          * @return array
          */
-        public function generateNewThreadForm($forumId, $insertId = null, $insertSubject = null)
+        public function generateNewThreadForm($forumId)
         {
 
             list($access, $message) = $this->checkPermission($forumId);
@@ -1836,13 +1817,9 @@ JSPAGINATE;
                 }
             }
 
-            if (!$inputThreadname && !$insertSubject) {
+            if (!$inputThreadname) {
                $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ':<br/>' .
                    '<input name="thread" type="text" class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
-            }
-            elseif(!$inputThreadname){
-                $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . ':<br/>' .
-                    '<input name="thread" type="text" value="'.$insertSubject.' "readonly class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
             }
 
             $data = '<div class="c4gForumNewThread">' .
@@ -1850,46 +1827,61 @@ JSPAGINATE;
 
                     $inputThreadname .
                     '</div>';
-           if($this->c4g_forum_type =="TICKET"){
+           if ($this->c4g_forum_type =="TICKET") {
                $user = FrontendUser::getInstance();
                $groups = $this->helper->getMemberGroupsForForum($forumId,$user->getData()['id']);
+               $counterRecipient = 0;
+               $options ='';
+               $arrOptions = [];
 
-               if($this->helper->checkPermission($forumId,'tickettomember')){
-                   $data .= '<select name="recipient_member" class="formdata ui-corner-all">';
+               if ($this->helper->checkPermission($forumId,'tickettomember')) {
+                   $data .= '<select name="recipient_member" class="formdata ui-corner-all"';
 
+                   // only check members other than the current user
                    $allMembers = $this->Database->prepare(
-                       $select ="SELECT id,username,groups
-                FROM tl_member")->execute()->fetchAllAssoc();
-                   foreach($allMembers as $member){
+                       $select ="SELECT id,username,groups FROM tl_member WHERE id != '$user->id'"
+                   )->execute()->fetchAllAssoc();
+                   foreach ($allMembers as $member) {
                        $member['groups'] = unserialize($member['groups']);
                        $member['groups'] = array_flip($member['groups']);
-                       foreach($groups as $group){
-                           if(array_key_exists($group['id'],$member['groups'])){
-                               $data .= '<option value="'.$member['id'].'">'.$member['username'].'</option>';
+                       foreach ($groups as $group) {
+                           if (array_key_exists($group['id'],$member['groups']) && !$arrOptions[$member['id']]) {
+                               $options .= '<option value="'.$member['id'].'">'.$member['username'].'</option>';
+                               $arrOptions[$member['id']] = true;
+                               $counterRecipient = $counterRecipient + 1;
                            }
                        }
                    }
-               }
-               else{
-                   $data .= '<select name="recipient_group" class="formdata ui-corner-all">';
-                   foreach($groups as $group){
+                   if ($counterRecipient == 1) {
+                       $data .= ' style="visibility:hidden" value="'.$member['id'].'"';
+                   } elseif ($counterRecipient == 0) {
+                       return null;
+                   }
+               } else {
+                   $data .= '<select name="recipient_group" class="formdata ui-corner-all"';
+                   foreach ($groups as $group) {
                        $selects =$this->Database->prepare("SELECT id,name
                 FROM tl_member_group
                 WHERE id=?")->execute($group['id'])->fetchAllAssoc();
                        foreach($selects as $select){
-                           $data .= '<option value="'.$select['id'].'">'.$select['name'].'</option>';
+                           $options .= '<option value="'.$select['id'].'">'.$select['name'].'</option>';
+                           $counterRecipient = $counterRecipient +1;
                        }
                    }
-
+                   if($counterRecipient == 1){
+                       $data .= ' style="visibility:hidden" value="'. $select['id'].'"';
+                   }
+                   elseif($counterRecipient == 0){
+                       return null;
+                   }
                }
-               $data .='</select>';
+
+
+               $data .='>'.$options.'</select>';
            }
 
             $data .= $this->getThreadDescForForm('c4gForumNewThreadDesc', $forumId, 'newthread', '');
             $data .= $this->getThreadSortForForm('c4gForumNewThreadSort', $forumId, 'newthread', '999');
-            if($insertId){
-                $data .= '<input name="id" type="hidden" value="'.$insertId.'" class ="formdata"';
-            }
 
             $editorId = '';
 
@@ -2093,6 +2085,7 @@ JSPAGINATE;
             $data .=
                 '<input name="parentDialog" type="hidden" class="formdata" value="' . $parentDialog . '"></input>' .
                 '</div>';
+            $title = $this->helper->getTicketTitle($threadId,$this->c4g_forum_type);
 
 
             $return = array(
@@ -2118,7 +2111,7 @@ JSPAGINATE;
                     )
                 ),
                 "dialogoptions" => $this->addDefaultDialogOptions(array(
-                                                                      "title" => sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'NEW_POST_TITLE'), $thread['threadname'], $thread['forumname']),
+                                                                      "title" => sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'NEW_POST_TITLE'), $title, $thread['forumname']),
                                                                       "modal" => true
                                                                   ))
             );
@@ -2231,8 +2224,8 @@ JSPAGINATE;
             $post             = array();
             $post['username'] = $this->User->username;
             $post['creation'] = time();
-            $post['subject']  = nl2br(C4GUtils::secure_ugc($this->putVars['subject']));
-            $post['text']     = nl2br(C4GUtils::secure_ugc($this->putVars['post']));
+            $post['subject']  = C4GUtils::secure_ugc($this->putVars['subject']);
+            $post['text']     = C4GUtils::secure_ugc($this->putVars['post']);
             $post['linkname'] = C4GUtils::secure_ugc($this->putVars['linkname']);
             $post['linkurl']  = C4GUtils::secure_ugc($this->putVars['linkurl']);
             $data             = $this->generatePostAsHtml($post, false, true);
@@ -2488,9 +2481,9 @@ JSPAGINATE;
             $post             = array();
             $post['username'] = $this->User->username;
             $post['creation'] = time();
-            $post['subject']  = nl2br(C4GUtils::secure_ugc($threadname));
-            $post['tags']     = nl2br(C4GUtils::secure_ugc($this->putVars['tags']));
-            $post['text']     = nl2br(C4GUtils::secure_ugc($this->putVars['post']));
+            $post['subject']  = C4GUtils::secure_ugc($threadname);
+            $post['tags']     = C4GUtils::secure_ugc($this->putVars['tags']);
+            $post['text']     = C4GUtils::secure_ugc($this->putVars['post']);
             $post['linkname'] = C4GUtils::secure_ugc($this->putVars['linkname']);
             $post['linkurl']  = C4GUtils::secure_ugc($this->putVars['linkurl']);
             $data .= $this->generatePostAsHtml($post, false, true);
@@ -2640,7 +2633,7 @@ JSPAGINATE;
                         $divClass .= " c4gForumBoxNoJqui";
                     }
                 }
-                $data .= '<div class="' . $divClass . '" id="' . $divId . '" title="' . nl2br(C4GUtils::secure_ugc($this->getForumLanguageConfig($forum,'description'))) . '" data-action="' . $action . '" data-hoverclass="' . $hoverClass . '"' . $href . '>';
+                $data .= '<div class="' . $divClass . '" id="' . $divId . '" title="' . C4GUtils::secure_ugc($this->getForumLanguageConfig($forum,'description')) . '" data-action="' . $action . '" data-hoverclass="' . $hoverClass . '"' . $href . '>';
                 $break = false;
 // TODO
                 if ($forum['box_imagesrc']) { // check if bin is empty !!!!
@@ -2648,17 +2641,7 @@ JSPAGINATE;
                     if ($this->c4g_forum_boxes_jqui_layout) {
                         $imgClass .= " ui-corner-all";
                     }
-                    /*if (version_compare(VERSION, '3.2', '>=')) {
-					// Contao 3.2.x Format
-
-
-				} else if (is_numeric($forum['box_imagesrc'])) {
-					// Contao 3.x Format
-					$objFile = \FilesModel::findByPk($forum['box_imagesrc']);
-					$forum['box_imagesrc'] = $objFile->path;
-				}*/
                     $data .= '<img src="' . $forum['box_imagesrc'] . '" class="' . $imgClass . '" alt="' . $this->getForumLanguageConfig($forum,'name') . '">';
-
                 }
                 if ($this->c4g_forum_boxes_text) {
                     $name = $this->getForumLanguageConfig($forum,'name');
@@ -3821,7 +3804,7 @@ JSPAGINATE;
         {
             //TODO forum id hier übergeben, dann können wir uns das forum hier aus der db holen und abfragen
             $forum = C4gForumModel::findByPk($forumId);
-            return ($GLOBALS['con4gis_maps_extension']['installed']) && (($forum->enable_maps) || static::$useMaps);
+            return ($GLOBALS['con4gis']['maps']['installed']) && (($forum->enable_maps) || static::$useMaps);
         }
 
 
@@ -4370,87 +4353,31 @@ JSPAGINATE;
             $this->c4g_map_id                    = $forum['map_id'];
             C4GForumHelper::$postIdToIgnoreInMap = $postId;
 
-            if (version_compare($GLOBALS['con4gis_maps_extension']['version'], '3.0', '<')) {
-                // con4gis-Maps 1/2
-                $mapData = C4GMaps::prepareMapData($this, $this->Database, null, true);
-                if ($forum['map_type'] == 'PICK') {
-                    // GEO Picker
-                    $mapData['pickGeo']          = true;
-                    $mapData['pickGeo_xCoord']   = '#c4gForumPostMapEntryGeoX';
-                    $mapData['pickGeo_yCoord']   = '#c4gForumPostMapEntryGeoY';
-                    $mapData['pickGeo_initzoom'] = 14;
+            $mapData = MapDataConfigurator::prepareMapData($this, $this->Database);
+            if ($forum['map_type'] == 'PICK') {
+                // GEO Picker
+                $mapData['geopicker'] = array
+                (
+                    'type' => 'frontend',
+                    'input_geo_x' => '[name="geox"]',
+                    'input_geo_y' => '[name="geoy"]'
+                );
 
-                    $mapData['geocoding']     = true;
-                    $mapData['geocoding_url'] = 'system/modules/con4gis_maps/C4GNominatim.php';
-                    $mapData['geocoding_div'] = 'c4gForumPostMapGeocoding';
-
-                    $mapData['div'] = 'c4gForumPostMap';
-                    $data .= '<div id="c4gForumPostMapGeocoding" class="c4gForumPostMapGeocoding"></div>';
-                    $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
-                } else {
-                    // Feature Editor
-                    $mapData['editor']        = true;
-                    $mapData['editor_labels'] = $GLOBALS['TL_LANG']['c4g_maps']['editor_labels'];
-                    $mapData['editor_field']  = '#c4gForumPostMapEntryGeodata';
-                    switch ($forum['map_type']) {
-                        case 'EDIT1' :
-                            $mapData['editor_types'] = array('polygon');
-                            break;
-                        case 'EDIT2' :
-                            $mapData['editor_types'] = array('path');
-                            break;
-                        default:
-                    }
-
-                    $mapData['geocoding_url']         = 'system/modules/con4gis_maps/C4GNominatim.php';
-                    $mapData['geosearch']             = true;
-                    $mapData['geosearch_div']         = 'c4gForumPostMapGeosearch';
-                    $mapData['geosearch_zoomto']      = 14;
-                    $mapData['geosearch_zoombounds']  = true;
-                    $mapData['geosearch_attribution'] = true;
-
-                    $mapData['div'] = 'c4gForumPostMap';
-                    $data .= '<div id="c4gForumPostMapGeosearch" class="c4gForumPostMapGeosearch"></div>';
-                    $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
-                }
+                $mapData['mapDiv'] = 'c4gForumPostMap';
+                $mapData['addIdToDiv'] = false;
+                $data .= '<div id="c4gForumPostMapGeocoding" class="c4gForumPostMapGeocoding"></div>';
+                $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
             } else {
-                // con4gis-Maps 3
-                $mapData = \c4g\Maps\MapDataConfigurator::prepareMapData($this, $this->Database);
-                if ($forum['map_type'] == 'PICK') {
-                    // GEO Picker
-                    $mapData['geopicker'] = array
-                    (
-                        'type' => 'frontend',
-                        'input_geo_x' => '[name="geox"]',
-                        'input_geo_y' => '[name="geoy"]'
-                    );
+                // Feature Editor
+                $mapData['editor']        = true;
+                $mapData['editor_labels'] = $GLOBALS['TL_LANG']['c4g_maps']['editor_labels'];
+                $mapData['editor_field']  = '#c4gForumPostMapEntryGeodata';
+                $mapData['geosearch']['enable']   = true;
 
-                    $mapData['mapDiv'] = 'c4gForumPostMap';
-                    $mapData['addIdToDiv'] = false;
-                    $data .= '<div id="c4gForumPostMapGeocoding" class="c4gForumPostMapGeocoding"></div>';
-                    $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
-                } else {
-                    // Feature Editor
-                    $mapData['editor']        = true;
-                    $mapData['editor_labels'] = $GLOBALS['TL_LANG']['c4g_maps']['editor_labels'];
-                    $mapData['editor_field']  = '#c4gForumPostMapEntryGeodata';
-                    // switch ($forum['map_type']) {
-                    //     case 'EDIT1' :
-                    //         $mapData['editor_types'] = array('polygon');
-                    //         break;
-                    //     case 'EDIT2' :
-                    //         $mapData['editor_types'] = array('path');
-                    //         break;
-                    //     default:
-                    // }
-
-                    $mapData['geosearch']['enable']   = true;
-
-                    $mapData['mapDiv'] = 'c4gForumPostMap';
-                    $mapData['addIdToDiv'] = false;
-                    $data .= '<div id="c4gForumPostMapGeosearch" class="c4gForumPostMapGeosearch"></div>';
-                    $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
-                }
+                $mapData['mapDiv'] = 'c4gForumPostMap';
+                $mapData['addIdToDiv'] = false;
+                $data .= '<div id="c4gForumPostMapGeosearch" class="c4gForumPostMapGeosearch"></div>';
+                $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
             }
 
             if ($add) {
@@ -4529,34 +4456,18 @@ JSPAGINATE;
             $locations        = array();
             $locations[]      = $this->helper->getMapLocationForPost($post);
 
-            if (version_compare($GLOBALS['con4gis_maps_extension']['version'], '3.0', '<')) {
-                // con4gis-Maps 1/2
-                $mapData = C4GMaps::prepareMapData($this, $this->Database, $locations);
-                if (($post['loc_geox'] != '') && ($post['loc_geoy'] != '')) {
-                    $mapData['calc_extent'] = 'CENTERZOOM';
-                    $mapData['center_geox'] = $post['loc_geox'];
-                    $mapData['center_geoy'] = $post['loc_geoy'];
-                    $mapData['zoom']        = 14;
-                } else {
-                    $mapData['calc_extent']    = 'ID';
-                    $mapData['calc_extent_id'] = $locations[0]['id'];
-                }
-                $mapData['div'] = 'c4gForumPostMap';
+            $mapData = MapDataConfigurator::prepareMapData($this, $this->Database);
+            if (($post['loc_geox'] != '') && ($post['loc_geoy'] != '')) {
+                $mapData['calc_extent'] = 'CENTERZOOM';
+                $mapData['center']['lon'] = $post['loc_geox'];
+                $mapData['center']['lat'] = $post['loc_geoy'];
+                $mapData['center']['zoom'] = 14;
             } else {
-                // con4gis-Maps 3
-                $mapData = \c4g\Maps\MapDataConfigurator::prepareMapData($this, $this->Database);
-                if (($post['loc_geox'] != '') && ($post['loc_geoy'] != '')) {
-                    $mapData['calc_extent'] = 'CENTERZOOM';
-                    $mapData['center']['lon'] = $post['loc_geox'];
-                    $mapData['center']['lat'] = $post['loc_geoy'];
-                    $mapData['center']['zoom'] = 14;
-                } else {
-                    // $mapData['calc_extent']    = 'ID';
-                    // $mapData['calc_extent_id'] = $locations[0]['id'];
-                }
-                $mapData['mapDiv'] = 'c4gForumPostMap';
-                $mapData['addIdToDiv'] = false;
+                // $mapData['calc_extent']    = 'ID';
+                // $mapData['calc_extent_id'] = $locations[0]['id'];
             }
+            $mapData['mapDiv'] = 'c4gForumPostMap';
+            $mapData['addIdToDiv'] = false;
             $data           = '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
 
             $return = array(
@@ -4605,17 +4516,9 @@ JSPAGINATE;
 
             $this->c4g_map_id = $forum['map_id'];
             $locations        = $this->helper->getMapLocationsForForum($forumId, $this->c4g_forum_param_forumbox, $this->c4g_forum_param_forum);
-
-            if (version_compare($GLOBALS['con4gis_maps_extension']['version'], '3.0', '<')) {
-                // con4gis-Maps 1/2
-                $mapData = C4GMaps::prepareMapData($this, $this->Database, $locations);
-                $mapData['div'] = 'c4gForumPostMap';
-            } else {
-                // con4gis-Maps 3
-                $mapData = \c4g\Maps\MapDataConfigurator::prepareMapData($this, $this->Database);
-                $mapData['mapDiv'] = 'c4gForumPostMap';
-                $mapData['addIdToDiv'] = false;
-            }
+            $mapData = MapDataConfigurator::prepareMapData($this, $this->Database);
+            $mapData['mapDiv'] = 'c4gForumPostMap';
+            $mapData['addIdToDiv'] = false;
 
 
             $data = '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
@@ -5855,10 +5758,13 @@ JSPAGINATE;
                 case 'threadlist':
                     $return = $this->getThreadlist($values[1]);
                     break;
-                default:
-                    break;
-                case 'ticket':
+                case 'ticketcall':
                     $return = $this->ticket($values[1],$values[2],$values[3],$values[4]);
+                    break;
+                case 'closethread':
+                    $return = $this->closethread($values[1]);
+                    break;
+                default:
                     break;
             }
             // HOOK: for enhancements to change the result
@@ -5902,27 +5808,31 @@ JSPAGINATE;
             return $result;
 
         }
-        public function ticket($forumId,$ticketId,$groupId,$subject = null)
+        public function ticket($forumId,$concerning,$groupId,$subject)
         {
+            $this->action = 'newthread';
             $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId,$groupId)->fetchAssoc();
             if(!$subforum){
                 $subforum = $this->helper->createNewSubforum($forumId,$groupId);
             }
-            $threads = $this->helper->getThreadsFromDB($subforum['id']);
-            foreach($threads as $thread){
-                if($thread['concerning'] === $ticketId){
-                    $return = $this->getThreadAsHtml($thread['id']);
+            $ticketforums = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=?")->execute($subforum['id'])->fetchAllAssoc();
+            foreach($ticketforums as $ticketforum)
+            {
+                if($ticketforum['concerning'] == $concerning)
+                {
+                    $return = $this->getForumInTable($ticketforum['id']);
                 }
             }
             if(!$return){
-                $return = $this->generateNewThreadForm($subforum['id'],$ticketId,$subject);
+                $ticketforum = $this->helper->createNewTicketForum($subforum['id'],$concerning,$subject);
+                $return = $this->generateNewThreadForm($ticketforum['id']);
             }
             return $return;
         }
-        public function autoTicket($forumId, $groupId,$subject,$text,$ticketId)
+        public function autoTicket($forumId, $groupId, $subject,$text ,$concerning)
         {
             $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId,$groupId)->fetchAssoc();
-            if(!$subforum){
+            if(!$subforum) {
                 $subforum = $this->helper->createNewSubforum($forumId,$groupId);
             }
             $author =$subforum['default_author'];
@@ -5931,14 +5841,31 @@ JSPAGINATE;
             $group = $this->Database->prepare('SELECT cg_member FROM tl_member_group WHERE id=?')->execute($groupId)->fetchAssoc();
             $recipient = $group['cg_member'];
             foreach($threads as $thread){
-                if($thread['concerning'] == $ticketId){
+                if($thread['concerning'] == $concerning && $thread['state'] != 3){
                     $return = $this->helper->insertPostIntoDB($thread['id'],$author,$subject,$text,null,null,null,null,null,null,null,null,null,null,null,$recipient,$owner);
                 }
             }
             if(!$return){
-                $return = $this->helper->insertThreadIntoDB($subforum['id'],$subject,$author,null,'999',$text,null,null,null,null,null,null,null,null,null,null,$recipient,$owner,$ticketId);
+                $return = $this->helper->insertThreadIntoDB($subforum['id'],$subject,$author,null,'999',$text,null,null,null,null,null,null,null,null,null,null,$recipient,$owner,$concerning);
             }
             return $return;
+        }
+        public function closethread($threadId)
+        {
+            $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($threadId)->fetchAssoc();
+            $newposts = $thread['posts']+1;
+            $this->Database->prepare('UPDATE tl_c4g_forum_thread SET state = 3, posts ='.$newposts.' WHERE id=?')->execute($threadId);
+            $set = array(
+                'text'      => C4GForumTicketStatus::getState(3),
+                'subject'      => C4GForumTicketStatus::getState(3),
+                'state'     => 3,
+                'creation'  => time(),
+                'pid'       => $threadId,
+                'author'    => $this->User->id,
+                'post_number'     => $newposts
+            );
+            $this->Database->prepare('INSERT INTO tl_c4g_forum_post %s')->set($set)->execute();
+            return $this->getThreadAsHtml($threadId);
         }
 
 
@@ -5982,11 +5909,7 @@ JSPAGINATE;
             $sFrontendUrl = false;
             if (!empty($id)) {
                 $oPage = \Contao\PageModel::findPublishedById($id);
-                if (version_compare(VERSION, '3.1', '<')) {
-                    $sFrontendUrl = $this->Environment->url;
-                } else {
-                    $sFrontendUrl = $this->Environment->url . TL_PATH . '/';
-                }
+                $sFrontendUrl = $this->Environment->url . TL_PATH . '/';
                 $sFrontendUrl .= $this->getFrontendUrl($oPage->row());
             }
 
@@ -6125,20 +6048,20 @@ JSPAGINATE;
 
             try {
 
-
                 $this->initMembers();
                 $session = $this->Session->getData();
-                if (version_compare(VERSION, '3.1', '<')) {
-                    $frontendUrl = $this->Environment->url . $session['current_forum_url'];
-                } else {
-                    $frontendUrl = $this->Environment->url . TL_PATH . '/' . $session['current_forum_url'];
-                }
+                $frontendUrl = $this->Environment->url . TL_PATH . '/' . $session['current_forum_url'];
 
                 $this->helper = new C4GForumHelper($this->Database, $this->Environment, $this->User, $this->headline,
-                                                   $frontendUrl, $this->c4g_forum_show_realname);
+                                                   $frontendUrl, $this->c4g_forum_show_realname,$this->c4g_forum_type);
 
                 if (($_SERVER['REQUEST_METHOD']) == 'PUT') {
                     parse_str(file_get_contents("php://input"), $this->putVars);
+                    foreach ($this->putVars as $key => $value) {
+                        $tmpVal = Input::xssClean($value, true);
+                        $tmpVal = C4GUtils::cleanHtml($tmpVal);
+                        $this->putVars[$key] = $tmpVal;
+                    }
                 }
 
                 // if there was an initial get parameter "state" then use it for jumping directly
@@ -6205,6 +6128,7 @@ JSPAGINATE;
                     $result['cronexec'][] = $sitemapJob;
                 }
             }
+//            return $result;
             if ($this->plainhtml) {
                 return $result;
             } else {

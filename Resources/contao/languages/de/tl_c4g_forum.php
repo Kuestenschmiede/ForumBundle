@@ -84,7 +84,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['link_newwindow'] 			= array('Links in neuem
 																		'Links nicht im selben Fenster, sondern in einem neuen Fenster öffnen.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['sitemap_exclude'] 			= array('Nicht in XML-Sitemap aufnehmen',
 																		'Den Forenbereich und die Themen nicht in die Google XML-Sitemap aufnehmen (die Sitemap wird im Frontend-Modul aktiviert)');
-$GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'] 			= array('Autor für Backend', 'Benutzer, der als Autor angezeigt werden soll, wenn es Forenelement im Backend erstellt wird.');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'] 			= array('Autor für Backend', 'Benutzer, der als Autor angezeigt werden soll, wenn ein Forenelement im Backend erstellt wird.');
 
 /**
  * Legends
@@ -166,6 +166,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['right_latestthreads']	= 'Neue Themen';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_alllanguages']	= 'Alle Sprachen editieren (Mehrsprachigkeit)';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_tickettomember']	= 'Tickets an einzelne Mitglieder oder Moderatoren schicken';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_showsentthreads']= 'Abgeschickte Tickets weiter anzeigen';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_closethread']    = 'Status ändern';
 
 /**
  * Fulltext Indexing Configuration Texts
@@ -183,8 +184,6 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['warning']     		= array("Eine komplette Ind
 $GLOBALS['TL_LANG']['tl_c4g_forum']['success']			= "Ihr Forum wurde erfolgreich indiziert.";
 $GLOBALS['TL_LANG']['tl_c4g_forum']['fail']				= array("FEHLER: ",
 																"Bei der Indizierung kam es zu einer Zeitüberschreitung!");
-
-
 
 
     $GLOBALS['TL_LANG']['tl_c4g_forum']['default_subscription_text'] = <<<TEXT

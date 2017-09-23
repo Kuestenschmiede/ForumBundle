@@ -18,7 +18,7 @@
      */
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_type']              = array(
         'Forenart',
-        'Die Forenart beeinflusst die Beschriftungen. Bei Informationen werden Themen zu Fragen und Beiträge zu Kommentaren.'
+        'Die Forenart beeinflusst die Beschriftungen. Bei Informationen werden Themen zu Fragen und Beiträge zu Kommentaren. Ticketsystem verändert das Forum zu einem geschlossenem Ticketsystem.'
     );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_size']              = array(
         'Größe (Breite, Höhe)',
@@ -81,17 +81,17 @@
         'Wählen Sie die Sprachen für die Frontendeingabe. Achtung wählen Sie nur Sprachen die über die Sprachdateien definiert sind (Standard: de,en,fi)'
     );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes']                       = array(
-        'BBCodes verwenden',
-        'Deaktivieren Sie diese Checkbox, falls Sie BBCodes komplett deaktivieren möchten! Die Verwendung von BBCodes ist dann in diesem Forum nicht mehr möglich. Dies kann zu Formatfehlern führen, wenn diese in einem bereits laufenden Forum zuvor aktiviert waren.'
+        'Editor verwenden',
+        'Deaktivieren Sie diese Checkbox, falls Sie Bden Editor komplett deaktivieren möchten! Dies kann zu Formatfehlern führen, wenn der Editor in einem bereits laufenden Forum zuvor aktiviert waren. Ohne Editor sind Formatierungen nicht mehr möglich.'
     );
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor']                = array('Alten WYSIWYG-Editor verwenden', 'Achtung: Dieses Feature funktioniert nur, wenn das Forum eingebettet, also nicht im Dialog, verwendet wird!');
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = array('WYSIWYG-Editor Toolbar Schaltfächen', '');
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_ckeditor']                      = array('Neuen WYSIWYG-Editor verwenden', '');
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('WYSIWYG-Editor', '');
+    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor']                = array('Alten WYSIWYG-Editor verwenden', 'Achtung: Dieses Feature funktioniert nur, wenn das Forum eingebettet, also nicht im Dialog, verwendet wird!');
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = array('Editor Toolbar Schaltfächen', '');
+    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_ckeditor']                      = array('Neuen WYSIWYG-Editor verwenden', '');
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('Editor', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button']                = array('Persönliche Nachrichten', 'Button für Persönliche Nachrichten im Profil anzeigen');
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "Neuen WYSIWYG-Editor verwenden";
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb']           = "Alten WYSIWYG-Editor verwenden";
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "Keinen WYSIWYG-Editor verwenden";
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "CKEditor verwenden";
+    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb']           = "Alten WYSIWYG-Editor verwenden";
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "Keinen Editor verwenden";
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imguploadpath']  = array('Bildupload-Verzeichnis', 'Wählen Sie das Verzeichnis aus, in dem die Bilder gespeichert werden sollen. Es wird je Tag ein extra Ordner innerhalb dieses Ordners angelegt.');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_fileuploadpath'] = array('Dateiupload-Verzeichnis', 'Wählen Sie das Verzeichnis aus, in dem die Dateien gespeichert werden sollen. Es wird je Tag ein extra Ordner innerhalb dieses Ordners angelegt.');
 // $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_smileys'] 	= array('Smileys verwenden',
@@ -221,6 +221,11 @@
         'Wählen Sie hier die Seite aus, auf der sich das Frontend-Modul mit dem Forum befindet.'
     );
 
+    $GLOBALS['TL_LANG']['tl_module']['ticketredirectsite'] = array(
+        'Weiterleitungsseite Ticket',
+        'Wählen Sie hier die Seite aus, auf die für die Ticketerstellung weitergeleitet werden soll.'
+    );
+
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_last_post_on_new'] = array("Beim Neuanlegen letzten Post anzeigen", "");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_enabled'] = array("Bewertungen aktivieren", "Zeigt ein fünf Sterne Bewertungssystem beim schreiben von Beiträgen an.");
@@ -267,7 +272,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_general_legend'] = 'Forum - Grundeinstellungen';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_legend']    = 'Forum - Benutzereinstellungen';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sizes_legend']   = 'Forum - Größeneinstellungen';
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_legend'] = 'Forum - Editoreinstellungen (BBCodes)';
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_legend'] = 'Forum - Editoreinstellungen';
     //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pn_legend']      = 'Forum - Persönliche Nachrichten';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_legend']   = 'Forum - Einstellungen für Kachelsicht';
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqui_legend']    = 'Forum - Styling (jQuery UI)';

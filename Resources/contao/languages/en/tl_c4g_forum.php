@@ -166,6 +166,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['right_latestthreads']		= 'Latest threads';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_alllanguages']	    = 'Edit all languages (multilingual)';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_tickettomember']     = 'Send tickets to single admins or members';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_showsentthreads']	= 'Show sent tickets';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_closethread']        = 'Change state';
 
 
 /**

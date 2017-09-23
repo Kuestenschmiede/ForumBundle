@@ -3,7 +3,7 @@
 /**
  * con4gis - the gis-kit
  *
- * @version   php 7
+ * @version   php 5
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
@@ -17,18 +17,16 @@
  */
 $GLOBALS['TL_LANG']['MOD']['con4gis'] 				= array( 'con4gis (construction kit)', 'www.con4gis.org' );
 
-$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Forums', 'Administrate forums.' );
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Overview Tickets / Threads','Overview on tickets and threads');
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Overviwe Posts');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Forums', 'Amministrazione forums.' );
 
 /**
  * Frontend modules
  */
 $GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			= array('Forum (con4gis)',
-															'This module allows you to integrate forums.');
+															'Questo modulo permette di integrare i forums.');
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('Forum (con4gis) - Breadcrumb',
-															'This module allows you to integrate a forum breadcrumb on pages linked to the forum.');
-$GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter'] 	= array('Forum (con4gis) - Private messages',
-															'With this module you can integrate the private messages for your forum.');
+															'Questo modulo permette di integrare i breadcrumb nelle pagine collegate al forum.');
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter'] 	= array('Forum (con4gis) - Messaggi privati',
+															'Con questo modulo è possibile integrare i messaggi privati nel forum.');
 
 ?>

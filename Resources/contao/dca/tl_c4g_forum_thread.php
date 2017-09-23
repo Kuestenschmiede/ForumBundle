@@ -128,6 +128,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         ),
         'pid' => array
         (
+            'filter'                  => true,
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         'name' => array
@@ -144,8 +145,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['state'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'foreignKey'              => 'tl_c4g_forum_state.state',
-            #'options_callback'        => array('tl_c4g_forum_thread','get_options'),
+            'options_callback'        => array('tl_c4g_forum_thread','get_options'),
             'filter'                  => true,
             'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-'),
             'sql'                     => "int(10)"
@@ -168,7 +168,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'inputType'               => 'select',
             'foreignKey'              => 'tl_member.username',
             //'options_callback'      => array('CLASS', 'METHOD'),
-            'filter'                  => true,
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
             'sql'                     => "blob"
         ),
@@ -221,7 +220,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
 class tl_c4g_forum_thread extends \Backend{
     public function forumPost($row, $href, $label, $title, $icon)
     {
-
         $href .= "&amp;id=".$row['id'];
         return '<a href="' . $this->addToUrl($href) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ';
     }
@@ -242,16 +240,35 @@ class tl_c4g_forum_thread extends \Backend{
     }
     public function get_label($arrRow)
     {
-        $result = '[Ticket #'.sprintf('%04d', $arrRow['id']).'] #'.sprintf('%04d', $arrRow['concerning']).' ';
+        $result ="";
+        if($GLOBALS['TL_CONFIG']['c4g_forum_type'] == "DISCUSSIONS"){
+            $result .= '[Thema #';
+        }
+        else if($GLOBALS['TL_CONFIG']['c4g_forum_type'] == "TICKET"){
+            $result .= '[Ticket #';
+        }
+        $result .=sprintf('%04d', $arrRow['id']).'] ';
+        $author = $this->Database->prepare('SELECT * FROM tl_member WHERE id=?')->execute($arrRow['author'])->fetchAssoc();
         $result .= $arrRow['name'].': ';
-        $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp']));
-        $state = $this->Database->prepare('SELECT state FROM tl_c4g_forum_state WHERE id=?')->execute($arrRow['state'])->fetchAssoc();
+        $result .= date($GLOBALS['TL_CONFIG']['dateFormat'], intval($arrRow['tstamp'])).' ';
+        $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp'])).' ';
+        $result .= $author['username'];
+        $state = \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState($arrRow['state']);
         if($state)
         {
-            $result .=' : (<b>'.$state['state'].'</b>)';
+            $result .=' : (<b>'.$state.'</b>)';
         }
 
         return $result;
+    }
+    public function get_options(DataContainer $dc)
+    {
+        return array(
+            1 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(1),
+            2 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(2),
+            3 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(3),
+            4 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(4)
+            );
     }
 
 

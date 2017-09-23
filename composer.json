@@ -1,22 +1,27 @@
 {
   "name": "con4gis/forum",
-  "description": "Forum module for contao",
-  "keywords": ["con4gis", "forum", "discussion", "panel", "board", "contao", "c4g", "forumbundle", "con4gisforum"],
-  "type": "contao-module",
+  "description": "The contribution brick of the Contao GIS-kit con4gis. Powerful discussion forum amd ticketcenter for Contao.",
+  "keywords": ["con4gis", "forum", "discussion", "panel", "board", "contao", "c4g", "ForumBundle", "tickets", "ticketcenter", "helpdesk"],
+  "type": "contao-bundle",
   "homepage": "https://con4gis.org",
   "license": "LGPL-3.0+",
-  "authors":[
+  "authors": [
     {
-      "name":"Küstenschmiede GmbH Software & Design",
-      "homepage":"https://kuestenschmiede.de"
+      "name": "Kuestenschmiede GmbH Software & Design",
+      "homepage": "https://kuestenschmiede.de",
+      "role": "Operator"
+    },
+    {
+      "name": "con4gis community",
+      "homepage": "https://con4gis.org",
+      "role": "Developer"
     }
   ],
+  "support": {
+    "email": "support@con4gis.org"
+  },
   "require": {
-    "php": "^5.6|^7.0",
-    "symfony/framework-bundle": "^3.3",
-    "contao/core-bundle": "^4.4.2",
-    "con4gis/core": "~2.0",
-    "con4gis/con4gis_core": "~1.9"
+    "con4gis/core": "~2.0"
   },
   "conflict": {
     "contao/core": "*",
@@ -28,17 +33,21 @@
   "autoload": {
     "psr-4": {
       "con4gis\\ForumBundle\\": ""
-    }
+    },
+    "classmap": [
+      "Resources/contao/"
+    ],
+    "exclude-from-classmap": [
+      "Resources/contao/config/",
+      "Resources/contao/dca/",
+      "Resources/contao/languages/",
+      "Resources/contao/templates/"
+    ]
   },
   "config": {
     "preferred-install": "dist"
   },
   "extra": {
-    "contao": {
-      "sources": {
-        "": "Resources/contao"
-      },
-      "contao-manager-plugin": "con4gis\\ForumBundle\\ContaoManager\\Plugin"
-    }
+    "contao-manager-plugin": "con4gis\\ForumBundle\\ContaoManager\\Plugin"
   }
 }

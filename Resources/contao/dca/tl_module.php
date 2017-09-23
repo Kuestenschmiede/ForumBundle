@@ -87,9 +87,10 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_size'],
         'exclude'   => true,
+        'default'   => '0',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
-        'eval'      => array('rgxp' => 'digit'),
+        'eval'      => array('rgxp' => 'digit','mandatory'=> false),
         'sql'       => "varchar(255) NOT NULL default ''"
     );
 
@@ -97,9 +98,10 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_scroll'],
         'exclude'   => true,
+        'default'   => '0',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
-        'eval'      => array('rgxp' => 'digit'),
+        'eval'      => array('rgxp' => 'digit','mandatory'=> false),
         'sql'       => "varchar(255) NOT NULL default ''"
     );
 
@@ -315,7 +317,7 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_avatars'],
         'exclude'   => true,
-        'default'   => true,
+        'default'   => false,
         'inputType' => 'checkbox',
         'eval'      => array('submitOnChange' => true),
         'sql'       => "char(1) NOT NULL default ''"
@@ -325,6 +327,7 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_avatar_size'],
         'exclude'   => true,
+        'default'   => '0',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
         'eval'      => array('rgxp' => 'digit'),
@@ -491,7 +494,7 @@ if (method_exists('\System', 'getContainer')) {
         'options'   => array(
             'ck' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck'],
             //'bb' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb'],
-            'no' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no'],
+            //'no' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no'],
         ),
         'sql'       => "char(2) NOT NULL default 'ck'"
     );
@@ -577,7 +580,7 @@ if (method_exists('\System', 'getContainer')) {
         'default'   => 'src/con4gis/ForumBundle/Resources/public/images/smileys',
         'inputType' => 'text',
         'eval'      => array('maxlength' => 128, "style" => 'width: 200px'),
-        'sql'       => "char(128) NOT NULL default 'system/modules/con4gis_core/assets/vendor/wswgEditor/images/smilies'"
+        'sql'       => "char(128) NOT NULL default 'bundles/con4giscore/vendor/wswgEditor/images/smilies'"
     );
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_autourl'] = array
@@ -682,6 +685,7 @@ if (method_exists('\System', 'getContainer')) {
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_dialogsize'],
         'exclude'   => true,
+        'default'   => '2',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
         'eval'      => array('rgxp' => 'digit'),
@@ -1007,6 +1011,18 @@ if (method_exists('\System', 'getContainer')) {
         'inputType' => 'checkbox',
         'eval'      => array('tl_class'=>'clr long'),
         'sql'       => "char(1) NOT NULL default '0'"
+    );
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['ticketredirectsite'] = array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['ticketredirectsite'],
+        'default'                 => '0',
+        'exclude'                 => true,
+        'inputType'               => 'pageTree',
+        'foreignKey'              => 'tl_page.title',
+        'eval'                    => array('mandatory'=>false, 'fieldType'=>'radio', 'tl_class'=>'clr'),
+        'sql'                     => "int(10) unsigned NOT NULL default '0'",
+        'relation'                => array('type'=>'hasOne', 'load'=>'eager')
     );
 
 //    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_enable_maps'] = array

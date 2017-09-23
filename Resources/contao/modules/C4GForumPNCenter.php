@@ -12,6 +12,7 @@
  */
 
     namespace con4gis\ForumBundle\Resources\contao\modules;
+    use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
     use Contao\User;
 
@@ -88,16 +89,10 @@
             $sJsLang = $this->getClientLangVars();
 
             $this->Template->c4g_pn_js = $sJsLang;
-
             $data = array();
 
             // set global js var to inidcate api endpoint
-            if (\class_exists('\con4gis\ApiBundle\Controller\ApiController') &&  (version_compare( VERSION, '4', '>=' ))) {
-                $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/c4g_forum_pn_api';</script>";
-            } else {
-                $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'system/modules/con4gis_core/api/index.php/c4g_forum_pn_api';</script>";
-            }
-
+            $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/forumPnService';</script>";
          
             if (!$_GET['c4g_forum_fmd']) {
                 // try to get parameters from referer, if they don't exist
@@ -118,7 +113,7 @@
                 ->execute($_GET['c4g_forum_fmd']);
 
             // initialize used Javascript Libraries and CSS files
-            \C4GJQueryGUI::initializeLibraries(
+            C4GJQueryGUI::initializeLibraries(
                 true,                                                 // add c4gJQuery GUI Core LIB
                 true,                                                 // add JQuery
                 true,                                                // add JQuery UI
@@ -141,7 +136,7 @@
                 $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
             } else if(!empty($this->c4g_forum_uitheme_css_select)) {
                 $theme = $this->c4g_forum_uitheme_css_select;
-                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'system/modules/con4gis_core/assets/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
+                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscoreassets/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
             } else if ($this->forumModule && $this->forumModule->c4g_forum_uitheme_css_src) {
                 if (version_compare(VERSION, '3.2', '>=')) {
                     // Contao 3.2.x Format
@@ -159,9 +154,9 @@
                 }
             } else if($this->forumModule && !empty($this->forumModule->c4g_forum_uitheme_css_select)) {
                 $theme = $this->forumModule->c4g_forum_uitheme_css_select;
-                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'system/modules/con4gis_core/assets/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
+                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
             } else {
-                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'system/modules/con4gis_core/assets/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
+                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
             }
 
             $this->Template->c4gdata = $data;

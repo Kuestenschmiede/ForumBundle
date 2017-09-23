@@ -31,7 +31,10 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             )
         ),
         'onsubmit_callback' =>array(array('tl_c4g_forum_post','saveDefault')),
-        'onload_callback'   =>array(array('tl_c4g_forum_post', 'loadPost'))
+        'onload_callback'   =>array(
+                                    array('tl_c4g_forum_post', 'loadPost')
+
+        ),
 
     ),
     'list' => array
@@ -46,7 +49,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
         'label' => array
         (
             'fields'                  => array('subject','text'),
-            'format'                  => '%s, %s'
+            'format'                  => '%s, %s',
+            'label_callback'          => array('tl_c4g_forum_post','loadLabel')
         ),
         'global_operations' => array
         (
@@ -145,7 +149,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['state'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'foreignKey'              => 'tl_c4g_forum_state.state',
+            'options_callback'        => array('tl_c4g_forum_post','get_options'),
             'sql'                     => "int(10)"
         ),
 
@@ -242,7 +246,7 @@ class tl_c4g_forum_post extends \Backend{
         $thread = $this->Database->prepare("SELECT pid,last_post_id FROM tl_c4g_forum_thread WHERE id=?")->execute($dc->activeRecord->pid)->fetchAssoc();
         $lastPost = $this->Database->prepare('SELECT post_number FROM tl_c4g_forum_post WHERE id=?')->execute($thread['last_post_id'])->fetchAssoc();
         $arrSet['forum_id'] = $thread['pid'];
-        $arrSet['author'] = $this->Database->prepare("SELECT default_author FROM tl_c4g_forum WHERE id=?")->execute($forumId['pid'])->fetchAssoc()['default_author'];
+        $arrSet['author'] = $this->Database->prepare("SELECT default_author FROM tl_c4g_forum WHERE id=?")->execute($arrSet['forum_id'])->fetchAssoc()['default_author'];
         $arrSet['creation'] = time();
         $arrSet['post_number'] = $lastPost['post_number'];
 
@@ -258,33 +262,24 @@ class tl_c4g_forum_post extends \Backend{
         $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($arrSet)->execute($dc->id);
         $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSetParent)->execute($dc->activeRecord->pid);
     }
-    public function loadPost(DataContainer $dc)
+
+    public function loadLabel ($arrRow)
     {
-        if(!$dc->activeRecord){
-            return;
+        //Status des Tickets auf gelesen ändern
+        $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($arrRow['pid'])->fetchAssoc();
+        if($thread['state'] == 1){
+            $set['state'] = 2;
+            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($set)->execute($arrRow['pid']);
         }
-        $find = array(
-            '~\[b\](.*?)\[/b\]~s',
-            '~\[i\](.*?)\[/i\]~s',
-            '~\[u\](.*?)\[/u\]~s',
-            '~\[quote\](.*?)\[/quote\]~s',
-            '~\[url=(.*?)\](.*?)\[/url\]~s',
-            '~\[size=(.*?)\](.*?)\[/size\]~s',
-            '~\[color=(.*?)\](.*?)\[/color\]~s',
-            '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s'
+        return $arrRow['text'];
+    }
+    public function get_options(DataContainer $dc)
+    {
+        return array(
+            1 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(1),
+            2 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(2),
+            3 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(3),
+            4 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(4)
         );
-        // HTML tags to replace BBcode
-        $replace = array(
-            '<b>$1</b>',
-            '<i>$1</i>',
-            '<span style="text-decoration:underline;">$1</span>',
-            '<pre>$1</'.'pre>',
-            '<a href="$1">$2</a>',
-            '<span style="font-size:$1px;">$2</span>',
-            '<span style="color:$1;">$2</span>',
-            '<img src="$1" alt="" />'
-        );
-        $text = array('text' =>'Hallo');//preg_replace($find,$replace,$dc->activeRecord->text));
-        $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($text)->execute($dc->activeRecord->id);
     }
 }

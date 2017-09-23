@@ -207,8 +207,8 @@
                 defaultLanguage: "en",
                 height:'360',
                 disableObjectResizing: true,
-                filebrowserImageUploadUrl: "system/modules/con4gis_core/assets/vendor/imgUpload.php",
-                filebrowserUploadUrl: 'system/modules/con4gis_core/assets/vendor/fileUpload.php',
+                filebrowserImageUploadUrl: "bundles/con4giscore/vendor/imgUpload.php",
+                filebrowserUploadUrl: 'bundles/con4giscore/vendor/C4GFileUpload.php',
                 // codeSnippet_languages: {
                 // }
             });

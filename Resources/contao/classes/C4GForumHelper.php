@@ -15,12 +15,10 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumMember;
+use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
 use Contao\System;
-
-if (version_compare(VERSION,'3','<')) {
-	include_once "classes/C4GUtils.php";
-}
 
 /**
  * Class C4GForumHelper
@@ -220,8 +218,25 @@ class C4GForumHelper extends \System
 		}
 		else {
 			$forum = $this->Database->prepare(
-				"SELECT id, member_groups, admin_groups, guest_rights, member_rights, admin_rights FROM tl_c4g_forum WHERE id=?")
+				"SELECT id, member_groups, admin_groups, guest_rights, member_rights, admin_rights, pid FROM tl_c4g_forum WHERE id=?")
 	 								 ->execute($forumId)->fetchAssoc();
+			while($forum['pid'])
+            {
+                $pForum = $this->Database->prepare(
+                    "SELECT id, member_groups, admin_groups, guest_rights, member_rights, admin_rights,pid FROM tl_c4g_forum WHERE id=?")
+                    ->execute($forum['pid'])->fetchAssoc();
+                if(!$forum['guest_rights']){
+                    $forum['guest_rights'] = $pForum['guest_rights'];
+                }
+                if(!$forum['admin_rights']){
+                    $forum['admin_rights'] = $pForum['admin_rights'];
+                }
+                if(!$forum['member_rights']){
+                    $forum['member_rights'] = $pForum['member_rights'];
+                }
+                $forum['pid'] = $pForum['pid'];
+            }
+
 	 		$this->ForumCache[$forumId] = $forum;
 		}
         //TODO hier fehlt manchmal forumid, weswegen aus der db nix zurückkommt
@@ -578,7 +593,7 @@ class C4GForumHelper extends \System
 				break;
 		}
 		$threads = $this->Database->prepare(
-				"SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,a.concerning,".
+				"SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,".
 		               "c.creation AS lastPost, " . $sqlLastUser . " AS lastUsername, a.recipient,a.owner ".
 				"FROM tl_c4g_forum_thread a ".
 				"LEFT JOIN tl_member b ON b.id = a.author ".
@@ -1457,7 +1472,7 @@ class C4GForumHelper extends \System
 				break;
 		}
 		if($withPosts){
-			$select = "SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,".
+			$select = "SELECT a.id,a.name,a.threaddesc," . $sqlAuthor . ",a.creation,a.sort,a.posts,a.state,".
 					"c.creation AS lastPost, " . $sqlLastUser . " AS lastUsername ".
 					"FROM tl_c4g_forum_thread a ".
 					"LEFT JOIN tl_member b ON b.id = a.author ".
@@ -1465,7 +1480,7 @@ class C4GForumHelper extends \System
 					"LEFT JOIN tl_member d ON d.id = c.author ".
 					"WHERE a.id = ? ";
 		}else{
-			$select = "SELECT a.id,a.pid AS forumid,a.name,a.threaddesc,a.sort,a.author," . $sqlAuthor . ",a.creation, a.posts ".
+			$select = "SELECT a.id,a.pid AS forumid,a.name,a.threaddesc,a.sort,a.author,a.state," . $sqlAuthor . ",a.creation, a.posts ".
 					"FROM tl_c4g_forum_thread a ".
 					"LEFT JOIN tl_member b ON b.id = a.author ".
 					"WHERE a.id = ? ";
@@ -1803,6 +1818,20 @@ class C4GForumHelper extends \System
 
         return $result->name;
 	}
+	public function getTicketTitle($ticketId,$forumtype, $time = null){
+	    $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($ticketId)->fetchAssoc();
+        $title = '['.C4GForumHelper::getTypeText($forumtype,'THREAD') . ' #';
+        $title .= sprintf('%04d',$thread['id']).'] '.$thread['name'] .' ';
+        if($time){
+            $title .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($thread['tstamp']));
+        }
+        if($thread['state'])
+        {
+            $state = C4GForumTicketStatus::getState($thread['state']);
+            $title .=': (<b>'.$state.'</b>)';
+        }
+        return $title;
+    }
 
 	/**
 	 *
@@ -1878,7 +1907,7 @@ class C4GForumHelper extends \System
 		$set['pid'] = $threadId;
 		$set['author'] = $userId;
 		$set['creation'] = time();
-		$set['text'] = nl2br(C4GUtils::secure_ugc($post));
+		$set['text'] = C4GUtils::secure_ugc($post);
 		$set['subject'] = C4GUtils::secure_ugc($subject);
 		$set['forum_id'] = $forumId;
 		$set['post_number'] = $post_number;
@@ -1966,8 +1995,8 @@ class C4GForumHelper extends \System
 	public function updatePostDB($post, $userId, $subject,$tags,$rating = 0, $postText, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id)
 	{
 		$set = array();
-		$set['text'] = nl2br(C4GUtils::secure_ugc($postText));
-		$set['subject'] = nl2br(C4GUtils::secure_ugc($subject));
+		$set['text'] = C4GUtils::secure_ugc($postText);
+		$set['subject'] = C4GUtils::secure_ugc($subject);
 		$set['edit_count'] = $post['edit_count'] + 1;
 		$set['edit_last_author'] = $userId;
 		$set['edit_last_time'] = time();
@@ -2046,7 +2075,7 @@ class C4GForumHelper extends \System
 	public function updateThreadDB($thread, $userId, $name, $threaddesc, $sort)
 	{
 		$set = array();
-		$set['name'] = nl2br(C4GUtils::secure_ugc($name));
+		$set['name'] = C4GUtils::secure_ugc($name);
 		$set['threaddesc'] = nl2br(C4GUtils::secure_ugc($threaddesc));
 		$set['edit_count'] = $thread['edit_count'] + 1;
 		$set['edit_last_author'] = $userId;
@@ -2267,7 +2296,7 @@ class C4GForumHelper extends \System
 			$set['creation'] = time();
 			$set['sort'] = $sort;
 			$set['name'] = C4GUtils::secure_ugc($threadname);
-		    $set['threaddesc'] = nl2br(C4GUtils::secure_ugc($threaddesc));
+		    $set['threaddesc'] = C4GUtils::secure_ugc($threaddesc);
 		    $set['recipient'] = $recipient;
 		    $set['owner'] = $owner;
 		    $set['tstamp'] = time();
@@ -2409,15 +2438,13 @@ class C4GForumHelper extends \System
             ->execute($frontendUser)->fetchAssoc();
 		$user['groups'] = unserialize($user['groups']);
 		foreach($user['groups'] as $key){
-		    if(in_array($key,$memGroups['0']) && in_array($key,$adGroups['0'])){
-		        $memGroups .= $adGroups;
-		        $return = $memGroups;
+		    if (in_array($key,$memGroups['0']) && in_array($key,$adGroups['0'])) {
+		        // the union operator is used here because array_merge does not handle numeric keys correctly
+		        $return = $memGroups + $adGroups;
 		        break;
-            }
-            elseif(in_array($key,$memGroups['0'])){
+            } elseif (in_array($key,$memGroups['0'])) {
 		            $return = $adGroups;
-            }
-            else{
+            } else{
                 $return = $memGroups;
             }
         }
@@ -2762,7 +2789,7 @@ class C4GForumHelper extends \System
 	 * @return array
 	 */
 	public function getMemberDefaultRights() {
-		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads','tickettomember','showsentthreads');
+		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads');
 		return $this->executePermissionHook($return, 'member');
 	}
 
@@ -2771,8 +2798,8 @@ class C4GForumHelper extends \System
 	 * @return array
 	 */
 	public function getAdminDefaultRights() {
-		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','threadsort','editownpost','editpost',
-					 'editownthread','editthread','delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember','showsentthreads');
+		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','threadsort','editownpost','editpost', 'editownthread', 'editthread',
+            'delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember','closethread');
 		return $this->executePermissionHook($return,'admin');
 	}
 
@@ -2781,7 +2808,7 @@ class C4GForumHelper extends \System
 	 */
 	public function getGuestRightList() {
 		$return = $this->getGuestDefaultRights();
-		if ($GLOBALS['con4gis_maps_extension']['installed']) {
+		if ($GLOBALS['con4gis']['maps']['installed']) {
 			$return[] = 'mapview';
 		}
 		return $return;
@@ -2792,7 +2819,7 @@ class C4GForumHelper extends \System
 	 */
 	public function getRightList() {
 		$return = $this->getAdminDefaultRights();
-		if ($GLOBALS['con4gis_maps_extension']['installed']) {
+		if ($GLOBALS['con4gis']['maps']['installed']) {
 			$return[] = 'mapview';
 			$return[] = 'mapedit';
 			$return[] = 'mapextend';
@@ -3171,7 +3198,11 @@ class C4GForumHelper extends \System
 	    $set['pid'] = $forumId;
 	    $set['published'] = 1;
 	    $groupArray[] = $groupId;
+//	    $set['define_rights'] = 0;
 	    $set['member_groups'] = serialize($groupArray);
+	    if(!$set['member_groups']){
+	        $set['member_groups']=$parentForum['member_groups'];
+        }
 	    $set['admin_groups'] = $parentForum['admin_groups'];
 	    $set['member_rights'] = $parentForum['member_rights'];
 	    $set['admin_rights'] = $parentForum['admin_rights'];
@@ -3181,6 +3212,24 @@ class C4GForumHelper extends \System
 
 	    $this->Database->prepare('INSERT INTO tl_c4g_forum %s')->set($set)->execute();
 	    return $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id =?')->execute($forumId,$groupId)->fetchAssoc();
+
+    }
+    public function createNewTicketForum($forumId,$concerning,$subject){
+        $parentForum = $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE id=?')->execute($forumId)->fetchAssoc();
+        $set['name'] = $subject;
+        $set['concerning'] = $concerning;
+        $set['pid'] = $forumId;
+        $set['published'] = 1;
+//      $set['define_rights'] = 1;
+        $set['member_groups'] = $parentForum['member_groups'];
+        $set['admin_groups'] = $parentForum['admin_groups'];
+	    $set['member_rights'] = $parentForum['member_rights'];
+	    $set['admin_rights'] = $parentForum['admin_rights'];
+        $set['default_author'] = $parentForum['default_author'];
+        $set['tstamp'] = time();
+
+        $this->Database->prepare('INSERT INTO tl_c4g_forum %s')->set($set)->execute();
+        return $this->Database->prepare('SELECT * FROM tl_c4g_forum WHERE pid=? AND concerning=?')->execute($forumId,$concerning)->fetchAssoc();
 
     }
 
@@ -3820,8 +3869,17 @@ class C4GForumHelper extends \System
 
     }
 
-
-
+    /**
+     * @param $forumId
+     * @param $groupId
+     * @param $subject
+     * @param $text
+     * @param $ticketId
+     */
+    public static function create_ticket($forumId, $groupId,$subject,$text,$ticketId){
+        $forum = new C4GForum(\ModuleModel::findByPk($forumId));
+        $forum->autoTicket($forumId, $groupId,$subject,$text,$ticketId);
+    }
 }
 
 ?>
