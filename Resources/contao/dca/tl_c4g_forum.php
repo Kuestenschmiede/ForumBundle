@@ -966,6 +966,7 @@ class tl_c4g_forum extends \Backend
             '~\[u\](.*?)\[/u\]~s',
             '~\[quote\](.*?)\[/quote\]~s',
             '~\[url=(.*?)\](.*?)\[/url\]~s',
+            '~\[url](.*?)\[/url\]~s',
             '~\[size=(.*?)\](.*?)\[/size\]~s',
             '~\[color=(.*?)\](.*?)\[/color\]~s',
             '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s'
@@ -977,10 +978,12 @@ class tl_c4g_forum extends \Backend
             '<span style="text-decoration:underline;">$1</span>',
             '<pre>$1</'.'pre>',
             '<a href="$1">$2</a>',
+            '<a href="$1">$1</a>',
             '<span style="font-size:$1px;">$2</span>',
             '<span style="color:$1;">$2</span>',
             '<img src="$1" alt="" />'
         );
+
         foreach($posts as $post)
         {
 
