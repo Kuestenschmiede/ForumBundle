@@ -1765,7 +1765,7 @@ JSPAGINATE;
                 $title = $this->helper->getTicketTitle($thread['id'],$this->c4g_forum_type);
             }
             else{
-                $title = C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') . $threadname;
+                $title = C4GForumHelper::getTypeText($this->c4g_forum_type,'THREAD') .': '. $threadname;
             }
 
             $return = array(

@@ -129,6 +129,7 @@
 
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_COUNT']          = ' Beitrag <b %s>#%d</b> von <b %s>%d</b> ';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['POST_HEADER_COUNT']           = ' Kommentar <b %s>#%d</b> von <b %s>%d</b> ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POST_HEADER_COUNT']              = ' Nachricht <b %s>#%d</b> von <b %s>%d</b> ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['COMMENT_HEADER_COUNT']       = ' Kommentar <b %s>#%d</b> von <b %s>%d</b> ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_CREATED']        = 'Erstellt von <b %s>%s</b> am <b %s>%s</b>';
