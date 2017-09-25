@@ -13,8 +13,12 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
 
-    /**
+
+/**
      * Class C4GForumBreadcrumb
      * @package con4gis\ForumBundle\Resources\contao\modules
      */
@@ -120,7 +124,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             if ($this->forumModule->numRows) {
 
                 // initialize used Javascript Libraries and CSS files
-                \C4GJQueryGUI::initializeLibraries(
+                C4GJQueryGUI::initializeLibraries(
                     true,                                                  // add c4gJQuery GUI Core LIB
                     ($this->forumModule->c4g_forum_jquery_lib == true),   // add JQuery
                     ($this->forumModule->c4g_forum_jqui_lib == true),      // add JQuery UI
