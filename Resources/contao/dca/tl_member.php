@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['memberSignature'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'textarea',
-    'eval'                    => array('feEditable' => true, 'feViewable' => true, 'feGroup' => 'forum'),
+    'eval'                    => array('style'=>'height:60px', 'decodeEntities'=>true, 'tl_class'=>'clr', 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'forum'),
     'sql'                     => "mediumtext NULL"
 );
 
@@ -130,7 +130,7 @@ class tl_member_dca extends \Contao\Backend
      */
     public function setUploadFolder($varValue, $dc)
     {
-        $uploadFolder = "files/userimages/";
+        $uploadFolder = TL_ROOT . "/files/userimages/";
         $iMemberId = $dc->id;
 
         if ($iMemberId > 0) {
