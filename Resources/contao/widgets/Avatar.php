@@ -24,7 +24,6 @@
  */
 class Avatar extends \Widget implements \uploadable
 {
-
 	/**
 	 * Submit user input
 	 * @var boolean
@@ -68,7 +67,7 @@ class Avatar extends \Widget implements \uploadable
 	 * @param mixed
 	 * @return mixed
 	 */
-	protected function validator($varInput)
+	public function validator($varInput)
 	{
 		$strUploadTo = 'system/tmp';
 
@@ -85,7 +84,8 @@ class Avatar extends \Widget implements \uploadable
 			// Add user-based subfolder to target folder to prevent overwriting files with duplicate names.
 			if (TL_MODE === 'FE') {
 				$this->import('frontenduser');
-				$strUploadTo = 'files/userimages/user_' . $this->frontenduser->id;
+                $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+				$strUploadTo = $rootDir . '/files/userimages/user_' . $this->frontenduser->id;
 			}
 
 			// Create the folder if it does not exist.

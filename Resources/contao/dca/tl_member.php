@@ -29,7 +29,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['memberImage'] = array
     'inputType'               => 'avatar',
     'load_callback'           => array(array('tl_member_dca', 'setUploadFolder')),
     'save_callback'           => array(array('tl_member_dca', 'handleMemberImage')),
-    'eval'                    => array('filesOnly'=>true, 'multiple' => false, 'fieldType'=>'radio', 'feEditable'=>true, 'feViewable'=>true, 'feGroup'=>'forum', 'storeFile' => true, 'uploadFolder' => 'files/userimages/xxx', 'tl_class'=>'clr'),
+    'eval'                    => array('filesOnly'=>true, 'multiple' => false, 'fieldType'=>'radio', 'feEditable'=>true, 'feViewable'=>true, 'feGroup'=>'forum', 'storeFile' => true, 'tl_class'=>'clr'),
     'sql'                     => "mediumtext NULL"
 );
 
@@ -130,7 +130,8 @@ class tl_member_dca extends \Contao\Backend
      */
     public function setUploadFolder($varValue, $dc)
     {
-        $uploadFolder = TL_ROOT . "/files/userimages/";
+        $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+        $uploadFolder = $rootDir . "/files/userimages/";
         $iMemberId = $dc->id;
 
         if ($iMemberId > 0) {
