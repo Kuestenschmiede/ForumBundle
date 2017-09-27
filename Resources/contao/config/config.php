@@ -51,12 +51,12 @@ array_insert($GLOBALS['BE_MOD']['con4gis_bricks'],2, array(
 /**
  * Add frontend form field for memberImage (Avatar)
  */
-$GLOBALS['TL_FFL']['avatar'] = 'Avatar';
+$GLOBALS['TL_FFL']['avatar'] = 'con4gis\ForumBundle\Resources\contao\widgets\Avatar';
 
 /**
  * Add backend form field for memberImage (Avatar)
  */
-$GLOBALS['BE_FFL']['avatar'] = 'Avatar';
+$GLOBALS['BE_FFL']['avatar'] = 'con4gis\ForumBundle\Resources\contao\widgets\Avatar';
 
 /**
  * Hooks

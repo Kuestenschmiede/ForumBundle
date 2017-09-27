@@ -1,28 +1,14 @@
 <?php
 
-/**
- * Contao Open Source CMS
- *
- * Copyright (c) 2005-2014 Leo Feyer
- *
- * @package Core
- * @link    https://contao.org
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
- */
+namespace con4gis\ForumBundle\Resources\contao\widgets;
 
+use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
+use con4gis\ForumBundle\Resources\contao\classes\C4gForumSingleFileUpload;
+use Contao\Folder;
+use Contao\System;
+use Contao\Widget;
 
-/**
- * Class Upload
- *
- * Provide methods to use the FileUpload class in a back end widget. The widget
- * will only upload the files to the server. Use a submit_callback to process
- * the files or use the class as base for your own upload widget.
- *
- * @copyright  Leo Feyer 2005-2014
- * @author     Leo Feyer <https://contao.org>
- * @package    Core
- */
-class Avatar extends \Widget implements \uploadable
+class Avatar extends Widget implements \uploadable
 {
 	/**
 	 * Submit user input
@@ -57,7 +43,7 @@ class Avatar extends \Widget implements \uploadable
 	{
 		parent::__construct($arrAttributes);
 
-		$this->objUploader = new \con4gis\ForumBundle\Resources\contao\classes\C4gForumSingleFileUpload();
+		$this->objUploader = new C4gForumSingleFileUpload();
 		$this->objUploader->setName($this->strName);
 	}
 
@@ -84,12 +70,13 @@ class Avatar extends \Widget implements \uploadable
 			// Add user-based subfolder to target folder to prevent overwriting files with duplicate names.
 			if (TL_MODE === 'FE') {
 				$this->import('frontenduser');
-                $rootDir = System::getContainer()->getParameter('kernel.project_dir');
-				$strUploadTo = $rootDir . '/files/userimages/user_' . $this->frontenduser->id;
+				$strUploadTo = '/files/userimages/user_' . $this->frontenduser->id;
 			}
 
 			// Create the folder if it does not exist.
-			new \Contao\Folder($strUploadTo);
+			if (!is_dir($strUploadTo)) {
+                mkdir($strUploadTo);
+            }
 		}
 
 		return $this->objUploader->uploadTo($strUploadTo);
@@ -114,7 +101,7 @@ class Avatar extends \Widget implements \uploadable
 		}
 
 		// Generate an image tag with the member's avatar.
-		$sImage = \con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper::getAvatarByMemberId($iMemberId);
+		$sImage = C4GForumHelper::getAvatarByMemberId($iMemberId);
 		if ($sImage) {
 			$sReturn = '<img src="' . $sImage . '">';
 		}

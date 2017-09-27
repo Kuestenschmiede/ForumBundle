@@ -52,7 +52,7 @@ ClassLoader::addClasses(array
 //	'C4gForumPnApi' 	          => __DIR__.'/../modules/api/C4gForumPnApi.php',
 //
 //	// Widgets
-	'Avatar'                      => __DIR__.'/../widgets/Avatar.php',
+//	'Avatar'                      => __DIR__.'/../widgets/Avatar.php',
 ));
 
 
