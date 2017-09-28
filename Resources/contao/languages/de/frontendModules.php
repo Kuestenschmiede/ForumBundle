@@ -103,6 +103,17 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']        = 'Abbruch';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']         = 'Schließen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBMIT']        = 'Übernehmen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['Questions']['SEND']          = 'Speichern';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['Questions']['PREVIEW']       = 'Vorschau';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['Questions']['CANCEL']        = 'Abbruch';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['Questions']['CLOSE']         = 'Schließen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['Questions']['SUBMIT']        = 'Übernehmen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEND']          = 'Speichern';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['PREVIEW']       = 'Vorschau';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['CANCEL']        = 'Abbruch';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['CLOSE']         = 'Schließen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBMIT']        = 'Übernehmen';
+
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE_THREAD']        = 'Thema schließen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['CLOSE_THREAD']        = 'Ticket schließen';
 
@@ -129,6 +140,7 @@
 
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_COUNT']          = ' Beitrag <b %s>#%d</b> von <b %s>%d</b> ';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['POST_HEADER_COUNT']           = ' Kommentar <b %s>#%d</b> von <b %s>%d</b> ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['POST_HEADER_COUNT']              = ' Nachricht <b %s>#%d</b> von <b %s>%d</b> ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['COMMENT_HEADER_COUNT']       = ' Kommentar <b %s>#%d</b> von <b %s>%d</b> ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_CREATED']        = 'Erstellt von <b %s>%s</b> am <b %s>%s</b>';

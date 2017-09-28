@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * con4gis - the gis-kit
@@ -30,11 +30,11 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
                 'pid' => 'index'
             )
         ),
-        'onsubmit_callback' =>array(array('tl_c4g_forum_post','saveDefault')),
+        'onsubmit_callback' =>array(array('tl_c4g_forum_post','saveDefault'))/*,
         'onload_callback'   =>array(
                                     array('tl_c4g_forum_post', 'loadPost')
 
-        ),
+        ),*/
 
     ),
     'list' => array

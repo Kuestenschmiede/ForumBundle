@@ -1,6 +1,4 @@
-<?php if (!defined('TL_ROOT')) {
-    die('You can not access this file directly!');
-}
+<?php
 
 /**
  * con4gis - the gis-kit
@@ -13,14 +11,7 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-// set imageSize options (Contao 3&4)
-if (method_exists('\System', 'getContainer')) {
-    //contao 4
     $imageSizes = \System::getContainer()->get('contao.image.image_sizes')->getAllOptions();
-} else {
-    //contao 3
-    $imageSizes = array('px');
-}
 
     /***
      * Palettes

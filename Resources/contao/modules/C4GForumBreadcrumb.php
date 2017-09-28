@@ -13,8 +13,12 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
 
-    /**
+
+/**
      * Class C4GForumBreadcrumb
      * @package con4gis\ForumBundle\Resources\contao\modules
      */
@@ -120,21 +124,23 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             if ($this->forumModule->numRows) {
 
                 // initialize used Javascript Libraries and CSS files
-                \C4GJQueryGUI::initializeLibraries(
-                    true,                                                  // add c4gJQuery GUI Core LIB
-                    ($this->forumModule->c4g_forum_jquery_lib == true),   // add JQuery
-                    ($this->forumModule->c4g_forum_jqui_lib == true),      // add JQuery UI
-                    false,                                                  // add Tree Control
-                    false,                                                  // add Table Control
-                    false,                                                  // add history.js
-                    false,                                                  // add simple tooltip
-                    false,                                                  // add C4GMaps
-                    false,                                                  // add C4GMaps - GoogleMaps
-                    false,                                                  // add C4GMaps - MapsEditor
-                    false,                                                  // add WYSIWYG editor
-                    false);                                                  // add jScrollPane
+                C4GJQueryGUI::initializeLibraries(
+                    true,
+                    ($this->forumModule->c4g_forum_jquery_lib == true),
+                    ($this->forumModule->c4g_forum_jqui_lib == true),
+                    ($this->forumModule->c4g_forum_navigation == 'TREE'),
+                    ($this->forumModule->c4g_forum_jqtable_lib == true),
+                    ($this->forumModule->c4g_forum_jqhistory_lib == true),
+                    ($this->forumModule->c4g_forum_jqtooltip_lib == true),
+                    ($this->forumModule->false),
+                    ($this->forumModule->false),
+                    ($this->forumModule->false),
+                    ($this->forumModule->c4g_forum_bbcodes == true),
+                    ($this->forumModule->c4g_forum_jqscrollpane_lib == true));
+
+
                 $data['id']             = $this->id;
-                $data['div']            = 'c4g_forum';
+                $data['div']            = 'c4g_forum_navigation';
                 $data['initData']       = $this->getInitData();
                 $data['jquiBreadcrumb'] = $this->forumModule->c4g_forum_breadcrumb_jqui_layout;
                 if (!$this->forumModule->c4g_forum_breadcrumb_jqui_layout) {

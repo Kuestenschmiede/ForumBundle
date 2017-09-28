@@ -13,12 +13,14 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
+use Contao\FileUpload;
+
 /**
  * Single file upload handler to return only 1 input field for a single file upload.
  *
  * Class C4gForumSingleFileUpload
  */
-class C4gForumSingleFileUpload extends \Contao\FileUpload
+class C4gForumSingleFileUpload extends FileUpload
 {
 
     /**
