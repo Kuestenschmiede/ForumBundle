@@ -23,6 +23,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         'dataContainer' => 'Table',
         'ptable' => 'tl_c4g_forum',
         'ctable' => 'tl_c4g_forum_post',
+        //'notCreatable'  => true,
         'sql'           => array
         (
             'keys' => array
@@ -274,16 +275,25 @@ class tl_c4g_forum_thread extends \Backend{
     public function getDatasets(DataContainer $dc)
     {
         $pid = input::get('id');
-        $childs = $this->getChilds($pid,$dc);
-        $root = $dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread WHERE pid=?")
-            ->execute($pid)
-            ->fetchEach('id');
-        $root = array_merge($root,$childs);
-        if (empty($root)) {
-            $root = array('0');
+        if($pid){
+            $childs = $this->getChilds($pid,$dc);
+            $root = $dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread WHERE pid=?")
+                ->execute($pid)
+                ->fetchEach('id');
+            $root = array_merge($root,$childs);
+            if (empty($root)) {
+                $root = array('0');
+            }
         }
-        // manipulate dca array
+        else{
+            $GLOBALS['TL_CSS'][] = "bundles/con4gisforum/css/c4gForumBackendButton.css";
+            $root = $dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread")
+                ->execute()
+                ->fetchEach('id');
+
+        }
         $GLOBALS['TL_DCA']['tl_c4g_forum_thread']['list']['sorting']['root'] = $root;
+
     }
     public function getChilds($pid,$dc)
     {
