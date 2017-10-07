@@ -120,7 +120,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'thread' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['thread'],
-                'href'                => 'do=c4g_forum_thread&amp;table=tl_c4g_forum_thread',
+                'href'                => 'do=c4g_forum_thread',
                 'icon'	 		      => 'bundles/con4gisforum/icons/table.png',
                 'button_callback'     => array('tl_c4g_forum','forumThread')
             ),

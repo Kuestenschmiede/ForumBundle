@@ -78,10 +78,9 @@
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_size'],
         'exclude'   => true,
-        'default'   => '0',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
-        'eval'      => array('rgxp' => 'digit','mandatory'=> false),
+        'eval'      => array('rgxp' => 'digit','mandatory'=> false,'includeBlankOption' => true),
         'sql'       => "varchar(255) NOT NULL default ''"
     );
 
@@ -89,10 +88,9 @@
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_scroll'],
         'exclude'   => true,
-        'default'   => '0',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
-        'eval'      => array('rgxp' => 'digit','mandatory'=> false),
+        'eval'      => array('rgxp' => 'digit','mandatory'=> false,'includeBlankOption' => true),
         'sql'       => "varchar(255) NOT NULL default ''"
     );
 
@@ -318,10 +316,9 @@
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_avatar_size'],
         'exclude'   => true,
-        'default'   => '0',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
-        'eval'      => array('rgxp' => 'digit'),
+        'eval'      => array('rgxp' => 'digit','includeBlankOption' => true),
         'sql'       => "varchar(255) NOT NULL default ''"
     );
 
@@ -676,10 +673,9 @@
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_dialogsize'],
         'exclude'   => true,
-        'default'   => '2',
         'inputType' => 'imageSize',
         'options'   => $imageSizes,
-        'eval'      => array('rgxp' => 'digit'),
+        'eval'      => array('rgxp' => 'digit','includeBlankOption' => true),
         'sql'       => "varchar(255) NOT NULL default ''"
     );
 
