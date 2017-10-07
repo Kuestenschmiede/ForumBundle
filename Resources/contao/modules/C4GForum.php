@@ -5905,7 +5905,7 @@ JSPAGINATE;
         public function getForumPageUrl()
         {
 
-            $id           = $this->c4g_forum_sitemap_root;
+            $id = $this->c4g_forum_sitemap_root;
             $sFrontendUrl = false;
             if (!empty($id)) {
                 $oPage = \Contao\PageModel::findPublishedById($id);
