@@ -2408,9 +2408,15 @@ class C4GForumHelper extends \System
 	 * @param string $threadname
 	 * @return string
 	 */
-	public function checkThreadname( $threadname )
+	public function checkThreadname( $threadname ,$opt_length)
 	{
-		return wordwrap($threadname, 50, " ", true);
+	    if($opt_length)
+        {
+            return wordwrap($threadname, $opt_length, " ", true);
+        }
+        else{
+	        return wordwrap($threadname, 30, " ", true);
+        }
 	}
 
 	/**

@@ -32,6 +32,10 @@
         'alkuperä',
         'Valitse parent foorumi aloittaaksesi. Jätä tyhjäksi nähdäksesi kaikki määritellyt foorumit.'
     );
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxlength'] = array(
+        'Length of titles',
+        'Choose the count of characters in a title till a wordwrap.'
+    );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_navigation']   = array(
         'Navigaatio',
         'Valitse navigaatio foorumille.'
