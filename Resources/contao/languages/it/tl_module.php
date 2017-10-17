@@ -42,6 +42,10 @@
         'Azione per i clicks sui threads',
         'Seleziona l\'azione da eseguire quando un thread viene cliccato.'
     );
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxlength'] = array(
+        'Length of titles',
+        'Choose the count of characters in a title till a wordwrap.'
+    );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_realname']     = array(
         'Usa i nomi reali al posto dei nomi utente',
         'Scegliere se e come si vogliono mostrare i nomi reali degli utenti al posto dei nomi utenta'

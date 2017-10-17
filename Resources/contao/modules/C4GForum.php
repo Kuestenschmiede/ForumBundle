@@ -2645,6 +2645,7 @@ JSPAGINATE;
                 }
                 if ($this->c4g_forum_boxes_text) {
                     $name = $this->getForumLanguageConfig($forum,'name');
+                    $name = $this->helper->checkThreadname($name, $this->c4g_forum_boxlength);
                     if (strlen($name) > 100) {
                         $name = substr($name, 0, 97) . '...';
                     }
@@ -5905,7 +5906,7 @@ JSPAGINATE;
         public function getForumPageUrl()
         {
 
-            $id           = $this->c4g_forum_sitemap_root;
+            $id = $this->c4g_forum_sitemap_root;
             $sFrontendUrl = false;
             if (!empty($id)) {
                 $oPage = \Contao\PageModel::findPublishedById($id);

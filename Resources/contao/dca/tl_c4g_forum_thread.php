@@ -23,6 +23,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         'dataContainer' => 'Table',
         'ptable' => 'tl_c4g_forum',
         'ctable' => 'tl_c4g_forum_post',
+        //'notCreatable'  => true,
         'sql'           => array
         (
             'keys' => array
@@ -31,7 +32,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
                 'pid' => 'index'
             )
         ),
-        'onsubmit_callback' =>array(array('tl_c4g_forum_thread','saveDefault'))
+        'onsubmit_callback' =>array(array('tl_c4g_forum_thread','saveDefault')),
+        'onload_callback'   =>array(array('tl_c4g_forum_thread', 'getDatasets'))
     ),
     'list' => array
     (
@@ -147,6 +149,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_forum_thread','get_options'),
             'filter'                  => true,
+            'search'                  => true,
             'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-'),
             'sql'                     => "int(10)"
         ),
@@ -166,6 +169,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['owner'],
             'exclude'                 => true,
             'inputType'               => 'select',
+            'filter'                  => true,
+            'search'                  => true,
             'foreignKey'              => 'tl_member.username',
             //'options_callback'      => array('CLASS', 'METHOD'),
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
@@ -175,6 +180,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['recipient'],
             'exclude'                 => true,
             'inputType'               => 'select',
+            'filter'                  => true,
+            'search'                  => true,
             'foreignKey'              => 'tl_member.username',
             //'options_callback'      => array('CLASS', 'METHOD'),
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
@@ -269,6 +276,45 @@ class tl_c4g_forum_thread extends \Backend{
             3 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(3),
             4 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(4)
             );
+    }
+    public function getDatasets(DataContainer $dc)
+    {
+        $pid = input::get('id');
+        if($pid){
+            $childs = $this->getChilds($pid,$dc);
+            $root = $dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread WHERE pid=?")
+                ->execute($pid)
+                ->fetchEach('id');
+            $root = array_merge($root,$childs);
+            if (empty($root)) {
+                $root = array('0');
+            }
+        }
+        else{
+            $GLOBALS['TL_CSS'][] = "bundles/con4gisforum/css/c4gForumBackendButton.css";
+            $root = $dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread")
+                ->execute()
+                ->fetchEach('id');
+
+        }
+        $GLOBALS['TL_DCA']['tl_c4g_forum_thread']['list']['sorting']['root'] = $root;
+
+    }
+    public function getChilds($pid,$dc)
+    {
+        $childs = $dc->Database->prepare("SELECT id FROM tl_c4g_forum WHERE pid=?")
+            ->execute($pid)->fetchAllAssoc();
+
+        $return = array();
+
+        foreach($childs as $child)
+        {
+            $return = array_merge($return,$dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread WHERE pid=?")
+                ->execute($child['id'])
+                ->fetchEach('id'));
+            $return = array_merge($return, self::getChilds($child['id'],$dc));
+        }
+        return $return;
     }
 
 

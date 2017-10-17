@@ -2408,9 +2408,15 @@ class C4GForumHelper extends \System
 	 * @param string $threadname
 	 * @return string
 	 */
-	public function checkThreadname( $threadname )
+	public function checkThreadname( $threadname ,$opt_length)
 	{
-		return wordwrap($threadname, 50, " ", true);
+	    if($opt_length)
+        {
+            return wordwrap($threadname, $opt_length, " ", true);
+        }
+        else{
+	        return wordwrap($threadname, 30, " ", true);
+        }
 	}
 
 	/**
@@ -3130,7 +3136,7 @@ class C4GForumHelper extends \System
 	 */
 	public function performCron($filename)
 	{
-		$strPath = TL_ROOT . '/system/tmp/' . $filename . '.tmp';
+		$strPath = System::getContainer()->getParameter('kernel.project_dir'). '/system/tmp/' . $filename . '.tmp';
 
 		// Read the file content if it exists
 		if (file_exists($strPath))
@@ -3182,7 +3188,7 @@ class C4GForumHelper extends \System
                 $data['param_forumbox'] = $module->c4g_forum_param_forumbox;
 				$cron[] = $data;
 				$filename = md5(uniqid(mt_rand(), true));
-				$objFile = fopen(TL_ROOT . '/system/tmp/' . $filename.'.tmp', 'wb');
+				$objFile = fopen(System::getContainer()->getParameter('kernel.project_dir'). '/system/tmp/' . $filename.'.tmp', 'wb');
 				fputs($objFile, serialize($cron));
 				fclose($objFile);
 				return $filename;
@@ -3244,7 +3250,7 @@ class C4GForumHelper extends \System
 		else {
 			$path = '';
 		}
-		$objFile = fopen(TL_ROOT . '/' . $path . $data['filename'] . '.xml', 'wb');
+		$objFile = fopen(System::getContainer()->getParameter('kernel.project_dir'). '/' . $path . $data['filename'] . '.xml', 'wb');
 
 		fputs($objFile,'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">'."\n");
 

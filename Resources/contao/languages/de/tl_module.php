@@ -40,6 +40,10 @@
         'Aktion bei Klick auf Thema',
         'Wählen Sie, welche Aktion bei einem Klick auf ein Thema ausgeführt werden soll.'
     );
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxlength'] = array(
+        'Länge von Forumtiteln',
+        'Wählen Sie die Anzahl von Zeichen, nach denen in Boxen umgebrochen werden soll.'
+    );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_realname']     = array(
         'Verwende richtige Namen anstelle des Benutzernamens',
         'Wählen Sie ob und wie Sie die richtigen Namen der Benutzer anzeigen lassen wollen, anstelle ihrer Benutzernamen.'

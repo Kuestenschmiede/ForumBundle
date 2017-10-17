@@ -13,6 +13,8 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
+use Contao\System;
+
 /**
  * Class C4GForumSubscription
  * @package con4gis\ForumBundle\Resources\contao\classes
@@ -424,7 +426,7 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
             if ($cron) {
                 // send mails via cron job, (will be triggered in Javascript part)
                 $filename = md5(uniqid(mt_rand(), true));
-                $objFile  = fopen(TL_ROOT . '/system/tmp/' . $filename . '.tmp', 'wb');
+                $objFile  = fopen(System::getContainer()->getParameter('kernel.project_dir'). '/system/tmp/' . $filename . '.tmp', 'wb');
                 fputs($objFile, serialize($cron));
                 fclose($objFile);
             }

@@ -50,6 +50,10 @@
         'Post order',
         'Choose the order of the posts in the post list of a thread.'
     );
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxlength'] = array(
+        'Length of titles',
+        'Choose the count of characters in a title till a wordwrap.'
+    );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_collapsible_posts'] = array(
         'Make posts collapsible',
         'Choose if and how you want the posts to be collapsible.'
