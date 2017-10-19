@@ -3272,7 +3272,7 @@ class C4GForumHelper extends \System
 		if (array_search('INTROS', $data['contents'])!==false) {
 			foreach($forums AS $forum) {
 				if (!$forum['sitemap_exclude'] && $forum['use_intropage']) {
-					fputs($objFile, "<url><loc>".$this->getUrlForForum($forum['id'],2, false, $data['paramForumbox'], $data['paramForum'])."</loc></url>\n");
+					fputs($objFile, "<url><loc>".$this->getUrlForForum($forum['id'],2, false, $data['param_forumbox'], $data['param_forum'])."</loc></url>\n");
 				}
 			}
 		}
@@ -3287,7 +3287,7 @@ class C4GForumHelper extends \System
 					else {
 						$urltype = 0;
 					}
-					fputs($objFile, "<url><loc>".$this->getUrlForForum($forum['id'],$urltype, false, $data['paramForumbox'], $data['paramForum'])."</loc></url>\n");
+					fputs($objFile, "<url><loc>".$this->getUrlForForum($forum['id'],$urltype, false, $data['param_forumbox'], $data['param_forum'])."</loc></url>\n");
 				}
 			}
 		}
@@ -3303,7 +3303,7 @@ class C4GForumHelper extends \System
 
 					$threads = $this->getThreadsFromDB($forum['id']);
 					foreach($threads AS $thread) {
-						fputs($objFile, "<url><loc>".$this->getUrlForThread($thread['id'],$forum['id'], false, $data['paramForumbox'], $data['paramForum'])."</loc></url>\n");
+						fputs($objFile, "<url><loc>".$this->getUrlForThread($thread['id'],$forum['id'], false, $data['param_forumbox'], $data['param_forum'])."</loc></url>\n");
 					}
 				}
 			}
