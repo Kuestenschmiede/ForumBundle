@@ -3247,12 +3247,13 @@ class C4GForumHelper extends \System
 		fputs($objFile,'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">'."\n");
 
 		$this->checkGuestRights = true;
-		if ($data['startforum']==0) {
-			$idfield = 'pid';
-		}
-		else {
-			$idfield = 'id';
-		}
+
+		//if ($data['startforum']==0) {
+        $idfield = 'pid';
+        /*}
+        else {
+            $idfield = 'id';
+        }*/
 
 		$url = parse_url($_SERVER['HTTP_REFERER']);
         $scheme = '';
@@ -3265,7 +3266,7 @@ class C4GForumHelper extends \System
         }
         $this->frontendUrl = $scheme.$url['host'].$path;
 
-		$forums = $this->getForumsFromDB($data['startforum'],true,true,$idfield,true);
+		$forums = $this->getForumsFromDB($data['startforum'],true,true,$idfield,false);
 
 		// generate URLs for forum intropages
 		if (array_search('INTROS', $data['contents'])!==false) {
