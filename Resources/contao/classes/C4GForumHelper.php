@@ -3255,7 +3255,15 @@ class C4GForumHelper extends \System
 		}
 
 		$url = parse_url($_SERVER['HTTP_REFERER']);
-        $this->frontendUrl = $url['host'].$url['path'];
+        $scheme = '';
+		if ($url['scheme']) {
+            $scheme = $url['scheme'] . "://";
+        }
+        $path = '';
+        if ($url['path']) {
+            $path = $url['path'];
+        }
+        $this->frontendUrl = $scheme.$url['host'].$path;
 
 		$forums = $this->getForumsFromDB($data['startforum'],true,true,$idfield,true);
 
