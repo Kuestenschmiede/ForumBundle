@@ -3253,6 +3253,10 @@ class C4GForumHelper extends \System
 		else {
 			$idfield = 'id';
 		}
+
+		$url = parse_url($_SERVER['HTTP_REFERER']);
+        $this->frontendUrl = $url['host'].$url['path'];
+
 		$forums = $this->getForumsFromDB($data['startforum'],true,true,$idfield,true);
 
 		// generate URLs for forum intropages
