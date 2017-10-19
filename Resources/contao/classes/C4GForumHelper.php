@@ -3253,7 +3253,7 @@ class C4GForumHelper extends \System
 		else {
 			$idfield = 'id';
 		}
-		$forums = $this->getForumsFromDB($data['startforum'],true,true,$idfield);
+		$forums = $this->getForumsFromDB($data['startforum'],true,true,$idfield,true);
 
 		// generate URLs for forum intropages
 		if (array_search('INTROS', $data['contents'])!==false) {
@@ -3315,6 +3315,8 @@ class C4GForumHelper extends \System
 		{
 			$arrFeeds[] = $objSitemaps->c4g_forum_sitemap_filename;
 		}
+
+		\Database::getInstance()->execute("UPDATE tl_module  SET c4g_forum_sitemap_updated=0 WHERE type='c4g_forum' AND c4g_forum_sitemap=1 AND c4g_forum_sitemap_filename!=''");
 
 		return $arrFeeds;
 	}
