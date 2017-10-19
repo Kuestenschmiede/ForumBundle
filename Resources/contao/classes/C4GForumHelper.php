@@ -3241,13 +3241,8 @@ class C4GForumHelper extends \System
 	 */
 	public function createXMLSitemap($data)
 	{
-		if (version_compare(VERSION,'3','>=')) {
-			$path = 'share/';
-		}
-		else {
-			$path = '';
-		}
-		$objFile = fopen(System::getContainer()->getParameter('kernel.project_dir'). '/' . $path . $data['filename'] . '.xml', 'wb');
+    	$path = 'share/';
+		$objFile = fopen($path . $data['filename'] . '.xml', 'wb');
 
 		fputs($objFile,'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">'."\n");
 
@@ -3314,17 +3309,13 @@ class C4GForumHelper extends \System
 	public function removeOldFeedsHook()
 	{
 		$arrFeeds = Array();
-		if (version_compare(VERSION,'3','<')) {
-			$objSitemaps = $this->Database->execute("SELECT c4g_forum_sitemap_filename FROM tl_module WHERE type='c4g_forum' AND c4g_forum_sitemap=1 AND c4g_forum_sitemap_filename!=''");
-		}
-		else {
-			$objSitemaps = \Database::getInstance()->execute("SELECT c4g_forum_sitemap_filename FROM tl_module WHERE type='c4g_forum' AND c4g_forum_sitemap=1 AND c4g_forum_sitemap_filename!=''");
-		}
+		$objSitemaps = \Database::getInstance()->execute("SELECT c4g_forum_sitemap_filename FROM tl_module WHERE type='c4g_forum' AND c4g_forum_sitemap=1 AND c4g_forum_sitemap_filename!=''");
 
 		while ($objSitemaps->next())
 		{
 			$arrFeeds[] = $objSitemaps->c4g_forum_sitemap_filename;
 		}
+
 		return $arrFeeds;
 	}
 
