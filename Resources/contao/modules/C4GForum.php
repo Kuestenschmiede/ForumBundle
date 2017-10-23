@@ -192,8 +192,8 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             //$GLOBALS ['TL_CSS'][] = 'system/modules/con4gis_forum/html/css/bbcodes.css';
             $data['id']      = $this->id;
             // set global js var to inidcate api endpoint
-            $data['forumAjaxUrl'] = "con4gis/api/forumService";
-            $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/forumPnService';</script>";
+            $data['forumAjaxUrl'] = "con4gis/forumService";
+            $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/forumPnService';</script>";
             $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'con4gis/api/fileUpload/';</script>";
 
 

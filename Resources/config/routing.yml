@@ -1,5 +1,5 @@
 forum_ajax:
-    path: /con4gis/api/forumService/{id}/{req}
+    path: /con4gis/forumService/{id}/{req}
     defaults:
         _scope: frontend
         _controller: "con4gisForumBundle:Forum:ajax"
@@ -8,7 +8,7 @@ forum_ajax:
         req: .*
 
 forum_history_ajax:
-    path: /con4gis/api/forumService/{id}
+    path: /con4gis/forumService/{id}
     defaults:
         _scope: frontend
         _controller: "con4gisForumBundle:Forum:ajax"
@@ -16,7 +16,7 @@ forum_history_ajax:
         id: \d+
 
 forum_pn:
-    path: /con4gis/api/forumPnService/{actionFragment}
+    path: /con4gis/forumPnService/{actionFragment}
     defaults:
         _scope: frontend
         _controller: "con4gisForumBundle:Forum:personalMessage"
