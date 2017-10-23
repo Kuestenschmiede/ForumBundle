@@ -81,6 +81,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['DEL_POST']                = 'Löschen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['EDIT_POST']               = 'Bearbeiten';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDIT_POST']                   = 'Antwort bearbeiten';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_POST']                    = 'Löschen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDIT_POST_PREVIEW']           = 'Vorschau - Antwort bearbeiten';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['EDIT_POST_PREVIEW']       = 'Vorschau - Beitrag bearbeiten';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SAVE_POST_CHANGES']       = 'Speichern';

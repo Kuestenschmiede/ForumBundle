@@ -3241,30 +3241,38 @@ class C4GForumHelper extends \System
 	 */
 	public function createXMLSitemap($data)
 	{
-		if (version_compare(VERSION,'3','>=')) {
-			$path = 'share/';
-		}
-		else {
-			$path = '';
-		}
-		$objFile = fopen(System::getContainer()->getParameter('kernel.project_dir'). '/' . $path . $data['filename'] . '.xml', 'wb');
+    	$path = 'share/';
+		$objFile = fopen($path . $data['filename'] . '.xml', 'wb');
 
 		fputs($objFile,'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">'."\n");
 
 		$this->checkGuestRights = true;
-		if ($data['startforum']==0) {
-			$idfield = 'pid';
-		}
-		else {
-			$idfield = 'id';
-		}
-		$forums = $this->getForumsFromDB($data['startforum'],true,true,$idfield);
+
+		//if ($data['startforum']==0) {
+        $idfield = 'pid';
+        /*}
+        else {
+            $idfield = 'id';
+        }*/
+
+		$url = parse_url($_SERVER['HTTP_REFERER']);
+        $scheme = '';
+		if ($url['scheme']) {
+            $scheme = $url['scheme'] . "://";
+        }
+        $path = '';
+        if ($url['path']) {
+            $path = $url['path'];
+        }
+        $this->frontendUrl = $scheme.$url['host'].$path;
+
+		$forums = $this->getForumsFromDB($data['startforum'],true,true,$idfield,false);
 
 		// generate URLs for forum intropages
 		if (array_search('INTROS', $data['contents'])!==false) {
 			foreach($forums AS $forum) {
 				if (!$forum['sitemap_exclude'] && $forum['use_intropage']) {
-					fputs($objFile, "<url><loc>".$this->getUrlForForum($forum['id'],2, false, $data['paramForumbox'], $data['paramForum'])."</loc></url>\n");
+					fputs($objFile, "<url><loc>".$this->getUrlForForum($forum['id'],2, false, $data['param_forumbox'], $data['param_forum'])."</loc></url>\n");
 				}
 			}
 		}
@@ -3279,7 +3287,7 @@ class C4GForumHelper extends \System
 					else {
 						$urltype = 0;
 					}
-					fputs($objFile, "<url><loc>".$this->getUrlForForum($forum['id'],$urltype, false, $data['paramForumbox'], $data['paramForum'])."</loc></url>\n");
+					fputs($objFile, "<url><loc>".$this->getUrlForForum($forum['id'],$urltype, false, $data['param_forumbox'], $data['param_forum'])."</loc></url>\n");
 				}
 			}
 		}
@@ -3295,7 +3303,7 @@ class C4GForumHelper extends \System
 
 					$threads = $this->getThreadsFromDB($forum['id']);
 					foreach($threads AS $thread) {
-						fputs($objFile, "<url><loc>".$this->getUrlForThread($thread['id'],$forum['id'], false, $data['paramForumbox'], $data['paramForum'])."</loc></url>\n");
+						fputs($objFile, "<url><loc>".$this->getUrlForThread($thread['id'],$forum['id'], false, $data['param_forumbox'], $data['param_forum'])."</loc></url>\n");
 					}
 				}
 			}
@@ -3314,17 +3322,15 @@ class C4GForumHelper extends \System
 	public function removeOldFeedsHook()
 	{
 		$arrFeeds = Array();
-		if (version_compare(VERSION,'3','<')) {
-			$objSitemaps = $this->Database->execute("SELECT c4g_forum_sitemap_filename FROM tl_module WHERE type='c4g_forum' AND c4g_forum_sitemap=1 AND c4g_forum_sitemap_filename!=''");
-		}
-		else {
-			$objSitemaps = \Database::getInstance()->execute("SELECT c4g_forum_sitemap_filename FROM tl_module WHERE type='c4g_forum' AND c4g_forum_sitemap=1 AND c4g_forum_sitemap_filename!=''");
-		}
+		$objSitemaps = \Database::getInstance()->execute("SELECT c4g_forum_sitemap_filename FROM tl_module WHERE type='c4g_forum' AND c4g_forum_sitemap=1 AND c4g_forum_sitemap_filename!=''");
 
 		while ($objSitemaps->next())
 		{
 			$arrFeeds[] = $objSitemaps->c4g_forum_sitemap_filename;
 		}
+
+		\Database::getInstance()->execute("UPDATE tl_module  SET c4g_forum_sitemap_updated=0 WHERE type='c4g_forum' AND c4g_forum_sitemap=1 AND c4g_forum_sitemap_filename!=''");
+
 		return $arrFeeds;
 	}
 
