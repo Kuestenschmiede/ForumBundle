@@ -92,7 +92,7 @@
             $data = array();
 
             // set global js var to inidcate api endpoint
-            $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/api/forumPnService';</script>";
+            $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/forumPnService';</script>";
          
             if (!$_GET['c4g_forum_fmd']) {
                 // try to get parameters from referer, if they don't exist

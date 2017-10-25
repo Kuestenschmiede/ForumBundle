@@ -948,7 +948,7 @@ class tl_c4g_forum extends \Backend
                 $unreadTickets = true;
             }
         }
-        if($unreadTickets){
+        if($unreadTickets && $GLOBALS['TL_CONFIG']['c4g_forum_type'] == "TICKET"){
             $return = $arrRow['name'].' <b>(ungelesene Tickets)</b>';
         }
         else{
