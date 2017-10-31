@@ -1,8 +1,8 @@
 {
   "name": "con4gis/forum",
+  "type": "contao-bundle",
   "description": "The contribution brick of the Contao GIS-kit con4gis. Powerful discussion forum amd ticketcenter for Contao.",
   "keywords": ["con4gis", "forum", "discussion", "panel", "board", "contao", "c4g", "ForumBundle", "tickets", "ticketcenter", "helpdesk"],
-  "type": "contao-bundle",
   "homepage": "https://con4gis.org",
   "license": "LGPL-3.0+",
   "authors": [
@@ -18,17 +18,16 @@
     }
   ],
   "support": {
-    "email": "support@con4gis.org"
+    "email": "support@con4gis.org",
+    "issues": "https://github.com/Kuestenschmiede/ForumBundle/issues"
   },
   "require": {
+    "contao/core-bundle": "^4.4",
     "con4gis/core": "~2.0"
   },
   "conflict": {
     "contao/core": "*",
     "contao/manager-plugin": "<2.0 || >=3.0"
-  },
-  "support": {
-    "issues": "https://github.com/Kuestenschmiede/ForumBundle/issues"
   },
   "autoload": {
     "psr-4": {
