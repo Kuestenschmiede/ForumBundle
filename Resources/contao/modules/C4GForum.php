@@ -2901,11 +2901,11 @@ JSPAGINATE;
             $subscriptionId = $this->helper->subscription->getSubforumSubscriptionFromDB($forumId, $this->User->id);
 
             if ($subscriptionId) {
-                $dialogData = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_SUBFORUM_SUBSCRIPTION_CANCEL'], $this->helper->getForumNameFromDB($forumId, $this->c4g_forum_language_temp));
-                $buttonTxt  = $GLOBALS ['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_SUBFORUM_CANCEL'];
+                $dialogData = sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_SUBFORUM_SUBSCRIPTION_CANCEL'), $this->helper->getForumNameFromDB($forumId, $this->c4g_forum_language_temp));
+                $buttonTxt  = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_SUBFORUM_CANCEL');
                 $title      = C4GForumHelper::getTypeText($this->c4g_forum_type,'UNSUBSCRIBE_SUBFORUM');
             } else {
-                $dialogData = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_SUBFORUM_TEXT'], $this->helper->getForumNameFromDB($forumId,$this->c4g_forum_language_temp));
+                $dialogData = sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_SUBFORUM_TEXT'), $this->helper->getForumNameFromDB($forumId,$this->c4g_forum_language_temp));
                 $buttonTxt  = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIBE_SUBFORUM');
 
                 $dialogData .= '<div>' . '<input id="c4gForumSubscriptionForumOnlyThreads"  type="checkbox" name="subscription_only_threads" class="formdata" />' . '<label for="c4gForumSubscriptionForumOnlyThreads">' .
@@ -2965,9 +2965,9 @@ JSPAGINATE;
                 if ($result) {
                     $return                 = $this->getForumInTable($forumId, true);
                     $return ['dialogclose'] = "subscribesubforum" . $forumId;
-                    $return ['usermessage'] = $GLOBALS ['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_SUBFORUM_CANCEL_SUCCESS'];
+                    $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_SUBFORUM_CANCEL_SUCCESS');
                 } else {
-                    $return ['usermessage'] = $GLOBALS ['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_SUBFORUM_ERROR'];
+                    $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_SUBFORUM_ERROR');
                 }
 
             } else {
@@ -2976,11 +2976,11 @@ JSPAGINATE;
 
                 $result = $this->helper->subscription->insertSubscriptionSubforumIntoDB($forumId, $this->User->id, $subscriptionOnlyThreads);
                 if (!$result) {
-                    $return ['usermessage'] = $GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_SUBFORUM_ERROR'];
+                    $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_SUBFORUM_ERROR');
                 } else {
                     $return                 = $this->getForumInTable($forumId, true);
                     $return ['dialogclose'] = "subscribesubforum" . $forumId;
-                    $return ['usermessage'] = $GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_SUBFORUM_SUCCESS'];
+                    $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_SUBFORUM_SUCCESS');
                 }
             }
 
@@ -3012,8 +3012,8 @@ JSPAGINATE;
             $subscriptionId = $this->helper->subscription->getThreadSubscriptionFromDB($threadId, $this->User->id);
             if ($subscriptionId) {
                 $dialogData = sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_THREAD_SUBSCRIPTION_CANCEL'), $threadname, $thread ['forumname']);
-                $buttonTxt  = $GLOBALS ['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_THREAD_CANCEL'];
-                $title      = $GLOBALS ['TL_LANG']['C4G_FORUM']['UNSUBSCRIBE_THREAD'];
+                $buttonTxt  = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_THREAD_CANCEL');
+                $title      = C4GForumHelper::getTypeText($this->c4g_forum_type,'UNSUBSCRIBE_THREAD');
             } else {
                 $dialogData = sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_THREAD_TEXT'), $threadname, $thread ['forumname']);
                 $buttonTxt  = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIBE_THREAD');
@@ -3031,7 +3031,7 @@ JSPAGINATE;
             $dialogbuttons[] = array(
                 "action" => 'closedialog:subscribethread:' . $threadId,
                 "type"   => 'get',
-                "text"   => $GLOBALS['TL_LANG']['C4G_FORUM']['CANCEL']
+                "text"   => C4GForumHelper::getTypeText($this->c4g_forum_type,'CANCEL')
             );
 
             $return = array(
@@ -3254,7 +3254,7 @@ JSPAGINATE;
                 array(
                     "action" => 'closedialog:movethread:' . $threadId,
                     "type"   => 'get',
-                    "text"   => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
+                    "text"   => C4GForumHelper::getTypeText($this->c4g_forum_type,'CANCEL')
                 );
             $return          = array(
                 "dialogtype"    => "html",

@@ -604,14 +604,14 @@ use Contao\System;
                 $subscriptionId = $this->getSubforumSubscriptionFromDB($values[0], $member->id);
                 if ($subscriptionId) {
                     if ($this->deleteSubscriptionSubforum($subscriptionId)) {
-                        $message = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['UNSUBSCRIBE_SUBFORUM_LINK_SUCCESS'], $this->helper->getForumNameFromDB($values[0]), $member->username);
+                        $message = sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'UNSUBSCRIBE_SUBFORUM_LINK_SUCCESS'), $this->helper->getForumNameFromDB($values[0]), $member->username);
                     }
                 }
 
             }
 
             if (!$message) {
-                $return['message'] = $GLOBALS['TL_LANG']['C4G_FORUM']['UNSUBSCRIBE_SUBFORUM_LINK_FAILED'];
+                $return['message'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'UNSUBSCRIBE_SUBFORUM_LINK_FAILED');
             }
             $return['message'] = $message;
             $return['forumid'] = $values[0];
@@ -629,12 +629,12 @@ use Contao\System;
             $member = $this->Database->prepare("SELECT id,username FROM tl_member " . "WHERE email=?")->execute($email);
             if ($member->id) {
                 if ($this->deleteAllSubscriptions($member->id)) {
-                    return sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['UNSUBSCRIBE_ALL_LINK_SUCCESS'], $member->username);
+                    return sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'UNSUBSCRIBE_ALL_LINK_SUCCESS'), $member->username);
                 }
 
             }
 
-            return $GLOBALS['TL_LANG']['C4G_FORUM']['UNSUBSCRIBE_ALL_LINK_FAILED'];
+            return C4GForumHelper::getTypeText($this->c4g_forum_type,'UNSUBSCRIBE_ALL_LINK_FAILED');
         }
     }
 
