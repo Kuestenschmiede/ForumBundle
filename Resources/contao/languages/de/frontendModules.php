@@ -72,7 +72,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['MOVE_THREAD']                 = 'Ticket verschieben';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIBE_THREAD']            = 'Ticket abonnieren';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['UNSUBSCRIBE_THREAD']          = 'Ticket abbestellen';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['UNSUBSCRIBE_THREAD']      = 'Forenbereich abonnieren';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBSCRIBE_SUBFORUM']      = 'Forenbereich abonnieren';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['UNSUBSCRIBE_SUBFORUM']    = 'Forenbereich abbestellen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBSCRIBE_SUBFORUM']       = 'FAQ abonnieren';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['UNSUBSCRIBE_SUBFORUM']     = 'FAQ abbestellen';
