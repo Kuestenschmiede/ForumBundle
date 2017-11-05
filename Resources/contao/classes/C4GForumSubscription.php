@@ -318,31 +318,31 @@ use Contao\System;
                     if ($this->helper->checkPermission($thread['forumid'], $sPerm, $subscriber['memberId'])) {
                         switch ($sendKind) {
                             case "new" :
-                                $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_NEW'];
-                                $aMailData['ACTION_NAME']              = $GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . ''];
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '_WITH_SUBJECT'], $this->MailCache ['subject']);
+                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_NEW');
+                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
 
                                 break;
                             case "edit" :
-                                $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_EDIT'];
-                                $aMailData['ACTION_NAME']              = $GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . ''];
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '_WITH_SUBJECT'], $this->MailCache ['subject']);
+                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_EDIT');
+                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
 
                                 break;
                             case "delete" :
-                                $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_DELETE'];
-                                $aMailData['ACTION_NAME']              = $GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . ''];
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '_WITH_SUBJECT'], $this->MailCache ['subject']);
+                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_DELETE');
+                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
 
                                 break;
                             case "delThread" :
-                                $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_DELTHREAD'];
+                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_DELTHREAD');
                                 $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD');
                                 $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD_WITH_SUBJECT'), $thread['threadname']);
                                 $sActionType                           = "THREAD";
                                 break;
                             case "moveThread" :
-                                $subjectAddition                       = $GLOBALS ['TL_LANG'] ['C4G_FORUM'] ['SUBSCRIPTION_' . $sType . '_MAIL_MOVETHREAD'];
+                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_MOVETHREAD');
                                 $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD');
                                 $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD_WITH_SUBJECT'), $this->MailCache ['moveThreadOldName'], $thread['threadname']);
                                 $sActionType                           = "THREAD";
@@ -355,7 +355,7 @@ use Contao\System;
                                 break;
                         }
 
-                        $aMailData['ACTION_PRE'] = $GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE'];
+                        $aMailData['ACTION_PRE'] = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE');
 
                         \System::log('[C4G] ' . $aMailData['ACTION_NAME'] . " in \"" . $thread['forumname'] . "\": " . $thread['threadname'], __METHOD__, TL_GENERAL);
 
@@ -369,7 +369,7 @@ use Contao\System;
                             $data['from'] = $GLOBALS ['TL_CONFIG'] ['adminEmail'];
                         }
 
-                        $data['subject'] = sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['SUBSCRIPTION_' . $sType . '_MAIL_SUBJECT'], $subjectAddition, $GLOBALS['TL_CONFIG']['websiteTitle'], $thread['forumname'], $thread['threadname']);
+                        $data['subject'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_SUBJECT'), $subjectAddition, $GLOBALS['TL_CONFIG']['websiteTitle'], $thread['forumname'], $thread['threadname']);
 
                         $aMailData['USERNAME']             = $subscriber['username'];
                         $aMailData['RESPONSIBLE_USERNAME'] = $this->User->username;
@@ -411,7 +411,7 @@ use Contao\System;
 
 
 
-                        $mailText     = trim($thread['mail']) ?: $GLOBALS['TL_LANG']['tl_c4g_forum']['default_subscription_text'];
+                        $mailText     = trim($thread['mail']) ?: C4GForumHelper::getTypeText($forumType,'default_subscription_text');
                         $data['text'] = $this->parseMailText($mailText, $aMailData);
                         $data['to'] = $subscriber['email'];
 
