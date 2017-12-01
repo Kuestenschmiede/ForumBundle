@@ -737,7 +737,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                         $tooltip = $thread['threaddesc'];
                         break;
                 }
-
+                $tooltip = strip_tags($tooltip);
                 if (strlen($tooltip) >= 245) {
                     $tooltip = substr($tooltip, 0, strrpos($tooltip, ' '));
                     $tooltip .= ' [...]';
