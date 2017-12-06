@@ -4367,7 +4367,7 @@ JSPAGINATE;
                 $mapData['mapDiv'] = 'c4gForumPostMap';
                 $mapData['addIdToDiv'] = false;
                 $data .= '<div id="c4gForumPostMapGeocoding" class="c4gForumPostMapGeocoding"></div>';
-                $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
+                $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap c4g_map mod_c4g_maps"></div>';
             } else {
                 // Feature Editor
                 $mapData['editor']        = true;
@@ -4378,7 +4378,7 @@ JSPAGINATE;
                 $mapData['mapDiv'] = 'c4gForumPostMap';
                 $mapData['addIdToDiv'] = false;
                 $data .= '<div id="c4gForumPostMapGeosearch" class="c4gForumPostMapGeosearch"></div>';
-                $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
+                $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap c4g_map  mod_c4g_maps"></div>';
             }
 
             if ($add) {
@@ -4469,7 +4469,7 @@ JSPAGINATE;
             }
             $mapData['mapDiv'] = 'c4gForumPostMap';
             $mapData['addIdToDiv'] = false;
-            $data           = '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
+            $data           = '<div id="c4gForumPostMap" class="c4gForumPostMap c4g_map mod_c4g_maps"></div>';
 
             $return = array(
                 "dialogtype"    => "html",
@@ -4522,7 +4522,7 @@ JSPAGINATE;
             $mapData['addIdToDiv'] = false;
 
 
-            $data = '<div id="c4gForumPostMap" class="c4gForumPostMap mod_c4g_maps"></div>';
+            $data = '<div id="c4gForumPostMap" class="c4gForumPostMap c4g_map mod_c4g_maps"></div>';
 
             $return = array(
                 "dialogtype"    => "html",
