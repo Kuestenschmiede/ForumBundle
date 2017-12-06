@@ -6024,7 +6024,7 @@ JSPAGINATE;
             $this->User = $user;
 
             // auf die benutzerdefinierte Fehlerbehandlung umstellen
-            $old_error_handler = \set_error_handler("c4gForumErrorHandler");
+            $old_error_handler = \set_error_handler("con4gis\ForumBundle\Resources\contao\modules\c4gForumErrorHandler");
             if ($request == null) {
 
                 // Ajax Request: read get parameter "req"
