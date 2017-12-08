@@ -71,7 +71,11 @@ class Avatar extends Widget implements \uploadable
 			if (TL_MODE === 'FE') {
 				$this->import('frontenduser');
 				$strUploadTo = '/files/userimages/user_' . $this->frontenduser->id;
-			}
+			} else {
+                if (!$strUploadTo) {
+                    return;
+                }
+            }
 
 			// Create the folder if it does not exist.
 			if (!is_dir($strUploadTo)) {
