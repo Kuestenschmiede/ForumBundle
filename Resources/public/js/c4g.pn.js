@@ -22,7 +22,7 @@
 
     /**
      *
-     * @returns {{sendMessage: _sendMessage, deleteMessage: _deleteMessage, openModal: _openModal, parseBBCode: _parseBBCode, initCKEditor: _initCKEditor}}
+     * @returns {{sendMessage: _sendMessage, deleteMessage: _deleteMessage, openModal: _openModal, parseHTMLCode: _parseHTMLCode, initCKEditor: _initCKEditor}}
      * @constructor
      */
     var C4gPn = function () {
@@ -183,8 +183,10 @@
          * @param selector
          * @private
          */
-        var _parseBBCode = function (selector) {
-            $(selector).html(wswgEditor.parseBBCode($(selector).html()));
+        var _parseHTMLCode = function (selector) {
+            var cont = document.createElement('div');
+            cont.innerHTML=$(selector).html();
+            $(selector).html( $(cont).text() );
         };
 
 
@@ -252,7 +254,7 @@
             sendMessageTo: _sendMessageTo,
             deleteMessage: _deleteMessage,
             openModal: _openModal,
-            parseBBCode: _parseBBCode,
+            parseHTMLCode: _parseHTMLCode,
             initCKEditor: _initCKEditor,
             markAsRead: _markAsRead
         };

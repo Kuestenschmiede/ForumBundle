@@ -443,8 +443,9 @@ use Contao\System;
         private function parseMailText($sText, $aData)
         {
 
+            //$sText = htmlentities($sText);
             $sText = html_entity_decode($sText);
-            
+            $sText = strip_tags($sText);
             // first, check if we've got a language part corresponding
             // to subscriber's language
             $lang = substr(strtoupper($aData['LANGUAGE']), 0, 2);

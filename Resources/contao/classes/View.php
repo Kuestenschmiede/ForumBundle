@@ -35,6 +35,7 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
             $oPn = C4gForumPn::getById($aData['id']);
 
             $oTemplate = new \FrontendTemplate(self::$sTemplate);
+            $oPn->setMessage($oPn->getMessage());
             $oTemplate->pn = $oPn;
 
             return $oTemplate->parse();
