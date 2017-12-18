@@ -10,109 +10,125 @@ use Contao\Widget;
 
 class Avatar extends Widget implements \uploadable
 {
-	/**
-	 * Submit user input
-	 * @var boolean
-	 */
-	protected $blnSubmitInput = true;
+    /**
+     * Submit user input
+     * @var boolean
+     */
+    protected $blnSubmitInput = true;
 
-	/**
-	 * Add a for attribute
-	 * @var boolean
-	 */
-	protected $blnForAttribute = false;
+    /**
+     * Add a for attribute
+     * @var boolean
+     */
+    protected $blnForAttribute = false;
 
-	/**
-	 * Template
-	 * @var string
-	 */
-	protected $strTemplate = 'be_widget';
+    /**
+     * Template
+     * @var string
+     */
+    protected $strTemplate = 'be_widget';
 
-	/**
-	 * Uploader
-	 * @var \FileUpload
-	 */
-	protected $objUploader;
-
-
-	/**
-	 * Initialize the FileUpload object
-	 * @param array
-	 */
-	public function __construct($arrAttributes=null)
-	{
-		parent::__construct($arrAttributes);
-
-		$this->objUploader = new C4gForumSingleFileUpload();
-		$this->objUploader->setName($this->strName);
-	}
+    /**
+     * Uploader
+     * @var \FileUpload
+     */
+    protected $objUploader;
 
 
-	/**
-	 * Trim values
-	 * @param mixed
-	 * @return mixed
-	 */
-	public function validator($varInput)
-	{
-		$strUploadTo = 'system/tmp';
+    /**
+     * Initialize the FileUpload object
+     * @param array
+     */
+    public function __construct($arrAttributes = null)
+    {
+        parent::__construct($arrAttributes);
 
-		// No file specified
-		if (!isset($_FILES[$this->strName]['name'][0])) {
-			return;
-		}
+        $this->objUploader = new C4gForumSingleFileUpload();
+        $this->objUploader->setName($this->strName);
+    }
 
-		// Specify the target folder in the DCA (eval)
-		if (isset($this->arrConfiguration['uploadFolder']))
-		{
-			$strUploadTo = $this->arrConfiguration['uploadFolder'];
 
-			// Add user-based subfolder to target folder to prevent overwriting files with duplicate names.
-			if (TL_MODE === 'FE') {
-				$this->import('frontenduser');
-				$strUploadTo = '/files/userimages/user_' . $this->frontenduser->id;
-			} else {
-                if (!$strUploadTo) {
+
+    /**
+     * Trim values
+     * @param mixed
+     * @return mixed
+     */
+    public function validator($varInput)
+    {
+        $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+
+        $strUploadTo = 'system/tmp';
+
+        // No file specified
+        if (!isset($_FILES[$this->strName]['name'][0]))
+        {
+            return;
+        }
+
+        // Specify the target folder in the DCA (eval)
+        if (isset($this->arrConfiguration['uploadFolder']))
+        {
+            $strUploadTo = $this->arrConfiguration['uploadFolder'];
+
+            // Add user-based subfolder to target folder to prevent overwriting files with duplicate names.
+            if (TL_MODE === 'FE')
+            {
+                $this->import('frontenduser');
+                $strUploadTo = 'files/userimages/user_' . $this->frontenduser->id;
+            }
+            else
+            {
+                if (!$strUploadTo)
+                {
                     return;
                 }
             }
 
-			// Create the folder if it does not exist.
-			if (!is_dir($strUploadTo)) {
-                mkdir($strUploadTo);
+            // Create the folder if it does not exist.
+            if (!is_dir($rootDir . '/' . $strUploadTo))
+            {
+                new Folder($strUploadTo);
             }
-		}
+        }
 
-		return $this->objUploader->uploadTo($strUploadTo);
-	}
+        return $this->objUploader->uploadTo($strUploadTo);
+    }
 
 
-	/**
-	 * Generate the widget and return it as string
-	 * @return string
-	 */
-	public function generate()
-	{
-		$iMemberId = 0;
-		$sReturn = '';
+    /**
+     * Generate the widget and return it as string
+     * @return string
+     */
+    public function generate()
+    {
+        $iMemberId = 0;
+        $sReturn = '';
 
-		// Get the member's ID based upon the usage-location of the Widget: BE -> current viewed member, FE -> current logged in frontenduser.
-		if (TL_MODE === 'FE') {
-			$this->import('frontenduser');
-			$iMemberId = $this->frontenduser->id;
-		} else if (TL_MODE === 'BE') {
-			$iMemberId = $this->currentRecord;
-		}
+        // Get the member's ID based upon the usage-location of the Widget: BE -> current viewed member, FE -> current logged in frontenduser.
+        if (TL_MODE === 'FE')
+        {
+            $this->import('frontenduser');
+            $iMemberId = $this->frontenduser->id;
+        }
+        else
+        {
+            if (TL_MODE === 'BE')
+            {
+                $iMemberId = $this->currentRecord;
+            }
+        }
 
-		// Generate an image tag with the member's avatar.
-		$sImage = C4GForumHelper::getAvatarByMemberId($iMemberId);
-		if ($sImage) {
-			$sReturn = '<img src="' . $sImage . '">';
-		}
+        // Generate an image tag with the member's avatar.
+        $sImage = C4GForumHelper::getAvatarByMemberId($iMemberId);
+        if ($sImage)
+        {
+            $sReturn = '<img src="' . $sImage . '">';
+        }
 
-		$sReturn .= ltrim($this->objUploader->generateMarkup());
+        $sReturn .= ltrim($this->objUploader->generateMarkup());
 
-		return $sReturn;
-	}
+        return $sReturn;
+    }
 
 }

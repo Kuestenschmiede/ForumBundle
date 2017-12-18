@@ -105,18 +105,23 @@ class tl_member_dca extends \Contao\Backend
     public function handleMemberImage($varValue, $dc)
     {
         // Get the member's ID based upon the usage-location of the Widget: BE -> current viewed member, FE -> current logged in frontenduser.
-        if (TL_MODE === 'FE') {
+        if (TL_MODE === 'FE')
+        {
             $this->import('frontenduser');
             $iMemberId = $this->frontenduser->id;
-        } else {
+        }
+        else
+        {
             $iMemberId = $dc->id;
         }
 
         $sImagePathFromDatabase = \con4gis\ForumBundle\Resources\contao\models\C4gForumMember::getAvatarByMemberId($iMemberId);
 
         $deseralized_value = deserialize($varValue);
-        if (empty($deseralized_value) && (!empty($sImagePathFromDatabase))) {
-            if ($sImagePathFromDatabase) {
+        if (empty($deseralized_value) && (!empty($sImagePathFromDatabase)))
+        {
+            if ($sImagePathFromDatabase)
+            {
                 $varValue = $sImagePathFromDatabase;
             }
         }
@@ -124,21 +129,24 @@ class tl_member_dca extends \Contao\Backend
         return $varValue;
     }
 
+
     /**
      * @param $dc
      * @return string
      */
     public function setUploadFolder($varValue, $dc)
     {
-        $rootDir = System::getContainer()->getParameter('kernel.project_dir');
-        $uploadFolder = $rootDir . "/files/userimages/";
+
+        $uploadFolder = "files/userimages";
         $iMemberId = $dc->id;
 
-        if ($iMemberId > 0) {
-            $uploadFolder = $uploadFolder.'user_'.$iMemberId;
+        if ($iMemberId > 0)
+        {
+            $uploadFolder = $uploadFolder . '/user_' . $iMemberId;
         }
 
         $GLOBALS['TL_DCA']['tl_member']['fields']['memberImage']['eval']['uploadFolder'] = $uploadFolder;
     }
+
 
 }
