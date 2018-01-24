@@ -3201,7 +3201,7 @@ class C4GForumHelper extends \System
 	    $set['pid'] = $forumId;
 	    $set['published'] = 1;
 	    $groupArray[] = $groupId;
-//	    $set['define_rights'] = 0;
+	    $set['define_groups'] = 1;
 	    $set['member_groups'] = serialize($groupArray);
 	    if(!$set['member_groups']){
 	        $set['member_groups']=$parentForum['member_groups'];
