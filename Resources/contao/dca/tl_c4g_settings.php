@@ -13,13 +13,14 @@
 
 
 
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{c4g_forum_legend},c4g_forum_type';
+$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_forum_legend},c4g_forum_type;';
 
-$GLOBALS['TL_DCA']['tl_settings']['fields']['c4g_forum_type'] = array
+$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['c4g_forum_type'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_settings']['c4g_forum_type'],
+    'label'     => &$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_forum_type'],
     'inputType' => 'select',
     'options'   => array('DISCUSSIONS', 'QUESTIONS', 'TICKET'),
     'default'   => 'DISCUSSIONS',
-    'reference' => &$GLOBALS['TL_LANG']['tl_settings']['c4g_references']
+    'reference' => &$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_references'],
+    'sql'       => "varchar(255) NOT NULL default 'DISCUSSIONS'"
 );

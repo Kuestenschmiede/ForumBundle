@@ -5858,7 +5858,7 @@ JSPAGINATE;
             $this->Database->prepare('UPDATE tl_c4g_forum_thread SET state = 3, posts ='.$newposts.' WHERE id=?')->execute($threadId);
             $set = array(
                 'text'      => C4GForumTicketStatus::getState(3),
-                'subject'      => C4GForumTicketStatus::getState(3),
+                'subject'   => C4GForumTicketStatus::getState(3),
                 'state'     => 3,
                 'creation'  => time(),
                 'pid'       => $threadId,

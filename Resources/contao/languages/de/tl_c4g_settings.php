@@ -1,6 +1,4 @@
-<?php if (!defined('TL_ROOT')) {
-    die('You cannot access this file directly!');
-}
+<?php
 
 /**
  * con4gis - the gis-kit
@@ -16,15 +14,15 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_settings']['c4g_forum_type']              = array(
+$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_forum_type']              = array(
     'Forenart',
     'Die Forenart beeinflusst die Beschriftungen im Backend. Bei Informationen werden Themen zu Fragen und Beiträge zu Kommentaren. Ticketsystem verändert das Forum zu einem geschlossenem Ticketsystem.'
 );
-$GLOBALS['TL_LANG']['tl_settings']['c4g_forum_legend'] = "Forum (con4gis)";
+$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_forum_legend'] = "Forumeinstellungen";
 
 /**
  * References
  */
-$GLOBALS['TL_LANG']['tl_settings']['c4g_references']['DISCUSSIONS'] = 'Diskussionen (Themen & Beiträge)';
-$GLOBALS['TL_LANG']['tl_settings']['c4g_references']['QUESTIONS']   = 'Informationen (Fragen & Kommentare)';
-$GLOBALS['TL_LANG']['tl_settings']['c4g_references']['TICKET']   = 'Ticketsystem';
+$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_references']['DISCUSSIONS'] = 'Diskussionen (Themen & Beiträge)';
+$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_references']['QUESTIONS']   = 'Informationen (Fragen & Kommentare)';
+$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_references']['TICKET']   = 'Ticketsystem';
