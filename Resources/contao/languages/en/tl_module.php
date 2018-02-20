@@ -305,6 +305,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['FORUMS']  = 'Public forums';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['INTROS']  = 'Public forums - Intropages';
 
+    $GLOBALS['TL_LANG']['tl_module']['c4g_references']['settings']  = 'con4gis settings';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['base']      = 'base';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['black-tie'] = 'black-tie';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['blitzer']   = 'blitzer';

@@ -320,6 +320,8 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['THREADS'] = 'Öffentliche Themen';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['FORUMS']  = 'Öffentliche Forenbereiche';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['INTROS']  = 'Öffentliche Forenbereiche - Einstiegsseiten';
+
+    $GLOBALS['TL_LANG']['tl_module']['c4g_references']['settings']  = 'con4gis Einstellungen';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['base']      = 'base';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['black-tie'] = 'black-tie';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['blitzer']   = 'blitzer';

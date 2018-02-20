@@ -37,7 +37,7 @@
         '{expert_legend:hide},guests,cssID,space';
 
     $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_pncenter'] =
-        '{title_legend},name,headline,type,c4g_forum_uitheme_css_select,c4g_appearance_themeroller_css;';
+        '{title_legend},name,headline,type;{c4g_forum_jqui_legend},c4g_forum_uitheme_css_select,c4g_appearance_themeroller_css;';
 
     $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_bbcodes';
     $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_jqui';
@@ -660,12 +660,12 @@
     (
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_uitheme_css_select'],
         'exclude'                 => true,
-        'default'                 => 'base',
+        'default'                 => 'settings',
         'inputType'               => 'radio',
-        'options'                 => array('base','black-tie','blitzer','cupertino','dark-hive','dot-luv','eggplant','excite-bike','flick','hot-sneaks','humanity','le-frog','mint-choc','overcast','pepper-grinder','redmond','smoothness','south-street','start','sunny','swanky-purse','trontastic','ui-darkness','ui-lightness','vader'),
+        'options'                 => array('settings','base','black-tie','blitzer','cupertino','dark-hive','dot-luv','eggplant','excite-bike','flick','hot-sneaks','humanity','le-frog','mint-choc','overcast','pepper-grinder','redmond','smoothness','south-street','start','sunny','swanky-purse','trontastic','ui-darkness','ui-lightness','vader'),
         'eval'                    => array('mandatory'=>true, 'submitOnChange' => true),
         'reference'               => &$GLOBALS['TL_LANG']['tl_module']['c4g_references'],
-        'sql'                     => "char(100) NOT NULL default 'base'"
+        'sql'                     => "char(100) NOT NULL default 'settings'"
     );
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_uitheme_css_src'] = array

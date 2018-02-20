@@ -13,6 +13,7 @@
 
     namespace con4gis\ForumBundle\Resources\contao\modules;
     use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
+    use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
     use Contao\User;
 
@@ -134,17 +135,30 @@
             if ($this->c4g_appearance_themeroller_css) {
                 $objFile = \FilesModel::findByUuid($this->c4g_appearance_themeroller_css);
                 $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
-            } else if(!empty($this->c4g_forum_uitheme_css_select)) {
+            } else if(!empty($this->c4g_forum_uitheme_css_select) && ($this->c4g_forum_uitheme_css_select != 'settings')) {
                 $theme = $this->c4g_forum_uitheme_css_select;
                 $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscoreassets/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
             } else if ($this->forumModule && $this->forumModule->c4g_forum_uitheme_css_src) {
                 $objFile = \FilesModel::findByUuid($this->forumModule->c4g_forum_uitheme_css_src);
                 $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
-            } else if($this->forumModule && !empty($this->forumModule->c4g_forum_uitheme_css_select)) {
+            } else if($this->forumModule && !empty($this->forumModule->c4g_forum_uitheme_css_select) && ($this->forumModule->c4g_forum_uitheme_css_select != 'settings')) {
                 $theme = $this->forumModule->c4g_forum_uitheme_css_select;
                 $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
             } else {
-                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
+                $settings = C4gSettingsModel::findAll();
+
+                if ($settings) {
+                    $settings = $settings[0];
+                }
+                if ($settings && $settings->c4g_appearance_themeroller_css) {
+                    $objFile = \FilesModel::findByUuid($this->settings->c4g_appearance_themeroller_css);
+                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
+                } else if ($settings && $settings->c4g_uitheme_css_select) {
+                    $theme = $settings->c4g_uitheme_css_select;
+                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
+                } else {
+                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
+                }
             }
 
             $this->Template->c4gdata = $data;
