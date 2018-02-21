@@ -8,7 +8,7 @@
  * @package   con4gis
  * @author    con4gis contributors (see "authors.txt")
  * @license   GNU/LGPL http://opensource.org/licenses/lgpl-3.0.html
- * @copyright Küstenschmiede GmbH Software & Design 2011 - 2017.
+ * @copyright Küstenschmiede GmbH Software & Design 2011 - 2018
  * @link      https://www.kuestenschmiede.de
  */
 
@@ -23,7 +23,7 @@ use Contao\System;
 /**
  * Class C4GForumHelper
  *
- * @copyright  Küstenschmiede GmbH Software & Design 2012
+ * @copyright  Küstenschmiede GmbH Software & Design 2011 - 2018
  * @author     Jürgen Witte <http://www.kuestenschmiede.de>
  * @package    con4gis
  * @author     Jürgen Witte <http://www.kuestenschmiede.de>
