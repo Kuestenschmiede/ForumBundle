@@ -11,16 +11,17 @@
  * @link      https://www.kuestenschmiede.de
  */
 
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
+
 /**
  * Usethe "memberLink" key in the eval array to indicate this field as a member link field, e. g. homepage, facebook, twitter.
  * This key is used in the member data generation for the forum to get all member links as output them.
  */
 
-$GLOBALS['TL_DCA']['tl_member']['palettes']['default'] = str_replace(
-    '{groups_legend}',
-    '{forum_member_legend},memberImage,memberSignature,memberPosts,memberHomepageLink,memberFacebookLink,memberTwitterLink,memberGooglePlusLink;{groups_legend}',
-    $GLOBALS['TL_DCA']['tl_member']['palettes']['default']
-);
+PaletteManipulator::create()
+    ->addLegend('forum_member_legend', 'groups_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
+    ->addField(array('memberImage','memberSignature','memberPosts','memberHomepageLink','memberFacebookLink','memberTwitterLink','memberGooglePlusLink'), 'forum_member_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+    ->applyToPalette('default', 'tl_member');
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['memberImage'] = array
 (
