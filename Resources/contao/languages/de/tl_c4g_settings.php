@@ -14,7 +14,7 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_forum_type']              = array(
+$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_forum_type'] = array(
     'Forenart',
     'Die Forenart beeinflusst die Beschriftungen im Backend. Bei Informationen werden Themen zu Fragen und Beiträge zu Kommentaren. Ticketsystem verändert das Forum zu einem geschlossenem Ticketsystem.'
 );
