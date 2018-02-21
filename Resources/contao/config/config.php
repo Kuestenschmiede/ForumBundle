@@ -26,7 +26,7 @@ $GLOBALS['FE_MOD']['con4gis']['c4g_forum_pncenter'] = 'con4gis\ForumBundle\Resou
 /**
  * Backend modules
  */
-array_insert($GLOBALS['BE_MOD']['con4gis_bricks'],2, array(
+array_insert($GLOBALS['BE_MOD']['con4gis_bricks'],1, array(
     'c4g_forum' => array
     (
         'tables' 		=> array('tl_c4g_forum'),
