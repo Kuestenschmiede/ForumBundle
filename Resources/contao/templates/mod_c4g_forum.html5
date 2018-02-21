@@ -18,7 +18,8 @@ if (typeof(jQuery)=='undefined') {
 	jQuery(document).ready(function() {
 		<?php
 
-		echo "jQuery('div#". $this->c4gdata['div']."' ).c4gGui({".
+                echo "c4g.projects = c4g.projects || {};";
+                echo "var gui = new c4g.projects.c4gGui({".
 				"id: ".$this->c4gdata['id'].", ".
 				"height: '" . $this->c4gdata['height'] ."', ".
 				"width: '" . $this->c4gdata['width'] ."', ".
@@ -31,7 +32,8 @@ if (typeof(jQuery)=='undefined') {
 				"embedDialogs: '" . $this->c4gdata['embedDialogs'] ."', ".
 				"jquiEmbeddedDialogs: '" . $this->c4gdata['jquiEmbeddedDialogs'] ."', ".
 				"contaoPath: '" . \Contao\Environment::get('base')."', ".
-				"contaoLanguage: '" . $this->c4gdata['currentLanguage'] . "',";
+				"contaoLanguage: '" . $this->c4gdata['currentLanguage'] . "'," .
+                "mainDiv: jQuery('div#". $this->c4gdata['div']."' ),";
 		if ($this->c4gdata['navPanel']) {
 			echo "navPanel: true";
 		}
@@ -39,6 +41,8 @@ if (typeof(jQuery)=='undefined') {
 			echo "navPanel: false";
 		}
 		echo "});";
+      echo "gui.setup();";
+      echo "c4g.projects.C4GGui = gui;";
 		?>
 
 	});
