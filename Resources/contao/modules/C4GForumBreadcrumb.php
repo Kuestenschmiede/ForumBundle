@@ -163,11 +163,11 @@ use Contao\Database;
                     if ($settings) {
                         $settings = $settings[0];
                     }
-                    if ($settings && $settings->c4g_appearance_themeroller_css) {
-                        $objFile = \FilesModel::findByUuid($this->settings->c4g_appearance_themeroller_css);
+                    if ($settings && $settings['c4g_appearance_themeroller_css']) {
+                        $objFile = \FilesModel::findByUuid($this->settings['c4g_appearance_themeroller_css']);
                         $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
-                    } else if ($settings && $settings->c4g_uitheme_css_select) {
-                        $theme = $settings->c4g_uitheme_css_select;
+                    } else if ($settings && $settings['c4g_uitheme_css_select']) {
+                        $theme = $settings['c4g_uitheme_css_select'];
                         $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
                     } else {
                         $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
