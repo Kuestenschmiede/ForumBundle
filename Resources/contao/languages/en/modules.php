@@ -17,8 +17,8 @@
  */
 //$GLOBALS['TL_LANG']['MOD']['con4gis'] 				= array( 'con4gis (construction kit)', 'www.con4gis.org' );
 
-$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Forums', 'Administrate forums.' );
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Threadlist','Overview on tickets and threads');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Forum: Structure', 'Administrate forums.' );
+$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Forum: Threadlist','Overview on tickets and threads');
 $GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Overview Posts');
 
 /**
