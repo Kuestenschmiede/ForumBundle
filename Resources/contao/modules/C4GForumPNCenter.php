@@ -13,9 +13,8 @@
 
     namespace con4gis\ForumBundle\Resources\contao\modules;
     use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
-    use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
-    use Contao\User;
+    use Contao\Database;
 
 
     /**
@@ -145,7 +144,7 @@
                 $theme = $this->forumModule->c4g_forum_uitheme_css_select;
                 $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
             } else {
-                $settings = C4gSettingsModel::findAll();
+                $settings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
 
                 if ($settings) {
                     $settings = $settings[0];

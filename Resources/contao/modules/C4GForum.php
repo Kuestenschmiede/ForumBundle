@@ -13,19 +13,17 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
-    use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
-    use con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus;
-    use con4gis\MapsBundle\Resources\contao\classes\MapDataConfigurator;
-    use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
-    use con4gis\MapsBundle\Resources\contao\classes\ResourceLoader;
-    use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
-    use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
+    use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
     use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+    use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
+    use con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPost;
     use con4gis\ForumBundle\Resources\contao\models\C4gForumSession;
+    use con4gis\MapsBundle\Resources\contao\classes\MapDataConfigurator;
+    use con4gis\MapsBundle\Resources\contao\classes\ResourceLoader;
+    use Contao\Database;
     use Contao\FrontendUser;
-    use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
     use Contao\Input;
     use Contao\Module;
 
@@ -177,7 +175,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                     $theme = $this->c4g_forum_uitheme_css_select;
                     $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
             } else {
-                $settings = C4gSettingsModel::findAll();
+                $settings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
 
                 if ($settings) {
                     $settings = $settings[0];
