@@ -38,4 +38,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][2]      = "Gelesen";
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][3]      = "Geschlossen";
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][4]      = "Neu";
 
+$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['counter_caption_thread'] = '[Thema #';
+$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['counter_caption_ticket'] = '[Ticket #';
+
 ?>

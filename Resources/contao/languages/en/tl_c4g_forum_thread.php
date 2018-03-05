@@ -36,4 +36,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][1]      = "Backoffice Unread
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][2]      = "Backoffice Read";
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][3]      = "Closed";
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][4]      = "New";
+
+$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['counter_caption_thread'] = '[Thread #';
+$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['counter_caption_ticket'] = '[Ticket #';
 ?>

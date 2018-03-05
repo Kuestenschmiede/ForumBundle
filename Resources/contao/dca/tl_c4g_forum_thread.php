@@ -248,12 +248,20 @@ class tl_c4g_forum_thread extends \Backend{
     public function get_label($arrRow)
     {
         $result ="";
-        if($GLOBALS['TL_CONFIG']['c4g_forum_type'] == "DISCUSSIONS"){
-            $result .= '[Thema #';
+        $settings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
+
+        if ($settings) {
+            $settings = $settings[0];
         }
-        else if($GLOBALS['TL_CONFIG']['c4g_forum_type'] == "TICKET"){
-            $result .= '[Ticket #';
+        if ($settings && $settings['c4g_forum_type']) {
+
+            if ($settings['c4g_forum_type'] == "DISCUSSIONS") {
+                $result .= $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['counter_caption_thread'];
+            } else if ($settings['c4g_forum_type'] == "TICKET") {
+                $result .= $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['counter_caption_ticket'];
+            }
         }
+
         $result .=sprintf('%04d', $arrRow['id']).'] ';
         $author = $this->Database->prepare('SELECT * FROM tl_member WHERE id=?')->execute($arrRow['author'])->fetchAssoc();
         $result .= $arrRow['name'].': ';

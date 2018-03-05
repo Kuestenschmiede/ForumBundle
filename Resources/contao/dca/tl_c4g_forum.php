@@ -948,12 +948,20 @@ class tl_c4g_forum extends \Backend
                 $unreadTickets = true;
             }
         }
-        if($unreadTickets && $GLOBALS['TL_CONFIG']['c4g_forum_type'] == "TICKET"){
-            $return = $arrRow['name'].' <b>(ungelesene Tickets)</b>';
+
+        $return = $arrRow['name'];
+
+        $settings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
+
+        if ($settings) {
+            $settings = $settings[0];
         }
-        else{
-            $return = $arrRow['name'];
+        if ($settings && $settings['c4g_forum_type']) {
+            if($unreadTickets && $settings['c4g_forum_type'] == "TICKET") {
+                $return = $arrRow['name'] . $GLOBALS['TL_LANG']['tl_c4g_forum']['unreaded_tickets'];
+            }
         }
+
         return $return;
     }
     public function remove_bb()

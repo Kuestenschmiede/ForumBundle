@@ -114,6 +114,8 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['show']   		= array('Details', 'Die Details 
 $GLOBALS['TL_LANG']['tl_c4g_forum']['index']   		= array('Indizieren', 'Indiziert das komplette Forum');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['thread']  		= array('Themen', 'Zeigt die Kinder des Forenbereichs an');
 
+$GLOBALS['TL_LANG']['tl_c4g_forum']['unreaded_tickets'] = ' <b>(ungelesene Tickets)</b>';
+
 /**
  * Links
  */

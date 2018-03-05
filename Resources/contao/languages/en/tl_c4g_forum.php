@@ -135,6 +135,8 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['references']['OSMID']  	= 'Extend Popup (BE
 $GLOBALS['TL_LANG']['tl_c4g_forum']['references']['PICK']   	= 'Single point (GEO-Picker)';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['references']['EDIT']   	= 'Points, lines, polygones (Editor)';
 
+$GLOBALS['TL_LANG']['tl_c4g_forum']['unreaded_tickets'] = ' <b>(unreaded tickets)</b>';
+
 /**
  * Forum Rights
  */

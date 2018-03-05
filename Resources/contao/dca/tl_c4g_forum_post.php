@@ -255,6 +255,7 @@ class tl_c4g_forum_post extends \Backend{
         $arrSetParent['creation'] = time();
         $arrSetParent['state'] = $dc->activeRecord->state;
 
+        //ToDo Language
         if($dc->activeRecord->subject == ''){
             $arrSet['subject'] = 'Statusänderung: '.$dc->activeRecord->state;
         }
