@@ -719,18 +719,26 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                     case "title_first_post":
                         $tooltip = $this->helper->getFirstPostLimitedTextOfThreadFromDB($thread['id'], 250, true);
                         $tooltip = preg_replace('/\[[^\[\]]*\]/i', '', $tooltip);
+                        $tooltip = htmlspecialchars_decode($tooltip);
+                        $tooltip = strip_tags($tooltip);
                         break;
                     case "title_last_post":
                         $tooltip = $this->helper->getLastPostLimitedTextOfThreadFromDB($thread['id'], 250, true);
                         $tooltip = preg_replace('/\[[^\[\]]*\]/i', '', $tooltip);
+                        $tooltip = htmlspecialchars_decode($tooltip);
+                        $tooltip = strip_tags($tooltip);
                         break;
                     case "body_first_post":
                         $tooltip = $this->helper->getFirstPostLimitedTextOfThreadFromDB($thread['id'], 250);
                         $tooltip = preg_replace('/\[[^\[\]]*\]/i', '', $tooltip);
+                        $tooltip = htmlspecialchars_decode($tooltip);
+                        $tooltip = strip_tags($tooltip);
                         break;
                     case "body_last_post":
                         $tooltip = $this->helper->getLastPostLimitedTextOfThreadFromDB($thread['id'], 250);
                         $tooltip = preg_replace('/\[[^\[\]]*\]/i', '', $tooltip);
+                        $tooltip = htmlspecialchars_decode($tooltip);
+                        $tooltip = strip_tags($tooltip);
                         break;
                     case "threadtitle":
                         if ($this->c4g_forum_multilingual) {
@@ -738,6 +746,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                         } else {
                             $tooltip = $thread['name'];
                         }
+                        $tooltip = strip_tags($tooltip);
                         break;
                     case "threadbody":
                         $tooltip = $thread['threaddesc'];
