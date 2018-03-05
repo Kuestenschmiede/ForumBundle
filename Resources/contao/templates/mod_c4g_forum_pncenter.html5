@@ -32,13 +32,17 @@
             } else {
               jQuery(document).ready(function() {
                     <?php if ($this->c4gdata['div']!='') {
-                        echo "jQuery('div#". $this->c4gdata['div']."' ).c4gGui({".
+                        echo "c4g.projects = c4g.projects || {};";
+                        echo "var gui = new c4g.projects.c4gGui({".
                         "id: ".$this->c4gdata['id'].", ".
                         "initData: " . $this->c4gdata['initData'] .", ".
                         "jquiButtons: false, ".
                         "jquiEmbeddedDialogs: false, ".
-                        "navPanel: false ".
+                        "navPanel: false, ".
+                        "mainDiv: jQuery('div#". $this->c4gdata['div']."' )" . 
                         "});";
+                  echo "gui.setup();";
+                  echo "c4g.projects.C4GGui = gui;";
                     }?>
                 });
 
