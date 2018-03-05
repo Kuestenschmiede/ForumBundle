@@ -163,7 +163,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         ),
         'author' => array
         (
-            'sql'                     => "int(10) NOT NULL default '1'"
+            'sql'                     => "int(10) NOT NULL default '0'"
         ),
         'owner' => array(
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['owner'],
