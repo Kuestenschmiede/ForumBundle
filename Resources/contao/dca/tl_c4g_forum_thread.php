@@ -241,9 +241,10 @@ class tl_c4g_forum_thread extends \Backend{
 
         $arrSet['author'] = $author['default_author'];
 
-        $arrSet['creation'] = time();
-
-        $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSet)->execute($dc->id);
+        if ($arrSet['author']) {
+            $arrSet['creation'] = time();
+            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSet)->execute($dc->id);
+        }
     }
     public function get_label($arrRow)
     {

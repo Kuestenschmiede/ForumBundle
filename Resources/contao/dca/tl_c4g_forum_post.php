@@ -260,8 +260,10 @@ class tl_c4g_forum_post extends \Backend{
             $arrSet['subject'] = 'Statusänderung: '.$dc->activeRecord->state;
         }
 
-        $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($arrSet)->execute($dc->id);
-        $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSetParent)->execute($dc->activeRecord->pid);
+        if ($arrSet['author']) {
+            $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($arrSet)->execute($dc->id);
+            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSetParent)->execute($dc->activeRecord->pid);
+        }
     }
 
     public function loadLabel ($arrRow)
