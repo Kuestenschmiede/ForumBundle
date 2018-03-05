@@ -25,8 +25,8 @@ if (typeof(jQuery)=='undefined') {
 				"jquiButtons: false, ".
 				"jquiEmbeddedDialogs: false, ".
 				"breadcrumbDelim: '" . $this->c4gdata['breadcrumbDelim'] ."', ".
-				"navPanel: false ".
-                "mainDiv: jQuery('div#". $this->c4gdata['div']."' ),";
+				"navPanel: false, ".
+                "mainDiv: jQuery('div#". $this->c4gdata['div']."' )";
 			"});";
 			 echo "gui.setup();";
              echo "c4g.projects.C4GGui = gui;";
