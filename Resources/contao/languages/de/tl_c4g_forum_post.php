@@ -41,5 +41,6 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][4]      = "Neu";
  * Legends
  */
 $GLOBALS['TL_LANG']['tl_c4g_forum_post']['description_legend'] = 'Beitrag';
+$GLOBALS['TL_LANG']['tl_c4g_forum_post']['state_change'] = 'Statusänderung: ';
 
 ?>
