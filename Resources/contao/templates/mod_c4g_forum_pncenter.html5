@@ -39,7 +39,7 @@
                         "jquiButtons: false, ".
                         "jquiEmbeddedDialogs: false, ".
                         "navPanel: false, ".
-                        "mainDiv: jQuery('div#". $this->c4gdata['div']."' )" . 
+                        "mainDiv: jQuery('div#". $this->c4gdata['div']."' )" .
                         "});";
                   echo "gui.setup();";
                   echo "c4g.projects.C4GGui = gui;";
