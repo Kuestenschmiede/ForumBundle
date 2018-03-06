@@ -243,7 +243,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'exclude'               => true,
                         'inputType'             => 'select',
                         'options'               => \System::getLanguages(),
-                        'eval'                  => array('chosen' => true, style=>'width: 200px')
+                        'eval'                  => array('chosen' => true, 'style'=>'width: 200px')
                     )
                 )
             ),
@@ -283,7 +283,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'exclude'               => true,
                         'inputType'             => 'select',
                         'options'               => \System::getLanguages(),
-                        'eval'                  => array('chosen' => true, style=>'width: 200px')
+                        'eval'                  => array('chosen' => true, 'style'=>'width: 200px')
                     )
                 )
             ),
@@ -320,7 +320,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'exclude'               => true,
                         'inputType'             => 'select',
                         'options'               => \System::getLanguages(),
-                        'eval'                  => array('chosen' => true, style=>'width: 200px')
+                        'eval'                  => array('chosen' => true, 'style'=>'width: 200px')
                     )
                 )
             ),
