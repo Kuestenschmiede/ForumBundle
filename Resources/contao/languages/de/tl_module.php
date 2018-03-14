@@ -93,6 +93,7 @@
     //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_ckeditor']                      = array('Neuen WYSIWYG-Editor verwenden', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('Editor', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button']                = array('Persönliche Nachrichten', 'Button für Persönliche Nachrichten im Profil anzeigen');
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sub_title']                     = array('Titel für Abonnement','Titel der im Betreff einer Mail bei Abonnement angezeigt wird');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "CKEditor verwenden";
     //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb']           = "Alten WYSIWYG-Editor verwenden";
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "Keinen Editor verwenden";

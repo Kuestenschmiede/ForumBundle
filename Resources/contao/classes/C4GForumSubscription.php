@@ -276,7 +276,7 @@ use Contao\System;
          * @param $sUrl
          * @return string
          */
-        public function sendSubscriptionEMail($subscribers, $threadId, $sendKind, $sUrl=false, $forumType='DISCUSSIONS')
+        public function sendSubscriptionEMail($subscribers, $threadId, $sendKind, $sUrl=false, $forumType='DISCUSSIONS', $headline=null)
         {
 
             \System::loadLanguageFile("tl_c4g_forum");
@@ -318,7 +318,7 @@ use Contao\System;
                     if ($this->helper->checkPermission($thread['forumid'], $sPerm, $subscriber['memberId'])) {
                         switch ($sendKind) {
                             case "new" :
-                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_NEW');
+                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '');
                                 $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '');
                                 $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
 
@@ -368,8 +368,11 @@ use Contao\System;
                         } else {
                             $data['from'] = $GLOBALS ['TL_CONFIG'] ['adminEmail'];
                         }
+                        if(!$headline || $headline ==''){
+                            $headline = $GLOBALS['TL_CONFIG']['websiteTitle'];
+                        }
 
-                        $data['subject'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_SUBJECT'), $subjectAddition, $GLOBALS['TL_CONFIG']['websiteTitle'], $thread['forumname'], $thread['threadname']);
+                        $data['subject'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_SUBJECT'), $subjectAddition, $headline, $thread['forumname'], $thread['threadname']);
 
                         $aMailData['USERNAME']             = $subscriber['username'];
                         $aMailData['RESPONSIBLE_USERNAME'] = $this->User->username;
@@ -474,7 +477,7 @@ use Contao\System;
             }
 
 
-            return $sText;
+            return strip_tags($sText);
 
 
             //        USERNAME: ##USERNAME##

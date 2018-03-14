@@ -96,6 +96,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_enabled'] = array("Enable rating", "Abilita la valutazione a 5 stelle quando si scrivono i post.");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_color'] = array("Colore delle stelle di valutazione", "Cambia il colore delle stelle di valutazione. Predefinito: textcolor globale");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button']                = array('Messaggi privati','Mostra un pulsante per i messaggi privati');
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sub_title']                     = array('Name for subscription','Name shown in the subject of a subscription-mail');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor']                = array('Usa editor WYSIWYG', 'ATTENZIONE: Questa possibilità funziona solo con i forums incorporati!');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = array('Pulsanti della toolbar dell\'editor WYSIWYG', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imguploadpath']  = array('Cartella di upload per immagini', 'Imposta dove verranno memorizzate le immagini caricate. Una sottocartella aggiuntiva con la data verrà creata automaticamente dentro questa');

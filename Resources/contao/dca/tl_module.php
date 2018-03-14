@@ -19,7 +19,7 @@
     $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] =
         '{title_legend},name,headline,type;' .
         '{c4g_forum_general_legend},c4g_forum_type,c4g_forum_startforum,c4g_forum_navigation,c4g_forum_boxlength,c4g_forum_threadclick,c4g_forum_postsort,c4g_forum_collapsible_posts,c4g_forum_breadcrumb,c4g_forum_hide_intropages,c4g_forum_jumpTo,c4g_forum_language,c4g_forum_multilingual,c4g_forum_tooltip,c4g_forum_show_last_post_on_new;' .
-        '{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_rating_enabled,c4g_forum_rating_color,c4g_forum_show_post_count,c4g_forum_show_avatars,c4g_forum_show_online_status,c4g_forum_show_ranks,c4g_forum_show_pn_button;'.
+        '{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_rating_enabled,c4g_forum_rating_color,c4g_forum_show_post_count,c4g_forum_show_avatars,c4g_forum_show_online_status,c4g_forum_show_ranks,c4g_forum_show_pn_button,c4g_forum_sub_title;'.
         '{c4g_forum_bbcodes_legend:hide},c4g_forum_bbcodes;' .
         '{c4g_forum_sizes_legend:hide},c4g_forum_size,c4g_forum_scroll;' .
         '{c4g_forum_pagination_legend:hide},c4g_forum_pagination_active,c4g_forum_pagination_perpage,c4g_forum_pagination_format;' .
@@ -176,6 +176,14 @@
         'default'   => true,
         'inputType' => 'checkbox',
         'sql'       => "char(1) NOT NULL default ''"
+    );
+    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sub_title'] = array
+    (
+        'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_sub_title'],
+        'exclude'   => true,
+        'default'   => '',
+        'inputType' => 'text',
+        'sql'       => "char(255) NOT NULL default ''"
     );
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_perpage'] = array

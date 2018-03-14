@@ -94,6 +94,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_enabled'] = array("Ota käyttöön arvostelu", "Ottaa käyttöön viiden tähden arvostelusysteemin kun viestejä kirjoitetaan.");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_color'] = array("Arvostelutähtien väri", "Vaihtaa arvostelutähtien värin. Oletus: global tekstin väri");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button']                = array('Private messages','Show button for private messages');
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sub_title']                     = array('Name for subscription','Name shown in the subject of a subscription-mail');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor']                = array('Käytä WYSIWYG-Editoria', 'VAROITUS: Tämä ominaisuus toimii vain sulautetuilla foorumeilla!');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = array('WYSIWYG-Editori tooltip napit', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imguploadpath']  = array('Kuvan latauskansio', 'Päätä minne ladatut kuvat pitäisi varastoida. Ylimääräinen kansio joka on nimetty päivämäärän mukaan on luotu tänne');

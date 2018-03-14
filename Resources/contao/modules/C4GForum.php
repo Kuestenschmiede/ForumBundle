@@ -51,7 +51,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
      * Class C4GForum
      * @package con4gis\ForumBundle\Resources\contao\modules
      */
-    class C4GForum extends Module
+    class C4GForum extends \Module
     {
 
         /**
@@ -2206,7 +2206,7 @@ JSPAGINATE;
                     $this->helper->subscription->MailCache ['post']     = $this->putVars['post'];
                     $this->helper->subscription->MailCache ['linkname'] = $this->putVars['linkname'];
                     $this->helper->subscription->MailCache ['linkurl']  = $this->putVars['linkurl'];
-                    $cronjob                                            = $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $threadId, 'new', $sUrl, $this->c4g_forum_type);
+                    $cronjob                                            = $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $threadId, 'new', $sUrl, $this->c4g_forum_type, $this->c4g_forum_sub_title);
                     if ($cronjob) {
                         $return['cronexec'] = $cronjob;
                     }
@@ -2437,7 +2437,7 @@ JSPAGINATE;
                     $this->helper->subscription->MailCache ['linkname'] = $this->putVars['linkname'];
                     $this->helper->subscription->MailCache ['linkurl']  = $this->putVars['linkurl'];
                     $cronjob                                            =
-                        $this->helper->subscription->sendSubscriptionEMail($forumSubscribers, $result['thread_id'], 'newThread', $sUrl, $this->c4g_forum_type);
+                        $this->helper->subscription->sendSubscriptionEMail($forumSubscribers, $result['thread_id'], 'newThread', $sUrl, $this->c4g_forum_type, $this->c4g_forum_sub_title);
                     if ($cronjob) {
                         $return['cronexec'][] = $cronjob;
                     }
@@ -2830,7 +2830,7 @@ JSPAGINATE;
             if ($threadSubscribers || $forumSubscribers) {
                 $cronexec =
                     $this->helper->subscription->sendSubscriptionEMail(
-                        array_merge($threadSubscribers, $forumSubscribers), $threadId, 'delThread', false, $this->c4g_forum_type);
+                        array_merge($threadSubscribers, $forumSubscribers), $threadId, 'delThread', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
             }
             $result = $this->helper->deleteThreadFromDB($threadId);
             if (!$result) {
@@ -3206,7 +3206,7 @@ JSPAGINATE;
                 if ($threadSubscribers || $forumSubscribers || $newForumSubscribers) {
                     $cronjob =
                         $this->helper->subscription->sendSubscriptionEMail(
-                            array_merge($threadSubscribers, $forumSubscribers, $newForumSubscribers), $threadId, 'moveThread', false, $this->c4g_forum_type);
+                            array_merge($threadSubscribers, $forumSubscribers, $newForumSubscribers), $threadId, 'moveThread', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
                     if ($cronjob) {
                         $return['cronexec'][] = $cronjob;
                     }
@@ -3427,7 +3427,7 @@ JSPAGINATE;
                     $this->helper->subscription->MailCache ['linkurl']  = $post ['linkurl'];
                     $cronjob                                            =
                         $this->helper->subscription->sendSubscriptionEMail(
-                            array_merge($threadSubscribers, $forumSubscribers), $post ['threadid'], 'delete', false, $this->c4g_forum_type);
+                            array_merge($threadSubscribers, $forumSubscribers), $post ['threadid'], 'delete', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
                     if ($cronjob) {
                         $return['cronexec'] = $cronjob;
                     }
@@ -3565,7 +3565,7 @@ JSPAGINATE;
                     $this->helper->subscription->MailCache ['linkurl']  = $this->putVars['linkurl'];
                     $cronjob                                            =
                         $this->helper->subscription->sendSubscriptionEMail(
-                            array_merge($threadSubscribers, $forumSubscribers), $post['threadid'], 'edit', false, $this->c4g_forum_type);
+                            array_merge($threadSubscribers, $forumSubscribers), $post['threadid'], 'edit', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
                     if ($cronjob) {
                         $return['cronexec'] = $cronjob;
                     }
@@ -6074,7 +6074,7 @@ JSPAGINATE;
                 $session = $this->Session->getData();
                 $frontendUrl = $this->Environment->url . TL_PATH . '/' . $session['current_forum_url'];
 
-                $this->helper = new C4GForumHelper($this->Database, $this->Environment, $this->User, $this->headline,
+                $this->helper = new C4GForumHelper($this->Database, $this->Environment, $this->User, $this->c4g_forum_sub_title,
                                                    $frontendUrl, $this->c4g_forum_show_realname,$this->c4g_forum_type);
 
                 if (($_SERVER['REQUEST_METHOD']) == 'PUT') {
