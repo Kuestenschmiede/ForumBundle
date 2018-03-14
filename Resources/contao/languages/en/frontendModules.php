@@ -14,7 +14,7 @@
 
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['FORUM']                   = 'Forum';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['FAQ']                      = 'FAQ';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['FORUM']                      = 'FAQ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['FORUM']                       = 'Tickets';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREAD']                  = 'Thread';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['THREAD']                   = 'Question';
@@ -31,7 +31,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['FAQS']                     = 'FAQ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NEW_THREAD']              = 'New thread';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['NEW_THREAD']               = 'New question';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['Tickets']['NEW_THREAD']                 = 'New ticket';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEW_THREAD']                  = 'New ticket';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST']                    = 'Post';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POSTS']                   = 'Posts';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_POST']               = 'Last post';
@@ -104,6 +104,10 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']                   = 'Close';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBMIT']                  = 'Submit';
 
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE_THREAD']            = 'Close Thread';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['CLOSE_THREAD']             = 'Close Question';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['CLOSE_THREAD']                = 'Close Ticket';
+
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADS_NODESC']          = 'No description available...';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADS_EMPTY']           = 'No threads available';
@@ -117,7 +121,13 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['THREADS_LENGTHMENU']       = 'Display _MENU_ questions';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['THREADS_NOTFOUND']         = 'No questions found for given search';
 
-    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADS_PROCESSING']      = 'Please wait...';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['THREADS_EMPTY']               = 'No tickets available';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['THREADS_INFO']                = "_TOTAL_ tickets(_START_ to _END_)";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['THREADS_FILTERED']            = '(filtered from _MAX_ total tickets)';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['THREADS_LENGTHMENU']          = 'Display _MENU_ tickets';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['THREADS_NOTFOUND']            = 'No tickets found for given search';
+
+$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADS_PROCESSING']      = 'Please wait...';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADS_SEARCH']          = 'Quick search';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_COUNT']          = ' Post <b %s>#%d</b> of <b %s>%d</b> ';
@@ -444,7 +454,12 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_CB_ONLYTHREADS']                = "Search only questions (ignore comments)";
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_LBL_DISPLAY_ONLY_THREADS']      = 'Only display questions with comments from user:';
     $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_LBL_SEARCH_ALL_THEMES_THREADS'] = 'Search through all questions starting from';
-    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_CB_ONLYTHREADS']                = "Search only tickets (ignore messages)";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCHDIALOG_CB_ONLYTHREADS']                = "Search only questions (ignore messages)";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCHDIALOG_HEADLINE_THREADS']                 = 'Search for tickets';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCHDIALOG_CB_ONLYTHREADS']                   = "Search only tickets (ignore posts)";
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCHDIALOG_LBL_DISPLAY_ONLY_THREADS']         = 'Only display tickets with posts from user:';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCHDIALOG_LBL_SEARCH_ALL_THEMES_THREADS']    = 'Search through all tickets starting from';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCHDIALOG_CB_ONLYTHREADS']                   = "Search only tickets (ignore posts)";
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH_MESSAGE_NO_SEARCH_ENTRY'] = 'Please enter a searchstring.';
 
@@ -462,8 +477,18 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH_HELPTEXT_AREA']        = 'Defines the searcharea. ';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH_HELPTEXT_AUTHOR']      = 'If a username is entered here, ' .
                                                                       'only threads will be displayed, that are created by him or her.';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCH_HELPTEXT_AUTHOR']       = 'If a username is entered here, ' .
+                                                                      'only questions will be displayed, that are created by him or her.';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCH_HELPTEXT_AUTHOR']          = 'If a username is entered here, ' .
+                                                                      'only tickets will be displayed, that are created by him or her.';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH_HELPTEXT_TIMEPERIOD']  = 'This will choose the actuality of a Thread. ' .
-                                                                      'This can refer to the date of birth or last post. If the counter is set to "0", ' .
+                                                                      'This can refer to the date of birth or the last post. If the counter is set to "0", ' .
+                                                                      'this option will be ignored.';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SEARCH_HELPTEXT_TIMEPERIOD']   = 'This will choose the actuality of a question. ' .
+                                                                      'This can refer to the date of birth or the last comment. If the counter is set to "0", ' .
+                                                                      'this option will be ignored.';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SEARCH_HELPTEXT_TIMEPERIOD']      = 'This will choose the actuality of a ticket. ' .
+                                                                      'This can refer to the date of birth or the last post. If the counter is set to "0", ' .
                                                                       'this option will be ignored.';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LATESTTHREADS_HEADLINE'] = 'Latest threads';

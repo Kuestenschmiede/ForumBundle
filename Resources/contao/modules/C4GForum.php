@@ -4391,7 +4391,7 @@ JSPAGINATE;
                 $data .= '<div id="c4gForumPostMap" class="c4gForumPostMap c4g_map mod_c4g_maps"></div>';
             } else {
                 // Feature Editor
-                $mapData['editor']        = true;
+                $mapData['editor']['enable']        = "1";
                 $mapData['editor_labels'] = $GLOBALS['TL_LANG']['c4g_maps']['editor_labels'];
                 $mapData['editor_field']  = '#c4gForumPostMapEntryGeodata';
                 $mapData['geosearch']['enable']   = true;
