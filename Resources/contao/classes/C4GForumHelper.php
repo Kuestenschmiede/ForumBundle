@@ -3045,6 +3045,8 @@ class C4GForumHelper extends \System
         if($sUrl !== false){
 			$this->frontendUrl = $sUrl;
 		}
+        $paramForum = $paramForum ? $paramForum : 'forum';
+        $paramForumbox = $paramForumbox ? $paramForumbox : 'forumbox';
 
 		switch ($urlType) {
 			case 1:
@@ -3075,6 +3077,7 @@ class C4GForumHelper extends \System
 	 								 ->execute($threadId);
 			$forumId = $data->pid;
 		}
+		$paramForum = $paramForum ? $paramForum : 'forum';
 		return strtok($this->frontendUrl,'?') . '?state='.$paramForum.':'.$forumId.';readthread:'.$threadId;
 	}
 
