@@ -3065,7 +3065,7 @@ class C4GForumHelper extends \System
 	 * @param int $threadId
 	 * @param int $forumId
 	 */
-	public function getUrlForThread($threadId,$forumId=0, $sUrl=false, $paramForumbox, $paramForum)
+	public function getUrlForThread($threadId,$forumId=0, $sUrl=false, $paramForum = 'forum')
 	{
 		if($sUrl !== false){
 			$this->frontendUrl = $sUrl;
@@ -3306,7 +3306,7 @@ class C4GForumHelper extends \System
 
 					$threads = $this->getThreadsFromDB($forum['id']);
 					foreach($threads AS $thread) {
-						fputs($objFile, "<url><loc>".$this->getUrlForThread($thread['id'],$forum['id'], false, $data['param_forumbox'], $data['param_forum'])."</loc></url>\n");
+						fputs($objFile, "<url><loc>".$this->getUrlForThread($thread['id'],$forum['id'], false, $data['param_forum'])."</loc></url>\n");
 					}
 				}
 			}
