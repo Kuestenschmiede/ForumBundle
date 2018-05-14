@@ -274,7 +274,6 @@ use Contao\System;
          * @param $threadId
          * @param $sendKind
          * @param $sUrl
-         * @return string
          */
         public function sendSubscriptionEMail($subscribers, $threadId, $sendKind, $sUrl=false, $forumType='DISCUSSIONS', $headline=null)
         {
@@ -379,21 +378,6 @@ use Contao\System;
                         $aMailData['FORUMNAME']            = $thread['forumname'];
                         $aMailData['THREADNAME']           = $thread['threadname'];
 
-
-/*
-                        // umformatierung BBC-Quotes
-                        $this->MailCache ['post'] = preg_replace('/\[quote=([^\]]+)\]([\s\S]*?)\[\/quote\]/i', '"$2" (Zitat von $1)', $this->MailCache ['post']);
-                        $this->MailCache ['post'] = preg_replace('/\[quote\]([\s\S]*?)\[\/quote\]/i', '"$1" (Zitat)', $this->MailCache ['post']);
-                        // umformatierung Spoiler
-                        $this->MailCache ['post'] = preg_replace('/\[spoiler\]([\s\S]*?)\[\/spoiler\]/i', '(Spoiler)', $this->MailCache ['post']);
-                        // umformatierung Listen
-                        $this->MailCache ['post'] = preg_replace('/\[\*\]([^\[]*)/i', '\n- $1', $this->MailCache ['post']);
-
-
-                        // entferne BBCodes
-                        $this->MailCache ['post'] = preg_replace('/\[[^\[\]]*\]/i', '', $this->MailCache ['post']);
-*/
-
                         // set post subject and content
                         $aMailData['POST_SUBJECT'] = $this->MailCache ['subject'];
                         $aMailData['POST_CONTENT'] = $this->MailCache ['post'];
@@ -418,23 +402,10 @@ use Contao\System;
                         $data['text'] = $this->parseMailText($mailText, $aMailData);
                         $data['to'] = $subscriber['email'];
 
-                        $cron[] = $data;
-
                         $addresses[$subscriber ['email']] = true;
                     }
                 }
             }
-
-
-            if ($cron) {
-                // send mails via cron job, (will be triggered in Javascript part)
-                $filename = md5(uniqid(mt_rand(), true));
-                $objFile  = fopen(System::getContainer()->getParameter('kernel.project_dir'). '/system/tmp/' . $filename . '.tmp', 'wb');
-                fputs($objFile, serialize($cron));
-                fclose($objFile);
-            }
-
-            return $filename;
         }
 
 
