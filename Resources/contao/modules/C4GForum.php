@@ -5868,8 +5868,8 @@ JSPAGINATE;
 
         /**
          * get reaction for denied permission
-         *
-         * @param string $message
+         * @param $message
+         * @return mixed
          */
         public function getPermissionDenied($message)
         {
