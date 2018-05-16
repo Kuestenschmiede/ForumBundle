@@ -13,6 +13,7 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
+use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
 use Contao\System;
 
 /**
@@ -403,6 +404,60 @@ use Contao\System;
                         $data['to'] = $subscriber['email'];
 
                         $addresses[$subscriber ['email']] = true;
+
+                        /** Send Notifications */
+
+                        switch ($sendKind) {
+                            case "new" :
+                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_new_post']);
+                                $notificationData['post_subject'] = $aMailData['post_subject'];
+                                break;
+                            case "edit" :
+                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_edited_post']);
+                                $notificationData['post_subject'] = $aMailData['post_subject'];
+                                break;
+                            case "delete" :
+                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_deleted_post']);
+                                $notificationData['post_subject'] = $aMailData['post_subject'];
+                                break;
+                            case "delThread" :
+                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_deleted_thread']);
+                                break;
+                            case "moveThread" :
+                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_moved_thread']);
+                                break;
+                            case "newThread" :
+                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_new_thread']);
+                                break;
+                            default:
+                                $notificationArray = array();
+                                break;
+                        }
+                        $notificationData['threadname'] = $aMailData['THREADNAME'];
+                        $notificationData['forumname'] = $aMailData['FORUMNAME'];
+                        $notificationData['user_email'] = $this->User->email;
+                        $notificationData['responsible_username'] = $this->User->username;
+                        $notificationData['post_subject'] = $this->MailCache ['subject'];
+                        $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
+                        $notificationData['ACTION_NAME_WITH_SUBJECT'] = $aMailData['ACTION_NAME_WITH_SUBJECT'];
+                        $notificationData['ACTION_PRE'] = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE');
+
+                        if ($sType == "SUBFORUM") {
+                            $notificationData['details_link']         = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
+                            $notificationData['UNSUBSCRIBE_LINK']     = $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl);
+                            $notificationData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
+                        } else {
+                            $notificationData['details_link']         = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
+                            $notificationData['UNSUBSCRIBE_LINK']     = $this->generateUnsubscribeLinkThread($threadId, $subscriber['email'], $sUrl);
+                            $notificationData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
+                        }
+
+                        foreach ($notificationArray as $notification) {
+                            $objNotification = \NotificationCenter\Model\Notification::findByPk($notification);
+                            if ($objNotification !== null) {
+                                $objNotification->send($notificationData);
+                            }
+                        }
                     }
                 }
             }
