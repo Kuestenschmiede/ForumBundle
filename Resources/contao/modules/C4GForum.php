@@ -2206,7 +2206,11 @@ JSPAGINATE;
                     $this->helper->subscription->MailCache ['post']     = $this->putVars['post'];
                     $this->helper->subscription->MailCache ['linkname'] = $this->putVars['linkname'];
                     $this->helper->subscription->MailCache ['linkurl']  = $this->putVars['linkurl'];
-                    $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $threadId, 'new', $sUrl, $this->c4g_forum_type, $this->c4g_forum_sub_title);
+//                    $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $threadId, 'new', $sUrl, $this->c4g_forum_type, $this->c4g_forum_sub_title);
+                    $cronjob                                            = $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $threadId, 'new', $sUrl, $this->c4g_forum_type, $this->c4g_forum_sub_title);
+                    if ($cronjob) {
+                        $return['cronexec'] = $cronjob;
+                    }
                 }
 
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUCCESS_SAVE_POST');
@@ -2432,7 +2436,12 @@ JSPAGINATE;
                     $this->helper->subscription->MailCache ['post']     = $this->putVars['post'];
                     $this->helper->subscription->MailCache ['linkname'] = $this->putVars['linkname'];
                     $this->helper->subscription->MailCache ['linkurl']  = $this->putVars['linkurl'];
-                    $this->helper->subscription->sendSubscriptionEMail($forumSubscribers, $result['thread_id'], 'newThread', $sUrl, $this->c4g_forum_type, $this->c4g_forum_sub_title);
+//                    $this->helper->subscription->sendSubscriptionEMail($forumSubscribers, $result['thread_id'], 'newThread', $sUrl, $this->c4g_forum_type, $this->c4g_forum_sub_title);
+                    $cronjob                                            =
+                        $this->helper->subscription->sendSubscriptionEMail($forumSubscribers, $result['thread_id'], 'newThread', $sUrl, $this->c4g_forum_type, $this->c4g_forum_sub_title);
+                    if ($cronjob) {
+                        $return['cronexec'][] = $cronjob;
+                    }
                 }
 
                 $sitemapJob = $this->helper->generateSitemapCronjob($this, $forumId);
@@ -2820,7 +2829,10 @@ JSPAGINATE;
 
 
             if ($threadSubscribers || $forumSubscribers) {
-                $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $threadId, 'delThread', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+//                $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $threadId, 'delThread', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+                $cronexec =
+                    $this->helper->subscription->sendSubscriptionEMail(
+                        array_merge($threadSubscribers, $forumSubscribers), $threadId, 'delThread', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
             }
             $result = $this->helper->deleteThreadFromDB($threadId);
             if (!$result) {
@@ -3194,7 +3206,13 @@ JSPAGINATE;
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'MOVE_THREAD_SUCCESS');
 
                 if ($threadSubscribers || $forumSubscribers || $newForumSubscribers) {
-                    $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers, $newForumSubscribers), $threadId, 'moveThread', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+                    //$this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers, $newForumSubscribers), $threadId, 'moveThread', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+                    $cronjob =
+                        $this->helper->subscription->sendSubscriptionEMail(
+                            array_merge($threadSubscribers, $forumSubscribers, $newForumSubscribers), $threadId, 'moveThread', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+                    if ($cronjob) {
+                        $return['cronexec'][] = $cronjob;
+                    }
                 }
 
                 $sitemapJob = $this->helper->generateSitemapCronjob($this, $forumId);
@@ -3410,7 +3428,13 @@ JSPAGINATE;
                     $this->helper->subscription->MailCache ['post']     = str_replace('<br />', '', $post ['text']);
                     $this->helper->subscription->MailCache ['linkname'] = $post ['linkname'];
                     $this->helper->subscription->MailCache ['linkurl']  = $post ['linkurl'];
-                    $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $post ['threadid'], 'delete', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+//                    $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $post ['threadid'], 'delete', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+                    $cronjob                                            =
+                        $this->helper->subscription->sendSubscriptionEMail(
+                            array_merge($threadSubscribers, $forumSubscribers), $post ['threadid'], 'delete', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+                    if ($cronjob) {
+                        $return['cronexec'] = $cronjob;
+                    }
                 }
 
                 $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'DEL_POST_SUCCESS');
@@ -3543,7 +3567,13 @@ JSPAGINATE;
                     $this->helper->subscription->MailCache ['post']     = $this->putVars['post'];
                     $this->helper->subscription->MailCache ['linkname'] = $this->putVars['linkname'];
                     $this->helper->subscription->MailCache ['linkurl']  = $this->putVars['linkurl'];
-                    $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $post['threadid'], 'edit', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+//                    $this->helper->subscription->sendSubscriptionEMail(array_merge($threadSubscribers, $forumSubscribers), $post['threadid'], 'edit', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+                    $cronjob                                            =
+                        $this->helper->subscription->sendSubscriptionEMail(
+                            array_merge($threadSubscribers, $forumSubscribers), $post['threadid'], 'edit', false, $this->c4g_forum_type,$this->c4g_forum_sub_title);
+                    if ($cronjob) {
+                        $return['cronexec'] = $cronjob;
+                    }
                 }
 
 

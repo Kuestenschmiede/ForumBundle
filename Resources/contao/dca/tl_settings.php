@@ -24,7 +24,7 @@ $GLOBALS['TL_DCA'][$strName]['palettes']['default'] .=
 
 
 /** Fields */
-$GLOBALS['TL_DCA'][$strName]['fields']['sub_new_thread'] = array
+/*$GLOBALS['TL_DCA'][$strName]['fields']['sub_new_thread'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG'][$strName]['fields']['sub_new_thread'],
     'exclude'                 => true,
@@ -77,4 +77,4 @@ $GLOBALS['TL_DCA'][$strName]['fields']['sub_edited_post'] = array
     'foreignKey'              => 'tl_nc_notification.title',
     'eval'                    => array('multiple' => true,),
     'sql'                     => "varchar(255) NOT NULL default ''",
-);
+);*/

@@ -28,6 +28,7 @@
         '{c4g_forum_jqui_legend:hide},c4g_forum_jqui;' .
         '{c4g_forum_lib_legend:hide},c4g_forum_jquery_lib,c4g_forum_jqtable_lib,c4g_forum_jqhistory_lib,c4g_forum_jqtooltip_lib,c4g_forum_jqscrollpane_lib;' .
         '{c4g_forum_sitemap_legend:hide},c4g_forum_sitemap;' .
+        '{c4g_forum_notifications:hide},sub_new_thread,sub_deleted_thread,sub_moved_thread,sub_new_post,sub_deleted_post,sub_edited_post;' .
         '{expert_legend:hide},guests,cssID,space,c4g_forum_remove_lastperson,c4g_forum_remove_lastdate,c4g_forum_remove_createperson,c4g_forum_remove_createdate,c4g_forum_remove_count,c4g_forum_move_all,c4g_forum_param_forumbox,c4g_forum_param_forum';
 
     $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_breadcrumb'] =
@@ -1028,6 +1029,61 @@
         'eval'                    => array('mandatory'=>false, 'fieldType'=>'radio', 'tl_class'=>'clr'),
         'sql'                     => "int(10) unsigned NOT NULL default '0'",
         'relation'                => array('type'=>'hasOne', 'load'=>'eager')
+    );
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_thread'] = array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_new_thread'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'foreignKey'              => 'tl_nc_notification.title',
+        'eval'                    => array('multiple' => true,),
+        'sql'                     => "varchar(255) NOT NULL default ''",
+    );
+    $GLOBALS['TL_DCA']['tl_module']['fields']['sub_deleted_thread'] = array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_deleted_thread'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'foreignKey'              => 'tl_nc_notification.title',
+        'eval'                    => array('multiple' => true,),
+        'sql'                     => "varchar(255) NOT NULL default ''",
+    );
+    $GLOBALS['TL_DCA']['tl_module']['fields']['sub_moved_thread'] = array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_moved_thread'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'foreignKey'              => 'tl_nc_notification.title',
+        'eval'                    => array('multiple' => true,),
+        'sql'                     => "varchar(255) NOT NULL default ''",
+    );
+    $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_post'] = array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_new_post'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'foreignKey'              => 'tl_nc_notification.title',
+        'eval'                    => array('multiple' => true,),
+        'sql'                     => "varchar(255) NOT NULL default ''",
+    );
+    $GLOBALS['TL_DCA']['tl_module']['fields']['sub_deleted_post'] = array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_deleted_post'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'foreignKey'              => 'tl_nc_notification.title',
+        'eval'                    => array('multiple' => true,),
+        'sql'                     => "varchar(255) NOT NULL default ''",
+    );
+    $GLOBALS['TL_DCA']['tl_module']['fields']['sub_edited_post'] = array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_edited_post'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'foreignKey'              => 'tl_nc_notification.title',
+        'eval'                    => array('multiple' => true,),
+        'sql'                     => "varchar(255) NOT NULL default ''",
     );
 
 //    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_enable_maps'] = array

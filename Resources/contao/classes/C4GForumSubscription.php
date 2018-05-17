@@ -283,7 +283,7 @@ use Contao\System;
 
             $thread = $this->helper->getThreadAndForumNameAndMailTextFromDBUncached($threadId);
 
-            $cron      = array();
+            $cron = array();
             $addresses = array();
             foreach ($subscribers as $subscriber) {
                 if ((!$addresses[$subscriber ['email']]) && ($subscriber['memberId'] != $this->User->id)) {
@@ -299,67 +299,67 @@ use Contao\System;
                     $sActionType = "POST";
 
                     $aMailData = array(
-                        "USERNAME"                 => "",
-                        "RESPONSIBLE_USERNAME"     => "",
-                        "ACTION_NAME"              => "",
-                        "ACTION_PRE"               => "",
+                        "USERNAME" => "",
+                        "RESPONSIBLE_USERNAME" => "",
+                        "ACTION_NAME" => "",
+                        "ACTION_PRE" => "",
                         "ACTION_NAME_WITH_SUBJECT" => "",
-                        "FORUMNAME"                => "",
-                        "THREADNAME"               => "",
-                        "POST_SUBJECT"             => "",
-                        "POST_CONTENT"             => "",
-                        "DETAILS_LINK"             => "",
-                        "UNSUBSCRIBE_LINK"         => "",
-                        "UNSUBSCRIBE_ALL_LINK"     => "",
-                        "LANGUAGE"                 => $subscriber['language'],
+                        "FORUMNAME" => "",
+                        "THREADNAME" => "",
+                        "POST_SUBJECT" => "",
+                        "POST_CONTENT" => "",
+                        "DETAILS_LINK" => "",
+                        "UNSUBSCRIBE_LINK" => "",
+                        "UNSUBSCRIBE_ALL_LINK" => "",
+                        "LANGUAGE" => $subscriber['language'],
                     );
 
                     // check if subscriber still has permission to get subscription mails
                     if ($this->helper->checkPermission($thread['forumid'], $sPerm, $subscriber['memberId'])) {
                         switch ($sendKind) {
                             case "new" :
-                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '');
-                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
+                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '');
+                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
 
                                 break;
                             case "edit" :
-                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_EDIT');
-                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
+                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_' . $sType . '_MAIL_EDIT');
+                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
 
                                 break;
                             case "delete" :
-                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_DELETE');
-                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
+                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_' . $sType . '_MAIL_DELETE');
+                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
 
                                 break;
                             case "delThread" :
-                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_DELTHREAD');
-                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD_WITH_SUBJECT'), $thread['threadname']);
-                                $sActionType                           = "THREAD";
+                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_' . $sType . '_MAIL_DELTHREAD');
+                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD_WITH_SUBJECT'), $thread['threadname']);
+                                $sActionType = "THREAD";
                                 break;
                             case "moveThread" :
-                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_MOVETHREAD');
-                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD_WITH_SUBJECT'), $this->MailCache ['moveThreadOldName'], $thread['threadname']);
-                                $sActionType                           = "THREAD";
+                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_' . $sType . '_MAIL_MOVETHREAD');
+                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD_WITH_SUBJECT'), $this->MailCache ['moveThreadOldName'], $thread['threadname']);
+                                $sActionType = "THREAD";
                                 break;
                             case "newThread" : // only subforum
-                                $subjectAddition                       = C4GForumHelper::getTypeText($forumType,'NEW_THREAD');
-                                $aMailData['ACTION_NAME']              = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD_WITH_SUBJECT'), $thread['threadname']);
-                                $sActionType                           = "THREAD";
+                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'NEW_THREAD');
+                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD');
+                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD_WITH_SUBJECT'), $thread['threadname']);
+                                $sActionType = "THREAD";
                                 break;
                         }
 
-                        $aMailData['ACTION_PRE'] = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE');
+                        $aMailData['ACTION_PRE'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE');
 
                         \System::log('[C4G] ' . $aMailData['ACTION_NAME'] . " in \"" . $thread['forumname'] . "\": " . $thread['threadname'], __METHOD__, TL_GENERAL);
 
-                        $data            = array();
+                        $data = array();
                         $data['command'] = 'sendmail';
                         $data['charset'] = 'UTF-8';
 
@@ -368,16 +368,16 @@ use Contao\System;
                         } else {
                             $data['from'] = $GLOBALS ['TL_CONFIG'] ['adminEmail'];
                         }
-                        if(!$headline || $headline ==''){
+                        if (!$headline || $headline == '') {
                             $headline = $GLOBALS['TL_CONFIG']['websiteTitle'];
                         }
 
-                        $data['subject'] = sprintf(C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_' . $sType . '_MAIL_SUBJECT'), $subjectAddition, $headline, $thread['forumname'], $thread['threadname']);
+                        $data['subject'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_' . $sType . '_MAIL_SUBJECT'), $subjectAddition, $headline, $thread['forumname'], $thread['threadname']);
 
-                        $aMailData['USERNAME']             = $subscriber['username'];
+                        $aMailData['USERNAME'] = $subscriber['username'];
                         $aMailData['RESPONSIBLE_USERNAME'] = $this->User->username;
-                        $aMailData['FORUMNAME']            = $thread['forumname'];
-                        $aMailData['THREADNAME']           = $thread['threadname'];
+                        $aMailData['FORUMNAME'] = $thread['forumname'];
+                        $aMailData['THREADNAME'] = $thread['threadname'];
 
                         // set post subject and content
                         $aMailData['POST_SUBJECT'] = $this->MailCache ['subject'];
@@ -386,26 +386,25 @@ use Contao\System;
                         // building links
                         if ($sType == "SUBFORUM") {
 
-                            $aMailData['DETAILS_LINK']         = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
-                            $aMailData['UNSUBSCRIBE_LINK']     = $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl);
+                            $aMailData['DETAILS_LINK'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
+                            $aMailData['UNSUBSCRIBE_LINK'] = $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl);
                             $aMailData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
 
                         } else {
 
-                            $aMailData['DETAILS_LINK']         = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
-                            $aMailData['UNSUBSCRIBE_LINK']     = $this->generateUnsubscribeLinkThread($threadId, $subscriber['email'], $sUrl);
+                            $aMailData['DETAILS_LINK'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
+                            $aMailData['UNSUBSCRIBE_LINK'] = $this->generateUnsubscribeLinkThread($threadId, $subscriber['email'], $sUrl);
                             $aMailData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
                         }
 
 
-
-                        $mailText     = trim($thread['mail']) ?: C4GForumHelper::getTypeText($forumType,'default_subscription_text');
+                        $mailText = trim($thread['mail']) ?: C4GForumHelper::getTypeText($forumType, 'default_subscription_text');
                         $data['text'] = $this->parseMailText($mailText, $aMailData);
                         $data['to'] = $subscriber['email'];
 
                         $addresses[$subscriber ['email']] = true;
 
-                        /** Send Notifications */
+                        /** Send Notifications via Notification center*/
 
                         switch ($sendKind) {
                             case "new" :
@@ -440,15 +439,15 @@ use Contao\System;
                         $notificationData['post_subject'] = $this->MailCache ['subject'];
                         $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
                         $notificationData['ACTION_NAME_WITH_SUBJECT'] = $aMailData['ACTION_NAME_WITH_SUBJECT'];
-                        $notificationData['ACTION_PRE'] = C4GForumHelper::getTypeText($forumType,'SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE');
+                        $notificationData['ACTION_PRE'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE');
 
                         if ($sType == "SUBFORUM") {
-                            $notificationData['details_link']         = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
-                            $notificationData['UNSUBSCRIBE_LINK']     = $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl);
+                            $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
+                            $notificationData['UNSUBSCRIBE_LINK'] = $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl);
                             $notificationData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
                         } else {
-                            $notificationData['details_link']         = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
-                            $notificationData['UNSUBSCRIBE_LINK']     = $this->generateUnsubscribeLinkThread($threadId, $subscriber['email'], $sUrl);
+                            $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
+                            $notificationData['UNSUBSCRIBE_LINK'] = $this->generateUnsubscribeLinkThread($threadId, $subscriber['email'], $sUrl);
                             $notificationData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
                         }
 
@@ -457,6 +456,21 @@ use Contao\System;
                             if ($objNotification !== null) {
                                 $objNotification->send($notificationData);
                             }
+                        }
+
+                        /** //Todo The following If Else block is deprecated, remove it. */
+
+                        if (count($notificationArray) === 0) {
+                            if ($cron) {
+                                // send mails via cron job, (will be triggered in Javascript part)
+                                $filename = md5(uniqid(mt_rand(), true));
+                                $objFile = fopen(System::getContainer()->getParameter('kernel.project_dir') . '/system/tmp/' . $filename . '.tmp', 'wb');
+                                fputs($objFile, serialize($cron));
+                                fclose($objFile);
+                                return $filename;
+                            }
+                        } else {
+                            return false;
                         }
                     }
                 }
