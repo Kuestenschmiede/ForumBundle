@@ -3347,7 +3347,8 @@ JSPAGINATE;
 
             $data = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['MEMBER_GROUP'] . ':<br/>';
             $data .= '<select name="membergroup" class="formdata ui-corner-all">';
-            $groups = $this->helper->getMemberGroupsForForum($forumId);
+            $user = FrontendUser::getInstance();
+            $groups = $this->helper->getMemberGroupsForForum($forumId,$user->getData()['id']);
             foreach ($groups AS $group) {
                 $data .= '<option value="' . $group['id'] . '">' . $group['name'] . '</option>';
             }
