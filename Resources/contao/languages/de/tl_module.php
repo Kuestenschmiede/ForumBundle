@@ -361,7 +361,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_appearance_themeroller_css'] = array('jQuery UI ThemeRoller CSS Datei', 'Optional: wählen Sie eine, mit dem jQuery UI ThemeRoller erstellte CSS-Datei aus, um den Stil des Moduls entsprechend anzupassen.');
 
 
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_notifications'] = 'con4gis Forum Benachrichtigungen';
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_notifications'] = 'Forum - Benachrichtigungen';
     $GLOBALS['TL_LANG']['tl_module']['fields']['sub_new_thread'] = array('Neues Thema', 'Diese Email wird versendet, wenn eine neue Diskussion in einem abonnierten Forenbereich gepostet wird.');
     $GLOBALS['TL_LANG']['tl_module']['fields']['sub_deleted_thread'] = array('Gelöschtes Thema', 'Diese Email wird versendet, wenn eine Diskussion in einem abonnierten Forenbereich gelöscht wird.');
     $GLOBALS['TL_LANG']['tl_module']['fields']['sub_moved_thread'] = array('Verschobenes Thema', 'Diese Email wird versendet, wenn eine Diskussion in einem abonnierten Forenbereich verschoben wird.');
