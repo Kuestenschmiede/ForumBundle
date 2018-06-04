@@ -3386,5 +3386,3 @@ class C4GForumHelper extends \System
         $forum->autoTicket($forumId, $groupId,$subject,$text,$ticketId);
     }
 }
-
-?>

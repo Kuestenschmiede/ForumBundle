@@ -74,3 +74,90 @@ if(TL_MODE == "BE") {
 * Models
 */
 $GLOBALS['TL_MODELS']['tl_c4g_forum']       = 'con4gis\ForumBundle\Resources\contao\models\C4gForumModel';
+
+/**
+ * Notification Center
+ */
+
+
+$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum'] = array
+(
+    'sub_new_thread'   => array
+    (
+        'recipients'           => array('admin_email','user_email'),
+        'email_subject'        => array('admin_email','threadname', 'forumname'),
+        'email_text'           => array('user_email', 'threadname','forumname', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_html'           => array('user_email', 'threadname','forumname', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_sender_name'    => array('admin_email'),
+        'email_sender_address' => array('admin_email'),
+        'email_recipient_cc'   => array('admin_email'),
+        'email_recipient_bcc'  => array('admin_email'),
+        'email_replyTo'        => array('admin_email'),
+        'file_content'           => array('user_email', 'threadname','forumname', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+    ),
+    'sub_deleted_thread'  => array
+    (
+        'recipients'           => array('admin_email','user_email'),
+        'email_subject'        => array('admin_email','threadname', 'forumname'),
+        'email_text'           => array('user_email', 'threadname','forumname', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_html'           => array('user_email', 'threadname','forumname', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_sender_name'    => array('admin_email'),
+        'email_sender_address' => array('admin_email'),
+        'email_recipient_cc'   => array('admin_email'),
+        'email_recipient_bcc'  => array('admin_email'),
+        'email_replyTo'        => array('admin_email'),
+        'file_content'           => array('user_email', 'threadname','forumname', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+    ),
+    'sub_moved_thread'   => array
+    (
+        'recipients'           => array('admin_email','user_email'),
+        'email_subject'        => array('admin_email','threadname', 'forumname'),
+        'email_text'           => array('user_email', 'threadname','forumname', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_html'           => array('user_email', 'threadname','forumname', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_sender_name'    => array('admin_email'),
+        'email_sender_address' => array('admin_email'),
+        'email_recipient_cc'   => array('admin_email'),
+        'email_recipient_bcc'  => array('admin_email'),
+        'email_replyTo'        => array('admin_email'),
+        'file_content'           => array('user_email', 'threadname','forumname', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+    ),
+    'sub_new_post'   => array
+    (
+        'recipients'           => array('admin_email','user_email'),
+        'email_subject'        => array('admin_email','threadname', 'forumname'),
+        'email_text'           => array('user_email', 'threadname','forumname', 'post_subject', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_html'           => array('user_email', 'threadname','forumname', 'post_subject', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_sender_name'    => array('admin_email'),
+        'email_sender_address' => array('admin_email'),
+        'email_recipient_cc'   => array('admin_email'),
+        'email_recipient_bcc'  => array('admin_email'),
+        'email_replyTo'        => array('admin_email'),
+        'file_content'           => array('user_email', 'threadname','forumname', 'post_subject', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+    ),
+    'sub_deleted_post'   => array
+    (
+        'recipients'           => array('admin_email','user_email'),
+        'email_subject'        => array('admin_email','threadname', 'forumname'),
+        'email_text'           => array('user_email', 'threadname','forumname', 'post_subject', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_html'           => array('user_email', 'threadname','forumname', 'post_subject', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_sender_name'    => array('admin_email'),
+        'email_sender_address' => array('admin_email'),
+        'email_recipient_cc'   => array('admin_email'),
+        'email_recipient_bcc'  => array('admin_email'),
+        'email_replyTo'        => array('admin_email'),
+        'file_content'           => array('user_email', 'threadname','forumname', 'post_subject', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+    ),
+    'sub_edited_post'   => array
+    (
+        'recipients'           => array('admin_email','user_email'),
+        'email_subject'        => array('admin_email','threadname', 'forumname'),
+        'email_text'           => array('user_email', 'threadname','forumname', 'post_subject', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_html'           => array('user_email', 'threadname','forumname', 'post_subject', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'email_sender_name'    => array('admin_email'),
+        'email_sender_address' => array('admin_email'),
+        'email_recipient_cc'   => array('admin_email'),
+        'email_recipient_bcc'  => array('admin_email'),
+        'email_replyTo'        => array('admin_email'),
+        'file_content'           => array('user_email', 'threadname','forumname', 'post_subject', 'responsible_username','action_pre', 'action_name_with_subject', 'post_content', 'details_link', 'unsubscribe_link', 'unsubscribe_all_link',),
+    ),
+);
