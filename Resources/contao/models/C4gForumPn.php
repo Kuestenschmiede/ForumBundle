@@ -467,6 +467,9 @@ namespace con4gis\ForumBundle\Resources\contao\models;
          * @param string $sUrl
          */
         private function notifyRecipient($sUrl = ""){
+
+            //Todo Remove this function and all its calls
+
             \System::loadLanguageFile('tl_c4g_forum_pn');
 
             $aRecipient = self::getMemberById($this->getRecipientId());
@@ -486,6 +489,36 @@ namespace con4gis\ForumBundle\Resources\contao\models;
             $eMail->html = str_replace("##LINK##",$sUrl,$GLOBALS['TL_LANG']['tl_c4g_forum_pn']['notify_text']);
             $eMail->sendTo($aRecipient['email']);
             unset($eMail);
+        }
+
+        private function sendEmailNotification() {
+
+            $notificationData['threadname'] = $aMailData['THREADNAME'];
+            $notificationData['forumname'] = $aMailData['FORUMNAME'];
+            $notificationData['user_email'] = $this->User->email;
+            $notificationData['responsible_username'] = $this->User->username;
+            $notificationData['post_subject'] = $this->MailCache ['subject'];
+            $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
+            $notificationData['ACTION_NAME_WITH_SUBJECT'] = $aMailData['ACTION_NAME_WITH_SUBJECT'];
+            $notificationData['ACTION_PRE'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE');
+
+            if ($sType == "SUBFORUM") {
+                $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
+                $notificationData['UNSUBSCRIBE_LINK'] = $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl);
+                $notificationData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
+            } else {
+                $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
+                $notificationData['UNSUBSCRIBE_LINK'] = $this->generateUnsubscribeLinkThread($threadId, $subscriber['email'], $sUrl);
+                $notificationData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
+            }
+
+            foreach ($notificationArray as $notification) {
+                $objNotification = \NotificationCenter\Model\Notification::findByPk($notification);
+                if ($objNotification !== null) {
+                    $objNotification->send($notificationData);
+                }
+            }
+
         }
 
 

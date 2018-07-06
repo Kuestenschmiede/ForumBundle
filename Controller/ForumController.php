@@ -157,6 +157,22 @@ class ForumController extends Controller
                     );
                     $oPn = C4gForumPn::create($aData);
                     $oPn->send($sUrl);
+
+                    /** Notification Center */
+
+                    $notificationArray = unserialize($GLOBALS['TL_CONFIG']['mail_new_pm']);
+                    $notificationData['user_name'] = $aRecipient['username'];
+                    $notificationData['user_mail'] = $aRecipient['email'];
+                    $notificationData['responsible_username'] = $this->getUser()->username;
+                    $notificationData['redirect'] = $sUrl;
+
+                    foreach ($notificationArray as $notification) {
+                        $objNotification = \NotificationCenter\Model\Notification::findByPk($notification);
+                        if ($objNotification !== null) {
+                            $objNotification->send($notificationData);
+                        }
+                    }
+                    
                     $response->setData(['success' => true]);
                     return $response;
                     break;

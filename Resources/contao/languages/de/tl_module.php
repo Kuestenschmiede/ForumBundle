@@ -368,3 +368,5 @@
     $GLOBALS['TL_LANG']['tl_module']['fields']['sub_new_post'] = array('Neuer Beitrag', 'Diese Email wird versendet, wenn ein neuer Beitrag in einer abonnierten Diskussion gepostet wird.');
     $GLOBALS['TL_LANG']['tl_module']['fields']['sub_deleted_post'] = array('Gelöschter Beitrag', 'Diese Email wird versendet, wenn ein Beitrag in einer abonnierten Diskussion gelöscht wird.');
     $GLOBALS['TL_LANG']['tl_module']['fields']['sub_edited_post'] = array('Bearbeiteter Beitrag', 'Diese Email wird versendet, wenn ein neuer Beitrag in einer abonnierten Diskussion bearbeitet wird.');
+    $GLOBALS['TL_LANG']['tl_module']['fields']['mail_new_pm'] = array('Neue Persönliche Nachricht', 'Diese Email wird versendet, wenn der Nutzer eine neue persönliche Nachricht erhalten hat.');
+    $GLOBALS['TL_LANG']['tl_module']['fields']['new_pm_redirect'] = array('Weiterleitungsseite für persönliche Nachrichten', 'Hier können Sie einstellen, auf welche Seite in der Benachrichtigung für pers. Nachrichten verlinkt werden soll. (Auf der Seite sollte das Modul für pers. Nachrichten eingebunden werden.)');
