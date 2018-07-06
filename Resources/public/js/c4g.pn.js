@@ -56,7 +56,6 @@
         }
       ];
 
-
       if (type == "compose") {
 
         minWidth = 480;
@@ -118,6 +117,7 @@
             },
             buttons: aButtons
           });
+            document.getElementById('frmCompose').dataset.target = data.url;
         }
       });
     };
@@ -152,7 +152,7 @@
      */
     var _sendMessage = function (frm) {
       var data = $(frm).serializeObject();
-      data.url = document.location.href;
+      data.url = frm.dataset.target;
       $.ajax({
         method: "POST",
         //url: "system/modules/con4gis_forum/api/index.php/send/",
@@ -172,10 +172,11 @@
      * @param frm
      * @private
      */
-    var _sendMessageTo = function (iUserId, subject, title) {
+    var _sendMessageTo = function (iUserId, subject, title, opt_this) {
+      event.preventDefault();
       subject = subject || "";
       title = title || "";
-      _openModal('compose', {recipient_id: iUserId, subject: subject},title);
+      _openModal('compose', {recipient_id: iUserId, subject: subject, url:opt_this.getAttribute('data-target')},title);
     };
 
 

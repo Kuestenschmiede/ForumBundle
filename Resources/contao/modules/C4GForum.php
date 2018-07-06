@@ -1313,6 +1313,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $oUserDataTemplate->iUserId = $oMember->id;
 
             $oUserDataTemplate->c4g_forum_show_pn_button = ($this->User->id && ($this->User->id != $iAuthorId) && $this->c4g_forum_show_pn_button == '1' && !$preview);
+            $oUserDataTemplate->c4g_forum_pm_redirect = '{{link_url::'. $this->new_pm_redirect .'}}';
             $oUserDataTemplate->pn_label = $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['profile_compose'];
 
             $sJsLang = C4GForumPNCenter::getClientLangVars();
