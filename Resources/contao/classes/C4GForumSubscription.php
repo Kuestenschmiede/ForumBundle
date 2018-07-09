@@ -274,9 +274,13 @@ use Contao\System;
          * @param $subscribers
          * @param $threadId
          * @param $sendKind
-         * @param $sUrl
+         * @param $forumModule
+         * @param bool $sUrl
+         * @param string $forumType
+         * @param null $headline
+         * @return bool|string
          */
-        public function sendSubscriptionEMail($subscribers, $threadId, $sendKind, $sUrl=false, $forumType='DISCUSSIONS', $headline=null)
+        public function sendSubscriptionEMail($subscribers, $threadId, $sendKind, $forumModule, $sUrl=false, $forumType='DISCUSSIONS', $headline=null)
         {
 
             \System::loadLanguageFile("tl_c4g_forum");
@@ -408,25 +412,25 @@ use Contao\System;
 
                         switch ($sendKind) {
                             case "new" :
-                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_new_post']);
+                                $notificationArray = unserialize($forumModule->sub_new_post);
                                 $notificationData['post_subject'] = $aMailData['post_subject'];
                                 break;
                             case "edit" :
-                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_edited_post']);
+                                $notificationArray = unserialize($forumModule->sub_edited_post);
                                 $notificationData['post_subject'] = $aMailData['post_subject'];
                                 break;
                             case "delete" :
-                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_deleted_post']);
+                                $notificationArray = unserialize($forumModule->sub_deleted_post);
                                 $notificationData['post_subject'] = $aMailData['post_subject'];
                                 break;
                             case "delThread" :
-                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_deleted_thread']);
+                                $notificationArray = unserialize($forumModule->sub_deleted_thread);
                                 break;
                             case "moveThread" :
-                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_moved_thread']);
+                                $notificationArray = unserialize($forumModule->sub_moved_thread);
                                 break;
                             case "newThread" :
-                                $notificationArray = unserialize($GLOBALS['TL_CONFIG']['sub_new_thread']);
+                                $notificationArray = unserialize($forumModule->sub_new_thread);
                                 break;
                             default:
                                 $notificationArray = array();
