@@ -161,10 +161,10 @@ class ForumController extends Controller
                         "dt_created"   => time(),
                         "status"       => 0
                     );
+                    $oPn = C4gForumPn::create($aData);
+                    $oPn->_save();
 
                     /** Notification Center */
-
-
                     /** Get forum module settings  */
 
                     $db = \Database::getInstance();
