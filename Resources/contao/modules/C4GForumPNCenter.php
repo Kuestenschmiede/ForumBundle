@@ -44,9 +44,39 @@
                 $objTemplate->href     = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
 
                 return $objTemplate->parse();
+            } else {
+                $this->Template = new \FrontendTemplate($this->strTemplate);
+                $this->Template->setData($this->arrData);
+
+                $this->compile();
+
+                // Do not change this order (see #6191)
+                $this->Template->style = !empty($this->arrStyle) ? implode(' ', $this->arrStyle) : '';
+                $this->Template->class = trim('mod_' . $this->type . ' ' . $this->cssID[1]);
+                $this->Template->cssID = !empty($this->cssID[0]) ? ' id="' . $this->cssID[0] . '"' : '';
+
+                $this->Template->inColumn = $this->strColumn;
+
+                if ($this->Template->headline == '')
+                {
+                    $this->Template->headline = $this->headline;
+                }
+
+                if ($this->Template->hl == '')
+                {
+                    $this->Template->hl = $this->hl;
+                }
+
+                if (!empty($this->objModel->classes) && \is_array($this->objModel->classes))
+                {
+                    $this->Template->class .= ' ' . implode(' ', $this->objModel->classes);
+                }
+
+                $this->Template->c4g_forum_module     = $this->pm_center_forum_module;
+
+                return $this->Template->parse();
             }
 
-            return parent::generate();
         }
 
         /**

@@ -23,6 +23,8 @@ namespace con4gis\ForumBundle\Resources\contao\models;
      */
     class C4gForumPn{
 
+        //Todo Delete file 
+
         /**
          * @var string
          */

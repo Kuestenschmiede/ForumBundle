@@ -12,6 +12,7 @@ namespace con4gis\ForumBundle\Controller;
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
+use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabase;
 use Contao\FrontendUser;
 use Contao\Input;
 use Contao\ModuleModel;
@@ -139,13 +140,18 @@ class ForumController extends Controller
                 case "send":
                     $iRecipientId = \Input::post('recipient_id');
                     $sRecipient = \Input::post('recipient');
-                    $sUrl = \Input::post('url');
+                    $forumModule = \Input::post('url');
                     if (empty($iRecipientId) && !empty($sRecipient)) {
                         $aRecipient = C4gForumPn::getMemberByUsername($sRecipient);
                         if(empty($aRecipient)){
                             throw new \Exception($GLOBALS['TL_LANG']['tl_c4g_forum_pn']['member_not_found']);
                         }
                         $iRecipientId = $aRecipient['id'];
+                    } elseif (!empty($iRecipientId)) {
+                        $db = \Database::getInstance();
+                        $stmt = $db->prepare("SELECT * FROM tl_member WHERE id = ?");
+                        $result = $stmt->execute($iRecipientId);
+                        $aRecipient = $result->fetchAssoc();
                     }
                     $aData = array(
                         "subject"      => \Input::post('subject'),
@@ -155,16 +161,23 @@ class ForumController extends Controller
                         "dt_created"   => time(),
                         "status"       => 0
                     );
-                    $oPn = C4gForumPn::create($aData);
-                    $oPn->send($sUrl);
 
                     /** Notification Center */
 
-                    $notificationArray = unserialize($GLOBALS['TL_CONFIG']['mail_new_pm']);
+
+                    /** Get forum module settings  */
+
+                    $db = \Database::getInstance();
+                    $stmt = $db->prepare("SELECT new_pm_redirect, mail_new_pm FROM tl_module WHERE id = ?");
+                    $result = $stmt->execute($forumModule)->fetchAssoc();
+
+                    $notificationArray = unserialize($result['mail_new_pm']);
                     $notificationData['user_name'] = $aRecipient['username'];
-                    $notificationData['user_mail'] = $aRecipient['email'];
+                    $notificationData['user_email'] = $aRecipient['email'];
                     $notificationData['responsible_username'] = $this->getUser()->username;
-                    $notificationData['redirect'] = $sUrl;
+                    $this->container->get('contao.framework')->initialize();
+                    $test = \Contao\Controller::replaceInsertTags('{{link_url::'.$result['new_pm_redirect'].'}}');
+                    $notificationData['redirect'] = $_SERVER['SERVER_NAME'].'/'.$test;
 
                     foreach ($notificationArray as $notification) {
                         $objNotification = \NotificationCenter\Model\Notification::findByPk($notification);

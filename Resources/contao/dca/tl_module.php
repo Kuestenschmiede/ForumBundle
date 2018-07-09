@@ -38,7 +38,7 @@
         '{expert_legend:hide},guests,cssID,space';
 
     $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_pncenter'] =
-        '{title_legend},name,headline,type;{c4g_forum_jqui_legend},c4g_forum_uitheme_css_select,c4g_appearance_themeroller_css;';
+        '{title_legend},name,headline,type;{pm_center_forum_module_legend},pm_center_forum_module;{c4g_forum_jqui_legend},c4g_forum_uitheme_css_select,c4g_appearance_themeroller_css;';
 
     $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_bbcodes';
     $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_jqui';
@@ -1097,10 +1097,18 @@
         'sql'                     => "int(10) unsigned NOT NULL default '0'"
     );
 
-//    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_enable_maps'] = array
-//    (
-//        'sql' => "char(1) NOT NULL default ''"
-//    );
+
+
+    /** Fields - PM Center */
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['pm_center_forum_module'] = array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['pm_center_forum_module'],
+        'inputType'               => 'select',
+        'foreignKey'              => 'tl_module.name',
+        'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-',),
+        'sql'                     => "int(10) unsigned NOT NULL default '0'"
+    );
 
     /**
      * Class tl_module_c4g_forum
