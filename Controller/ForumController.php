@@ -140,7 +140,7 @@ class ForumController extends Controller
                 case "send":
                     $iRecipientId = \Input::post('recipient_id');
                     $sRecipient = \Input::post('recipient');
-                    $forumModule = \Input::post('url');
+                    $forumModule = \Input::post('target');
                     if (empty($iRecipientId) && !empty($sRecipient)) {
                         $aRecipient = C4gForumPn::getMemberByUsername($sRecipient);
                         if(empty($aRecipient)){

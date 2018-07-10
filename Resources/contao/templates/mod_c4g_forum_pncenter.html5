@@ -16,7 +16,7 @@
                 <div class="blockbody">
                     <a href="#" onclick="C4gPn.openModal('inbox',undefined,'<?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['inbox']; ?>'); return false;"><i class="fa fa-inbox"></i> <?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['inbox']; ?> <?php echo $this->count_unread; ?>/<?php echo $this->count_all; ?></a>
                     <hr>
-                    <a href="#" onclick="C4gPn.openModal('compose', {url:this.getAttribute('data-target')}, '<?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['compose']; ?>', this); return false;" data-target="<?php echo $this->c4g_forum_module;?>"><i class="fa fa-file-o"></i> <?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['compose']; ?></a>
+                    <a href="#" onclick="C4gPn.openModal('compose', {target:this.getAttribute('data-target')}, '<?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['compose']; ?>', this); return false;" data-target="<?php echo $this->c4g_forum_module;?>"><i class="fa fa-file-o"></i> <?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['compose']; ?></a>
                 </div>
             </div>
 
