@@ -461,21 +461,6 @@ use Contao\System;
                                 $objNotification->send($notificationData);
                             }
                         }
-
-                        /** //Todo The following If Else block is deprecated, remove it. */
-
-                        if (count($notificationArray) === 0) {
-                            if ($cron) {
-                                // send mails via cron job, (will be triggered in Javascript part)
-                                $filename = md5(uniqid(mt_rand(), true));
-                                $objFile = fopen(System::getContainer()->getParameter('kernel.project_dir') . '/system/tmp/' . $filename . '.tmp', 'wb');
-                                fputs($objFile, serialize($cron));
-                                fclose($objFile);
-                                return $filename;
-                            }
-                        } else {
-                            return false;
-                        }
                     }
                 }
             }

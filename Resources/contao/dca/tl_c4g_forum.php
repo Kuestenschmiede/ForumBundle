@@ -615,18 +615,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'eval'                    => array(),
             'sql'                     => "blob NULL"
 		),
-		'mail_subscription_text' => array
-		(
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['mail_subscription_text'],
-            'search'				  => true,
-            'default'                 => &$GLOBALS['TL_LANG']['tl_c4g_forum']['default_subscription_text'],
-            'inputType'               => 'textarea',
-            'save_callback' => array(
-                array('tl_c4g_forum','setMailTextDefault')
-            ),
-            'eval'                    => array("rows" => 15, "cols" => 60, "style" => "height:300px !important;"),
-            'sql'                     => "text NULL"
-		),
         'default_author' => array
 		(
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'],
