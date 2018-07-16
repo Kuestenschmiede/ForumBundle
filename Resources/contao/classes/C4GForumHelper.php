@@ -155,17 +155,17 @@ class C4GForumHelper extends \System
 	}
 
 
-
-	/**
-	 * Checks Forum-Permission for current user
-	 *
-	 * @param string $right
-	 * @param string $memberGroups
-	 * @param string $adminGroups
-	 * @param string $guestRights
-	 * @param string $memberRights
-	 * @param string $adminRights
-	 */
+    /**
+     * Checks Forum-Permission for current user
+     * @param $right
+     * @param $memberGroups
+     * @param $adminGroups
+     * @param $guestRights
+     * @param $memberRights
+     * @param $adminRights
+     * @param int $userId
+     * @return bool
+     */
     public function checkPermissionWithData( $right, $memberGroups, $adminGroups, $guestRights, $memberRights, $adminRights, $userId = 0)
     {
     	$rights = $guestRights;
@@ -205,12 +205,13 @@ class C4GForumHelper extends \System
     	return false;
     }
 
-	/**
-	 *
-	 * Check the permission for the given right
-	 * @param int $forumId
-	 * @param String $right
-	 */
+    /**
+     * Check the permission for the given right
+     * @param $forumId
+     * @param $right
+     * @param int $userId
+     * @return bool
+     */
 	public function checkPermission( $forumId, $right, $userId = 0 )
 	{
 		if (isset($this->ForumCache[$forumId])) {
@@ -248,23 +249,27 @@ class C4GForumHelper extends \System
 	}
 
 
-	/**
-	 *
-	 * Check the permission for the given action
-	 * @param int $forumId
-	 * @param String $action
-	 */
+    /**
+     * Check the permission for the given action
+     * @param $forumId
+     * @param $action
+     * @param null $userId
+     * @param $paramForumbox
+     * @param $paramForum
+     * @return bool
+     */
 	public function checkPermissionForAction( $forumId, $action, $userId = null, $paramForumbox, $paramForum )
 	{
 		return $this->checkPermission($forumId,$this->actionToRight($action, $paramForum), $userId);
 	}
 
 
-	/**
-	 *
-	 * Determines the right needed to perform the given action
-	 * @param String $action
-	 */
+    /**
+     * Determines the right needed to perform the given action
+     * @param $action
+     * @param $paramForum
+     * @return string
+     */
 	public function actionToRight($action, $paramForum)
 	{
 		switch ($action) {
@@ -369,15 +374,15 @@ class C4GForumHelper extends \System
 	}
 
 
-	/**
-	 *
-	 * Give back all subforums of a given forum id from DB as array. 0 = root.
-	 * @param int $id parentId (if $idField is not provided)
-	 * @param boolean $children
-	 * @param boolean $flat
-	 * @param string $idField
-	 *
-	 */
+    /**
+     * Returns all subforums of a given forum id from DB as array. 0 = root.
+     * @param $id
+     * @param bool $children
+     * @param bool $flat
+     * @param string $idField
+     * @param bool $allModules
+     * @return array
+     */
 	public function getForumsFromDB($id, $children = false, $flat = false, $idField = 'pid', $allModules = false)
 	{
 
@@ -510,12 +515,12 @@ class C4GForumHelper extends \System
 		return $return;
 	}
 
-	/**
-	 *
-	 * @param int $id
-	 * @param boolean $children
-	 * @param string $idField
-	 */
+    /**
+     * @param $id
+     * @param bool $children
+     * @param string $idField
+     * @return array
+     */
 	public function getForumsIdsFromDB($id, $children = false, $idField = 'pid')
 	{
 		$forums = $this->Database->prepare(
@@ -545,10 +550,10 @@ class C4GForumHelper extends \System
 		return $return;
 	}
 
-	/**
-	 *
-	 * @param int $forumId
-	 */
+    /**
+     * @param $forumId
+     * @return mixed|null
+     */
 	public function getForumFromDB($forumId)
 	{
 		$forum = $this->getForumsFromDB($forumId,false,false,'id');
@@ -561,12 +566,11 @@ class C4GForumHelper extends \System
 	}
 
 
-
-	/**
-	 *
-	 * Give back all threads of a given forum id from DB as array.
-	 * @param int $forumId
-	 */
+    /**
+     * Returns all threads of a given forum id from DB as array.
+     * @param $forumId
+     * @return mixed
+     */
 	public function getThreadsFromDB($forumId)
 	{
 	switch( $this->show_realname ){
@@ -613,11 +617,11 @@ class C4GForumHelper extends \System
 		return $aThreads;
 	}
 
-	/**
-	 *
-	 * Give back all threads of a given forum id (including all subforums) from DB as array.
-	 * @param int $forumId
-	 */
+    /**
+     * Returns all threads of a given forum id (including all subforums) from DB as array.
+     * @param $forumId
+     * @return mixed
+     */
 	public function getThreadsFromDBWithSubforums($forumId)
 	{
 
