@@ -179,9 +179,9 @@ class C4GForumHelper extends \System
             } else {
                 $userGroups = $this->User->groups;
             }
-            if ($right == 'readpost') {
+            /*if ($right == 'readpost') {
 
-            }
+            }*/
 
             if (($adminGroups) && (sizeof(array_intersect($userGroups, deserialize($adminGroups))) > 0)) {
                 $rights = $adminRights;
@@ -295,6 +295,10 @@ class C4GForumHelper extends \System
 			case 'delthreaddialog':
 			case 'delthread':
 				return 'delthread';
+
+            case 'delownthreaddialog':
+            case 'delownthread':
+                return 'delownthread';
 
 			case 'movethread':
 			case 'movethreaddialog':
@@ -2795,9 +2799,9 @@ class C4GForumHelper extends \System
 	/**
 	 * @return array
 	 */
-	public function getMemberDefaultRights() {
+	public function getmemberdefaultrights() {
 		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','editownpost','editownthread','search','latestthreads');
-		return $this->executePermissionHook($return, 'member');
+		return $this->executepermissionhook($return, 'member');
 	}
 
 
@@ -2806,7 +2810,7 @@ class C4GForumHelper extends \System
 	 */
 	public function getAdminDefaultRights() {
 		$return = array('visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','threadsort','editownpost','editpost', 'editownthread', 'editthread',
-            'delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember','closethread');
+            'delownpost','delpost','delownthread' , 'delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember','closethread');
 		return $this->executePermissionHook($return,'admin');
 	}
 

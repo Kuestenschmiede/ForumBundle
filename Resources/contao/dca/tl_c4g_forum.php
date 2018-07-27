@@ -837,11 +837,10 @@ class tl_c4g_forum extends \Backend
 		$this->createNewVersion('tl_c4g_forum', $intId);
 	}
 
-	/**
-	 *
-	 * Get List of available rights
-	 * @param DataContainer $dc
-	 */
+    /**
+     * @param DataContainer $dc
+     * @return mixed
+     */
 	public function getGuestRightList(DataContainer $dc)
 	{
 		if ($dc->Database != null) {
@@ -854,11 +853,10 @@ class tl_c4g_forum extends \Backend
 		return $return;
 	}
 
-	/**
-	 *
-	 * Get List of available rights
-	 * @param DataContainer $dc
-	 */
+    /**
+     * @param DataContainer $dc
+     * @return mixed
+     */
 	public function getRightList(DataContainer $dc)
 	{
 		if ($dc->Database != null) {
@@ -897,10 +895,11 @@ class tl_c4g_forum extends \Backend
 		}
 	}
 
-	/**
-	 * Return the page pick wizard for the linkUrl
-	 * @param DataContainer $dc
-	 */
+    /**
+     * Return the page pick wizard for the linkUrl
+     * @param DataContainer $dc
+     * @return string
+     */
 	public function pickLinkUrl(DataContainer $dc)
 	{
 		if (version_compare(VERSION,'3','<')) {

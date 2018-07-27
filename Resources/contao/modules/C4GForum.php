@@ -1682,6 +1682,21 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                              )
                 );
             }
+            $a = $thread['author'];
+            $b = $this->User->id;
+            $c = $this->helper->checkPermission($thread['forumid'], 'delownthread');
+
+            if ($thread['author'] == $this->User->id && $this->helper->checkPermission($thread['forumid'], 'delownthread')) {
+                array_insert($dialogbuttons, 0,
+                    array(
+                        array(
+                            "action" => 'delownthreaddialog:' . $id,
+                            "type"   => 'get',
+                            "text"   => C4GForumHelper::getTypeText($this->c4g_forum_type,'DEL_THREAD')
+                        )
+                    )
+                );
+            }
 
             if ($post['threadauthor'] == $this->User->id) {
                 $editAction = 'editownthreaddialog';
@@ -2816,6 +2831,12 @@ JSPAGINATE;
          */
         public function delThread($threadId)
         {
+            $thread = $this->helper->getThreadAndForumNameFromDB($threadId);
+            if ($thread['author'] == $this->User->id) {
+                $action = 'delownthread';
+            } else {
+                $action = 'delthread';
+            }
 
             $forumId = $this->helper->getForumIdForThread($threadId);
             list($access, $message) = $this->checkPermission($forumId);
@@ -2864,13 +2885,19 @@ JSPAGINATE;
          */
         public function delThreadDialog($threadId)
         {
+            $thread = $this->helper->getThreadAndForumNameFromDB($threadId);
+
+            if ($thread['author'] == $this->User->id) {
+                $action = 'delownthread';
+            } else {
+                $action = 'delthread';
+            }
 
             list($access, $message) = $this->checkPermission($this->helper->getForumIdForThread($threadId));
             if (!$access) {
                 return $this->getPermissionDenied($message);
             }
 
-            $thread = $this->helper->getThreadAndForumNameFromDB($threadId);
             if ($this->c4g_forum_multilingual) {
                 $threadname = $this->helper->translateThreadField($thread['threadid'], 'name', $this->c4g_forum_language_temp, $thread['threadname']);
             } else {
@@ -5573,8 +5600,8 @@ JSPAGINATE;
 
         /**
          * @param $action
-         *
-         * @return array
+         * @return array|void
+         * @throws \Exception
          */
         public function performAction($action)
         {
@@ -5645,9 +5672,11 @@ JSPAGINATE;
                     $return = $this->useDialog($values[1]);
                     break;
                 case 'delthreaddialog':
+                case 'delownthreaddialog':
                     $return = $this->delThreadDialog($values[1]);
                     break;
                 case 'delthread':
+                case 'delownthread':
                     $return = $this->delThread($values[1]);
                     break;
                 case 'movethreaddialog':

@@ -154,6 +154,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['right_editownthread']	= 'Eigenes Thema bear
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_editthread']		= 'Thema bearbeiten';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_delownpost']		= 'Eigenen Beitrag löschen';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_delpost']		= 'Beitrag löschen';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_delownthread'] 		= 'Eigenes Thema löschen';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_delthread'] 		= 'Thema löschen';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_movethread'] 	= 'Thema verschieben';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_subscribethread']= 'Thema abonnieren';
