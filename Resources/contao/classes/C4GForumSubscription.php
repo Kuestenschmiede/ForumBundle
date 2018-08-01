@@ -438,7 +438,8 @@ use Contao\System;
                         }
                         $notificationData['threadname'] = $aMailData['THREADNAME'];
                         $notificationData['forumname'] = $aMailData['FORUMNAME'];
-                        $notificationData['user_email'] = $this->User->email;
+                        $notificationData['user_email'] = $subscriber['email'];
+                        $notificationData['admin_email'] = $data['from'];
                         $notificationData['responsible_username'] = $this->User->username;
                         $notificationData['post_subject'] = $this->MailCache ['subject'];
                         $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
