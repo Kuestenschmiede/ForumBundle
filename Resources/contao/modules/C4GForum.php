@@ -254,15 +254,15 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $data['jquiEmbeddedDialogs'] = $this->dialogs_jqui;
             $data['contaoLanguage']      = $this->c4g_forum_language_temp;
 
-            $binImageUuid = deserialize(unserialize($this->c4g_forum_bbcodes_editor_imguploadpath));
+            $binImageUuid = $this->c4g_forum_bbcodes_editor_imguploadpath;
             if ($binImageUuid) {
-                $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid[0]));
+                $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid));
             }
             \Session::getInstance()->set("con4gisImageUploadPath", $imageUploadPath->path.'/');
 
-            $binFileUuid = deserialize(unserialize($this->c4g_forum_bbcodes_editor_fileuploadpath));
+            $binFileUuid = $this->c4g_forum_bbcodes_editor_fileuploadpath;
             if ($binFileUuid) {
-                $fileUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binFileUuid[0]));
+                $fileUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binFileUuid));
             }
             \Session::getInstance()->set("con4gisFileUploadPath", $fileUploadPath->path.'/');
 
@@ -1933,9 +1933,9 @@ JSPAGINATE;
             $sCurrentSite = strtok(\Environment::get('httpReferer'),'?');
             $sCurrentSiteHashed = md5($sCurrentSite . \Config::get('encryptionKey'));
 
-            $binImageUuid = deserialize(unserialize($this->c4g_forum_bbcodes_editor_imguploadpath));
+            $binImageUuid = $this->c4g_forum_bbcodes_editor_imguploadpath;
             if ($binImageUuid) {
-                $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid[0]));
+                $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid));
 
             }
 
@@ -2080,9 +2080,9 @@ JSPAGINATE;
             ';
             }
 
-            $binImageUuid = deserialize(unserialize($this->c4g_forum_bbcodes_editor_imguploadpath));
+            $binImageUuid = $this->c4g_forum_bbcodes_editor_imguploadpath;
             if ($binImageUuid) {
-                $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid[0]));
+                $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid));
             }
 
             $data .= '<div class="c4gForumNewPostContent">' .
@@ -4072,9 +4072,9 @@ JSPAGINATE;
             $sCurrentSite = strtok(\Environment::get('httpReferer'),'?');
             $sCurrentSiteHashed = md5($sCurrentSite . \Config::get('encryptionKey'));
 
-            $binImageUuid = deserialize(unserialize($this->c4g_forum_bbcodes_editor_imguploadpath));
+            $binImageUuid = $this->c4g_forum_bbcodes_editor_imguploadpath;
             if ($binImageUuid) {
-                $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid[0]));
+                $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid));
             }
 
 
