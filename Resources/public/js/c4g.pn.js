@@ -94,7 +94,7 @@
           },
           click: function () {
             var sSubject = 'RE: ' + $('.subject').text();
-            _sendMessageTo(data.sid, sSubject, sSubject);
+            _sendMessageTo(data.sid, sSubject, sSubject, this);
             $(this).dialog("close");
           }
         });
@@ -117,7 +117,10 @@
             },
             buttons: aButtons
           });
-            document.getElementById('frmCompose').dataset.target = data.target;
+          var frmCompose = document.getElementById('frmCompose');
+          if ((typeof(frmCompose) !== 'undefined') && (frmCompose !== null)){
+              frmCompose.dataset.target = data.target;
+          }
         }
       });
     };
