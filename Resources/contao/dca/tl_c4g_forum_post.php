@@ -150,7 +150,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_forum_post','get_options'),
-            'sql'                     => "int(10)"
+            'sql'                     => "int(10) default '0'"
         ),
 
         'tags' => array

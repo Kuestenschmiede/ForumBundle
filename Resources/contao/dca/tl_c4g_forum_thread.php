@@ -151,7 +151,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'filter'                  => true,
             'search'                  => true,
             'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-'),
-            'sql'                     => "int(10)"
+            'sql'                     => "int(10) default '0'"
         ),
         'sort' => array
         (
@@ -174,7 +174,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'foreignKey'              => 'tl_member.username',
             //'options_callback'      => array('CLASS', 'METHOD'),
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
-            'sql'                     => "blob"
+            'sql'                     => "blob NULL"
         ),
         'recipient' => array(
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['recipient'],
@@ -185,10 +185,10 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'foreignKey'              => 'tl_member.username',
             //'options_callback'      => array('CLASS', 'METHOD'),
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
-            'sql'                     => "blob",
+            'sql'                     => "blob NULL",
         ),
         'concerning' => array(
-            'sql'                     => 'int(10)'
+            'sql'                     => 'int(10) default "0"'
         ),
         'creation' => array
         (

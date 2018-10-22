@@ -620,7 +620,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'],
             'inputType'               => 'select',
             'foreignKey'              => 'tl_member.username',
-            'sql'                     => "int(10)"
+            'sql'                     => "int(10) default '0'"
 		),
         'member_id' => array
         (
