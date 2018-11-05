@@ -6042,8 +6042,12 @@ JSPAGINATE;
          */
         public function generateAjax($request = null, $user = null)
         {
-
             $this->User = $user;
+            if (($user !== null) && ($user->id)) {
+                $db = Database::getInstance();
+                $stmt = $db->prepare("UPDATE tl_member SET tstampLastAction = ? WHERE id = ?");
+                $stmt->execute(time(), $user->id);
+            }
 
             // auf die benutzerdefinierte Fehlerbehandlung umstellen
             $old_error_handler = \set_error_handler("con4gis\ForumBundle\Resources\contao\modules\c4gForumErrorHandler");

@@ -83,6 +83,10 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['memberGooglePlusLink'] = array
     'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'fieldType'=>'radio', 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'forum', 'memberLink' => true, 'tl_class'=>'w50'),
     'sql'                     => "varchar(255) NOT NULL default ''"
 );
+$GLOBALS['TL_DCA']['tl_member']['fields']['tstampLastAction'] = array
+(
+    'sql'                     => "int(10) NOT NULL default 0"
+);
 
 
 /**

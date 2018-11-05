@@ -25,7 +25,7 @@ class C4gForumSession extends \Model
      *
      * @var string
      */
-    protected static $sTable = 'tl_session';
+    protected static $sTable = 'tl_member';
 
 
     /**
@@ -39,7 +39,9 @@ class C4gForumSession extends \Model
         $iTimeThreshold = time() - $iThreshold;
 
         $oDatabase = \Database::getInstance();
-        $oTimeStamp = $oDatabase->prepare("SELECT tstamp FROM $t WHERE pid = ? AND tstamp > ?")->execute($iMemberId, $iTimeThreshold);
+        $oTimeStamp = $oDatabase->prepare(
+            "SELECT tstampLastAction FROM $t WHERE id = ? AND tstampLastAction > ?"
+        )->execute($iMemberId, $iTimeThreshold);
 
         // If member present in the session table and last activity (timestamp) is within now and the given time-threshold, the user is online.
         if ($oTimeStamp->numRows > 0) {
