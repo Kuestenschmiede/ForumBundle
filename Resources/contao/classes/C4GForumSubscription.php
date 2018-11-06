@@ -13,8 +13,7 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
-use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
-use Contao\System;
+use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
 
 /**
  * Class C4GForumSubscription
@@ -278,16 +277,11 @@ use Contao\System;
          * @param bool $sUrl
          * @param string $forumType
          * @param null $headline
-         * @return bool|string
          */
         public function sendSubscriptionEMail($subscribers, $threadId, $sendKind, $forumModule, $sUrl=false, $forumType='DISCUSSIONS', $headline=null)
         {
-
             \System::loadLanguageFile("tl_c4g_forum");
-
             $thread = $this->helper->getThreadAndForumNameAndMailTextFromDBUncached($threadId);
-
-            $cron = array();
             $addresses = array();
             foreach ($subscribers as $subscriber) {
                 if ((!$addresses[$subscriber ['email']]) && ($subscriber['memberId'] != $this->User->id)) {
@@ -299,168 +293,52 @@ use Contao\System;
                         $sPerm = 'subscribethread';
                     }
 
-
-                    $sActionType = "POST";
-
-                    $aMailData = array(
-                        "USERNAME" => "",
-                        "RESPONSIBLE_USERNAME" => "",
-                        "ACTION_NAME" => "",
-                        "ACTION_PRE" => "",
-                        "ACTION_NAME_WITH_SUBJECT" => "",
-                        "FORUMNAME" => "",
-                        "THREADNAME" => "",
-                        "POST_SUBJECT" => "",
-                        "POST_CONTENT" => "",
-                        "DETAILS_LINK" => "",
-                        "UNSUBSCRIBE_LINK" => "",
-                        "UNSUBSCRIBE_ALL_LINK" => "",
-                        "LANGUAGE" => $subscriber['language'],
-                    );
-
                     // check if subscriber still has permission to get subscription mails
                     if ($this->helper->checkPermission($thread['forumid'], $sPerm, $subscriber['memberId'])) {
-                        switch ($sendKind) {
-                            case "new" :
-                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '');
-                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_NEW_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
-
-                                break;
-                            case "edit" :
-                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_' . $sType . '_MAIL_EDIT');
-                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_EDIT_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
-
-                                break;
-                            case "delete" :
-                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_' . $sType . '_MAIL_DELETE');
-                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_DEL_' . $sActionType . '_WITH_SUBJECT'), $this->MailCache ['subject']);
-
-                                break;
-                            case "delThread" :
-                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_' . $sType . '_MAIL_DELTHREAD');
-                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_DEL_THREAD_WITH_SUBJECT'), $thread['threadname']);
-                                $sActionType = "THREAD";
-                                break;
-                            case "moveThread" :
-                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_' . $sType . '_MAIL_MOVETHREAD');
-                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_MOVE_THREAD_WITH_SUBJECT'), $this->MailCache ['moveThreadOldName'], $thread['threadname']);
-                                $sActionType = "THREAD";
-                                break;
-                            case "newThread" : // only subforum
-                                $subjectAddition = C4GForumHelper::getTypeText($forumType, 'NEW_THREAD');
-                                $aMailData['ACTION_NAME'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD');
-                                $aMailData['ACTION_NAME_WITH_SUBJECT'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_NEW_THREAD_WITH_SUBJECT'), $thread['threadname']);
-                                $sActionType = "THREAD";
-                                break;
-                        }
-
-                        $aMailData['ACTION_PRE'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE');
-
-                        \System::log('[C4G] ' . $aMailData['ACTION_NAME'] . " in \"" . $thread['forumname'] . "\": " . $thread['threadname'], __METHOD__, TL_GENERAL);
-
-                        $data = array();
-                        $data['command'] = 'sendmail';
-                        $data['charset'] = 'UTF-8';
-
-                        if ($GLOBALS ['TL_CONFIG'] ['useSMTP'] and $this->checkmail($GLOBALS ['TL_CONFIG'] ['smtpUser'])) {
-                            $data['from'] = $GLOBALS ['TL_CONFIG'] ['smtpUser'];
-                        } else {
-                            $data['from'] = $GLOBALS ['TL_CONFIG'] ['adminEmail'];
-                        }
-                        if (!$headline || $headline == '') {
-                            $headline = $GLOBALS['TL_CONFIG']['websiteTitle'];
-                        }
-
-                        $data['subject'] = sprintf(C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_' . $sType . '_MAIL_SUBJECT'), $subjectAddition, $headline, $thread['forumname'], $thread['threadname']);
-
-                        $aMailData['USERNAME'] = $subscriber['username'];
-                        $aMailData['RESPONSIBLE_USERNAME'] = $this->User->username;
-                        $aMailData['FORUMNAME'] = $thread['forumname'];
-                        $aMailData['THREADNAME'] = $thread['threadname'];
-
-                        // set post subject and content
-                        $aMailData['POST_SUBJECT'] = $this->MailCache ['subject'];
-                        $aMailData['POST_CONTENT'] = $this->MailCache ['post'];
-
-                        // building links
-                        if ($sType == "SUBFORUM") {
-
-                            $aMailData['DETAILS_LINK'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
-                            $aMailData['UNSUBSCRIBE_LINK'] = $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl);
-                            $aMailData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
-
-                        } else {
-
-                            $aMailData['DETAILS_LINK'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
-                            $aMailData['UNSUBSCRIBE_LINK'] = $this->generateUnsubscribeLinkThread($threadId, $subscriber['email'], $sUrl);
-                            $aMailData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
-                        }
-
-
-                        $mailText = trim($thread['mail']) ?: C4GForumHelper::getTypeText($forumType, 'default_subscription_text');
-                        $data['text'] = $this->parseMailText($mailText, $aMailData);
-                        $data['to'] = $subscriber['email'];
-
-                        $addresses[$subscriber ['email']] = true;
-
                         /** Send Notifications via Notification center*/
 
-                        switch ($sendKind) {
-                            case "new" :
-                                $notificationArray = unserialize($forumModule->sub_new_post);
-                                $notificationData['post_subject'] = $aMailData['post_subject'];
-                                break;
-                            case "edit" :
-                                $notificationArray = unserialize($forumModule->sub_edited_post);
-                                $notificationData['post_subject'] = $aMailData['post_subject'];
-                                break;
-                            case "delete" :
-                                $notificationArray = unserialize($forumModule->sub_deleted_post);
-                                $notificationData['post_subject'] = $aMailData['post_subject'];
-                                break;
-                            case "delThread" :
-                                $notificationArray = unserialize($forumModule->sub_deleted_thread);
-                                break;
-                            case "moveThread" :
-                                $notificationArray = unserialize($forumModule->sub_moved_thread);
-                                break;
-                            case "newThread" :
-                                $notificationArray = unserialize($forumModule->sub_new_thread);
-                                break;
-                            default:
-                                $notificationArray = array();
-                                break;
-                        }
-                        $notificationData['threadname'] = $aMailData['THREADNAME'];
-                        $notificationData['forumname'] = $aMailData['FORUMNAME'];
-                        $notificationData['user_email'] = $subscriber['email'];
-                        $notificationData['admin_email'] = $data['from'];
-                        $notificationData['responsible_username'] = $this->User->username;
-                        $notificationData['post_subject'] = $this->MailCache ['subject'];
-                        $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
-                        $notificationData['ACTION_NAME_WITH_SUBJECT'] = $aMailData['ACTION_NAME_WITH_SUBJECT'];
-                        $notificationData['ACTION_PRE'] = C4GForumHelper::getTypeText($forumType, 'SUBSCRIPTION_MAIL_ACTION_' . $sActionType . '_PRE');
-
-                        if ($sType == "SUBFORUM") {
-                            $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
-                            $notificationData['UNSUBSCRIBE_LINK'] = $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl);
-                            $notificationData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
-                        } else {
-                            $notificationData['details_link'] = $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl);
-                            $notificationData['UNSUBSCRIBE_LINK'] = $this->generateUnsubscribeLinkThread($threadId, $subscriber['email'], $sUrl);
-                            $notificationData['UNSUBSCRIBE_ALL_LINK'] = $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl);
-                        }
-
-                        foreach ($notificationArray as $notification) {
-                            $objNotification = \NotificationCenter\Model\Notification::findByPk($notification);
-                            if ($objNotification !== null) {
-                                $objNotification->send($notificationData);
+                        try {
+                            switch ($sendKind) {
+                                case "new" :
+                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_new_post']);
+                                    $notificationIDs = unserialize($forumModule->sub_new_post);
+                                    break;
+                                case "edit" :
+                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_edited_post']);
+                                    $notificationIDs = unserialize($forumModule->sub_edited_post);
+                                    break;
+                                case "delete" :
+                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_deleted_post']);
+                                    $notificationIDs = unserialize($forumModule->sub_deleted_post);
+                                    break;
+                                case "delThread" :
+                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_deleted_thread']);
+                                    $notificationIDs = unserialize($forumModule->sub_deleted_thread);
+                                    break;
+                                case "moveThread" :
+                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_moved_thread']);
+                                    $notificationIDs = unserialize($forumModule->sub_moved_thread);
+                                    break;
+                                case "newThread" :
+                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_new_thread']);
+                                    $notificationIDs = unserialize($forumModule->sub_new_thread);
+                                    break;
+                                default:
+                                    return;
                             }
+
+                            $notification->setTokenValue('admin_email', $GLOBALS['TL_CONFIG']['adminEmail']);
+                            $notification->setTokenValue('user_email', $subscriber['email']);
+                            $notification->setTokenValue('user_name', $subscriber['username']);
+                            $notification->setTokenValue('threadname', $thread['threadname']);
+                            $notification->setTokenValue('forumname', $thread['forumname']);
+                            $notification->setTokenValue('responsible_username', $this->User->username);
+                            $notification->setTokenValue('link', $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl));
+                            $notification->setTokenValue('unsubscribe_link', $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl));
+                            $notification->setTokenValue('unsubscribe_all_link', $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl));
+                            $notification->send($notificationIDs);
+                        } catch (\Exception $e) {
+                            \System::getContainer()->get('logger')->error($e->getMessage());
                         }
                     }
                 }
