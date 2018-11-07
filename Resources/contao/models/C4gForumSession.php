@@ -43,7 +43,6 @@ class C4gForumSession extends \Model
             "SELECT tstampLastAction FROM $t WHERE id = ? AND tstampLastAction > ?"
         )->execute($iMemberId, $iTimeThreshold);
 
-        // If member present in the session table and last activity (timestamp) is within now and the given time-threshold, the user is online.
         if ($oTimeStamp->numRows > 0) {
             return true;
         }
