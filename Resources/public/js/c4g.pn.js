@@ -176,7 +176,9 @@
      * @private
      */
     var _sendMessageTo = function (iUserId, subject, title, opt_this) {
-      event.preventDefault();
+      if (typeof(event) !== 'undefined') {
+          event.preventDefault();
+      }
       subject = subject || "";
       title = title || "";
       _openModal('compose', {recipient_id: iUserId, subject: subject, target:opt_this.getAttribute('data-target')},title);
