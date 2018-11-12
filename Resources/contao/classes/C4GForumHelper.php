@@ -587,8 +587,8 @@ class C4GForumHelper extends \System
 				$sqlLastUser = 'CONCAT(d.firstname, " ", d.lastname)';
 				break;
 			case 'LF':
-				$sqlAuthor = 'CONCAT(b.lastname, " ", b.firstname) AS username';
-				$sqlLastUser = 'CONCAT(d.lastname, " ", d.firstname)';
+				$sqlAuthor = 'CONCAT(b.lastname, ", ", b.firstname) AS username';
+				$sqlLastUser = 'CONCAT(d.lastname, ", ", d.firstname)';
 				break;
 			case 'UU':
 			default:

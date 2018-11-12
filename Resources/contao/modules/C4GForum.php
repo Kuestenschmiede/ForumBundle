@@ -1319,7 +1319,25 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $sJsLang = C4GForumPNCenter::getClientLangVars();
             $oUserDataTemplate->c4g_pn_js = $sJsLang;
 
-            $oUserDataTemplate->sUserName = $oMember->username;
+            switch ($this->c4g_forum_show_realname) {
+                case 'UU';
+                    $oUserDataTemplate->sUserName = $oMember->username;
+                    break;
+                case 'FF';
+                    $oUserDataTemplate->sUserName = $oMember->firstname;
+                    break;
+                case 'LL';
+                    $oUserDataTemplate->sUserName = $oMember->lastname;
+                    break;
+                case 'FL';
+                    $oUserDataTemplate->sUserName = $oMember->firstname . ' ' . $oMember->lastname;
+                    break;
+                case 'LF';
+                    $oUserDataTemplate->sUserName = $oMember->lastname . ', ' . $oMember->firstname;
+                    break;
+                default;
+                    break;
+            }
             $oUserDataTemplate->iUserPostCount = $iUserPostCount;
             if ($this->c4g_forum_show_avatars) {
                 $sImage = C4GForumHelper::getAvatarByMemberId($iAuthorId, deserialize($this->c4g_forum_avatar_size));
