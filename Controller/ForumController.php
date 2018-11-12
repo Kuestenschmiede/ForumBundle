@@ -10,6 +10,7 @@ namespace con4gis\ForumBundle\Controller;
 
 
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabase;
@@ -170,22 +171,19 @@ class ForumController extends Controller
                     $db = \Database::getInstance();
                     $stmt = $db->prepare("SELECT new_pm_redirect, mail_new_pm FROM tl_module WHERE id = ?");
                     $result = $stmt->execute($forumModule)->fetchAssoc();
-
-                    $notificationArray = unserialize($result['mail_new_pm']);
-                    $notificationData['user_name'] = $aRecipient['username'];
-                    $notificationData['user_email'] = $aRecipient['email'];
-                    $notificationData['responsible_username'] = $this->getUser()->username;
                     $this->container->get('contao.framework')->initialize();
-                    $test = \Contao\Controller::replaceInsertTags('{{link_url::'.$result['new_pm_redirect'].'}}');
-                    $notificationData['redirect'] = $_SERVER['SERVER_NAME'].'/'.$test;
+                    $route = \Contao\Controller::replaceInsertTags('{{link_url::'.$result['new_pm_redirect'].'}}');
 
-                    foreach ($notificationArray as $notification) {
-                        $objNotification = \NotificationCenter\Model\Notification::findByPk($notification);
-                        if ($objNotification !== null) {
-                            $objNotification->send($notificationData);
-                        }
-                    }
-                    
+                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['mail_new_pm']);
+                    $notification->setTokenValue('user_name', $aRecipient['username']);
+                    $notification->setTokenValue('user_email', $aRecipient['email']);
+                    $notification->setTokenValue('responsible_username', $this->getUser()->username);
+                    $notification->setTokenValue('link', $_SERVER['SERVER_NAME'].'/'.$route);
+                    $notification->setTokenValue('admin_email', $GLOBALS['TL_CONFIG']['adminEmail']);
+                    $notification->setTokenValue('subject', $aData['subject']);
+                    $notification->setTokenValue('message', $aData['message']);
+                    $notification->send(unserialize($result['mail_new_pm']));
+
                     $response->setData(['success' => true]);
                     return $response;
                     break;

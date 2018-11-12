@@ -163,14 +163,14 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum'] = array
     'mail_new_pm'   => array
     (
         'recipients'           => array('admin_email','user_email'),
-        'email_subject'        => array('admin_email',),
-        'email_text'           => array('user_name', 'responsible_username', 'link',),
-        'email_html'           => array('user_name', 'responsible_username', 'link',),
-        'email_sender_name'    => array('admin_email'),
+        'email_subject'        => array('admin_email','responsible_username','subject'),
+        'email_text'           => array('user_name', 'responsible_username', 'link','message','subject'),
+        'email_html'           => array('user_name', 'responsible_username', 'link','message','subject'),
+        'email_sender_name'    => array('admin_email','responsible_username'),
         'email_sender_address' => array('admin_email'),
         'email_recipient_cc'   => array('admin_email'),
         'email_recipient_bcc'  => array('admin_email'),
         'email_replyTo'        => array('admin_email'),
-        'file_content'           => array('user_name', 'responsible_username', 'link',),
+        'file_content'           => array('user_name', 'responsible_username', 'link','message','subject'),
     )
 );
