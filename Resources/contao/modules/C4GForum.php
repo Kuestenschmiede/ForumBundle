@@ -137,7 +137,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
         {
             $this->setTempLanguage();
 
-            if (FE_USER_LOGGED_IN) {
+            if (C4GUtils::isFrontendUserLoggedIn()) {
                 \System::import('FrontendUser', 'User');
             }
 
@@ -1606,7 +1606,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 )
             );
 
-            if (FE_USER_LOGGED_IN) {
+            if (C4GUtils::isFrontendUserLoggedIn()) {
                 if ($this->helper->checkPermission($thread['forumid'], 'subscribethread')) {
                     $showButton = true;
                     if ($this->helper->checkPermission($thread['forumid'], 'subscribeforum')) {

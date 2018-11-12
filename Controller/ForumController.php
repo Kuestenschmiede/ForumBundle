@@ -52,16 +52,16 @@ class ForumController extends Controller
         }
 
         // Show to guests only
-        if ($objModule->guests && FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$objModule->protected)
+        if ($objModule->guests && C4GUtils::isFrontendUserLoggedIn() && !C4GUtils::isBackendUserLoggedIn() && !$objModule->protected)
         {
             $response->setData('Forbidden');
             $response->setStatusCode(403);
         }
 
         // Protected element
-        if (!BE_USER_LOGGED_IN && $objModule->protected)
+        if (!C4GUtils::isBackendUserLoggedIn() && $objModule->protected)
         {
-            if (!FE_USER_LOGGED_IN)
+            if (!C4GUtils::isFrontendUserLoggedIn())
             {
                 $response->setData('Forbidden');
                 $response->setStatusCode(403);
@@ -94,7 +94,7 @@ class ForumController extends Controller
         $response = new JsonResponse();
         $feUser = FrontendUser::getInstance();
         $feUser->authenticate();
-        if (!FE_USER_LOGGED_IN) {
+        if (!C4GUtils::isFrontendUserLoggedIn()) {
             $response->setStatusCode(400);
             return $response;
         }

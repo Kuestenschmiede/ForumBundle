@@ -169,7 +169,7 @@ class C4GForumHelper extends \System
     public function checkPermissionWithData( $right, $memberGroups, $adminGroups, $guestRights, $memberRights, $adminRights, $userId = 0)
     {
     	$rights = $guestRights;
-    	if ((FE_USER_LOGGED_IN) && (!$this->checkGuestRights)) {
+    	if ((C4GUtils::isFrontendUserLoggedIn()) && (!$this->checkGuestRights)) {
             if (($userId != 0) && ($this->User->id != $userId)) {
                 $userGroups = deserialize($this->Database->prepare(
                     "SELECT groups FROM tl_member  " .

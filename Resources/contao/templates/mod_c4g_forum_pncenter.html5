@@ -1,5 +1,3 @@
-<?php if (FE_USER_LOGGED_IN): ?>
-
     <script src="bundles/con4giscore/vendor/ckeditor/ckeditor.js"></script>
     <script src="bundles/con4gisforum/js/c4g.pn.js"></script>
     <link rel="stylesheet" href="bundles/con4gisforum/css/c4g.pn.css">
@@ -53,4 +51,3 @@
             }})();
     </script>
 <?php echo $this->c4g_pn_js; ?>
-<?php endif; ?>
