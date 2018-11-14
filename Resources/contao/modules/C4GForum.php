@@ -481,7 +481,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                         4
                     ),
                     "bSearchable"     => false,
-                    "bVisible"        => ($this->c4g_forum_remove_lastperson != '1'),
+                    "bVisible"        => ($this->c4g_forum_remove_lastperson !== '1'),
                     "aTargets"        => array(2),
                     "responsivePriority" => array(2),
                     "c4gMinTableSize" => 700
@@ -495,7 +495,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                     ),
                     "sType"           => 'de_datetime',
                     "bSearchable"     => false,
-                    "bVisible"        => ($this->c4g_forum_remove_lastdate != '1'),
+                    "bVisible"        => ($this->c4g_forum_remove_lastdate !== '1'),
                     "asSorting"       => array(
                         'desc',
                         'asc'
@@ -519,7 +519,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                         7
                     ),
                     "bSearchable"     => false,
-                    "bVisible"        => ($this->c4g_forum_remove_createperson != '1'),
+                    "bVisible"        => ($this->c4g_forum_remove_createperson !== '1'),
                     "aTargets"        => array(5),
                     "responsivePriority" => array(5),
                     "c4gMinTableSize" => 500
@@ -537,7 +537,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                         'asc'
                     ),
                     "bSearchable"     => false,
-                    "bVisible"        => ($this->c4g_forum_remove_createdate != '1'),
+                    "bVisible"        => ($this->c4g_forum_remove_createdate !== '1'),
                     "aTargets"        => array(6),
                     "responsivePriority" => array(6),
                     "c4gMinTableSize" => 500
@@ -556,7 +556,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                         'asc'
                     ),
                     "bSearchable" => false,
-                    "bVisible"        => ($this->c4g_forum_remove_count != '1'),
+                    "bVisible"        => ($this->c4g_forum_remove_count !== '1'),
                     "aTargets"    => array(8),
                     "responsivePriority" => array(8)
                 ),
@@ -1216,15 +1216,15 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             if (!$this->plainhtml) {
                 // show author only when not in plainhtml-mode (=pages that will be indexed by search engines)
 
-                if (($this->c4g_forum_remove_createperson != '1') && ($this->c4g_forum_remove_createdate != '1')) {
+                if (($this->c4g_forum_remove_createperson !== '1') && ($this->c4g_forum_remove_createdate !== '1')) {
                     $data .= '<br><span class="c4g_forum_post_head_origin_row">' .
                         sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_CREATED'], 'class=c4g_forum_post_head_origin_author',
                             $post['username'], 'class=c4g_forum_post_head_origin_datetime', $this->helper->getDateTimeString($post['creation'])) . '</span>';
-                } else if ($this->c4g_forum_remove_createperson != '1') {
+                } else if ($this->c4g_forum_remove_createperson !== '1') {
                     $data .= '<br><span class="c4g_forum_post_head_origin_row">' .
                         sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_CREATED_AUTHOR'], 'class=c4g_forum_post_head_origin_author',
                             $post['username']) . '</span>';
-                } else if ($this->c4g_forum_remove_createdate != '1') {
+                } else if ($this->c4g_forum_remove_createdate !== '1') {
                     $data .= '<br><span class="c4g_forum_post_head_origin_row">' .
                         sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_HEADER_CREATED_DATE'],
                             'class=c4g_forum_post_head_origin_datetime', $this->helper->getDateTimeString($post['creation'])) . '</span>';
@@ -1405,7 +1405,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $data .= '</div>';
 
             if ($post['edit_count']) {
-                if (($this->c4g_forum_remove_lastperson != '1') && ($this->c4g_forum_remove_lastdate != '1')) {
+                if (($this->c4g_forum_remove_lastperson !== '1') && ($this->c4g_forum_remove_lastdate !== '1')) {
                     $data .=
                         '<div class="c4gForumPostText c4g_forum_post_head_edit_row' . $targetClass . '">' .
                         sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_EDIT_INFO'], 'class="c4g_forum_post_head_edit_count"',
@@ -1413,7 +1413,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                             'class="c4g_forum_post_head_edit_author"', $post['edit_username']) .
                         '</div>';
 
-                } else if ($this->c4g_forum_remove_lastperson != '1') {
+                } else if ($this->c4g_forum_remove_lastperson !== '1') {
                     $data .=
                         '<div class="c4gForumPostText c4g_forum_post_head_edit_row' . $targetClass . '">' .
                         sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_EDIT_INFO_AUTHOR'], 'class="c4g_forum_post_head_edit_count"',
@@ -1421,7 +1421,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                             'class="c4g_forum_post_head_edit_author"', $post['edit_username']) .
                         '</div>';
 
-                } else if ($this->c4g_forum_remove_lastdate != '1') {
+                } else if ($this->c4g_forum_remove_lastdate !== '1') {
                     $data .=
                         '<div class="c4gForumPostText c4g_forum_post_head_edit_row' . $targetClass . '">' .
                         sprintf($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_EDIT_INFO_DATE'], 'class="c4g_forum_post_head_edit_count"',
@@ -4822,7 +4822,7 @@ JSPAGINATE;
                         5
                     ),
                     "bSearchable"     => false,
-                    "bVisible"        => ($this->c4g_forum_remove_lastperson != '1'),
+                    "bVisible"        => ($this->c4g_forum_remove_lastperson !== '1'),
                     "aTargets"        => array(3),
                     "responsivePriority"    => array(3),
                     "c4gMinTableSize" => 700
@@ -4836,7 +4836,7 @@ JSPAGINATE;
                     ),
                     "sType"           => 'de_datetime',
                     "bSearchable"     => false,
-                    "bVisible"        => ($this->c4g_forum_remove_lastdate != '1'),
+                    "bVisible"        => ($this->c4g_forum_remove_lastdate !== '1'),
                     "asSorting"       => array(
                         'desc',
                         'asc'
@@ -4860,7 +4860,7 @@ JSPAGINATE;
                         8
                     ),
                     "bSearchable"     => false,
-                    "bVisible"        => ($this->c4g_forum_remove_createperson != '1'),
+                    "bVisible"        => ($this->c4g_forum_remove_createperson !== '1'),
                     "aTargets"        => array(6),
                     "responsivePriority"    => array(6),
                     "c4gMinTableSize" => 500
@@ -4877,7 +4877,7 @@ JSPAGINATE;
                         'asc'
                     ),
                     "bSearchable"     => false,
-                    "bVisible"        => ($this->c4g_forum_remove_createdate != '1'),
+                    "bVisible"        => ($this->c4g_forum_remove_createdate !== '1'),
                     "aTargets"        => array(7),
                     "responsivePriority"    => array(7),
                     "c4gMinTableSize" => 500
@@ -4896,7 +4896,7 @@ JSPAGINATE;
                         'asc'
                     ),
                     "bSearchable" => false,
-                    "bVisible"        => ($this->c4g_forum_remove_count != '1'),
+                    "bVisible"        => ($this->c4g_forum_remove_count !== '1'),
                     "aTargets"    => array(9),
                     "responsivePriority"    => array(9),
                 ),
@@ -5196,7 +5196,7 @@ JSPAGINATE;
                     5
                 ),
                 "bSearchable"     => false,
-                "bVisible"        => ($this->c4g_forum_remove_lastperson != '1'),
+                "bVisible"        => ($this->c4g_forum_remove_lastperson !== '1'),
                 "aTargets"        => array(3),
                 "responsivePriority"    => array(3),
                 "c4gMinTableSize" => 700
@@ -5205,7 +5205,7 @@ JSPAGINATE;
                 'sTitle'          => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_POST_SHORT'],
                 "aDataSort"       => array(5),
                 "bSearchable"     => false,
-                "bVisible"        => ($this->c4g_forum_remove_lastdate != '1'),
+                "bVisible"        => ($this->c4g_forum_remove_lastdate !== '1'),
                 "asSorting"       => array(
                     'desc',
                     'asc'
@@ -5228,7 +5228,7 @@ JSPAGINATE;
                     8
                 ),
                 "bSearchable"     => false,
-                "bVisible"        => ($this->c4g_forum_remove_createperson != '1'),
+                "bVisible"        => ($this->c4g_forum_remove_createperson !== '1'),
                 "aTargets"        => array(6),
                 "responsivePriority"    => array(6),
                 "c4gMinTableSize" => 500
@@ -5242,7 +5242,7 @@ JSPAGINATE;
                 ),
                 "sType"           => 'de_datetime',
                 "bSearchable"     => false,
-                "bVisible"        => ($this->c4g_forum_remove_createdate != '1'),
+                "bVisible"        => ($this->c4g_forum_remove_createdate !== '1'),
                 "aTargets"        => array(7),
                 "responsivePriority"    => array(7),
                 "c4gMinTableSize" => 500
@@ -5260,7 +5260,7 @@ JSPAGINATE;
                     'asc'
                 ),
                 "bSearchable" => false,
-                "bVisible"        => ($this->c4g_forum_remove_count != '1'),
+                "bVisible"        => ($this->c4g_forum_remove_count !== '1'),
                 "aTargets"    => array(9),
                 "responsivePriority"    => array(9),
             );
