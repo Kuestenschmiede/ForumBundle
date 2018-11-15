@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- Todo: Investiagate if Contao adds headline tags on its own or not. If not, add them here. -->
 
-</body>
-</html>
+<script src="/bundles/con4gisforum/js/subscription_module.js" defer></script>
+<link rel="stylesheet" href="/bundles/con4gisforum/css/subscription_module.css">
+
+<?php if ($this->forumSubs !== null) { ?>
+    <div class="forum_subs">
+        <?php foreach ($this->forumSubs as $sub) { ?>
+        <div class="sub">
+            <span class="sub_name">
+                <?php $sub-> ?>
+            </span>
+        </div>
+        <?php } ?>
+    </div>
+<?php } ?>
