@@ -22,6 +22,7 @@ $GLOBALS['con4gis']['forum']['installed'] = true;
 $GLOBALS['FE_MOD']['con4gis']['c4g_forum'] = 'con4gis\ForumBundle\Resources\contao\modules\C4GForum';
 $GLOBALS['FE_MOD']['con4gis']['c4g_forum_breadcrumb'] = 'con4gis\ForumBundle\Resources\contao\modules\C4GForumBreadcrumb';
 $GLOBALS['FE_MOD']['con4gis']['c4g_forum_pncenter'] = 'con4gis\ForumBundle\Resources\contao\modules\C4GForumPNCenter';
+$GLOBALS['FE_MOD']['con4gis']['c4g_forum_subscription'] = 'con4gis\ForumBundle\Resources\contao\modules\C4GSubscriptionOverview';
 
 /**
  * Backend modules
@@ -74,6 +75,9 @@ if(TL_MODE == "BE") {
 * Models
 */
 $GLOBALS['TL_MODELS']['tl_c4g_forum']       = 'con4gis\ForumBundle\Resources\contao\models\C4gForumModel';
+$GLOBALS['TL_MODELS']['tl_c4g_forum_subforum_subscription']       = \con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel::class;
+$GLOBALS['TL_MODELS']['tl_c4g_forum_thread_subscription']       = \con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel::class;
+$GLOBALS['TL_MODELS']['tl_c4g_forum_thread']       = \con4gis\ForumBundle\Resources\contao\models\C4GThreadModel::class;
 
 /**
  * Notification Center

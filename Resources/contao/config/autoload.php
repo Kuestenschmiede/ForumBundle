@@ -68,6 +68,7 @@ TemplateLoader::addFiles(array
 	'mod_c4g_forum_breadcrumb' => __DIR__.'/../templates',
 	'mod_c4g_forum_plainhtml'  => __DIR__.'/../templates',
 	'mod_c4g_forum_pncenter'   => __DIR__.'/../templates',
+	'mod_c4g_forum_subscription_overview'   => __DIR__.'/../templates',
 	'forum_user_data'          => __DIR__.'/../templates/partials',
 	'modal_inbox'          	   => __DIR__.'/../templates/',
 	'modal_compose'            => __DIR__.'/../templates/',

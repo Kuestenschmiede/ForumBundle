@@ -271,6 +271,13 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_remove_createdate'] = array("Feld -Erstellt am- ausblenden", "Mit dieser Funktion können Sie das Feld -Erstellt am- in der Liste ausblenden.");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_remove_count'] = array("Feld -#- ausblenden", "Mit dieser Funktion können Sie das Feld -#- in der Liste ausblenden.");
 
+    $GLOBALS['TL_LANG']['tl_module']['sub_forum_headline'] = array('Überschrift', 'Die Überschrift, die über den Bereichs-Abonnements angezeigt wird. Leer lassen, um die Standard-Überschrift zu verwenden.');
+    $GLOBALS['TL_LANG']['tl_module']['sub_forum_change_sub_caption'] = array('Text des "Abonnement ändern"-Buttons', 'Der Text des "Abonnement ändern"-Buttons. Leer lassen, um den Standard-Text zu verwenden.');
+    $GLOBALS['TL_LANG']['tl_module']['sub_forum_delete_sub_caption'] = array('Text des "Deabonnieren"-Buttons', 'Der Text des "Deabonnieren"-Buttons. Leer lassen, um den Standard-Text zu verwenden.');
+    $GLOBALS['TL_LANG']['tl_module']['thread_headline'] = array('Überschrift', 'Die Überschrift, die über den Themen-Abonnements angezeigt wird. Leer lassen, um die Standard-Überschrift zu verwenden.');
+    $GLOBALS['TL_LANG']['tl_module']['thread_change_sub_caption'] = array('Text des "Abonnement ändern"-Buttons', 'Der Text des "Abonnement ändern"-Buttons. Leer lassen, um den Standard-Text zu verwenden.');
+    $GLOBALS['TL_LANG']['tl_module']['thread_delete_sub_caption'] = array('Text des "Deabonnieren"-Buttons', 'Der Text des "Deabonnieren"-Buttons. Leer lassen, um den Standard-Text zu verwenden.');
+
     /**
      * Legend
      */
@@ -289,6 +296,9 @@
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_breadcrumb_legend'] = 'Navigationspfad';
     $GLOBALS['TL_LANG']['tl_module']['pm_center_forum_module_legend'] = 'Forenmodul';
+
+    $GLOBALS['TL_LANG']['tl_module']['subforum_sub_legend'] = 'Bereichs-Einstellungen';
+    $GLOBALS['TL_LANG']['tl_module']['thread_sub_legend'] = 'Themen-Einstellungen';
 
     /**
      * References
