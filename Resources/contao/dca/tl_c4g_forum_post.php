@@ -163,7 +163,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
         ),
         'creation' => array
         (
-            'sql'                     => "int(10) NOT NULL default '0'"
+            'sql'                     => "int(10) NOT NULL default '0'",
+            'default'                 => time(),
         ),
         'forum_id' => array
         (
@@ -171,7 +172,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
         ),
         'post_number' => array
         (
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'default'                 => "0",
         ),
         'edit_count' => array
         (
@@ -245,22 +247,22 @@ class tl_c4g_forum_post extends \Backend{
         }
         $thread = $this->Database->prepare("SELECT pid,last_post_id FROM tl_c4g_forum_thread WHERE id=?")->execute($dc->activeRecord->pid)->fetchAssoc();
         $lastPost = $this->Database->prepare('SELECT post_number FROM tl_c4g_forum_post WHERE id=?')->execute($thread['last_post_id'])->fetchAssoc();
+        $numPosts = $this->Database->prepare("SELECT COUNT(id) FROM tl_c4g_forum_post WHERE pid = ?")->execute($dc->activeRecord->pid)->fetchAssoc()['COUNT(id)'];
         $arrSet['forum_id'] = $thread['pid'];
         $arrSet['author'] = $this->Database->prepare("SELECT default_author FROM tl_c4g_forum WHERE id=?")->execute($arrSet['forum_id'])->fetchAssoc()['default_author'];
-        $arrSet['creation'] = time();
-        $arrSet['post_number'] = $lastPost['post_number'];
+        $arrSet['post_number'] = $numPosts !== null ? $numPosts : 1;
 
-        //@ToDo ForumId,author hinzufügen
-        $arrSetParent['last_post_id'] = $dc->id;
-        $arrSetParent['creation'] = time();
+        $arrSetParent['last_post_id'] = $dc->activeRecord->id;
         $arrSetParent['state'] = $dc->activeRecord->state;
+        $arrSetParent['edit_last_time'] = $dc->activeRecord->creation/* != '0' ? $dc->activeRecord->creation : time()*/;
+        $arrSetParent['posts'] = $arrSet['post_number'];
 
-        if($dc->activeRecord->subject == ''){
+        if($dc->activeRecord->subject == '') {
             $arrSet['subject'] = $GLOBALS['TL_LANG']['tl_c4g_forum_post']['state_change'] . $dc->activeRecord->state;
         }
 
         if ($arrSet['author']) {
-            $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($arrSet)->execute($dc->id);
+            $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($arrSet)->execute($dc->activeRecord->id);
             $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSetParent)->execute($dc->activeRecord->pid);
         }
     }
