@@ -52,5 +52,17 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread_subscription'] = array
             'foreignKey'              => 'tl_member.username',
             'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
         ),
+        'newPost' => array
+        (
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'editedPost' => array
+        (
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'deletedPost' => array
+        (
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
     ),
 );

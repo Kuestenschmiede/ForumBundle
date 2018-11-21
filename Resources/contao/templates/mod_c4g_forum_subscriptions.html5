@@ -15,38 +15,34 @@
                 <?php echo $subforum->name; ?>
             </span>
         <form action="/con4gis/forum/forumsub/" method="post">
-            <input type="checkbox" name="thread[]" value="newthread" checked="checked">
+            <input type="checkbox" name="thread[]" value="newthread"<?php if ($sub->newThread == '1') echo 'checked="checked"';?>>
             <label for="thread[]">
-                über <!--neue -->Themen informieren
+                über neue Themen informieren
             </label>
-            <!--
-            <input type="checkbox" name="thread[]" value="movedthread">
+            <input type="checkbox" name="thread[]" value="movedthread"<?php if ($sub->movedThread == '1') echo 'checked="checked"';?>>
             <label for="thread[]">
                 über verschobene Themen informieren
             </label>
-            <input type="checkbox" name="thread[]" value="deletedthread">
+            <input type="checkbox" name="thread[]" value="deletedthread"<?php if ($sub->deletedThread == '1') echo 'checked="checked"';?>>
             <label for="thread[]">
                 über gelöschte Themen informieren
             </label>
-            -->
-            <input type="checkbox" name="post[]" value="newpost"<?php if ($sub->thread_only != '1') echo 'checked="checked"';?>>
+            <input type="checkbox" name="post[]" value="newpost"<?php if ($sub->newPost == '1') echo 'checked="checked"';?>>
             <label for="post[]">
                 über <!--neue -->Beiträge informieren
             </label>
-            <!--
-            <input type="checkbox" name="post[]" value="editedpost">
+            <input type="checkbox" name="post[]" value="editedpost"<?php if ($sub->editedPost == '1') echo 'checked="checked"';?>>
             <label for="thread[]">
                 über geänderte Beiträge informieren
             </label>
-            <input type="checkbox" name="post[]" value="deletedpost">
+            <input type="checkbox" name="post[]" value="deletedpost"<?php if ($sub->deletedPost == '1') echo 'checked="checked"';?>>
             <label for="thread[]">
                 über gelöschte Beiträge informieren
             </label>
-            -->
-            <button type="button" id="forum_submit_change_button" <?php echo 'data-target="' . $this->pid . '"';?>>
+            <button type="button" id="forum_submit_change_button"<?php echo 'data-target="' . $this->pid . '"';?>>
             <?php echo $this->sub_forum_change_sub_caption; ?>
             </button>
-            <button type="button" id="forum_submit_delete_button" <?php echo 'data-target="' . $this->pid . '"';?>>
+            <button type="button" id="forum_submit_delete_button"<?php echo 'data-target="' . $this->pid . '"';?>>
             <?php echo $this->sub_forum_delete_sub_caption; ?>
             </button>
         </form>
@@ -67,24 +63,22 @@
                 <?php echo $thread->name; ?>
             </span>
         <form action="/con4gis/forum/threadsub/" method="post">
-            <input type="checkbox" name="post[]" value="newpost" checked="checked">
+            <input type="checkbox" name="post[]" value="newpost"<?php if ($sub->newPost == '1') echo 'checked="checked"';?>>
             <label for="post[]">
-                über <!--neue -->Beiträge informieren
+                über neue Beiträge informieren
             </label>
-            <!--
-            <input type="checkbox" name="post[]" value="editedpost">
+            <input type="checkbox" name="post[]" value="editedpost"<?php if ($sub->editedPost == '1') echo 'checked="checked"';?>>
             <label for="post[]">
                 über geänderte Beiträge informieren
             </label>
-            <input type="checkbox" name="post[]" value="deletedpost">
+            <input type="checkbox" name="post[]" value="deletedpost"<?php if ($sub->deletedPost == '1') echo 'checked="checked"';?>>
             <label for="post[]">
                 über gelöschte Beiträge informieren
             </label>
-            -->
-            <button type="button" id="forum_submit_change_button" <?php echo 'data-target="' . $this->pid . '"';?>>
+            <button type="button" id="thread_submit_change_button" <?php echo 'data-target="' . $this->pid . '"';?>>
             <?php echo $this->thread_change_sub_caption; ?>
             </button>
-            <button type="button" id="forum_submit_delete_button" <?php echo 'data-target="' . $this->pid . '"';?>>
+            <button type="button" id="thread_submit_delete_button" <?php echo 'data-target="' . $this->pid . '"';?>>
             <?php echo $this->thread_delete_sub_caption; ?>
             </button>
         </form>

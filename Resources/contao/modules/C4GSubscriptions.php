@@ -21,9 +21,9 @@ use Patchwork\Utf8;
  * Class C4GSubscriptionOverview
  * @package con4gis\ForumBundle\Resources\contao\modules
  */
-class C4GSubscriptionOverview extends \Module
+class C4GSubscriptions extends \Module
 {
-    protected $strTemplate = 'mod_c4g_forum_subscription_overview';
+    protected $strTemplate = 'mod_c4g_forum_subscriptions';
 
     /**
      * @return string

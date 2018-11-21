@@ -56,5 +56,29 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_subforum_subscription'] = array
         (
             'sql'                     => "char(1) NOT NULL default ''"
         ),
+        'newThread' => array
+        (
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'movedThread' => array
+        (
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'deletedThread' => array
+        (
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'newPost' => array
+        (
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'editedPost' => array
+        (
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'deletedPost' => array
+        (
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
     ),
 );
