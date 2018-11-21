@@ -13,6 +13,7 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
+use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 use Patchwork\Utf8;
@@ -52,6 +53,8 @@ class C4GSubscriptions extends \Module
 
     protected function compile()
     {
+        ResourceLoader::loadJavaScriptResource("/bundles/con4gisforum/js/subscriptios.js", ResourceLoader::JAVASCRIPT);
+
         $template = $this->Template;
         $template->sub_forum_headline = $this->sub_forum_headline !== '' ? $this->sub_forum_headline : 'Bereich-Abonnements';
         $template->sub_forum_change_sub_caption = $this->sub_forum_change_sub_caption !== '' ? $this->sub_forum_change_sub_caption : 'Abonnement ändern';
