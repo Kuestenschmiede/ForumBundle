@@ -1,47 +1,57 @@
 <!-- Todo: Investiagate if Contao adds headline tags on its own or not. If not, add them here. -->
 
-<link rel="stylesheet" href="/bundles/con4gisforum/css/subscriptions.css">
-
 <?php if ($this->forumSubs !== null) { ?>
-<div id="forum_subs">
-        <span class="thread_subs_headline">
+<div id="forum_subs"  class="ui-widget-content">
+        <span class="forum_subs_headline">
             <?php echo $this->sub_forum_headline ?>
         </span>
     <?php foreach ($this->forumSubs as $sub) {
     $subforum = $sub->getRelated('pid'); ?>
-    <div class="sub">
+    <div class="sub ui-widget-content">
             <span class="sub_name">
                 <?php echo $subforum->name; ?>
             </span>
         <form action="/con4gis/forum/forumsub/" method="post">
-            <input type="checkbox" name="thread[]" value="newthread"<?php if ($sub->newThread == '1') echo 'checked="checked"';?>>
-            <label for="thread[]">
-                über neue Themen informieren
-            </label>
-            <input type="checkbox" name="thread[]" value="movedthread"<?php if ($sub->movedThread == '1') echo 'checked="checked"';?>>
-            <label for="thread[]">
-                über verschobene Themen informieren
-            </label>
-            <input type="checkbox" name="thread[]" value="deletedthread"<?php if ($sub->deletedThread == '1') echo 'checked="checked"';?>>
-            <label for="thread[]">
-                über gelöschte Themen informieren
-            </label>
-            <input type="checkbox" name="post[]" value="newpost"<?php if ($sub->newPost == '1') echo 'checked="checked"';?>>
-            <label for="post[]">
-                über <!--neue -->Beiträge informieren
-            </label>
-            <input type="checkbox" name="post[]" value="editedpost"<?php if ($sub->editedPost == '1') echo 'checked="checked"';?>>
-            <label for="thread[]">
-                über geänderte Beiträge informieren
-            </label>
-            <input type="checkbox" name="post[]" value="deletedpost"<?php if ($sub->deletedPost == '1') echo 'checked="checked"';?>>
-            <label for="thread[]">
-                über gelöschte Beiträge informieren
-            </label>
-            <button type="button" class="forum_submit_change_button"<?php echo 'data-target="' . $sub->pid . '"';?>>
+            <div class="field">
+                <input type="checkbox" name="thread[]" value="newthread"<?php if ($sub->newThread == '1') echo 'checked="checked"';?>>
+                <label for="thread[]">
+                    über neue Themen informieren
+                </label>
+            </div>
+            <div class="field">
+                <input type="checkbox" name="thread[]" value="movedthread"<?php if ($sub->movedThread == '1') echo 'checked="checked"';?>>
+                <label for="thread[]">
+                    über verschobene Themen informieren
+                </label>
+            </div>
+            <div class="field">
+                <input type="checkbox" name="thread[]" value="deletedthread"<?php if ($sub->deletedThread == '1') echo 'checked="checked"';?>>
+                <label for="thread[]">
+                    über gelöschte Themen informieren
+                </label>
+            </div>
+            <div class="field">
+                <input type="checkbox" name="post[]" value="newpost"<?php if ($sub->newPost == '1') echo 'checked="checked"';?>>
+                <label for="post[]">
+                    über <!--neue -->Beiträge informieren
+                </label>
+            </div>
+            <div class="field">
+                <input type="checkbox" name="post[]" value="editedpost"<?php if ($sub->editedPost == '1') echo 'checked="checked"';?>>
+                <label for="thread[]">
+                    über geänderte Beiträge informieren
+                </label>
+            </div>
+            <div class="field">
+                <input type="checkbox" name="post[]" value="deletedpost"<?php if ($sub->deletedPost == '1') echo 'checked="checked"';?>>
+                <label for="thread[]">
+                    über gelöschte Beiträge informieren
+                </label>
+            </div>
+            <button type="button" class="forum_submit_change_button ui-button"<?php echo 'data-target="' . $sub->pid . '"';?>>
             <?php echo $this->sub_forum_change_sub_caption; ?>
             </button>
-            <button type="button" class="forum_submit_delete_button"<?php echo 'data-target="' . $sub->pid . '"';?>>
+            <button type="button" class="forum_submit_delete_button ui-button"<?php echo 'data-target="' . $sub->pid . '"';?>>
             <?php echo $this->sub_forum_delete_sub_caption; ?>
             </button>
         </form>
@@ -51,33 +61,39 @@
 <?php } ?>
 
 <?php if ($this->threadSubs !== null) { ?>
-<div id="thread_subs">
+<div id="thread_subs" class="ui-widget-content">
     <span class="thread_subs_headline">
         <?php echo $this->thread_headline ?>
     </span>
     <?php foreach ($this->threadSubs as $sub) {
                    $thread = $sub->getRelated('pid'); ?>
-    <div class="sub">
+    <div class="sub ui-widget-content">
             <span class="sub_name">
                 <?php echo $thread->name; ?>
             </span>
         <form action="/con4gis/forum/threadsub/" method="post">
-            <input type="checkbox" name="post[]" value="newpost"<?php if ($sub->newPost == '1') echo 'checked="checked"';?>>
-            <label for="post[]">
-                über neue Beiträge informieren
-            </label>
-            <input type="checkbox" name="post[]" value="editedpost"<?php if ($sub->editedPost == '1') echo 'checked="checked"';?>>
-            <label for="post[]">
-                über geänderte Beiträge informieren
-            </label>
-            <input type="checkbox" name="post[]" value="deletedpost"<?php if ($sub->deletedPost == '1') echo 'checked="checked"';?>>
-            <label for="post[]">
-                über gelöschte Beiträge informieren
-            </label>
-            <button type="button" class="thread_submit_change_button" <?php echo 'data-target="' . $sub->pid . '"';?>>
+            <div class="field">
+                <input type="checkbox" name="post[]" value="newpost"<?php if ($sub->newPost == '1') echo 'checked="checked"';?>>
+                <label for="post[]">
+                    über neue Beiträge informieren
+                </label>
+            </div>
+            <div class="field">
+                <input type="checkbox" name="post[]" value="editedpost"<?php if ($sub->editedPost == '1') echo 'checked="checked"';?>>
+                <label for="post[]">
+                    über geänderte Beiträge informieren
+                </label>
+            </div>
+            <div class="field">
+                <input type="checkbox" name="post[]" value="deletedpost"<?php if ($sub->deletedPost == '1') echo 'checked="checked"';?>>
+                <label for="post[]">
+                    über gelöschte Beiträge informieren
+                </label>
+            </div>
+            <button type="button" class="thread_submit_change_button ui-button" <?php echo 'data-target="' . $sub->pid . '"';?>>
             <?php echo $this->thread_change_sub_caption; ?>
             </button>
-            <button type="button" class="thread_submit_delete_button" <?php echo 'data-target="' . $sub->pid . '"';?>>
+            <button type="button" class="thread_submit_delete_button ui-button" <?php echo 'data-target="' . $sub->pid . '"';?>>
             <?php echo $this->thread_delete_sub_caption; ?>
             </button>
         </form>
