@@ -1,9 +1,9 @@
 <!-- Todo: Investiagate if Contao adds headline tags on its own or not. If not, add them here. -->
 
-<link rel="stylesheet" href="/bundles/con4gisforum/css/subscription_module.css">
+<link rel="stylesheet" href="/bundles/con4gisforum/css/subscriptions.css">
 
 <?php if ($this->forumSubs !== null) { ?>
-<div class="forum_subs">
+<div id="forum_subs">
         <span class="thread_subs_headline">
             <?php echo $this->sub_forum_headline ?>
         </span>
@@ -38,10 +38,10 @@
             <label for="thread[]">
                 über gelöschte Beiträge informieren
             </label>
-            <button type="button" id="forum_submit_change_button"<?php echo 'data-target="' . $this->pid . '"';?>>
+            <button type="button" class="forum_submit_change_button"<?php echo 'data-target="' . $sub->pid . '"';?>>
             <?php echo $this->sub_forum_change_sub_caption; ?>
             </button>
-            <button type="button" id="forum_submit_delete_button"<?php echo 'data-target="' . $this->pid . '"';?>>
+            <button type="button" class="forum_submit_delete_button"<?php echo 'data-target="' . $sub->pid . '"';?>>
             <?php echo $this->sub_forum_delete_sub_caption; ?>
             </button>
         </form>
@@ -51,7 +51,7 @@
 <?php } ?>
 
 <?php if ($this->threadSubs !== null) { ?>
-<div class="thread_subs">
+<div id="thread_subs">
     <span class="thread_subs_headline">
         <?php echo $this->thread_headline ?>
     </span>
@@ -74,10 +74,10 @@
             <label for="post[]">
                 über gelöschte Beiträge informieren
             </label>
-            <button type="button" id="thread_submit_change_button" <?php echo 'data-target="' . $this->pid . '"';?>>
+            <button type="button" class="thread_submit_change_button" <?php echo 'data-target="' . $sub->pid . '"';?>>
             <?php echo $this->thread_change_sub_caption; ?>
             </button>
-            <button type="button" id="thread_submit_delete_button" <?php echo 'data-target="' . $this->pid . '"';?>>
+            <button type="button" class="thread_submit_delete_button" <?php echo 'data-target="' . $sub->pid . '"';?>>
             <?php echo $this->thread_delete_sub_caption; ?>
             </button>
         </form>
@@ -90,4 +90,10 @@
 <span class="no_subs">
     Sie haben keine Abonnements.
 </span>
+<?php } else { ?>
+<template id="no_subs">
+    <span class="no_subs">
+    Sie haben keine Abonnements.
+</span>
+</template>
 <?php } ?>

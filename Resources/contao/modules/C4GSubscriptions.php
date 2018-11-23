@@ -53,7 +53,16 @@ class C4GSubscriptions extends \Module
 
     protected function compile()
     {
-        ResourceLoader::loadJavaScriptResource("/bundles/con4gisforum/js/subscriptios.js", ResourceLoader::JAVASCRIPT);
+        ResourceLoader::loadJavaScriptResource("/bundles/con4gisforum/js/subscriptions.js", ResourceLoader::HEAD);
+        ResourceLoader::loadJavaScriptResource('bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.js',
+            ResourceLoader::JAVASCRIPT,
+            'c4g_jquery_ui'
+        );
+        ResourceLoader::loadCssResource('bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.css', 'c4g_jquery_ui_core');
+        // Set the JQuery UI theme to be used
+        if (empty($GLOBALS['TL_CSS']['c4g_jquery_ui'])) {
+            ResourceLoader::loadCssResource('bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css', 'c4g_jquery_ui');
+        }
 
         $template = $this->Template;
         $template->sub_forum_headline = $this->sub_forum_headline !== '' ? $this->sub_forum_headline : 'Bereich-Abonnements';

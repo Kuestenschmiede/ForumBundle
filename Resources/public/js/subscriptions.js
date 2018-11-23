@@ -1,105 +1,121 @@
-var forumSubSubmitChange = document.getElementById('forum_submit_change_button');
+var forumSubsSubmitChange = document.getElementsByClassName('forum_submit_change_button');
+var index = 0;
 
-forumSubSubmitChange.addEventListener('click', function(){
-    let url = forumSubmitChange.parentNode.action;
-    let checkboxes = forumSubSubmitChange.parentNode.getElementsByTagName('input');
-    $.ajax(url,
-        {
-            method: "post",
-            data: {
-                target: forumSubSubmitChange.dataset.target,
-                newthreads: checkboxes[0].checked ? 1 : 0,
-                movedthreads: checkboxes[1].checked ? 1 : 0,
-                deletedthreads: checkboxes[2].checked ? 1 : 0,
-                newposts: checkboxes[3].checked ? 1 : 0,
-                editedposts: checkboxes[4].checked ? 1 : 0,
-                deletedposts: checkboxes[5].checked ? 1 : 0,
-                deletesub: 0
-            },
-            success: function(response, status, jqXHR) {
-                let obj = response.parse();
-                showInfoDialog(obj.message, obj.title, 'Ok');
-            }
-        }
-    )
-});
-
-var forumSubSubmitDelete = document.getElementById('forum_submit_delete_button');
-
-forumSubSubmitDelete.addEventListener('click', function(){
-    let url = forumSubSubmitDelete.parentNode.action;
-    $.ajax(url,
-        {
-            method: "post",
-            data: {
-                target: forumSubSubmitDelete.dataset.target,
-                deletesub: 1
-            },
-            success: function(response, status, jqXHR) {
-                let obj = response.parse();
-                showInfoDialog(obj.message, obj.title, 'Ok');
-                let formElementDiv = forumSubSubmitDelete.parentNode.parentNode;
-                let forumSubsDiv = forumSubSubmitDelete.parentNode.parentNode.parentNode;
-                forumSubsDiv.removeChild(formElementDiv);
-                if (formElementDiv.getElementsByClassName('sub').length === 0) {
-                    forumSubsDiv.parentNode.removeChild(forumSubsDiv);
+while (index < forumSubsSubmitChange.length) {
+    let currentButton = forumSubsSubmitChange.item(index);
+    currentButton.addEventListener('click', function(){
+        let url = currentButton.parentNode.action;
+        let checkboxes = currentButton.parentNode.getElementsByTagName('input');
+        $.ajax(url,
+            {
+                method: "post",
+                data: {
+                    target: currentButton.dataset.target,
+                    newthreads: checkboxes.item(0).checked ? 1 : 0,
+                    movedthreads: checkboxes.item(1).checked ? 1 : 0,
+                    deletedthreads: checkboxes.item(2).checked ? 1 : 0,
+                    newposts: checkboxes.item(3).checked ? 1 : 0,
+                    editedposts: checkboxes.item(4).checked ? 1 : 0,
+                    deletedposts: checkboxes.item(5).checked ? 1 : 0,
+                    deletesub: 0
+                },
+                success: function(response, status, jqXHR) {
+                    showInfoDialog(response.message, response.title, 'Ok');
                 }
             }
-        }
-    )
-});
+        )
+    });
+    index += 1;
+}
 
-var threadSubSubmitChange = document.getElementById('thread_submit_change_button');
+var forumSubsSubmitDelete = document.getElementsByClassName('forum_submit_delete_button');
+index = 0;
 
-threadSubSubmitChange.addEventListener('click', function(){
-    let url = threadSubSubmitChange.parentNode.action;
-    let checkboxes = threadSubSubmitChange.parentNode.getElementsByTagName('input');
-    $.ajax(url,
-        {
-            method: "post",
-            data: {
-                target: theadSubSubmitChange.dataset.target,
-                newthreads: checkboxes[0].checked ? 1 : 0,
-                movedthreads: checkboxes[1].checked ? 1 : 0,
-                deletedthreads: checkboxes[2].checked ? 1 : 0,
-                deletesub: 0
-            },
-            success: function(response, status, jqXHR) {
-                let obj = response.parse();
-                showInfoDialog(obj.message, obj.title, 'Ok');
-            }
-        }
-    )
-});
-
-var threadSubSubmitDelete = document.getElementById('thread_submit_delete_button');
-
-threadSubSubmitDelete.addEventListener('click', function(){
-    let url = threadSubSubmitDelete.parentNode.action;
-    $.ajax(url,
-        {
-            method: "post",
-            data: {
-                target: threadSubSubmitDelete.dataset.target,
-                deletesub: 1
-            },
-            success: function(response, status, jqXHR) {
-                let obj = response.parse();
-                showInfoDialog(obj.message, obj.title, 'Ok');
-                let formElementDiv = threadSubSubmitDelete.parentNode.parentNode;
-                let threadSubsDiv = threadSubSubmitDelete.parentNode.parentNode.parentNode;
-                threadSubsDiv.removeChild(formElementDiv);
-                if (formElementDiv.getElementsByClassName('sub').length === 0) {
-                    forumSubsDiv.parentNode.removeChild(threadSubsDiv);
+while (index < forumSubsSubmitDelete.length) {
+    let currentButton = forumSubsSubmitDelete.item(index);
+    currentButton.addEventListener('click', function(){
+        let url = currentButton.parentNode.action;
+        $.ajax(url,
+            {
+                method: "post",
+                data: {
+                    target: currentButton.dataset.target,
+                    deletesub: 1
+                },
+                success: function(response, status, jqXHR) {
+                    showInfoDialog(response.message, response.title, 'Ok');
+                    let formElementDiv = currentButton.parentNode.parentNode;
+                    let forumSubsDiv = currentButton.parentNode.parentNode.parentNode;
+                    forumSubsDiv.removeChild(formElementDiv);
+                    if (forumSubsDiv.getElementsByClassName('sub').length === 0) {
+                        forumSubsDiv.parentNode.removeChild(forumSubsDiv);
+                    }
                 }
             }
-        }
-    )
-});
+        )
+    });
+    index += 1;
+}
+
+var threadSubsSubmitChange = document.getElementsByClassName('thread_submit_change_button');
+index = 0;
+
+while (index < threadSubsSubmitChange.length) {
+    let currentButton = threadSubsSubmitChange.item(index);
+    currentButton.addEventListener('click', function(){
+        let url = currentButton.parentNode.action;
+        let checkboxes = currentButton.parentNode.getElementsByTagName('input');
+        $.ajax(url,
+            {
+                method: "post",
+                data: {
+                    target: currentButton.dataset.target,
+                    newposts: checkboxes.item(0).checked ? 1 : 0,
+                    editedposts: checkboxes.item(1).checked ? 1 : 0,
+                    deletedposts: checkboxes.item(2).checked ? 1 : 0,
+                    deletesub: 0
+                },
+                success: function(response, status, jqXHR) {
+                    showInfoDialog(response.message, response.title, 'Ok');
+                }
+            }
+        )
+    });
+    index += 1;
+}
+
+var threadSubsSubmitDelete = document.getElementsByClassName('thread_submit_delete_button');
+index = 0;
+
+while (index < threadSubsSubmitDelete.length) {
+    let currentButton = threadSubsSubmitDelete.item(index);
+    currentButton.addEventListener('click', function(){
+        let url = currentButton.parentNode.action;
+        $.ajax(url,
+            {
+                method: "post",
+                data: {
+                    target: currentButton.dataset.target,
+                    deletesub: 1
+                },
+                success: function(response, status, jqXHR) {
+                    showInfoDialog(response.message, response.title, 'Ok');
+                    let formElementDiv = currentButton.parentNode.parentNode;
+                    let threadSubsDiv = currentButton.parentNode.parentNode.parentNode;
+                    threadSubsDiv.removeChild(formElementDiv);
+                    if (threadSubsDiv.getElementsByClassName('sub').length === 0) {
+                        threadSubsDiv.parentNode.removeChild(threadSubsDiv);
+                    }
+                }
+            }
+        )
+    });
+    index += 1;
+}
 
 function showInfoDialog(message,title,okLabel){
     $('<div></div>').appendTo('body')
-        .html('<div>'+message+'?</div>')
+        .html('<div>'+message+'</div>')
         .dialog({
             modal: true, title: title, zIndex: 10000, autoOpen: true,
             width: 'auto', resizable: false,
@@ -110,6 +126,33 @@ function showInfoDialog(message,title,okLabel){
                         $(this).dialog("close");
                     }
                 },
+            ],
+            close: function (event, ui) {
+                $(this).remove();
+            }
+        });
+}
+
+function showConfirmationDialog(message,title,yesLabel, noLabel, yesCallback){
+    $('<div></div>').appendTo('body')
+        .html('<div>'+message+'?</div>')
+        .dialog({
+            modal: true, title: title, zIndex: 10000, autoOpen: true,
+            width: 'auto', resizable: false,
+            buttons: [
+                {
+                    text: yesLabel,
+                    click: function () {
+                        $(this).dialog("close");
+                        yesCallback();
+                    }
+                },
+                {
+                    text: noLabel,
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
             ],
             close: function (event, ui) {
                 $(this).remove();
