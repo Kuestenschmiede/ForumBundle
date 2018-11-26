@@ -66,6 +66,7 @@ class SubscriptionController extends Controller
                 ));
             }
         } catch (\Exception $e) {
+            \System::loadLanguageFile('subscriptions');
             $response = new JsonResponse();
             $response->setData(array(
                 'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_TITLE'],
@@ -113,6 +114,7 @@ class SubscriptionController extends Controller
                 ));
             }
         } catch (\Exception $e) {
+            \System::loadLanguageFile('subscriptions');
             $response = new JsonResponse();
             $response->setData(array(
                 'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_TITLE'],
