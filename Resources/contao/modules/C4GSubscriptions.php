@@ -14,6 +14,7 @@
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
 use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
+use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 use Patchwork\Utf8;
@@ -61,8 +62,8 @@ class C4GSubscriptions extends \Module
         );
         ResourceLoader::loadCssResource('bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.css', 'c4g_jquery_ui_core');
         // Set the JQuery UI theme to be used
-        if (empty($GLOBALS['TL_CSS']['c4g_jquery_ui'])) {
-            ResourceLoader::loadCssResource('bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css', 'c4g_jquery_ui');
+        if (!ResourceLoader::isJqueryUiThemeLoaded()) {
+            ResourceLoader::loadJqueryUiTheme(C4gSettingsModel::findSettings()->c4g_uitheme_css_select);
         }
 
         $template = $this->Template;
