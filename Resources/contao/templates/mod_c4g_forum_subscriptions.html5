@@ -48,10 +48,14 @@
                     über gelöschte Beiträge informieren
                 </label>
             </div>
-            <button type="button" class="forum_submit_change_button ui-button"<?php echo 'data-target="' . $sub->pid . '"';?>>
+            <button type="button" class="forum_submit_change_button ui-button"<?php
+                echo 'data-target="' . $sub->pid . '"';
+            ?>>
             <?php echo $this->sub_forum_change_sub_caption; ?>
             </button>
-            <button type="button" class="forum_submit_delete_button ui-button"<?php echo 'data-target="' . $sub->pid . '"';?>>
+            <button type="button" class="forum_submit_delete_button ui-button"<?php
+                echo 'data-target="' . $sub->pid . '"';
+            ?>>
             <?php echo $this->sub_forum_delete_sub_caption; ?>
             </button>
         </form>
@@ -90,10 +94,14 @@
                     über gelöschte Beiträge informieren
                 </label>
             </div>
-            <button type="button" class="thread_submit_change_button ui-button" <?php echo 'data-target="' . $sub->pid . '"';?>>
+            <button type="button" class="thread_submit_change_button ui-button" <?php
+                echo 'data-target="' . $sub->pid . '"';
+            ?>>
             <?php echo $this->thread_change_sub_caption; ?>
             </button>
-            <button type="button" class="thread_submit_delete_button ui-button" <?php echo 'data-target="' . $sub->pid . '"';?>>
+            <button type="button" class="thread_submit_delete_button ui-button" <?php
+                echo 'data-target="' . $sub->pid . '"';
+            ?>>
             <?php echo $this->thread_delete_sub_caption; ?>
             </button>
         </form>
