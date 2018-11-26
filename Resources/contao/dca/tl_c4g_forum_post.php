@@ -255,7 +255,7 @@ class tl_c4g_forum_post extends \Backend{
         $arrSetParent['creation'] = time();
         $arrSetParent['state'] = $dc->activeRecord->state;
 
-        if($dc->activeRecord->subject == ''){
+        if($dc->activeRecord->subject == '') {
             $arrSet['subject'] = $GLOBALS['TL_LANG']['tl_c4g_forum_post']['state_change'] . $dc->activeRecord->state;
         }
 

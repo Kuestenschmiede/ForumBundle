@@ -18,6 +18,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 use Contao\Database;
 use Contao\Frontend;
 use Contao\FrontendUser;
+use Contao\ModuleModel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,12 +43,13 @@ class SubscriptionController extends Controller
             if ($model->id === null) {
                 throw new \Exception("C4gForumSubscriptionModel: Subscription with ID $forumId does not exist.");
             }
+            \System::loadLanguageFile('subscriptions');
             if ($deleteSub === true) {
                 $model->delete();
                 $response = new JsonResponse();
                 $response->setData(array(
-                    'title' => 'Erfolg',
-                    'message' => 'Abonnement wurde erfolgreich gelöscht.'
+                    'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE_DELETE'],
+                    'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE_DELETE']
                 ));
             } else {
                 $model->newThread = $request->request->get('newthreads');
@@ -59,15 +61,15 @@ class SubscriptionController extends Controller
                 $model->save();
                 $response = new JsonResponse();
                 $response->setData(array(
-                    'title' => 'Erfolg',
-                    'message' => 'Abonnement wurde erfolgreich angepasst.'
+                    'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE'],
+                    'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE']
                 ));
             }
         } catch (\Exception $e) {
             $response = new JsonResponse();
             $response->setData(array(
-                'title' => 'Fehler',
-                'message' => 'Ein Fehler ist aufgetreten.'
+                'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_TITLE'],
+                'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_MESSAGE']
             ));
         }
         return $response;
@@ -91,12 +93,13 @@ class SubscriptionController extends Controller
             if ($model->id === null) {
                 throw new \Exception("C4GThreadSubscriptionModel: Subscription with ID $threadId does not exist.");
             }
+            \System::loadLanguageFile('subscriptions');
             if ($deleteSub === true) {
                 $model->delete();
                 $response = new JsonResponse();
                 $response->setData(array(
-                    'title' => 'Erfolg',
-                    'message' => 'Abonnement wurde erfolgreich gelöscht.'
+                    'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE_DELETE'],
+                    'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE_DELETE']
                 ));
             } else {
                 $model->newPost = $request->request->get('newposts');
@@ -105,15 +108,15 @@ class SubscriptionController extends Controller
                 $model->save();
                 $response = new JsonResponse();
                 $response->setData(array(
-                    'title' => 'Erfolg',
-                    'message' => 'Abonnement wurde erfolgreich angepasst.'
+                    'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE'],
+                    'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE']
                 ));
             }
         } catch (\Exception $e) {
             $response = new JsonResponse();
             $response->setData(array(
-                'title' => 'Fehler',
-                'message' => 'Ein Fehler ist aufgetreten. '.$e->getMessage()
+                'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_TITLE'],
+                'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_MESSAGE']
             ));
         }
         return $response;
