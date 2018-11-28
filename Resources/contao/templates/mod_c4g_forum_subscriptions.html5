@@ -1,4 +1,6 @@
-<!-- Todo: Investiagate if Contao adds headline tags on its own or not. If not, add them here. -->
+<?php if ($this->headline) {
+    echo "<".$this->hl.">".$this->headline."</".$this->hl.">";
+} ?>
 
 <?php if ($this->forumSubs !== null) { ?>
 <div id="forum_subs"  class="ui-widget-content">
