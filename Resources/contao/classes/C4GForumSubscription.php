@@ -340,6 +340,8 @@ use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
                         } catch (\Exception $e) {
                             //Todo log the exception message
 //                            \System::getContainer()->get('logger')->error($e->getMessage());
+                        } catch (\Error $e) {
+
                         }
                     }
                 }
