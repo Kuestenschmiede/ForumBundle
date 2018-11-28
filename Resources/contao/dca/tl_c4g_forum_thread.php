@@ -112,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
     'palettes' => array
     (
         '__selector__'                => array(''),
-        'default'                     => '{title_legend},title, price;{description_legend},description,name,recipient,owner,state,creation;'
+        'default'                     => '{title_legend},title,price;description,name,recipient,owner,state,creation;'
     ),
 
     // Subpalettes
@@ -172,7 +172,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'filter'                  => true,
             'search'                  => true,
             'foreignKey'              => 'tl_member.username',
-            //'options_callback'      => array('CLASS', 'METHOD'),
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
             'sql'                     => "blob NULL"
         ),
@@ -183,7 +182,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'filter'                  => true,
             'search'                  => true,
             'foreignKey'              => 'tl_member.username',
-            //'options_callback'      => array('CLASS', 'METHOD'),
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
             'sql'                     => "blob NULL",
         ),
@@ -192,7 +190,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         ),
         'creation' => array
         (
-            'sql'                     => "int(10) NOT NULL default '0'"
+            'sql'                     => "int(10) NOT NULL default '0'",
+            'default'                 => time(),
         ),
         'posts' => array
         (
