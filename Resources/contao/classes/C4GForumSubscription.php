@@ -158,13 +158,19 @@ use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
          * @param int $forumId
          * @param int $userId
          */
-        public function insertSubscriptionSubforumIntoDB($forumId, $userId, $subscriptionOnlyThreads)
+        public function insertSubscriptionSubforumIntoDB($forumId, $userId, $putVars)
         {
 
             $set                 = array();
-            $set ['pid']         = $forumId;
-            $set ['member']      = $userId;
-            $set ['thread_only'] = $subscriptionOnlyThreads;
+            $set['pid']         = $forumId;
+            $set['member']      = $userId;
+//            $set['thread_only'] = $subscriptionOnlyThreads;
+            $set['deletedPost'] = $putVars['deletedPost'] === 'true' ? '1' : '0';
+            $set['editedPost'] = $putVars['editedPost'] === 'true' ? '1' : '0';
+            $set['newPost'] = $putVars['newPost'] === 'true' ? '1' : '0';
+            $set['newThread'] = $putVars['newThread'] === 'true' ? '1' : '0';
+            $set['movedThread'] = $putVars['movedThread'] === 'true' ? '1' : '0';
+            $set['deletedThread'] = $putVars['deletedThread'] === 'true' ? '1' : '0';
             $objInsertStmt       = $this->Database->prepare("INSERT INTO tl_c4g_forum_subforum_subscription %s")->set($set)->execute();
 
             return $objInsertStmt->affectedRows;
@@ -174,12 +180,14 @@ use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
          * @param int $threadId
          * @param int $userId
          */
-        public function insertSubscriptionThreadIntoDB($threadId, $userId)
+        public function insertSubscriptionThreadIntoDB($threadId, $userId, $putVars)
         {
-
             $set            = array();
             $set ['pid']    = $threadId;
             $set ['member'] = $userId;
+            $set['deletedPost'] = $putVars['deletedPost'] === 'true' ? '1' : '0';
+            $set['editedPost'] = $putVars['editedPost'] === 'true' ? '1' : '0';
+            $set['newPost'] = $putVars['newPost'] === 'true' ? '1' : '0';
 
             $objInsertStmt = $this->Database->prepare("INSERT INTO tl_c4g_forum_thread_subscription %s")->set($set)->execute();
 
