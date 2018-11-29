@@ -49,6 +49,13 @@ while (index < forumSubsSubmitDelete.length) {
                     forumSubsDiv.removeChild(formElementDiv);
                     if (forumSubsDiv.getElementsByClassName('sub').length === 0) {
                         forumSubsDiv.parentNode.removeChild(forumSubsDiv);
+                        if (document.getElementById('thread_subs') === null) {
+                            var template = document.getElementById('no_subs');
+                            var html = template.innerHTML;
+                            var div = document.createElement('div');
+                            div.innerHTML = html;
+                            template.parentNode.appendChild(div);
+                        }
                     }
                 }
             }
@@ -105,6 +112,13 @@ while (index < threadSubsSubmitDelete.length) {
                     threadSubsDiv.removeChild(formElementDiv);
                     if (threadSubsDiv.getElementsByClassName('sub').length === 0) {
                         threadSubsDiv.parentNode.removeChild(threadSubsDiv);
+                        if (document.getElementById('forum_subs') === null) {
+                            var template = document.getElementById('no_subs');
+                            var html = template.innerHTML;
+                            var div = document.createElement('div');
+                            div.innerHTML = html;
+                            template.parentNode.appendChild(div);
+                        }
                     }
                 }
             }
