@@ -114,12 +114,12 @@
 
 <?php if ($this->threadSubs === null && $this->forumSubs === null) { ?>
 <span class="no_subs">
-    Sie haben keine Abonnements.
+    <?php echo $this->no_subs_text ?>
 </span>
 <?php } else { ?>
 <template id="no_subs">
     <span class="no_subs">
-    Sie haben keine Abonnements.
-</span>
+        <?php echo $this->no_subs_text ?>
+    </span>
 </template>
 <?php } ?>

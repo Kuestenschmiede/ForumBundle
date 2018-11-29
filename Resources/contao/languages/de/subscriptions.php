@@ -10,6 +10,16 @@
  * @link      https://www.kuestenschmiede.de
  */
 
+/** Module */
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_HEAD'] = 'Bereich-Abonnements';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_CHANGE'] = 'Abonnement ändern';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_DELETE'] = 'Deabonnieren';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['THREAD_SUBS_HEAD'] = 'Themen-Abonnements';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['THREAD_SUBS_CHANGE'] = 'Abonnement ändern';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['THREAD_SUBS_DELETE'] = 'Deabonnieren';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['NO_SUBS_TEXT'] = 'Sie haben keine Abonnements.';
+
+/** Dialog */
 $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE'] = 'Erfolg';
 $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE'] = 'Das Abonnement wurde erfolgreich angepasst.';
 $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE_DELETE'] = 'Erfolg';

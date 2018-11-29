@@ -277,6 +277,7 @@
     $GLOBALS['TL_LANG']['tl_module']['thread_headline'] = array('Überschrift', 'Die Überschrift, die über den Themen-Abonnements angezeigt wird. Leer lassen, um die Standard-Überschrift zu verwenden.');
     $GLOBALS['TL_LANG']['tl_module']['thread_change_sub_caption'] = array('Text des "Abonnement ändern"-Buttons', 'Der Text des "Abonnement ändern"-Buttons. Leer lassen, um den Standard-Text zu verwenden.');
     $GLOBALS['TL_LANG']['tl_module']['thread_delete_sub_caption'] = array('Text des "Deabonnieren"-Buttons', 'Der Text des "Deabonnieren"-Buttons. Leer lassen, um den Standard-Text zu verwenden.');
+    $GLOBALS['TL_LANG']['tl_module']['no_subs_text'] = array('Text für nichtvorhandene Abonnements', 'DIeser Text wird dem Nutzer ausgegeben, wenn er keine Abonnements (mehr) hat.');
 
     /**
      * Legend
@@ -299,6 +300,7 @@
 
     $GLOBALS['TL_LANG']['tl_module']['subforum_sub_legend'] = 'Bereichs-Einstellungen';
     $GLOBALS['TL_LANG']['tl_module']['thread_sub_legend'] = 'Themen-Einstellungen';
+    $GLOBALS['TL_LANG']['tl_module']['misc_legend'] = 'Sonstige Einstellungen';
 
     /**
      * References

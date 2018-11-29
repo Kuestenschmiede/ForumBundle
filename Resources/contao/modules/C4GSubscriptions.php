@@ -66,13 +66,15 @@ class C4GSubscriptions extends \Module
             ResourceLoader::loadJqueryUiTheme(C4gSettingsModel::findSettings()->c4g_uitheme_css_select);
         }
 
+        \System::loadLanguageFile('subscriptions');
         $template = $this->Template;
-        $template->sub_forum_headline = $this->sub_forum_headline !== '' ? $this->sub_forum_headline : 'Bereich-Abonnements';
-        $template->sub_forum_change_sub_caption = $this->sub_forum_change_sub_caption !== '' ? $this->sub_forum_change_sub_caption : 'Abonnement ändern';
-        $template->sub_forum_delete_sub_caption = $this->sub_forum_delete_sub_caption !== '' ? $this->sub_forum_delete_sub_caption : 'Deabonnieren';
-        $template->thread_headline = $this->thread_headline !== '' ? $this->thread_headline : 'Themen-Abonnements';
-        $template->thread_change_sub_caption = $this->thread_change_sub_caption !== '' ? $this->thread_change_sub_caption : 'Abonnement ändern';
-        $template->thread_delete_sub_caption = $this->thread_delete_sub_caption !== '' ? $this->thread_delete_sub_caption : 'Deabonnieren';
+        $template->sub_forum_headline = $this->sub_forum_headline !== '' ? $this->sub_forum_headline : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_HEAD'];
+        $template->sub_forum_change_sub_caption = $this->sub_forum_change_sub_caption !== '' ? $this->sub_forum_change_sub_caption : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_CHANGE'];
+        $template->sub_forum_delete_sub_caption = $this->sub_forum_delete_sub_caption !== '' ? $this->sub_forum_delete_sub_caption : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_DELETE'];
+        $template->thread_headline = $this->thread_headline !== '' ? $this->thread_headline : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['THREAD_SUBS_HEAD'];
+        $template->thread_change_sub_caption = $this->thread_change_sub_caption !== '' ? $this->thread_change_sub_caption : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['THREAD_SUBS_CHANGE'];
+        $template->thread_delete_sub_caption = $this->thread_delete_sub_caption !== '' ? $this->thread_delete_sub_caption : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['THREAD_SUBS_DELETE'];
+        $template->no_subs_text = $this->no_subs_text !== '' ? $this->no_subs_text : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['NO_SUBS_TEXT'];
 
         $user = \Contao\FrontendUser::getInstance();
 
