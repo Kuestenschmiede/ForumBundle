@@ -89,7 +89,7 @@
         'Deaktivieren Sie diese Checkbox, falls Sie Bden Editor komplett deaktivieren möchten! Dies kann zu Formatfehlern führen, wenn der Editor in einem bereits laufenden Forum zuvor aktiviert waren. Ohne Editor sind Formatierungen nicht mehr möglich.'
     );
     //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor']                = array('Alten WYSIWYG-Editor verwenden', 'Achtung: Dieses Feature funktioniert nur, wenn das Forum eingebettet, also nicht im Dialog, verwendet wird!');
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = array('Editor Toolbar Schaltfächen', '');
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = array('Editor Toolbar Schaltflächen', '');
     //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_ckeditor']                      = array('Neuen WYSIWYG-Editor verwenden', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('Editor', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button']                = array('Persönliche Nachrichten', 'Button für Persönliche Nachrichten im Profil anzeigen');
