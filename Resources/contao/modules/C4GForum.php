@@ -2967,13 +2967,13 @@ JSPAGINATE;
 
             $dialogbuttons = array();
 
-            $dialogbuttons [] = array(
+            $dialogbuttons[] = array(
                 "action" => 'subscribesubforum:' . $forumId . ':' . $subscriptionId,
                 "type"   => 'send',
                 "text"   => $buttonTxt
             );
 
-            $dialogbuttons [] = array(
+            $dialogbuttons[] = array(
                 "action" => 'closedialog:subscribesubforum' . $forumId,
                 "type"   => 'get',
                 "text"   => C4GForumHelper::getTypeText($this->c4g_forum_type,'CANCEL')
@@ -3044,7 +3044,6 @@ JSPAGINATE;
          */
         public function subscribeThreadDialog($threadId)
         {
-
             $forumId = $this->helper->getForumIdForThread($threadId);
             list($access, $message) = $this->checkPermission($forumId);
             if (!$access) {
