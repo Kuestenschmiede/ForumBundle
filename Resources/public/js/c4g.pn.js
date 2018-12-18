@@ -216,7 +216,7 @@
         defaultLanguage: "en",
         height:'360',
         disableObjectResizing: true,
-        filebrowserImageUploadUrl: "bundles/con4giscore/vendor/imgUpload.php",
+        filebrowserImageUploadUrl: "con4gis/upload/image",
         filebrowserUploadUrl: 'bundles/con4giscore/vendor/C4GFileUpload.php',
         // codeSnippet_languages: {
         // }
