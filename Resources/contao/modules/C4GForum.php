@@ -3082,7 +3082,7 @@ JSPAGINATE;
 
             $dialogbuttons[] = array(
                 "action" => 'subscribethread:' . $threadId . ':' . $subscriptionId,
-                "type"   => 'get',
+                "type"   => 'send',
                 "text"   => $buttonTxt
             );
 
