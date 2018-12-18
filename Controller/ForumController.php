@@ -174,16 +174,19 @@ class ForumController extends Controller
                     $this->container->get('contao.framework')->initialize();
                     $route = \Contao\Controller::replaceInsertTags('{{link_url::'.$result['new_pm_redirect'].'}}');
 
-                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['mail_new_pm']);
-                    $notification->setTokenValue('user_name', $aRecipient['username']);
-                    $notification->setTokenValue('user_email', $aRecipient['email']);
-                    $notification->setTokenValue('responsible_username', $this->getUser()->username);
-                    $notification->setTokenValue('link', $_SERVER['SERVER_NAME'].'/'.$route);
-                    $notification->setTokenValue('admin_email', $GLOBALS['TL_CONFIG']['adminEmail']);
-                    $notification->setTokenValue('subject', $aData['subject']);
-                    $notification->setTokenValue('message', $aData['message']);
-                    $notification->send(unserialize($result['mail_new_pm']));
-
+                    try {
+                        $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['mail_new_pm']);
+                        $notification->setTokenValue('user_name', $aRecipient['username']);
+                        $notification->setTokenValue('user_email', $aRecipient['email']);
+                        $notification->setTokenValue('responsible_username', $this->getUser()->username);
+                        $notification->setTokenValue('link', $_SERVER['SERVER_NAME'] . '/' . $route);
+                        $notification->setTokenValue('admin_email', $GLOBALS['TL_CONFIG']['adminEmail']);
+                        $notification->setTokenValue('subject', $aData['subject']);
+                        $notification->setTokenValue('message', $aData['message']);
+                        $notification->send(unserialize($result['mail_new_pm']));
+                    } catch (\Throwable $e) {
+                        //Todo log
+                    }
                     $response->setData(['success' => true]);
                     return $response;
                     break;
