@@ -22,3 +22,17 @@ forum_pn:
         _controller: "con4gisForumBundle:Forum:personalMessage"
     requirements:
         actionFragment: .*
+
+thread_sub:
+    path: /con4gis/forum/threadsub/
+    defaults:
+        _scope: frontend
+        _controller: "con4gisForumBundle:Subscription:changeThreadSubscription"
+        methods: [POST]
+
+forum_sub:
+    path: /con4gis/forum/forumsub/
+    defaults:
+        _scope: frontend
+        _controller: "con4gisForumBundle:Subscription:changeForumSubscription"
+        methods: [POST]

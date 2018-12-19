@@ -1,0 +1,28 @@
+.thread_subs_headline, .forum_subs_headline {
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.sub_name {
+    font-size: 20px;
+}
+
+.field {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-left: 5px;
+}
+
+.field input {
+    cursor: pointer;
+}
+
+.sub {
+    padding-left: 5px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+#thread_subs, #forum_subs {
+
+}

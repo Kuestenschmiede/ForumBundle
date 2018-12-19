@@ -168,13 +168,13 @@ class ForumController extends Controller
                     /** Notification Center */
                     /** Get forum module settings  */
 
-                    try {
-                        $db = \Database::getInstance();
-                        $stmt = $db->prepare("SELECT new_pm_redirect, mail_new_pm FROM tl_module WHERE id = ?");
-                        $result = $stmt->execute($forumModule)->fetchAssoc();
-                        $this->container->get('contao.framework')->initialize();
-                        $route = \Contao\Controller::replaceInsertTags('{{link_url::' . $result['new_pm_redirect'] . '}}');
+                    $db = \Database::getInstance();
+                    $stmt = $db->prepare("SELECT new_pm_redirect, mail_new_pm FROM tl_module WHERE id = ?");
+                    $result = $stmt->execute($forumModule)->fetchAssoc();
+                    $this->container->get('contao.framework')->initialize();
+                    $route = \Contao\Controller::replaceInsertTags('{{link_url::' . $result['new_pm_redirect'] . '}}');
 
+                    try {
                         $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['mail_new_pm']);
                         $notification->setTokenValue('user_name', $aRecipient['username']);
                         $notification->setTokenValue('user_email', $aRecipient['email']);

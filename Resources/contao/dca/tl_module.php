@@ -40,6 +40,12 @@
     $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_pncenter'] =
         '{title_legend},name,headline,type;{pm_center_forum_module_legend},pm_center_forum_module;{c4g_forum_jqui_legend},c4g_forum_uitheme_css_select,c4g_appearance_themeroller_css;';
 
+$GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_subscription'] =
+    '{title_legend},name,type,headline;' .
+    '{subforum_sub_legend},sub_forum_headline,sub_forum_change_sub_caption,sub_forum_delete_sub_caption;' .
+    '{thread_sub_legend},thread_headline,thread_change_sub_caption,thread_delete_sub_caption;'.
+    '{misc_legend},no_subs_text';
+
     $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_bbcodes';
     $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_jqui';
     $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_sitemap';
@@ -1108,6 +1114,57 @@
         'foreignKey'              => 'tl_module.name',
         'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-',),
         'sql'                     => "int(10) unsigned NOT NULL default '0'"
+    );
+
+    /** Fields - Subscriptions */
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['sub_forum_headline'] = array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_module']['sub_forum_headline'],
+        'inputType' => 'text',
+        'default'   => '',
+        'sql'       => "varchar(255) NOT NULL default ''"
+    );
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['sub_forum_change_sub_caption'] = array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_module']['sub_forum_change_sub_caption'],
+        'inputType' => 'text',
+        'default'   => '',
+        'sql'       => "varchar(255) NOT NULL default ''"
+    );
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['sub_forum_delete_sub_caption'] = array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_module']['sub_forum_delete_sub_caption'],
+        'inputType' => 'text',
+        'default'   => '',
+        'sql'       => "varchar(255) NOT NULL default ''"
+    );
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['thread_headline'] = array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_module']['thread_headline'],
+        'inputType' => 'text',
+        'default'   => '',
+        'sql'       => "varchar(255) NOT NULL default ''"
+    );
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['thread_change_sub_caption'] = array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_module']['thread_change_sub_caption'],
+        'inputType' => 'text',
+        'default'   => '',
+        'sql'       => "varchar(255) NOT NULL default ''"
+    );
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['thread_delete_sub_caption'] = array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_module']['thread_delete_sub_caption'],
+        'inputType' => 'text',
+        'default'   => '',
+        'sql'       => "varchar(255) NOT NULL default ''"
+    );
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['no_subs_text'] = array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_module']['no_subs_text'],
+        'inputType' => 'text',
+        'default'   => '',
+        'sql'       => "varchar(255) NOT NULL default ''"
     );
 
     /**

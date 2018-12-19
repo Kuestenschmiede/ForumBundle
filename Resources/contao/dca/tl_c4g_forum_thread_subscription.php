@@ -42,11 +42,27 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread_subscription'] = array
         ),
         'pid' => array
         (
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'foreignKey'              => 'tl_c4g_forum_thread.name',
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
         ),
         'member' => array
         (
-            'sql'                     => "int(10) NOT NULL default '0'"
+            'sql'                     => "int(10) NOT NULL default '0'",
+            'foreignKey'              => 'tl_member.username',
+            'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
+        ),
+        'newPost' => array
+        (
+            'sql'                     => "char(1) NOT NULL default '1'"
+        ),
+        'editedPost' => array
+        (
+            'sql'                     => "char(1) NOT NULL default '1'"
+        ),
+        'deletedPost' => array
+        (
+            'sql'                     => "char(1) NOT NULL default '1'"
         ),
     ),
 );

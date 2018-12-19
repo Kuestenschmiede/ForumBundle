@@ -225,6 +225,27 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBSCRIPTION_SUBFORUM_ONLY_THREADS'] = 'nur bei neuen Themen benachrichtigen';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBSCRIPTION_SUBFORUM_POSTS']        = 'mit Beiträgen';
 
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NEWTHREAD'] = 'bei neuen Themen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['MOVEDTHREAD'] = 'bei verschobenen Themen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['DELETEDTHREAD'] = 'bei gelöschten Themen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NEWPOST'] = 'bei neuen Beiträgen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['EDITEDPOST'] = 'bei geänderten Beiträgen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['DELETEDPOST'] = 'bei gelöschten Beiträgen benachrichtigen';
+
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['NEWTHREAD'] = 'bei neuen Themen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['MOVEDTHREAD'] = 'bei verschobenen Themen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['DELETEDTHREAD'] = 'bei gelöschten Themen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['NEWPOST'] = 'bei neuen Beiträgen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['EDITEDPOST'] = 'bei geänderten Beiträgen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['DELETEDPOST'] = 'bei gelöschten Beiträgen benachrichtigen';
+
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEWTHREAD'] = 'bei neuen Themen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['MOVEDTHREAD'] = 'bei verschobenen Themen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DELETEDTHREAD'] = 'bei gelöschten Themen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['NEWPOST'] = 'bei neuen Beiträgen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['EDITEDPOST'] = 'bei geänderten Beiträgen benachrichtigen';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DELETEDPOST'] = 'bei gelöschten Beiträgen benachrichtigen';
+
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBSCRIPTION_THREAD_MAIL_SUBJECT']   = "Ihr abonniertes Thema auf '%2\$s' (%1\$s)";
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBSCRIPTION_SUBFORUM_MAIL_SUBJECT'] = "Ihr abonnierter Bereich auf '%2\$s' (%1\$s)";
 

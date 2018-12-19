@@ -2947,20 +2947,33 @@ JSPAGINATE;
                 $dialogData = sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_SUBFORUM_TEXT'), $this->helper->getForumNameFromDB($forumId,$this->c4g_forum_language_temp));
                 $buttonTxt  = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIBE_SUBFORUM');
 
-                $dialogData .= '<div>' . '<input id="c4gForumSubscriptionForumOnlyThreads"  type="checkbox" name="subscription_only_threads" class="formdata" />' . '<label for="c4gForumSubscriptionForumOnlyThreads">' .
-                    C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_SUBFORUM_ONLY_THREADS') . '</label>' . '</div>';
+                $dialogData .= '<div>';
+                $dialogData .= '<div class="field"><input id="newThread" type="checkbox" name="newThread" class="formdata"><label for="newThread">'.
+                    C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEWTHREAD').'</label></div>';
+                $dialogData .= '<div class="field"><input id="movedThread" type="checkbox" name="movedThread" class="formdata"><label for="movedThread ">'.
+                    C4GForumHelper::getTypeText($this->c4g_forum_type, 'MOVEDTHREAD').'</label></div>';
+                $dialogData .= '<div class="field"><input id="deletedThread" type="checkbox" name="deletedThread" class="formdata"><label for="deletedThread">'.
+                    C4GForumHelper::getTypeText($this->c4g_forum_type, 'DELETEDTHREAD').'</label></div>';
+                $dialogData .= '<div class="field"><input id="newPost" type="checkbox" name="newPost" class="formdata"><label for="newPost">'.
+                    C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEWPOST').'</label></div>';
+                $dialogData .= '<div class="field"><input id="editedPost" type="checkbox" name="editedPost" class="formdata"><label for="editedPost">'.
+                    C4GForumHelper::getTypeText($this->c4g_forum_type, 'EDITEDPOST').'</label></div>';
+                $dialogData .= '<div class="field"><input id="deletedPost" type="checkbox" name="deletedPost" class="formdata"><label for="deletedPost">'.
+                    C4GForumHelper::getTypeText($this->c4g_forum_type, 'DELETEDPOST').'</label></div>';
+                $dialogData .= '</div>';
+
                 $title = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIBE_SUBFORUM');
             }
 
             $dialogbuttons = array();
 
-            $dialogbuttons [] = array(
+            $dialogbuttons[] = array(
                 "action" => 'subscribesubforum:' . $forumId . ':' . $subscriptionId,
                 "type"   => 'send',
                 "text"   => $buttonTxt
             );
 
-            $dialogbuttons [] = array(
+            $dialogbuttons[] = array(
                 "action" => 'closedialog:subscribesubforum' . $forumId,
                 "type"   => 'get',
                 "text"   => C4GForumHelper::getTypeText($this->c4g_forum_type,'CANCEL')
@@ -2991,9 +3004,8 @@ JSPAGINATE;
          *
          * @return array
          */
-        public function subscribeSubforum($forumId, $subscriptionId, $subscriptionOnlyThreads)
+        public function subscribeSubforum($forumId, $subscriptionId, $putVars)
         {
-
             list ($access, $message) = $this->checkPermission($forumId);
             if (!$access) {
                 return $this->getPermissionDenied($message);
@@ -3010,10 +3022,8 @@ JSPAGINATE;
                 }
 
             } else {
-
                 $subscriptionOnlyThreads = ($subscriptionOnlyThreads == 'true');
-
-                $result = $this->helper->subscription->insertSubscriptionSubforumIntoDB($forumId, $this->User->id, $subscriptionOnlyThreads);
+                $result = $this->helper->subscription->insertSubscriptionSubforumIntoDB($forumId, $this->User->id, $putVars);
                 if (!$result) {
                     $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_SUBFORUM_ERROR');
                 } else {
@@ -3034,7 +3044,6 @@ JSPAGINATE;
          */
         public function subscribeThreadDialog($threadId)
         {
-
             $forumId = $this->helper->getForumIdForThread($threadId);
             list($access, $message) = $this->checkPermission($forumId);
             if (!$access) {
@@ -3055,6 +3064,16 @@ JSPAGINATE;
                 $title      = C4GForumHelper::getTypeText($this->c4g_forum_type,'UNSUBSCRIBE_THREAD');
             } else {
                 $dialogData = sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_THREAD_TEXT'), $threadname, $thread ['forumname']);
+
+                $dialogData .= '<div>';
+                $dialogData .= '<div class="field"><input id="newPost" type="checkbox" name="newPost" class="formdata"><label for="newPost">'.
+                    C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEWPOST').'</label></div>';
+                $dialogData .= '<div class="field"><input id="editedPost" type="checkbox" name="editedPost" class="formdata"><label for="editedPost">'.
+                    C4GForumHelper::getTypeText($this->c4g_forum_type, 'EDITEDPOST').'</label></div>';
+                $dialogData .= '<div class="field"><input id="deletedPost" type="checkbox" name="deletedPost" class="formdata"><label for="deletedPost">'.
+                    C4GForumHelper::getTypeText($this->c4g_forum_type, 'DELETEDPOST').'</label></div>';
+                $dialogData .= '</div>';
+
                 $buttonTxt  = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIBE_THREAD');
                 $title      = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIBE_THREAD');
             }
@@ -3063,7 +3082,7 @@ JSPAGINATE;
 
             $dialogbuttons[] = array(
                 "action" => 'subscribethread:' . $threadId . ':' . $subscriptionId,
-                "type"   => 'get',
+                "type"   => 'send',
                 "text"   => $buttonTxt
             );
 
@@ -3094,10 +3113,10 @@ JSPAGINATE;
         /**
          * @param $threadId
          * @param $subscriptionId
-         *
+         * @param $putVars
          * @return mixed
          */
-        public function subscribeThread($threadId, $subscriptionId)
+        public function subscribeThread($threadId, $subscriptionId, $putVars)
         {
 
             list($access, $message) = $this->checkPermission($this->helper->getForumIdForThread($threadId));
@@ -3118,7 +3137,7 @@ JSPAGINATE;
                 }
 
             } else {
-                $result = $this->helper->subscription->insertSubscriptionThreadIntoDB($threadId, $this->User->id);
+                $result = $this->helper->subscription->insertSubscriptionThreadIntoDB($threadId, $this->User->id, $putVars);
                 if (!$result) {
                     $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUBSCRIPTION_THREAD_ERROR');
                 } else {
@@ -5719,13 +5738,13 @@ JSPAGINATE;
                     $return = $this->subscribeThreadDialog($values[1]);
                     break;
                 case 'subscribethread':
-                    $return = $this->subscribeThread($values[1], $values[2]);
+                    $return = $this->subscribeThread($values[1], $values[2], $this->putVars);
                     break;
                 case 'subscribesubforumdialog':
                     $return = $this->subscribeSubforumDialog($values[1]);
                     break;
                 case 'subscribesubforum':
-                    $return = $this->subscribeSubforum($values[1], $values[2], $this->putVars['subscription_only_threads']);
+                    $return = $this->subscribeSubforum($values[1], $values[2], $this->putVars);
                     break;
                 case 'unsubscribethread':
                     $return = $this->unsubscribeLinkThread($values[1]);

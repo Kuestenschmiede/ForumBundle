@@ -31,4 +31,7 @@ $GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('Forum (con4gis) - N
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter']	= array('Forum (con4gis) - Persönliche Nachrichten',
 															    'Mit diesem Modul binden Sie die persönlichen Nachrichten für Ihre Forenmitglieder ein.');
 
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription']	= array('Forum (con4gis) - Abonnements',
+    'Dieses Modul gibt erweiterten Zugriff auf Themen- und Forenbereich-Abonnements.');
+
 ?>
