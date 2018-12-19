@@ -58,27 +58,27 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_subforum_subscription'] = array
         ),
         'newThread' => array
         (
-            'sql'                     => "char(1) NOT NULL default ''"
+            'sql'                     => "char(1) NOT NULL default '1'"
         ),
         'movedThread' => array
         (
-            'sql'                     => "char(1) NOT NULL default ''"
+            'sql'                     => "char(1) NOT NULL default '1'"
         ),
         'deletedThread' => array
         (
-            'sql'                     => "char(1) NOT NULL default ''"
+            'sql'                     => "char(1) NOT NULL default '1'"
         ),
         'newPost' => array
         (
-            'sql'                     => "char(1) NOT NULL default ''"
+            'sql'                     => "char(1) NOT NULL default '1'"
         ),
         'editedPost' => array
         (
-            'sql'                     => "char(1) NOT NULL default ''"
+            'sql'                     => "char(1) NOT NULL default '1'"
         ),
         'deletedPost' => array
         (
-            'sql'                     => "char(1) NOT NULL default ''"
+            'sql'                     => "char(1) NOT NULL default '1'"
         ),
     ),
 );
