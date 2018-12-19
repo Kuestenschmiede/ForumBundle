@@ -14,6 +14,9 @@
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
 use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
+use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
+use con4gis\ForumBundle\Resources\contao\models\C4GThreadModel;
+use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 
 /**
  * Class C4GForumSubscription
@@ -306,28 +309,66 @@ use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
                         /** Send Notifications via Notification center*/
 
                         try {
+                            $threadModel = C4GThreadModel::findByPk($threadId);
+                            $subForumId = $threadModel->pid;
                             switch ($sendKind) {
                                 case "new" :
+                                    if ($this->isSubscriptionValid(
+                                        'newPost',
+                                        C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $this->user->id),
+                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $this->user->id))) {
+                                        break 2;
+                                    }
                                     $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_new_post']);
                                     $notificationIDs = unserialize($forumModule->sub_new_post);
                                     break;
-                                case "edit" :
+                                case "edit":
+                                    if ($this->isSubscriptionValid(
+                                        'editedPost',
+                                        C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $this->user->id),
+                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $this->user->id))) {
+                                        break 2;
+                                    }
                                     $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_edited_post']);
                                     $notificationIDs = unserialize($forumModule->sub_edited_post);
                                     break;
                                 case "delete" :
+                                    if ($this->isSubscriptionValid(
+                                        'deletedPost',
+                                        C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $this->user->id),
+                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $this->user->id))) {
+                                        break 2;
+                                    }
                                     $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_deleted_post']);
                                     $notificationIDs = unserialize($forumModule->sub_deleted_post);
                                     break;
                                 case "delThread" :
+                                    if ($this->isSubscriptionValid(
+                                        'deletedThread',
+                                        null,
+                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $this->user->id))) {
+                                        break 2;
+                                    }
                                     $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_deleted_thread']);
                                     $notificationIDs = unserialize($forumModule->sub_deleted_thread);
                                     break;
                                 case "moveThread" :
+                                    if ($this->isSubscriptionValid(
+                                        'movedThread',
+                                        null,
+                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $this->user->id))) {
+                                        break 2;
+                                    }
                                     $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_moved_thread']);
                                     $notificationIDs = unserialize($forumModule->sub_moved_thread);
                                     break;
                                 case "newThread" :
+                                    if ($this->isSubscriptionValid(
+                                        'newThread',
+                                        null,
+                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $this->user->id))) {
+                                        break 2;
+                                    }
                                     $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_new_thread']);
                                     $notificationIDs = unserialize($forumModule->sub_new_thread);
                                     break;
@@ -557,6 +598,68 @@ use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
 
             return C4GForumHelper::getTypeText($this->c4g_forum_type,'UNSUBSCRIBE_ALL_LINK_FAILED');
         }
-    }
 
-?>
+        public function isSubscriptionValid(
+            string $type,
+            C4GThreadSubscriptionModel $threadSubscriptionModel = null,
+            C4GForumSubscriptionModel $forumSubscriptionModel = null)
+        {
+            switch ($type) {
+                case "newPost":
+                    if ($threadSubscriptionModel !== null && $threadSubscriptionModel->newPost === 1) {
+                        return true;
+                    } else {
+                        if ($forumSubscriptionModel !== null && $forumSubscriptionModel->newPost === 1) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    breaK;
+                case "editedPost":
+                    if ($threadSubscriptionModel !== null && $threadSubscriptionModel->editedPost === 1) {
+                        return true;
+                    } else {
+                        if ($forumSubscriptionModel !== null && $forumSubscriptionModel->editedPost === 1) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    break;
+                case "deletedPost":
+                    if ($threadSubscriptionModel !== null && $threadSubscriptionModel->deletedPost === 1) {
+                        return true;
+                    } else {
+                        if ($forumSubscriptionModel !== null && $forumSubscriptionModel->deletedPost === 1) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    break;
+                case "newThread":
+                    if ($forumSubscriptionModel !== null && $forumSubscriptionModel->newThread === 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                    break;
+                case "movedThread":
+                    if ($forumSubscriptionModel !== null && $forumSubscriptionModel->movedThread === 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                    break;
+                case "deletedThread":
+                    if ($forumSubscriptionModel !== null && $forumSubscriptionModel->deletedThread === 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                    break;
+                default:
+                    return false;
+                    breaK;
+            }
+        }
+
+}
