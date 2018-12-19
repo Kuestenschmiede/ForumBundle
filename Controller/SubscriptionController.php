@@ -33,13 +33,7 @@ class SubscriptionController extends Controller
             $userId = FrontendUser::getInstance()->id;
             $forumId = $request->request->get('target');
             $deleteSub = $request->request->get('deletesub') ? true : false;
-            $model = new C4GForumSubscriptionModel(
-                Database::getInstance()->prepare(
-                    "SELECT * FROM ".
-                    C4GForumSubScriptionModel::getTable().
-                    " WHERE pid = ? AND member = ?")
-                ->execute($forumId, $userId)
-            );
+            $model = C4GForumSubscriptionModel::findByForumAndMember($forumId, $userId);
             if ($model->id === null) {
                 throw new \Exception("C4gForumSubscriptionModel: Subscription with ID $forumId does not exist.");
             }
@@ -84,13 +78,7 @@ class SubscriptionController extends Controller
             $userId = FrontendUser::getInstance()->id;
             $threadId = $request->request->get('target');
             $deleteSub = $request->request->get('deletesub') ? true : false;
-            $model = new C4GThreadSubscriptionModel(
-                Database::getInstance()->prepare(
-                    "SELECT * FROM ".
-                    C4GThreadSubscriptionModel::getTable().
-                    " WHERE pid = ? AND member = ?")
-                    ->execute($threadId, $userId)
-            );
+            $model = C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $userId);
             if ($model->id === null) {
                 throw new \Exception("C4GThreadSubscriptionModel: Subscription with ID $threadId does not exist.");
             }
