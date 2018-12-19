@@ -345,11 +345,9 @@ use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
                             $notification->setTokenValue('unsubscribe_link', $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl));
                             $notification->setTokenValue('unsubscribe_all_link', $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl));
                             $notification->send($notificationIDs);
-                        } catch (\Exception $e) {
+                        } catch (\Throwable $e) {
                             //Todo log the exception message
 //                            \System::getContainer()->get('logger')->error($e->getMessage());
-                        } catch (\Error $e) {
-
                         }
                     }
                 }
