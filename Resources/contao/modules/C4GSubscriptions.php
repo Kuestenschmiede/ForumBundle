@@ -55,7 +55,7 @@ class C4GSubscriptions extends \Module
     protected function compile()
     {
         ResourceLoader::loadJavaScriptResource("/bundles/con4gisforum/js/subscriptions.js", ResourceLoader::HEAD);
-        ResourceLoader::loadCssResource("/bundles/con4gisforum/css/subscriptions.css", ResourceLoader::CSS);
+        ResourceLoader::loadCssResource("/bundles/con4gisforum/css/subscriptions.css");
         ResourceLoader::loadJavaScriptResource('bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.js',
             ResourceLoader::JAVASCRIPT,
             'c4g_jquery_ui'
