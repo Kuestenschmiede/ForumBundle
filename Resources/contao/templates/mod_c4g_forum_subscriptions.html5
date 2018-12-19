@@ -35,7 +35,7 @@
             <div class="field">
                 <input type="checkbox" name="post[]" value="newpost"<?php if ($sub->newPost == '1') echo 'checked="checked"';?>>
                 <label for="post[]">
-                    über <!--neue -->Beiträge informieren
+                    über neue Beiträge informieren
                 </label>
             </div>
             <div class="field">
