@@ -158,9 +158,9 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 ($this->c4g_forum_jqtable_lib == true),             // add Table Control
                 ($this->c4g_forum_jqhistory_lib == true),           // add history.js
                 ($this->c4g_forum_jqtooltip_lib == true),           // add simple tooltip
-                ($this->c4g_forum_enable_maps == $enableMaps),      // add C4GMaps
+                ($enableMaps),      // add C4GMaps
                 $useGoogleMaps,                                     // add C4GMaps - include Google Maps Javascript?
-                ($this->c4g_forum_enable_maps == $enableMaps),      // add C4GMaps Feature Editor
+                ($enableMaps),      // add C4GMaps Feature Editor
                 ($this->c4g_forum_bbcodes == true),
                 ($this->c4g_forum_jqscrollpane_lib == true)         // add jScrollPane
             );

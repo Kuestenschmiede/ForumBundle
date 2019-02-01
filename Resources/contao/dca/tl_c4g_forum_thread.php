@@ -223,12 +223,14 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         )
     ),
 );
-class tl_c4g_forum_thread extends \Backend{
+class tl_c4g_forum_thread extends \Backend
+{
     public function forumPost($row, $href, $label, $title, $icon)
     {
         $href .= "&amp;id=".$row['id'];
         return '<a href="' . $this->addToUrl($href) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ';
     }
+    
     public function saveDefault(DataContainer $dc)
     {
         if (!$dc->activeRecord)
@@ -245,6 +247,7 @@ class tl_c4g_forum_thread extends \Backend{
             $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSet)->execute($dc->id);
         }
     }
+    
     public function get_label($arrRow)
     {
         $result ="";
@@ -276,6 +279,7 @@ class tl_c4g_forum_thread extends \Backend{
 
         return $result;
     }
+    
     public function get_options(DataContainer $dc)
     {
         return array(
@@ -285,9 +289,10 @@ class tl_c4g_forum_thread extends \Backend{
             4 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(4)
             );
     }
+    
     public function getDatasets(DataContainer $dc)
     {
-        $pid = input::get('id');
+        $pid = \Contao\Input::get('id');
         if($pid){
             $childs = $this->getChilds($pid,$dc);
             $root = $dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread WHERE pid=?")
@@ -308,6 +313,7 @@ class tl_c4g_forum_thread extends \Backend{
         $GLOBALS['TL_DCA']['tl_c4g_forum_thread']['list']['sorting']['root'] = $root;
 
     }
+    
     public function getChilds($pid,$dc)
     {
         $childs = $dc->Database->prepare("SELECT id FROM tl_c4g_forum WHERE pid=?")
