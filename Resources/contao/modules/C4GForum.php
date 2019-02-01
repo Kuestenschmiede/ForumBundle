@@ -4514,7 +4514,7 @@ JSPAGINATE;
 
             $this->c4g_map_id = $forum['map_id'];
             $locations        = array();
-            $locations[]      = $this->helper->getMapLocationForPost($post);
+            $locations[]      = $this->helper->getMapLocationForPost($post, $this->c4g_forum_param_forumbox, $this->c4g_forum_param_forum.':' . $post['forumid']);
 
             $mapData = MapDataConfigurator::prepareMapData($this, $this->Database);
             if (($post['loc_geox'] != '') && ($post['loc_geoy'] != '')) {
