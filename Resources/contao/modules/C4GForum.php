@@ -1099,26 +1099,35 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             }
 
             //$collapse = $this->c4g_forum_collapsible_posts;
-            $last               = false;
-            $first              = false;
+            $first = ($post['post_number'] == 1);
+            $last = ($post['post_number'] == $post['posts']);
             $targetClass        = '';
             $triggerClass       = '';
             $triggerTargetClass = '';
-            $hideClass          = '';
             $textClass          = '';
             switch ($this->c4g_forum_collapsible_posts) {
                 case 'CL':
-                    $last = true;
+                    if ($last === false) {
+                        $hideClass = ' c4gGuiCollapsible_hide';
+                        $targetClass        = ' c4gGuiCollapsible_target'.$hideClass;
+                        $triggerClass       = ' c4gGuiCollapsible_trigger';
+                        $triggerTargetClass = ' c4gGuiCollapsible_trigger_target'.$hideClass;
+                    }
                     break;
                 case 'CF':
-                    if (!$last && $post['post_number'] == 1) {
-                        $first = true;
-                    } elseif ($last && !($post['post_number'] == $post['posts'])) {
-                        $last = false;
+                    if ($first === false) {
+                        $hideClass = ' c4gGuiCollapsible_hide';
+                        $targetClass        = ' c4gGuiCollapsible_target'.$hideClass;
+                        $triggerClass       = ' c4gGuiCollapsible_trigger';
+                        $triggerTargetClass = ' c4gGuiCollapsible_trigger_target'.$hideClass;
                     }
                     break;
                 case 'CC':
                     $hideClass = ' c4gGuiCollapsible_hide';
+                    $targetClass        = ' c4gGuiCollapsible_target'.$hideClass;
+                    $triggerClass       = ' c4gGuiCollapsible_trigger';
+                    $triggerTargetClass = ' c4gGuiCollapsible_trigger_target'.$hideClass;
+                    break;
                 case 'CO':
                     $targetClass        = ' c4gGuiCollapsible_target';
                     $triggerClass       = ' c4gGuiCollapsible_trigger';
@@ -1126,10 +1135,6 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                     break;
                 default:
                     break;
-            }
-            if (!$last && !$first) {
-                $targetClass .= $hideClass;
-                $triggerTargetClass .= $hideClass;
             }
 
             if ($this->c4g_forum_posts_jqui) {
