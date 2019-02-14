@@ -1372,7 +1372,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 $aUserRanks = deserialize($this->c4g_forum_member_ranks, true);
                 $sUserRank = '';
                 foreach ($aUserRanks as $aUserRank) {
-                    if ($iUserPostCount >= $aUserRank['rank_min'] && $this->c4g_forum_language_temp === $aUserRank['rank_language']) {
+                    if ($iUserPostCount >= $aUserRank['rank_min'] && ($this->c4g_forum_language_temp === $aUserRank['rank_language'] || $this->c4g_forum_language_temp === explode('_', $aUserRank['rank_language'])[0])) {
                         $sUserRank = $aUserRank['rank_name'];
                     }
                 }
