@@ -1082,13 +1082,11 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
 
         /**
-         *
-         * Generate a given post as HTML
-         *
-         * @param      $post
-         * @param      $singlePost
+         * @param $post
+         * @param $singlePost
          * @param bool $preview
-         *
+         * @param bool $firstInThread
+         * @param bool $lastInThread
          * @return string
          */
         public function generatePostAsHtml($post, $singlePost, $preview = false)
@@ -1101,26 +1099,35 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             }
 
             //$collapse = $this->c4g_forum_collapsible_posts;
-            $last               = false;
-            $first              = false;
+            $first = ($post['post_number'] == 1);
+            $last = ($post['post_number'] == $post['posts']);
             $targetClass        = '';
             $triggerClass       = '';
             $triggerTargetClass = '';
-            $hideClass          = '';
             $textClass          = '';
             switch ($this->c4g_forum_collapsible_posts) {
                 case 'CL':
-                    $last = true;
+                    if ($last === false) {
+                        $hideClass = ' c4gGuiCollapsible_hide';
+                        $targetClass        = ' c4gGuiCollapsible_target'.$hideClass;
+                        $triggerClass       = ' c4gGuiCollapsible_trigger';
+                        $triggerTargetClass = ' c4gGuiCollapsible_trigger_target'.$hideClass;
+                    }
                     break;
                 case 'CF':
-                    if (!$last && $post['post_number'] == 1) {
-                        $first = true;
-                    } elseif ($last && !($post['post_number'] == $post['posts'])) {
-                        $last = false;
+                    if ($first === false) {
+                        $hideClass = ' c4gGuiCollapsible_hide';
+                        $targetClass        = ' c4gGuiCollapsible_target'.$hideClass;
+                        $triggerClass       = ' c4gGuiCollapsible_trigger';
+                        $triggerTargetClass = ' c4gGuiCollapsible_trigger_target'.$hideClass;
                     }
                     break;
                 case 'CC':
                     $hideClass = ' c4gGuiCollapsible_hide';
+                    $targetClass        = ' c4gGuiCollapsible_target'.$hideClass;
+                    $triggerClass       = ' c4gGuiCollapsible_trigger';
+                    $triggerTargetClass = ' c4gGuiCollapsible_trigger_target'.$hideClass;
+                    break;
                 case 'CO':
                     $targetClass        = ' c4gGuiCollapsible_target';
                     $triggerClass       = ' c4gGuiCollapsible_trigger';
@@ -1128,10 +1135,6 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                     break;
                 default:
                     break;
-            }
-            if (!$last && !$first) {
-                $targetClass .= $hideClass;
-                $triggerTargetClass .= $hideClass;
             }
 
             if ($this->c4g_forum_posts_jqui) {
@@ -1369,7 +1372,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 $aUserRanks = deserialize($this->c4g_forum_member_ranks, true);
                 $sUserRank = '';
                 foreach ($aUserRanks as $aUserRank) {
-                    if ($iUserPostCount >= $aUserRank['rank_min'] && $this->c4g_forum_language_temp === $aUserRank['rank_language']) {
+                    if ($iUserPostCount >= $aUserRank['rank_min'] && ($this->c4g_forum_language_temp === $aUserRank['rank_language'] || $this->c4g_forum_language_temp === explode('_', $aUserRank['rank_language'])[0])) {
                         $sUserRank = $aUserRank['rank_name'];
                     }
                 }

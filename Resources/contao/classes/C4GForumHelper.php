@@ -1549,12 +1549,12 @@ class C4GForumHelper extends \System
 		return $aThread;
 	}
 
-	/**
-	 *
-	 * Give back all posts
-	 * @param int $threadId
-	 * @param int $postId
-	 */
+    /**
+     * @param $threadId
+     * @param $postId
+     * @param string $order
+     * @return mixed
+     */
 	protected function getPostsFromDBInternal($threadId,$postId,$order='DESC')
 	{
 		switch( $this->show_realname ){
