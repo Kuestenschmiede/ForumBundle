@@ -275,7 +275,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'exclude'               => true,
                         'inputType'             => 'inputUnit',
                         'options'                 => array('h1', 'h2', 'h3', 'h4', 'h5', 'h6'),
-                        'eval'                    => array('tl_class'=>'w50','maxlength'=>255),
+                        'eval'                    => array('maxlength'=>255),
                     ),
                     'optional_headline_language' => array
                     (
