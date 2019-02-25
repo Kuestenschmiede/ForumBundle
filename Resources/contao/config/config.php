@@ -27,7 +27,7 @@ $GLOBALS['FE_MOD']['con4gis']['c4g_forum_subscription'] = 'con4gis\ForumBundle\R
 /**
  * Backend modules
  */
-array_insert($GLOBALS['BE_MOD']['con4gis_bricks'],1, array(
+$GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], array(
     'c4g_forum' => array
     (
         'tables' 		=> array('tl_c4g_forum'),
@@ -44,8 +44,6 @@ array_insert($GLOBALS['BE_MOD']['con4gis_bricks'],1, array(
         'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
     )
 ));
-
-	
 
 
 
