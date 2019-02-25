@@ -997,20 +997,17 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $rating = 0;
             $posts  = $this->helper->getPostsOfThreadFromDB($aThread['id']);
 
-            $sSql    = "SELECT SUM(rating) as total, COUNT(id) as cnt FROM tl_c4g_forum_post WHERE pid = ? AND rating > 0";
+            $sSql    = "SELECT AVG(rating) as average, COUNT(rating) as count FROM tl_c4g_forum_post WHERE pid = ? AND rating > 0";
             $oRes    = \Database::getInstance()->prepare($sSql)->execute($aThread['id']);
             $aResult = $oRes->fetchAssoc();
-            if (!empty($aResult) && $aResult['cnt'] > 0) {
-                $rating = $aResult['total'] / $aResult['cnt'];
-                $rating *= 2;
-                $rating = round($rating);
-                $rating = $rating / 2;
+            if (!empty($aResult) && $aResult['average'] > 0) {
+                $rating = round($aResult['average'] * 2) / 2;
             }
 
             if($bWithOverall === true){
                 $rating = array(
                     "rating" => $rating,
-                    "overall" => $aResult['cnt']
+                    "overall" => $aResult['count']
                 );
             }
 
