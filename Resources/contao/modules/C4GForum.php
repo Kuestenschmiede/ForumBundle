@@ -5514,7 +5514,7 @@ JSPAGINATE;
                 $names = unserialize($value['optional_names']);
                 if ($names) {
                     foreach ($names as $name) {
-                        if ($name['optional_language'] == $this->c4g_forum_language_temp) {
+                        if ($this->isMatchingLanguage($name['optional_language'])) {
                             $pathname = $name['optional_name'];
                             break;
                         }
@@ -6040,7 +6040,7 @@ JSPAGINATE;
                     $names = unserialize($forum['optional_names']);
                     if ($names) {
                         foreach ($names as $name) {
-                            if ($name['optional_language'] == $this->c4g_forum_language_temp) {
+                            if ($this->isMatchingLanguage($name['optional_language'])) {
                                 return $name['optional_name'];
                             }
                         }
@@ -6050,7 +6050,7 @@ JSPAGINATE;
                     $headlines = unserialize($forum['optional_headlines']);
                     if ($headlines) {
                         foreach ($headlines as $headline) {
-                            if ($headline['optional_headline_language'] == $this->c4g_forum_language_temp) {
+                            if ($this->isMatchingLanguage($headline['optional_headline_language'])) {
                                 return $headline['optional_headline'];
                             }
                         }
@@ -6060,7 +6060,7 @@ JSPAGINATE;
                     $descriptions = unserialize($forum['optional_descriptions']);
                     if ($descriptions) {
                         foreach ($descriptions as $description) {
-                            if ($description['optional_description_language'] == $this->c4g_forum_language_temp) {
+                            if ($this->isMatchingLanguage($description['optional_description_language'])) {
                                 return $description['optional_description'];
                             }
                         }
@@ -6258,6 +6258,20 @@ JSPAGINATE;
 
             $this->dialogs_jqui = ((!$this->c4g_forum_dialogs_embedded) || ($this->c4g_forum_embdialogs_jqui));
 
-
         }
+
+        /**
+         * @param string $language
+         * @return bool
+         */
+        protected function isMatchingLanguage(string $language) {
+            if ($language === $this->c4g_forum_language_temp) {
+                return true;
+            } elseif (explode('_', $language)[0] === $this->c4g_forum_language_temp) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
     }
