@@ -2420,11 +2420,11 @@ class C4GForumHelper extends \System
         }
 	}
 
-	/**
-	 *
-	 * @param int $forumId
-	 * @return array
-	 */
+    /**
+     * @param $forumId
+     * @param $frontendUser
+     * @return mixed
+     */
 	public function getMemberGroupsForForum($forumId, $frontendUser)
 	{
 		$forum = $this->Database->prepare(

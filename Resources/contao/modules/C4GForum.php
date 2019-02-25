@@ -1082,8 +1082,6 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
          * @param $post
          * @param $singlePost
          * @param bool $preview
-         * @param bool $firstInThread
-         * @param bool $lastInThread
          * @return string
          */
         public function generatePostAsHtml($post, $singlePost, $preview = false)
@@ -5610,8 +5608,8 @@ JSPAGINATE;
 
         /**
          * @param $action
-         *
-         * @return array
+         * @return array|void
+         * @throws \Exception
          */
         public function performAction($action)
         {
@@ -5846,8 +5844,8 @@ JSPAGINATE;
 
         /**
          * @param $historyAction
-         *
-         * @return array
+         * @return array|void
+         * @throws \Exception
          */
         public function performHistoryAction($historyAction)
         {
