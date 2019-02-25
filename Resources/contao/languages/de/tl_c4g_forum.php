@@ -15,18 +15,18 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_c4g_forum']['name'] 					= array('Name', 'Name des Forenbereiches');
-$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_names']           = array('Optionale Bezeichnungen', '');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_names']           = array('Optionale Bezeichnungen', 'Hier können Sie Bezeichnungen in Abhängigkeit von der Forensprache einstellen.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['optional_name']            = array('Bezeichnung', '');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['optional_language']        = array('Sprache', '');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['tags'] 					= array('Tags', 'Schlagwort-Vorgabe zur Auswahl bei der Thread- / Post-Erstellung');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['mail_subscription_text'] 					= array('E-Mail-Vorlage für Benachrichtigung bei Änderungen', 'Dieses Feature ist VERALTET und wird in einer zukünftigen Version ENTFERNT. Verwenden Sie stattdessen das Notifcation Center im Frontendmodul.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['headline'] 				= array('Überschrift',
 																		'Hier können Sie dem Forenbereich eine Überschrift hinzufügen.');
-$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_headlines']       = array('Optionale Überschriften', '');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_headlines']       = array('Optionale Überschriften', 'Hier können Sie Überschriften in Abhängigkeit von der Forensprache einstellen.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['optional_headline']        = array('Überschrift', '');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['description'] 				= array('Beschreibung',
 																		'Die Beschreibung wird als Tooltip angezeigt.');
-$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_descriptions']    = array('Optionale Beschreibungen', '');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_descriptions']    = array('Optionale Beschreibungen', 'Hier können Sie Beschreibungen in Abhängigkeit von der Forensprache einstellen.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['optional_description']     = array('Beschreibung', '');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['published'] 				= array('Veröffentlicht',
 																		'Legt fest, ob der Forenbereich veröffentlicht wird.');
