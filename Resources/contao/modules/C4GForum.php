@@ -6105,9 +6105,6 @@ JSPAGINATE;
 
             $this->setTempLanguage();
 
-            //$this->loadLanguageFile('frontendModules', $this->c4g_forum_language_temp);
-            //$this->loadLanguageFile('stopwords', $this->c4g_forum_language_temp);
-
             try {
 
                 $this->initMembers();
@@ -6260,8 +6257,7 @@ JSPAGINATE;
             }
 
             $this->dialogs_jqui = ((!$this->c4g_forum_dialogs_embedded) || ($this->c4g_forum_embdialogs_jqui));
-//            \System::import('FrontendUser', 'User');
-//            $this->import('FrontendUser', 'User');
+
 
         }
     }
