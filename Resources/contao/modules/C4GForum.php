@@ -4748,11 +4748,9 @@ JSPAGINATE;
 
 
         /**
-         *
-         * @param int   $forumId
-         * @param array $searchParam
-         *
-         * @return unknown|multitype:string multitype:number boolean  multitype:multitype:string NULL   Ambigous <multitype:boolean string multitype:multitype:number string   multitype:NULL string multitype:string   multitype:multitype:string boolean multitype:number   multitype:NULL string multitype:number   multitype:NULL boolean number multitype:number   multitype:NULL boolean number multitype:number  multitype:string   multitype:boolean multitype:number   multitype:string boolean multitype:string  multitype:number   multitype:NULL boolean multitype:number   multitype:NULL string multitype:number  multitype:multitype:number string     , multitype:number string unknown NULL >
+         * @param $forumId
+         * @param $searchParam
+         * @return array
          */
         public function search($forumId, $searchParam)
         {
