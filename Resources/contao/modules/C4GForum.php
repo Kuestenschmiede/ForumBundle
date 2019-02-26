@@ -4691,7 +4691,7 @@ JSPAGINATE;
                      '<option value=">">' . $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHDIALOG_DDL_NOTPRIOR'] . '</option>' .
                      '<option value="<">' . $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHDIALOG_DDL_PRIOR'] . '</option>' .
                      '</select> ' . $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHDIALOG_LBL_IS_THAN'] .
-                     ' <input name="timePeriod" value="0" type="number" class="formdata ui-corner-all" style="width:50px;"></input> ' .
+                     '<input name="timePeriod" value="0" type="number" class="formdata ui-corner-all" style="width:50px;">' .
                      '<select name="timeUnit" class="formdata ui-corner-all">' .
                      '<option value="hour">' . $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHDIALOG_DDL_HOUR'] . '</option>' .
                      '<option selected value="day">' . $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHDIALOG_DDL_DAY'] . '</option>' .
