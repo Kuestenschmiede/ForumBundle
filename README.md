@@ -1,4 +1,4 @@
-#con4gis-Forum
+#con4gis-ForumBundle
 ## Overview
 The contribution brick of the Contao GIS-kit **con4gis**. Powerful discussion forum amd ticketcenter for Contao. Useful as standalone forum or ticketsystem, for making entries in maps and other things like ratings.
 
