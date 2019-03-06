@@ -45,7 +45,8 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], array
     )
 ));
 
-
+$GLOBALS['BE_MOD']['con4gis'] =
+    \con4gis\CoreBundle\Resources\contao\classes\C4GUtils::sortBackendModules($GLOBALS['BE_MOD']['con4gis']);
 
 /**
  * Add frontend form field for memberImage (Avatar)
