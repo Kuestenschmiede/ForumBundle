@@ -16,8 +16,8 @@
  */
 //$GLOBALS['TL_LANG']['MOD']['con4gis'] 				= array( 'con4gis (construction kit)', 'www.con4gis.org' );
 
-$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Structure', 'Administrate forums.' );
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Threadlist','Overview on tickets and threads');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Forum structure', 'Administrate forums.' );
+$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Forum list','Overview on tickets and threads');
 $GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Overview Posts');
 
 /**
@@ -30,4 +30,3 @@ $GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('Forum (con4gis) - B
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter'] 	= array('Forum (con4gis) - Private messages',
 															'With this module you can integrate the private messages for your forum.');
 
-?>
