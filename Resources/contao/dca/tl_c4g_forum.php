@@ -255,9 +255,10 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['headline'],
 			'exclude'                 => true,
 			'search'                  => true,
+            'default'                 => array('value'=>'', 'unit'=>'h1'),
 			'inputType'               => 'inputUnit',
 			'options'                 => array('h1', 'h2', 'h3', 'h4', 'h5', 'h6'),
-			'eval'                    => array('maxlength'=>255),
+			'eval'                    => array('maxlength'=>200, 'tl_class'=>'long clr'),
             'sql'                     => "varchar(255) NOT NULL default ''"
 		),
         'optional_headlines' => array
@@ -273,9 +274,10 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                     (
                         'label'                 => &$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_headline'],
                         'exclude'               => true,
+                        'default'               => array('value'=>'', 'unit'=>'h1'),
                         'inputType'             => 'inputUnit',
-                        'options'                 => array('h1', 'h2', 'h3', 'h4', 'h5', 'h6'),
-                        'eval'                    => array('maxlength'=>255),
+                        'options'               => array('h1', 'h2', 'h3', 'h4', 'h5', 'h6'),
+                        'eval'                  => array('maxlength'=>200, 'style'=>'width: 250px'),
                     ),
                     'optional_headline_language' => array
                     (
@@ -295,7 +297,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'					=> &$GLOBALS['TL_LANG']['tl_c4g_forum']['description'],
 			'search'				=> true,
 			'inputType'				=> 'textarea',
-			'eval'                  => array('style' => 'height:60px'),
+			'eval'                  => array('style' => 'height:60px', 'tl_class'=>'long clr'),
             'sql'                   => "blob NULL"
 		),
         'optional_descriptions' => array
@@ -312,7 +314,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'label'                 => &$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_description'],
                         'exclude'               => true,
                         'inputType'             => 'textarea',
-                        'eval' 			        => array('tl_class'=>'w50','style' => 'height:60px')
+                        'eval' 			        => array('tl_class'=>'w50')
                     ),
                     'optional_description_language' => array
                     (
@@ -320,7 +322,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'exclude'               => true,
                         'inputType'             => 'select',
                         'options'               => \System::getLanguages(),
-                        'eval'                  => array('chosen' => true, 'style'=>'width: 200px')
+                        'eval'                  => array('chosen' => true, 'tl_class'=>'w50', 'style'=>'width: 200px')
                     )
                 )
             ),
