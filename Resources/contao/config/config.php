@@ -27,25 +27,28 @@ $GLOBALS['FE_MOD']['con4gis']['c4g_forum_subscription'] = 'con4gis\ForumBundle\R
 /**
  * Backend modules
  */
-$GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], array(
-    'c4g_forum' => array
-    (
-        'tables' 		=> array('tl_c4g_forum'),
-        'build_index' 	=> array('con4gis\ForumBundle\Resources\contao\classes\C4GForumBackend', 'buildIndex')
-    ),
-    'c4g_forum_thread' => array
-    (
-        'tables'        => array('tl_c4g_forum_thread'),
-        'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
-    ),
-    'c4g_forum_post' => array
-    (
-        'tables'        => array('tl_c4g_forum_post'),
-        'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
-    )
-));
+array_insert($GLOBALS['BE_MOD'], array_search('con4gis_core', array_keys($GLOBALS['BE_MOD'])) + 2,
+    ['con4gis_forum' => [
+        'c4g_forum' => array
+        (
+            'tables' 		=> array('tl_c4g_forum'),
+            'build_index' 	=> array('con4gis\ForumBundle\Resources\contao\classes\C4GForumBackend', 'buildIndex')
+        ),
+        'c4g_forum_thread' => array
+        (
+            'tables'        => array('tl_c4g_forum_thread'),
+            'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
+        ),
+        'c4g_forum_post' => array
+        (
+            'tables'        => array('tl_c4g_forum_post'),
+            'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
+        )
+    ]]
+);
 
-
+//$GLOBALS['BE_MOD']['con4gis'] =
+//    \con4gis\CoreBundle\Resources\contao\classes\C4GUtils::sortBackendModules($GLOBALS['BE_MOD']['con4gis']);
 
 /**
  * Add frontend form field for memberImage (Avatar)
