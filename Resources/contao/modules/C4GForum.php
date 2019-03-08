@@ -100,6 +100,8 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             parent::__construct($objModule,$strColumn='main');
             $this->helper = new C4GForumHelper($this->Database, null,FrontendUser::getInstance(),"","","UU",$this->c4g_forum_type);
             $this->User = FrontendUser::getInstance();
+//            ResourceLoader::loadJavaScriptResource('bundles/con4giscore/vendor/ckeditor5/ckeditor.js', ResourceLoader::HEAD);
+//            ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
         }
 
         /**
@@ -4022,7 +4024,7 @@ JSPAGINATE;
                     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADDESC'] . ':<br/>' .
                     '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
                     '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
-                    '<textarea name="threaddesc" id="' . $dialogId . '_threaddesc" class="formdata ui-corner-all" cols="80" rows="3">' . strip_tags($desc) . '</textarea><br />' .
+                    '<textarea name="threaddesc" id="' . $dialogId . '_threaddesc" class="formdata ui-corner-all" cols="80" rows="3">' . $desc . '</textarea><br />' .
                     '</div>';
             } else {
                 return '';
@@ -4119,7 +4121,7 @@ JSPAGINATE;
                      '<input type="hidden" name="uploadPath" value="' . $imageUploadPath->path . '">' .
                      '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
                      '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
-                     '<textarea' . $editorId . ' name="post" cols="80" rows="15" class="formdata ui-corner-all">' . strip_tags($post['text']) . '</textarea>' .
+                     '<textarea' . $editorId . ' name="post" cols="80" rows="15" class="formdata ui-corner-all">' . $post['text'] . '</textarea>' .
                      '</div>';
 
             $data .= $this->getPostlinkForForm('c4gForumEditPostLink', $post['forumid'], $dialogId, $post['linkname'], $post['linkurl']);
