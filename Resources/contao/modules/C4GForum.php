@@ -101,7 +101,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $this->helper = new C4GForumHelper($this->Database, null,FrontendUser::getInstance(),"","","UU",$this->c4g_forum_type);
             $this->User = FrontendUser::getInstance();
 //            ResourceLoader::loadJavaScriptResource('bundles/con4giscore/vendor/ckeditor5/ckeditor.js', ResourceLoader::HEAD);
-//            ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
+            ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
         }
 
         /**
