@@ -3,3 +3,7 @@
 .c4g_forum_post {
     display: none!important;
 }
+
+#tl_navigation .tl_level_1_group .group-con4gis_forum {
+    background: url("../../con4giscore/images/con4gis.svg") 7px center no-repeat;
+}
