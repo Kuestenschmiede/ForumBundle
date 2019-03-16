@@ -6,7 +6,7 @@ while (index < forumSubsSubmitChange.length) {
     currentButton.addEventListener('click', function(){
         let url = currentButton.parentNode.action;
         let checkboxes = currentButton.parentNode.getElementsByTagName('input');
-        $.ajax(url,
+        jQuery.ajax(url,
             {
                 method: "post",
                 data: {
@@ -35,7 +35,7 @@ while (index < forumSubsSubmitDelete.length) {
     let currentButton = forumSubsSubmitDelete.item(index);
     currentButton.addEventListener('click', function(){
         let url = currentButton.parentNode.action;
-        $.ajax(url,
+        jQuery.ajax(url,
             {
                 method: "post",
                 data: {
@@ -72,7 +72,7 @@ while (index < threadSubsSubmitChange.length) {
     currentButton.addEventListener('click', function(){
         let url = currentButton.parentNode.action;
         let checkboxes = currentButton.parentNode.getElementsByTagName('input');
-        $.ajax(url,
+        jQuery.ajax(url,
             {
                 method: "post",
                 data: {
@@ -98,7 +98,7 @@ while (index < threadSubsSubmitDelete.length) {
     let currentButton = threadSubsSubmitDelete.item(index);
     currentButton.addEventListener('click', function(){
         let url = currentButton.parentNode.action;
-        $.ajax(url,
+        jQuery.ajax(url,
             {
                 method: "post",
                 data: {
@@ -128,7 +128,7 @@ while (index < threadSubsSubmitDelete.length) {
 }
 
 function showInfoDialog(message,title,okLabel){
-    $('<div></div>').appendTo('body')
+    jQuery('<div></div>').appendTo('body')
         .html('<div>'+message+'</div>')
         .dialog({
             modal: true, title: title, zIndex: 10000, autoOpen: true,
@@ -137,18 +137,18 @@ function showInfoDialog(message,title,okLabel){
                 {
                     text: okLabel,
                     click: function () {
-                        $(this).dialog("close");
+                        jQuery(this).dialog("close");
                     }
                 },
             ],
             close: function (event, ui) {
-                $(this).remove();
+                jQuery(this).remove();
             }
         });
 }
 
 function showConfirmationDialog(message,title,yesLabel, noLabel, yesCallback){
-    $('<div></div>').appendTo('body')
+    jQuery('<div></div>').appendTo('body')
         .html('<div>'+message+'?</div>')
         .dialog({
             modal: true, title: title, zIndex: 10000, autoOpen: true,
@@ -157,19 +157,19 @@ function showConfirmationDialog(message,title,yesLabel, noLabel, yesCallback){
                 {
                     text: yesLabel,
                     click: function () {
-                        $(this).dialog("close");
+                        jQuery(this).dialog("close");
                         yesCallback();
                     }
                 },
                 {
                     text: noLabel,
                     click: function () {
-                        $(this).dialog("close");
+                        jQuery(this).dialog("close");
                     }
                 }
             ],
             close: function (event, ui) {
-                $(this).remove();
+                jQuery(this).remove();
             }
         });
 }

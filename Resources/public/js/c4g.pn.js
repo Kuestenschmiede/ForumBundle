@@ -1,13 +1,13 @@
-!(function ($) {
+!(function (jQuery) {
 
-  $.fn.serializeObject = function () {
+  jQuery.fn.serializeObject = function () {
     "use strict";
 
     var result = {};
     var extend = function (i, element) {
       var node = result[element.name];
       if ('undefined' !== typeof node && node !== null) {
-        if ($.isArray(node)) {
+        if (jQuery.isArray(node)) {
           node.push(element.value);
         } else {
           result[element.name] = [node, element.value];
@@ -16,7 +16,7 @@
         result[element.name] = element.value;
       }
     };
-    $.each(this.serializeArray(), extend);
+    jQuery.each(this.serializeArray(), extend);
     return result;
   };
 
@@ -46,8 +46,8 @@
             primary: "ui-icon-close"
           },
           click: function () {
-            $(this).dialog("close");
-            $('#modal-' + type).remove();
+            jQuery(this).dialog("close");
+            jQuery('#modal-' + type).remove();
           }
 
           // Uncommenting the following line would hide the text,
@@ -67,7 +67,7 @@
               primary: "ui-icon-arrowreturnthick-1-w"
             },
             click: function () {
-              $('#frmCompose').submit();
+              jQuery('#frmCompose').submit();
             }
           }
         );
@@ -84,7 +84,7 @@
           },
           click: function () {
             _deleteMessage(data.id);
-            $(this).dialog("close");
+            jQuery(this).dialog("close");
           }
         });
         aButtons.unshift({
@@ -93,27 +93,27 @@
             primary: "ui-icon-arrowreturnthick-1-w"
           },
           click: function () {
-            var sSubject = 'RE: ' + $('.subject').text();
+            var sSubject = 'RE: ' + jQuery('.subject').text();
             _sendMessageTo(data.sid, sSubject, sSubject, this);
-            $(this).dialog("close");
+            jQuery(this).dialog("close");
           }
         });
       }
 
-      $.ajax({
+      jQuery.ajax({
         method: "GET",
         //url: "system/modules/con4gis_forum/api/index.php/modal/" + type,
         url: pnApiBaseUrl + "/modal/" + type,
         data: {data: data},
         success: function (response) {
-          $('#modal-' + type).remove();
-          $("body").append(response.template);
-          $('#modal-' + type).dialog({
+          jQuery('#modal-' + type).remove();
+          jQuery("body").append(response.template);
+          jQuery('#modal-' + type).dialog({
             title: title,
             minWidth: minWidth,
             minHeight: minHeight,
             close: function (event, ui) {
-              $('#modal-' + type).remove();
+              jQuery('#modal-' + type).remove();
             },
             buttons: aButtons
           });
@@ -134,13 +134,13 @@
     var _deleteMessage = function (id) {
       var bConfirm = confirm(C4GLANG.delete_confirm);
       if (bConfirm == true) {
-        $.ajax({
+        jQuery.ajax({
           method: "DELETE",
           //url: "system/modules/con4gis_forum/api/index.php/delete/" + id,
           url: pnApiBaseUrl + "/delete/" + id,
           success: function (response) {
             if (response.success == true) {
-              $('#message-' + id).remove();
+              jQuery('#message-' + id).remove();
             }
           }
         });
@@ -154,9 +154,9 @@
      * @private
      */
     var _sendMessage = function (frm) {
-      var data = $(frm).serializeObject();
+      var data = jQuery(frm).serializeObject();
       data.target = frm.dataset.target;
-      $.ajax({
+      jQuery.ajax({
         method: "POST",
         //url: "system/modules/con4gis_forum/api/index.php/send/",
         url: pnApiBaseUrl + "/send/",
@@ -165,7 +165,7 @@
           if (response.success !== true) {
             alert(C4GLANG.send_error);
           } else {
-            $('#modal-compose').dialog('close');
+            jQuery('#modal-compose').dialog('close');
           }
         }
       });
@@ -192,8 +192,8 @@
      */
     var _parseHTMLCode = function (selector) {
       var cont = document.createElement('div');
-      cont.innerHTML=$(selector).html();
-      $(selector).html( $(cont).text() );
+      cont.innerHTML=jQuery(selector).html();
+      jQuery(selector).html( jQuery(cont).text() );
     };
 
 
@@ -240,7 +240,7 @@
         status: 1,
         id: id
       };
-      $.ajax({
+      jQuery.ajax({
         method: "POST",
         //url: "system/modules/con4gis_forum/api/index.php/mark",
         url: pnApiBaseUrl + "/mark",
@@ -249,7 +249,7 @@
           if (response.success !== true) {
             alert(response.message);
           } else {
-            $('#message-' + id + '.unread').removeClass('unread').addClass('read');
+            jQuery('#message-' + id + '.unread').removeClass('unread').addClass('read');
           }
         }
       });
