@@ -692,7 +692,6 @@ class tl_c4g_forum extends \Backend
         echo "<pre>";
         var_dump($sValue);
         die();
-
     }
 
 	/**
