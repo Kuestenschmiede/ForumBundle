@@ -130,7 +130,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         ),
         'pid' => array
         (
-            'filter'                  => true,
+//            'filter'                  => true,
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         'name' => array
@@ -148,7 +148,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => array('tl_c4g_forum_thread','get_options'),
-            'filter'                  => true,
+//            'filter'                  => true,
             'search'                  => true,
             'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-'),
             'sql'                     => "int(10) default '0'"
@@ -169,7 +169,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['owner'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'filter'                  => true,
+//            'filter'                  => true,
             'search'                  => true,
             'foreignKey'              => 'tl_member.username',
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
@@ -179,7 +179,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['recipient'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'filter'                  => true,
+//            'filter'                  => true,
             'search'                  => true,
             'foreignKey'              => 'tl_member.username',
             'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
