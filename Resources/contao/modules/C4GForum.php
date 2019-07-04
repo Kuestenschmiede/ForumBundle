@@ -2454,8 +2454,7 @@ JSPAGINATE;
                     $this->helper->subscription->MailCache ['post']     = $this->putVars['post'];
                     $this->helper->subscription->MailCache ['linkname'] = $this->putVars['linkname'];
                     $this->helper->subscription->MailCache ['linkurl']  = $this->putVars['linkurl'];
-                    $cronjob                                            =
-                        $this->helper->subscription->sendSubscriptionEMail($forumSubscribers, $result['thread_id'], 'newThread', $this, $sUrl, $this->c4g_forum_type, $this->c4g_forum_sub_title);
+                    $cronjob = $this->helper->subscription->sendSubscriptionEMail($forumSubscribers, $result['thread_id'], 'newThread', $this, $sUrl, $this->c4g_forum_type, $this->c4g_forum_sub_title);
                     if ($cronjob) {
                         $return['cronexec'][] = $cronjob;
                     }
