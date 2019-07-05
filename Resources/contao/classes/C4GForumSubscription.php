@@ -313,7 +313,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                             $threadModel = C4GThreadModel::findByPk($threadId);
                             switch ($sendKind) {
                                 case "new" :
-                                    if ($this->isSubscriptionValid(
+                                    if (!$this->isSubscriptionValid(
                                         'newPost',
                                         C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $subscriber['memberId']),
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
@@ -323,7 +323,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                     $notificationIDs = unserialize($forumModule->sub_new_post);
                                     break;
                                 case "edit":
-                                    if ($this->isSubscriptionValid(
+                                    if (!$this->isSubscriptionValid(
                                         'editedPost',
                                         C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $subscriber['memberId']),
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
@@ -333,7 +333,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                     $notificationIDs = unserialize($forumModule->sub_edited_post);
                                     break;
                                 case "delete" :
-                                    if ($this->isSubscriptionValid(
+                                    if (!$this->isSubscriptionValid(
                                         'deletedPost',
                                         C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $subscriber['memberId']),
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
@@ -343,7 +343,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                     $notificationIDs = unserialize($forumModule->sub_deleted_post);
                                     break;
                                 case "delThread" :
-                                    if ($this->isSubscriptionValid(
+                                    if (!$this->isSubscriptionValid(
                                         'deletedThread',
                                         null,
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
@@ -353,7 +353,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                     $notificationIDs = unserialize($forumModule->sub_deleted_thread);
                                     break;
                                 case "moveThread" :
-                                    if ($this->isSubscriptionValid(
+                                    if (!$this->isSubscriptionValid(
                                         'movedThread',
                                         null,
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
