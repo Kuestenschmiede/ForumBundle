@@ -252,6 +252,10 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imageWidth']  = array("Maximale Bildbreite", "Angabe in Pixel");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imageHeight'] = array("Maximale Bildhöhe", "Angabe in Pixel");
 
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage'] = array("Auswahlbox: Themen pro Seite", "Werte, Beschriftung: [[10, 25, 50, 100, -1], [10, 25, 50, 100, \"Alle\"]]");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'] = array("Wieviele Themen sollen initial angezeigt werden", "Default: 25");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_default'] = '[[10, 25, 50, 100, -1], [10, 25, 50, 100, "Alle"]]';
+
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_active'] = array("Pagination aktivieren", "");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_format'] = array("Paginator-Format", "Siehe <a onclick='window.open(this.href);return false;' href='http://www.xarg.org/2011/09/jquery-pagination-revised'>http://www.xarg.org/2011/09/jquery-pagination-revised</a>");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_perpage'] = array("Einträge pro Seite", "");

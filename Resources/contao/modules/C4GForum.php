@@ -652,6 +652,12 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                     'desc'
                 )
             );
+
+            if ($this->c4g_forum_threads_perpage) {
+                $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection;
+                $data['aLengthMenu'] = json_decode($this->c4g_forum_threads_perpage, true);
+            }
+
             $data['responsive'] = true;
             $data['bScrollCollapse'] = true;
             $data['bStateSave']      = false;
@@ -669,7 +675,6 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 "sInfoFiltered"  => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_FILTERED'),
                 "sInfoThousands" => '.',
                 "sLengthMenu"    => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_LENGTHMENU'),
-                "iDisplayLength" => 25,
                 "bLengthChange"  => true,
                 "sProcessing"    => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_PROCESSING'),
                 "sSearch"    => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_SEARCH'),
@@ -4995,6 +5000,12 @@ JSPAGINATE;
                     'desc'
                 )
             );
+
+            if ($this->c4g_forum_threads_perpage) {
+                $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection;
+                $data['aLengthMenu'] = json_decode($this->c4g_forum_threads_perpage, true);
+            }
+
             $data['responsive']      = true;
             $data['bScrollCollapse'] = true;
             $data['bStateSave']      = true;
@@ -5012,7 +5023,6 @@ JSPAGINATE;
                 "sInfoFiltered"  => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_FILTERED'),
                 "sInfoThousands" => '.',
                 "sLengthMenu"    => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_LENGTHMENU'),
-                "iDisplayLength" => 25,
                 "bLengthChange"  => true,
                 "sProcessing"    => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_PROCESSING'),
                 "sSearch"    => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_SEARCH'),
@@ -5318,6 +5328,12 @@ JSPAGINATE;
                     'desc'
                 )
             );
+
+            if ($this->c4g_forum_threads_perpage) {
+                $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection;
+                $data['aLengthMenu'] = json_decode($this->c4g_forum_threads_perpage, true);
+            }
+
             $data['responsive'] = true;
             $data['bScrollCollapse'] = true;
             $data['bStateSave']      = true;
@@ -5335,7 +5351,6 @@ JSPAGINATE;
                 "sInfoFiltered"  => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_FILTERED'),
                 "sInfoThousands" => '.',
                 "sLengthMenu"    => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_LENGTHMENU'),
-                "iDisplayLength" => 25,
                 "bLengthChange"  => true,
                 "sProcessing"    => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_PROCESSING'),
                 "sSearch"    => C4GForumHelper::getTypeText($this->c4g_forum_type,'THREADS_SEARCH'),

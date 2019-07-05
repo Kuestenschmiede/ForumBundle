@@ -21,7 +21,7 @@
         '{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_rating_enabled,c4g_forum_rating_color,c4g_forum_show_post_count,c4g_forum_show_avatars,c4g_forum_show_online_status,c4g_forum_show_ranks,c4g_forum_show_pn_button,c4g_forum_sub_title;'.
         '{c4g_forum_bbcodes_legend:hide},c4g_forum_bbcodes;' .
         '{c4g_forum_sizes_legend:hide},c4g_forum_size,c4g_forum_scroll;' .
-        '{c4g_forum_pagination_legend:hide},c4g_forum_pagination_active,c4g_forum_pagination_perpage,c4g_forum_pagination_format;' .
+        '{c4g_forum_pagination_legend:hide},c4g_forum_threads_perpage, c4g_forum_threads_perpage_selection, c4g_forum_pagination_active,c4g_forum_pagination_perpage,c4g_forum_pagination_format;' .
         '{c4g_forum_search_legend:hide},c4g_forum_search_onlythreads, c4g_forum_search_wholewords, c4g_forum_use_tags_in_search, c4g_forum_search_forums, c4g_forum_search_displayonly;' .
         '{c4g_forum_boxes_legend:hide},c4g_forum_boxes_text,c4g_forum_boxes_subtext,c4g_forum_boxes_lastpost,c4g_forum_boxes_center;' .
         '{c4g_forum_jqui_legend:hide},c4g_forum_jqui;' .
@@ -165,6 +165,25 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_subscription'] =
 //        'sql'       => "char(1) NOT NULL default '1'"
 //    );
 
+    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage'] = array
+    (
+        'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage'],
+        'exclude'   => true,
+        'default'   => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_default'],
+        'inputType' => 'text',
+        'eval'      => array('mandatory' => true, 'tl_class'=>'long'),
+        'sql'       => "varchar(255) NOT NULL default ''"
+    );
+
+    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage_selection'] = array
+    (
+        'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'],
+        'exclude'   => true,
+        'default'   => '10',
+        'inputType' => 'text',
+        'eval'      => array('maxlength' => 3, 'mandatory' => true),
+        'sql'       => "tinyint(3) NOT NULL default '10'"
+    );
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_active'] = array
     (
@@ -201,6 +220,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_subscription'] =
         'eval'      => array('maxlength' => 3),
         'sql'       => "tinyint(3) NOT NULL default '10'"
     );
+
     $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_format'] = array
     (
         'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_format'],
