@@ -253,7 +253,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imageHeight'] = array("Maximale Bildhöhe", "Angabe in Pixel");
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage'] = array("Auswahlbox: Themen pro Seite", "Werte, Beschriftung: [[10, 25, 50, 100, -1], [10, 25, 50, 100, \"Alle\"]]");
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'] = array("Wieviele Themen sollen initial angezeigt werden", "Default: 25");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'] = array("Wieviele Themen sollen initial angezeigt werden", "Default: 10");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_default'] = '[[10, 25, 50, 100, -1], [10, 25, 50, 100, "Alle"]]';
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_active'] = array("Pagination aktivieren", "");
