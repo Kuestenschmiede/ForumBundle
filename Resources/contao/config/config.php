@@ -98,7 +98,7 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum'] = array
         'email_recipient_cc'   => array('admin_email'),
         'email_recipient_bcc'  => array('admin_email'),
         'email_replyTo'        => array('admin_email'),
-        'file_content'           => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'file_content'         => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
     ),
     'sub_deleted_thread'  => array
     (
@@ -111,7 +111,7 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum'] = array
         'email_recipient_cc'   => array('admin_email'),
         'email_recipient_bcc'  => array('admin_email'),
         'email_replyTo'        => array('admin_email'),
-        'file_content'           => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'file_content'         => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
     ),
     'sub_moved_thread'   => array
     (
@@ -124,7 +124,7 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum'] = array
         'email_recipient_cc'   => array('admin_email'),
         'email_recipient_bcc'  => array('admin_email'),
         'email_replyTo'        => array('admin_email'),
-        'file_content'           => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'file_content'         => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
     ),
     'sub_new_post'   => array
     (
@@ -137,7 +137,7 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum'] = array
         'email_recipient_cc'   => array('admin_email'),
         'email_recipient_bcc'  => array('admin_email'),
         'email_replyTo'        => array('admin_email'),
-        'file_content'           => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'file_content'         => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
     ),
     'sub_deleted_post'   => array
     (
@@ -150,7 +150,7 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum'] = array
         'email_recipient_cc'   => array('admin_email'),
         'email_recipient_bcc'  => array('admin_email'),
         'email_replyTo'        => array('admin_email'),
-        'file_content'           => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'file_content'         => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
     ),
     'sub_edited_post'   => array
     (
@@ -163,7 +163,7 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum'] = array
         'email_recipient_cc'   => array('admin_email'),
         'email_recipient_bcc'  => array('admin_email'),
         'email_replyTo'        => array('admin_email'),
-        'file_content'           => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
+        'file_content'         => array('user_name', 'threadname','forumname', 'responsible_username', 'link', 'unsubscribe_link', 'unsubscribe_all_link',),
     ),
     'mail_new_pm'   => array
     (
@@ -176,6 +176,6 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum'] = array
         'email_recipient_cc'   => array('admin_email'),
         'email_recipient_bcc'  => array('admin_email'),
         'email_replyTo'        => array('admin_email'),
-        'file_content'           => array('user_name', 'responsible_username', 'link','message','subject'),
+        'file_content'         => array('user_name', 'responsible_username', 'link','message','subject'),
     )
 );
