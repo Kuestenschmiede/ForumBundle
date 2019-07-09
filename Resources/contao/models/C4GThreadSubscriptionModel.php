@@ -19,13 +19,22 @@ class C4GThreadSubscriptionModel extends \Contao\Model
 {
     protected static $strTable = 'tl_c4g_forum_thread_subscription';
 
-    public function findByThreadAndMember($threadId, $memberId) {
-        return new self(
-            Database::getInstance()->prepare(
-                "SELECT * FROM ".
-                self::$strTable.
-                " WHERE pid = ? AND member = ?")
-                ->execute($threadId, $memberId)
+    /**
+     * @param $threadId
+     * @param $memberId
+     * @return mixed
+     */
+    public function findByThreadAndMember($threadId, $memberId)
+    {
+        $arrColumns = array(
+            self::$strTable . '.pid=?',
+            self::$strTable . '.member=?'
         );
+        $arrValues = array(
+            $threadId,
+            $memberId
+        );
+
+        return static::findOneBy($arrColumns, $arrValues);
     }
 }

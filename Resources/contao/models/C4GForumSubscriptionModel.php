@@ -20,13 +20,23 @@ class C4GForumSubscriptionModel extends \Contao\Model
 {
     protected static $strTable = 'tl_c4g_forum_subforum_subscription';
 
-    public function findByForumAndMember($forumId, $memberId) {
-        return new self(
-            Database::getInstance()->prepare(
-                "SELECT * FROM ".
-                self::$strTable.
-                " WHERE pid = ? AND member = ?")
-                ->execute($forumId, $memberId)
+    /**
+     * @param $forumId
+     * @param $memberId
+     * @return mixed
+     */
+    public function findByForumAndMember($forumId, $memberId)
+    {
+        $arrColumns = array(
+            self::$strTable . '.pid=?',
+            self::$strTable . '.member=?'
         );
+        $arrValues = array(
+            $forumId,
+            $memberId
+        );
+
+        return static::findOneBy($arrColumns, $arrValues);
     }
+
 }
