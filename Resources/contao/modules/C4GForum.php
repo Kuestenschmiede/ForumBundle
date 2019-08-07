@@ -6132,7 +6132,7 @@ JSPAGINATE;
                     parse_str(file_get_contents("php://input"), $this->putVars);
                     foreach ($this->putVars as $key => $value) {
                         $tmpVal = Input::xssClean($value, true);
-                        $tmpVal = C4GUtils::cleanHtml($tmpVal);
+                        $tmpVal = C4GUtils::cleanHtml($tmpVal, false, ['/<iframe(.*?)<\/iframe>/is']);
                         $this->putVars[$key] = $tmpVal;
                     }
                 }
