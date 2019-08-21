@@ -13,7 +13,6 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
-use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
