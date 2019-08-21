@@ -26,14 +26,14 @@ class C4GThreadSubscriptionModel extends \Contao\Model
      */
     public static function findByThreadAndMember($threadId, $memberId)
     {
-        $arrColumns = array(
+        $arrColumns = [
             self::$strTable . '.pid=?',
             self::$strTable . '.member=?'
-        );
-        $arrValues = array(
+        ];
+        $arrValues = [
             $threadId,
             $memberId
-        );
+        ];
 
         return static::findOneBy($arrColumns, $arrValues);
     }

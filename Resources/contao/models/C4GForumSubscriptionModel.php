@@ -27,14 +27,14 @@ class C4GForumSubscriptionModel extends \Contao\Model
      */
     public static function findByForumAndMember($forumId, $memberId)
     {
-        $arrColumns = array(
+        $arrColumns = [
             self::$strTable . '.pid=?',
             self::$strTable . '.member=?'
-        );
-        $arrValues = array(
+        ];
+        $arrValues = [
             $forumId,
             $memberId
-        );
+        ];
 
         return static::findOneBy($arrColumns, $arrValues);
     }
