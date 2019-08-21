@@ -16,6 +16,7 @@ namespace con4gis\ForumBundle\Controller;
 
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
+use con4gis\ForumBundle\Resources\contao\classes\C4GForumNotification;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabase;
@@ -180,7 +181,7 @@ class ForumController extends Controller
                     $route = \Contao\Controller::replaceInsertTags('{{link_url::' . $result['new_pm_redirect'] . '}}');
 
                     try {
-                        $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['mail_new_pm']);
+                        $notification = new C4GForumNotification(C4GForumNotification::MAIL_NEW_PM);
                         $notification->setTokenValue('user_name', $aRecipient['username']);
                         $notification->setTokenValue('user_email', $aRecipient['email']);
                         $notification->setTokenValue('responsible_username', $this->getUser()->username);

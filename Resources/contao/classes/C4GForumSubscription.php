@@ -319,7 +319,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
                                         break 2;
                                     }
-                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_new_post']);
+                                    $notification = new C4GForumNotification(C4GForumNotification::SUB_NEW_POST);
                                     $notificationIDs = unserialize($forumModule->sub_new_post);
                                     break;
                                 case "edit":
@@ -329,7 +329,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
                                         break 2;
                                     }
-                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_edited_post']);
+                                    $notification = new C4GForumNotification(C4GForumNotification::SUB_EDITED_POST);
                                     $notificationIDs = unserialize($forumModule->sub_edited_post);
                                     break;
                                 case "delete" :
@@ -339,7 +339,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
                                         break 2;
                                     }
-                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_deleted_post']);
+                                    $notification = new C4GForumNotification(C4GForumNotification::SUB_DELETED_POST);
                                     $notificationIDs = unserialize($forumModule->sub_deleted_post);
                                     break;
                                 case "delThread" :
@@ -349,7 +349,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
                                         break 2;
                                     }
-                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_deleted_thread']);
+                                    $notification = new C4GForumNotification(C4GForumNotification::SUB_DELETED_THREAD);
                                     $notificationIDs = unserialize($forumModule->sub_deleted_thread);
                                     break;
                                 case "moveThread" :
@@ -359,7 +359,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
                                         break 2;
                                     }
-                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_moved_thread']);
+                                    $notification = new C4GForumNotification(C4GForumNotification::SUB_MOVED_THREAD);
                                     $notificationIDs = unserialize($forumModule->sub_moved_thread);
                                     break;
                                 case "newThread" :
@@ -369,7 +369,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                         C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
                                         break 2;
                                     }
-                                    $notification = new C4GNotification($GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['con4gis Forum']['sub_new_thread']);
+                                    $notification = new C4GForumNotification(C4GForumNotification::SUB_NEW_THREAD);
                                     $notificationIDs = unserialize($forumModule->sub_new_thread);
                                     break;
                                 default:
