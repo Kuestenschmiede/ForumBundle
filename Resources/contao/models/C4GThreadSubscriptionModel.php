@@ -24,7 +24,7 @@ class C4GThreadSubscriptionModel extends \Contao\Model
      * @param $memberId
      * @return mixed
      */
-    public function findByThreadAndMember($threadId, $memberId)
+    public static function findByThreadAndMember($threadId, $memberId)
     {
         $arrColumns = array(
             self::$strTable . '.pid=?',

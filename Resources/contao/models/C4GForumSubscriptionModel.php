@@ -25,7 +25,7 @@ class C4GForumSubscriptionModel extends \Contao\Model
      * @param $memberId
      * @return mixed
      */
-    public function findByForumAndMember($forumId, $memberId)
+    public static function findByForumAndMember($forumId, $memberId)
     {
         $arrColumns = array(
             self::$strTable . '.pid=?',
