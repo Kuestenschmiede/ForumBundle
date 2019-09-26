@@ -13,6 +13,7 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
@@ -386,8 +387,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                             $notification->setTokenValue('unsubscribe_all_link', $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl));
                             $notification->send($notificationIDs);
                         } catch (\Throwable $e) {
-                            //Todo log the exception message
-//                            \System::getContainer()->get('logger')->error($e->getMessage());
+                            C4gLogModel::addLogEntry('forum', $e->getMessage()."\n".$e->getTraceAsString());
                         }
                     }
                 }
