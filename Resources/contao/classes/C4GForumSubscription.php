@@ -310,7 +310,6 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                         /** Send Notifications via Notification center*/
 
                         try {
-                            $threadModel = C4GThreadModel::findByPk($threadId);
                             switch ($sendKind) {
                                 case "new" :
                                     if (!$this->isSubscriptionValid(
@@ -321,6 +320,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                     }
                                     $notification = new C4GForumNotification(C4GForumNotification::SUB_NEW_POST);
                                     $notificationIDs = unserialize($forumModule->sub_new_post);
+                                    $notification->setTokenValue('post_title', $this->MailCache ['subject']);
                                     break;
                                 case "edit":
                                     if (!$this->isSubscriptionValid(

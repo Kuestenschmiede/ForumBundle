@@ -28,10 +28,9 @@ class C4GForumNotification extends C4GNotification
         switch ($type) {
             case static::SUB_DELETED_THREAD:
             case static::SUB_MOVED_THREAD:
-            case static::SUB_NEW_POST:
+            case static::SUB_NEW_THREAD:
             case static::SUB_DELETED_POST:
             case static::SUB_EDITED_POST:
-            case static::SUB_NEW_THREAD:
                 $tokens = [
                     'tokens' => [
                         'admin_email',
@@ -43,6 +42,22 @@ class C4GForumNotification extends C4GNotification
                         'link',
                         'unsubscribe_link',
                         'unsubscribe_all_link'
+                    ]
+                ];
+                break;
+            case static::SUB_NEW_POST:
+                $tokens = [
+                    'tokens' => [
+                        'admin_email',
+                        'user_email',
+                        'user_name',
+                        'threadname',
+                        'forumname',
+                        'responsible_username',
+                        'link',
+                        'unsubscribe_link',
+                        'unsubscribe_all_link',
+                        'post_title'
                     ]
                 ];
                 break;
