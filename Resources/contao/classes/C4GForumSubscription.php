@@ -13,6 +13,7 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
@@ -309,7 +310,6 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                         /** Send Notifications via Notification center*/
 
                         try {
-                            $threadModel = C4GThreadModel::findByPk($threadId);
                             switch ($sendKind) {
                                 case "new" :
                                     if (!$this->isSubscriptionValid(
@@ -320,6 +320,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                                     }
                                     $notification = new C4GForumNotification(C4GForumNotification::SUB_NEW_POST);
                                     $notificationIDs = unserialize($forumModule->sub_new_post);
+                                    $notification->setTokenValue('post_title', $this->MailCache ['subject']);
                                     break;
                                 case "edit":
                                     if (!$this->isSubscriptionValid(
@@ -386,8 +387,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                             $notification->setTokenValue('unsubscribe_all_link', $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl));
                             $notification->send($notificationIDs);
                         } catch (\Throwable $e) {
-                            //Todo log the exception message
-//                            \System::getContainer()->get('logger')->error($e->getMessage());
+                            C4gLogModel::addLogEntry('forum', $e->getMessage()."\n".$e->getTraceAsString());
                         }
                     }
                 }
