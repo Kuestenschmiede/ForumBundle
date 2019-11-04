@@ -2772,8 +2772,12 @@ class C4GForumHelper extends \System
 		{
 			foreach ($GLOBALS['TL_HOOKS']['C4gForumPermissions'] as $callback)
 			{
-				$this->import($callback[0]);
-				$return = $this->$callback[0]->$callback[1]($return, $this, $type );
+                $hookClass = $callback[0];
+                $strFunction = $callback[1];
+                if ($strFunction) {
+                    $this->import($hookClass);
+                    $return = $this->$hookClass->$strFunction($return, $this, $type);
+                }
 			}
 		}
 		return $return;
