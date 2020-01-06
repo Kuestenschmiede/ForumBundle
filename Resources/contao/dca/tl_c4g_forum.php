@@ -79,7 +79,14 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'remove_bb' => array
             (
                 'button_callback'     => array('tl_c4g_forum','remove_bb')
-            )
+            ),
+            'back' => [
+                'href'                => 'key=back',
+                'class'               => 'header_back',
+                'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
+                'icon'                => 'back.svg',
+                'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
+            ],
 		),
 		'operations' => array
 		(
