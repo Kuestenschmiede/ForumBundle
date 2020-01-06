@@ -5641,6 +5641,7 @@ JSPAGINATE;
                     $this->log('C4G-Forum PHP-Error: ' . $e->getMessage(), $e->getFile() . ' Line ' . $e->getLine() . ' (Code: ' . $e->getCode() . ')', TL_ERROR);
                 }
             } catch (Exception $exc) {
+                C4gLogModel::addLogEntry('forum', $exc->getMessage());
             }
 
             return $return;
