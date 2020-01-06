@@ -5870,8 +5870,12 @@ JSPAGINATE;
             // HOOK: for enhancements to change the result
             if (isset($GLOBALS['TL_HOOKS']['C4gForumAfterAction']) && is_array($GLOBALS['TL_HOOKS']['C4gForumAfterAction'])) {
                 foreach ($GLOBALS['TL_HOOKS']['C4gForumAfterAction'] as $callback) {
-                    $this->import($callback[0]);
-                    $return = $this->$callback[0]->$callback[1]($return, $this, $this->helper, $this->putVars, $values[0], $values[1], $values[2], $values[3]);
+                    $hookClass = $callback[0];
+                    $strFunction = $callback[1];
+                    if ($strFunction) {
+                        $this->import($hookClass);
+                        $return = $this->$hookClass->$strFunction($return, $this, $this->helper, $this->putVars, $values[0], $values[1], $values[2], $values[3]);
+                    }
                 }
             }
 
