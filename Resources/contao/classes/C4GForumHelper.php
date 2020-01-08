@@ -14,6 +14,7 @@
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumMember;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
 use Contao\System;
@@ -3127,6 +3128,7 @@ class C4GForumHelper extends \System
 
 			unset($eMail);
 		} catch ( Swift_RfcComplianceException $e ) {
+		    C4gLogModel::addLogEntry('forum', $e->getMessage());
 			return false;
 		}
 		return true;
