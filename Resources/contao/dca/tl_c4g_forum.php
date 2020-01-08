@@ -94,19 +94,19 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['edit'],
 				'href'                => 'act=edit',
-				'icon'                => 'edit.gif'
+				'icon'                => 'edit.svg',
 			),
 			'copy' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['copy'],
 				'href'                => 'act=copy',
-				'icon'                => 'copy.gif'
+				'icon'                => 'copy.svg'
 			),
 			'copyChilds' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['copyChilds'],
 				'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
-				'icon'                => 'copychilds.gif',
+				'icon'                => 'copychilds.svg',
 				'attributes'          => 'onclick="Backend.getScrollOffset();"',
 				'button_callback'     => array('tl_c4g_forum', 'copyPageWithSubpages')
 			),
@@ -114,14 +114,14 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['cut'],
 				'href'                => 'act=paste&amp;mode=cut',
-				'icon'                => 'cut.gif',
+				'icon'                => 'cut.svg',
 				'attributes'          => 'onclick="Backend.getScrollOffset();"'
 			),
 			'delete' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['delete'],
 				'href'                => 'act=delete',
-				'icon'                => 'delete.gif',
+				'icon'                => 'delete.svg',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
 			),
 			'thread' => array
@@ -134,7 +134,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'toggle' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['toggle'],
-				'icon'                => 'visible.gif',
+				'icon'                => 'visible.svg',
 				'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
 				'button_callback'     => array('tl_c4g_forum', 'toggleIcon')
 			),
@@ -806,7 +806,7 @@ class tl_c4g_forum extends \Backend
 
 		if (!$row['published'])
 		{
-			$icon = 'invisible.gif';
+			$icon = 'invisible.svg';
 		}
 
 		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
