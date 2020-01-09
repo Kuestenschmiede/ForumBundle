@@ -4,7 +4,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -15,7 +15,6 @@ namespace con4gis\ForumBundle\Controller;
 
 
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
-use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Resources\contao\classes\C4GForumNotification;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
@@ -190,7 +189,7 @@ class ForumController extends Controller
                         $notification->setTokenValue('message', $aData['message']);
                         $notification->send(unserialize($result['mail_new_pm']));
                     } catch (\Throwable $e) {
-                        C4gLogModel::addLogEntry('forum', $e->getMessage());
+                        //Todo log
                     }
                     $response->setData(['success' => true]);
                     return $response;

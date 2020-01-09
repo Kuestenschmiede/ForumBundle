@@ -4,7 +4,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -5641,7 +5641,6 @@ JSPAGINATE;
                     $this->log('C4G-Forum PHP-Error: ' . $e->getMessage(), $e->getFile() . ' Line ' . $e->getLine() . ' (Code: ' . $e->getCode() . ')', TL_ERROR);
                 }
             } catch (Exception $exc) {
-                C4gLogModel::addLogEntry('forum', $exc->getMessage());
             }
 
             return $return;

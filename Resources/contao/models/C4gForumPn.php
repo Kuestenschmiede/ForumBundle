@@ -4,7 +4,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -13,7 +13,6 @@
 
 namespace con4gis\ForumBundle\Resources\contao\models;
 
-    use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
     use Contao\Email;
     use Contao\MemberModel;
     use Contao\UserModel;
@@ -508,7 +507,6 @@ namespace con4gis\ForumBundle\Resources\contao\models;
                 \Database::getInstance()->prepare('DELETE FROM ' . self::$sTable . " WHERE id = ? LIMIT 1;")->execute($this->getId());
                 return true;
             } catch (\Exception $e) {
-                C4gLogModel::addLogEntry('forum', $e->getMessage());
                 return false;
             }
         }
