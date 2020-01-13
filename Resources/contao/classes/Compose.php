@@ -13,10 +13,8 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
-
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
     use Contao\FrontendUser;
-    use Contao\User;
 
     /**
      * Class Compose
@@ -24,27 +22,23 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
      */
     class Compose
     {
+        protected static $sTemplate = 'modal_compose';
 
-        protected static $sTemplate = "modal_compose";
-
-
-        public static function parse($data = array()){
-
+        public static function parse($data = [])
+        {
             $oUser = FrontendUser::getInstance();
             $aPns = C4gForumPn::getByRecipient($oUser->id);
 
             $oTemplate = new \FrontendTemplate(self::$sTemplate);
-            $oTemplate->recipient_id = "";
-            if(isset($data['recipient_id'])){
+            $oTemplate->recipient_id = '';
+            if (isset($data['recipient_id'])) {
                 $oTemplate->recipient_id = $data['recipient_id'];
             }
-            if(isset($data['subject'])){
+            if (isset($data['subject'])) {
                 $oTemplate->subject = $data['subject'];
             }
             $oTemplate->pns = $aPns;
 
             return $oTemplate->parse();
         }
-
-
     }

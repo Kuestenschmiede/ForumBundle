@@ -13,12 +13,12 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
-
 class C4GForumTicketStatus
 {
-    public static function getState($stateId){
+    public static function getState($stateId)
+    {
         $return = $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][$stateId];
+
         return $return;
     }
-
 }

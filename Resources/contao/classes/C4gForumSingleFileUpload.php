@@ -22,7 +22,6 @@ use Contao\FileUpload;
  */
 class C4gForumSingleFileUpload extends FileUpload
 {
-
     /**
      * Overwrite parents method to only output 1 input field with no multiple attribute.
      *
@@ -32,7 +31,6 @@ class C4gForumSingleFileUpload extends FileUpload
     {
         $sField = '<input type="file" name="' . $this->strName . '[]" class="tl_upload_field"><br>';
 
-        return '<div id="upload-fields">'.$sField.'</div>';
+        return '<div id="upload-fields">' . $sField . '</div>';
     }
-
 }

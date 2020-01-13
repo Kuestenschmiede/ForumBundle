@@ -12,10 +12,8 @@
  */
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
-
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
     use Contao\FrontendUser;
-    use Contao\User;
 
     /**
      * Class View
@@ -23,13 +21,11 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
      */
     class View
     {
+        protected static $sTemplate = 'modal_view_message';
 
-        protected static $sTemplate = "modal_view_message";
-
-
-        public static function parse(){
-
-            $aData = \Input::get("data");
+        public static function parse()
+        {
+            $aData = \Input::get('data');
             $oUser = FrontendUser::getInstance();
             $oPn = C4gForumPn::getById($aData['id']);
 
@@ -39,6 +35,4 @@ namespace con4gis\ForumBundle\Resources\contao\classes;
 
             return $oTemplate->parse();
         }
-
-
     }

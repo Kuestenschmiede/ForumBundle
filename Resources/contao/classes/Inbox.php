@@ -12,10 +12,8 @@
  */
     namespace con4gis\ForumBundle\Resources\contao\classes;
 
-
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
     use Contao\FrontendUser;
-    use Contao\User;
 
     /**
      * Class Inbox
@@ -23,12 +21,10 @@
      */
     class Inbox
     {
+        protected static $sTemplate = 'modal_inbox';
 
-        protected static $sTemplate = "modal_inbox";
-
-
-        public static function parse(){
-
+        public static function parse()
+        {
             $oUser = FrontendUser::getInstance();
             $aPns = C4gForumPn::getByRecipient($oUser->id);
 
@@ -37,6 +33,4 @@
 
             return $oTemplate->parse();
         }
-
-
     }

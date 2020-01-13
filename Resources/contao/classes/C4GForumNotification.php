@@ -1,8 +1,6 @@
 <?php
 
-
 namespace con4gis\ForumBundle\Resources\contao\classes;
-
 
 use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
 
@@ -41,9 +39,10 @@ class C4GForumNotification extends C4GNotification
                         'responsible_username',
                         'link',
                         'unsubscribe_link',
-                        'unsubscribe_all_link'
-                    ]
+                        'unsubscribe_all_link',
+                    ],
                 ];
+
                 break;
             case static::SUB_NEW_POST:
                 $tokens = [
@@ -57,9 +56,10 @@ class C4GForumNotification extends C4GNotification
                         'link',
                         'unsubscribe_link',
                         'unsubscribe_all_link',
-                        'post_title'
-                    ]
+                        'post_title',
+                    ],
                 ];
+
                 break;
             case static::MAIL_NEW_PM:
                 $tokens = [
@@ -70,16 +70,16 @@ class C4GForumNotification extends C4GNotification
                         'responsible_username',
                         'link',
                         'message',
-                        'subject'
-                    ]
+                        'subject',
+                    ],
                 ];
+
                 break;
             default:
                 $tokens = [];
+
                 break;
         }
         parent::__construct($tokens);
     }
-
-
 }
