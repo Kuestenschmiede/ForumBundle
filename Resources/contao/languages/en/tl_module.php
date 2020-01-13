@@ -103,6 +103,7 @@
         'Automaticaly recognize URLs',
         'This Feature automatically recognites typed URLs and converts them into functional links.'
     );
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "Do not use editor";
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_text']     = array(
         'Box navigation: display forum name',

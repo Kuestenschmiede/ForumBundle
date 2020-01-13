@@ -385,6 +385,7 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['UNSUBSCRIBE_ALL_LINK_SUCCESS']      = 'All subscriptions of member "%s" have been canceled!';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['UNSUBSCRIBE_ALL_LINK_FAILED']       = 'Error when trying to cancel all subscriptions!';
 
+    $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['ADD_MEMBER']               = 'Add member';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['MOVE_THREAD_TEXT']      = 'Move thread <b>%s</b> of forum <b>%s</b> to the following forum:';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['MOVE_THREAD_ERROR']     = 'Error moving thread!';
