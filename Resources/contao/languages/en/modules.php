@@ -14,8 +14,6 @@
 /**
  * Back end modules
  */
-//$GLOBALS['TL_LANG']['MOD']['con4gis'] 				= array( 'con4gis (construction kit)', 'www.con4gis.org' );
-
 $GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Structure', 'Administrate forums.' );
 $GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Thread list','Overview on tickets and threads');
 $GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Overview Posts');
