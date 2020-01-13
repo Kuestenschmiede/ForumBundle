@@ -24,4 +24,5 @@ $GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_forum_legend'] = "Forum (con4gis)";
  */
 $GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_references']['DISCUSSIONS'] = 'Discussions (threads & posts)';
 $GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_references']['QUESTIONS']   = 'Informations (questions & comments)';
-$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_references']['TICKETS']   = 'Ticketsystem';
+$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_references']['TICKET']   = 'Ticketsystem';
+

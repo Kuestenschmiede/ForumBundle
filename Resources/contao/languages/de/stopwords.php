@@ -367,5 +367,3 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['STOPWORDS'] = array (
 		'zwar',
 		'zwischen'
 );
-
-?>

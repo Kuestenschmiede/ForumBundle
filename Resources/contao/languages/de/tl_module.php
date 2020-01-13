@@ -89,21 +89,15 @@
         'Editor verwenden',
         'Deaktivieren Sie diese Checkbox, falls Sie Bden Editor komplett deaktivieren möchten! Dies kann zu Formatfehlern führen, wenn der Editor in einem bereits laufenden Forum zuvor aktiviert waren. Ohne Editor sind Formatierungen nicht mehr möglich.'
     );
-    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor']                = array('Alten WYSIWYG-Editor verwenden', 'Achtung: Dieses Feature funktioniert nur, wenn das Forum eingebettet, also nicht im Dialog, verwendet wird!');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = array('Editor Toolbar Schaltflächen', '');
-    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_ckeditor']                      = array('Neuen WYSIWYG-Editor verwenden', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('Editor', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button']                = array('Persönliche Nachrichten', 'Button für Persönliche Nachrichten im Profil anzeigen');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sub_title']                     = array('Titel für Abonnement','Titel der im Betreff einer Mail bei Abonnement angezeigt wird');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "CKEditor verwenden";
-    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb']           = "Alten WYSIWYG-Editor verwenden";
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "Keinen Editor verwenden";
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imguploadpath']  = array('Bildupload-Verzeichnis', 'Wählen Sie das Verzeichnis aus, in dem die Bilder gespeichert werden sollen. Es wird je Tag ein extra Ordner innerhalb dieses Ordners angelegt.');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_fileuploadpath'] = array('Dateiupload-Verzeichnis', 'Wählen Sie das Verzeichnis aus, in dem die Dateien gespeichert werden sollen. Es wird je Tag ein extra Ordner innerhalb dieses Ordners angelegt.');
-// $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_smileys'] 	= array('Smileys verwenden',
-// 																		'Deaktivieren Sie diese Checkbox, falls Sie nicht wollen, dass das Forum Smileys automatisch erkennt und gegen entsprechende Icons austauscht.');
-// $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_smileys_url'] 	= array('Pfad zu den Smiley-Icons',
-// 																			'bsp= system/modules/con4gis_forum/html/images/smileys');
+
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_autourl'] = array(
         'Automatische URL-Erkennung verwenden',
         'Deaktivieren Sie diese Checkbox, wenn Sie nicht wollen, dass URLs automatisch erkannt und in einen Link umgewandelt werden.'
@@ -282,7 +276,7 @@
     $GLOBALS['TL_LANG']['tl_module']['thread_headline'] = array('Überschrift', 'Die Überschrift, die über den Themen-Abonnements angezeigt wird. Leer lassen, um die Standard-Überschrift zu verwenden.');
     $GLOBALS['TL_LANG']['tl_module']['thread_change_sub_caption'] = array('Text des "Abonnement ändern"-Buttons', 'Der Text des "Abonnement ändern"-Buttons. Leer lassen, um den Standard-Text zu verwenden.');
     $GLOBALS['TL_LANG']['tl_module']['thread_delete_sub_caption'] = array('Text des "Deabonnieren"-Buttons', 'Der Text des "Deabonnieren"-Buttons. Leer lassen, um den Standard-Text zu verwenden.');
-    $GLOBALS['TL_LANG']['tl_module']['no_subs_text'] = array('Text für nichtvorhandene Abonnements', 'DIeser Text wird dem Nutzer ausgegeben, wenn er keine Abonnements (mehr) hat.');
+    $GLOBALS['TL_LANG']['tl_module']['no_subs_text'] = array('Text für nichtvorhandene Abonnements', 'Dieser Text wird dem Nutzer ausgegeben, wenn er keine Abonnements (mehr) hat.');
 
     /**
      * Legend

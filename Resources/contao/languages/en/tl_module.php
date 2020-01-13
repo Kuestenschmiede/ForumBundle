@@ -225,6 +225,20 @@
         'Please select the page which contains the frontend module of the forum.'
     );
 
+    $GLOBALS['TL_LANG']['tl_module']['ticketredirectsite'] = array(
+        'Redirect page ticket',
+        'Pick the page to which is redirected to display the ticket.'
+    );
+
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_post_count'] = array("Show post count", "Zeige die Anzahl der Beiträge unter dem Autorennamen an.");
+
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_online_status'] = array("Show online status", "Show a member's online status next to their name.");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_member_online_time'] = array("Online time (in seconds)", "The amount of time a member remains logged in without performing an action.");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_ranks'] = array("Show member ranks", "Show the ranks of members.");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_member_ranks']  = array("Member ranks", "The member ranks based on number of posts.");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_min']      = array("Minimum posts", "Minimum number of posts for this rank.");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_name']     = array("Rank name", "The name of the rank.");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_language'] = array("Language", "The language of the rank.");
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_uploadTypes'] = array("Allowed Filetypes", "comma separated, without dot ");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_maxFileSize'] = array("Max Filesize", "Declaration in Byte: 1 kB = 1024 Byte, 1 MB = 1048576 Byte");
@@ -236,10 +250,10 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_use_tags_in_search'] = array("Select for tags defined in your forum", "");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_forums']      = array("Select special forum", "");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_displayonly'] = array("Entry for searching usernames and periods", "");
-    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_period']      = array("Periodsearch", "");
 
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_avatars'] = array("Show avatars", "Activate the member avatars");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_avatar_size'] = array("Avatar size (width, height)", "The width and height of user avatars");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_move_all'] = array("Move threads in other forum modules too (not recommend!)", "Just move threads between forum modules with same or similar settings!");
-
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_param_forumbox'] = array("rename forumbox param", "rename the browser param forumbox (not recommend!)");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_param_forum'] = array("rename forum param", "rename the browser param forum (not recommend!)");
 
@@ -248,6 +262,19 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_remove_createperson'] = array("remove field -AUTHOR-", "Remove the -Author- field from table.");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_remove_createdate'] = array("remove field -Created on-", "Remove the -Created on- field from table.");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_remove_count'] = array("remove field -#-", "Remove the -#- field from table.");
+
+    $GLOBALS['TL_LANG']['tl_module']['sub_forum_headline'] = array('Headline', 'Headline used for forum subscriptions. Leave empty to use the default headline.');
+    $GLOBALS['TL_LANG']['tl_module']['sub_forum_change_sub_caption'] = array('Change subscription button text', 'The text of the change subscription button. Leave empty to use the default text.');
+    $GLOBALS['TL_LANG']['tl_module']['sub_forum_delete_sub_caption'] = array('Unsubscribe button text', 'The text of the unsubscribe button. Leave empty to use the default text.');
+    $GLOBALS['TL_LANG']['tl_module']['thread_headline'] = array('Headline', 'The headline used for topic subscriptions. Leave empty to use the default text.');
+    $GLOBALS['TL_LANG']['tl_module']['thread_change_sub_caption'] = array('Change subscription button text', 'The text of the change subscription button. Leave empty to use the default text.');
+    $GLOBALS['TL_LANG']['tl_module']['thread_delete_sub_caption'] = array('Unsubscribe button text', 'The text of the unsubscribe button. Leave empty to use the default text.');
+    $GLOBALS['TL_LANG']['tl_module']['no_subs_text'] = array('Text for nonexistent subscriptions', 'This text is displayed to the user when they have no subscriptions.');
+
+    $GLOBALS['TL_LANG']['tl_module']['pm_center_forum_module_legend'] = 'Forum module';
+    $GLOBALS['TL_LANG']['tl_module']['subforum_sub_legend'] = 'Forum settings';
+    $GLOBALS['TL_LANG']['tl_module']['thread_sub_legend'] = 'Topic settings';
+    $GLOBALS['TL_LANG']['tl_module']['misc_legend'] = 'Miscellaneous settings';
 
     /**
      * Legend
@@ -281,6 +308,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['DISCUSSIONS'] = 'Discussions (threads & posts)';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['QUESTIONS']   = 'Informations (questions & comments)';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['TICKETS']   = 'Ticketsystem';
+    $GLOBALS['TL_LANG']['tl_module']['c4g_references']['TICKET']   = 'Ticketsystem';
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['TREE']  = 'Tree';
     $GLOBALS['TL_LANG']['tl_module']['c4g_references']['BOXES'] = 'Boxes';
@@ -346,8 +374,16 @@
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('WYSIWYG-Editor', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "CKEditor";
-    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb']           = "Old WYSIWYG-Editor";
-    //$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "No WYSIWYG-Editor";
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_appearance_themeroller_css'] = array('jQuery UI ThemeRoller CSS fille', 'select a jQuery UI CSS file.');
-?>
+    $GLOBALS['TL_LANG']['tl_module']['fields']['pm_center_forum_module'] = array('Forum module', 'Pick the forum module associated with this module.');
+
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_notifications'] = 'Forum - Notifications';
+    $GLOBALS['TL_LANG']['tl_module']['fields']['sub_new_thread'] = array('New Topic', 'This email is sent when a new discussion is posted in a forum the user is subscribed to.');
+    $GLOBALS['TL_LANG']['tl_module']['fields']['sub_deleted_thread'] = array('Deleted Topic', 'This email is sent when a topic is deleted in a forum the user is subscribed to.');
+    $GLOBALS['TL_LANG']['tl_module']['fields']['sub_moved_thread'] = array('Moved Topic', 'This email is sent when a topic is moved in a forum the user is subscribed to.');
+    $GLOBALS['TL_LANG']['tl_module']['fields']['sub_new_post'] = array('New Post', 'This email is sent when a new post is created in a topic the user is subscribed to.');
+    $GLOBALS['TL_LANG']['tl_module']['fields']['sub_deleted_post'] = array('Deleted Post', 'This email is sent when a post is deleted in a topic the user is subscribed to.');
+    $GLOBALS['TL_LANG']['tl_module']['fields']['sub_edited_post'] = array('Edited Post', 'This email is sent when a post is edited in a topic the user is subscribed to.');
+    $GLOBALS['TL_LANG']['tl_module']['fields']['mail_new_pm'] = array('New Personal Message', 'This email is sent when the user receives a new PM.');
+    $GLOBALS['TL_LANG']['tl_module']['fields']['new_pm_redirect'] = array('Redirect page for personal messages', 'This is the page the notification for new personal messages will link to.');

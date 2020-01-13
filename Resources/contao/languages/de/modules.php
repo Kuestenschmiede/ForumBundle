@@ -32,4 +32,3 @@ $GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter']	= array('Forum (con4gis) - Pers
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription']	= array('Forum (con4gis) - Abonnements',
     'Dieses Modul gibt erweiterten Zugriff auf Themen- und Forenbereich-Abonnements.');
 
-?>

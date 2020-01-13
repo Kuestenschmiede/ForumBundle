@@ -44,4 +44,3 @@ $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['counter_caption_ticket'] = '[Ticket 
 /** Legends */
 $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['description_legend'] = 'Ticket';
 
-?>

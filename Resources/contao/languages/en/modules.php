@@ -31,3 +31,5 @@ $GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('Forum (con4gis) - B
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter'] 	= array('Forum (con4gis) - Private messages',
 															'With this module you can integrate the private messages for your forum.');
 
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription']	= array('Forum (con4gis) - Subscriptions',
+    'This module allows access to subscriptions.');

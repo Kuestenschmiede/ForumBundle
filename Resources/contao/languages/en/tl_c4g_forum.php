@@ -19,6 +19,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['name'] 			= array('Name',
 $GLOBALS['TL_LANG']['tl_c4g_forum']['optional_names']           = array('Optional captions', '');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['optional_name']            = array('Caption', '');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['optional_language']        = array('Language', '');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['tags'] 					= array('Tags', 'Tags available when creating topics and posts.');
 
 $GLOBALS['TL_LANG']['tl_c4g_forum']['headline'] 		= array('Headline',
 																'Here you can add a headline to the forum.');
@@ -86,6 +87,8 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['link_newwindow'] 	= array('Open links in ne
 																'Do not open links in the same window, but display the linked pages in a new window.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['sitemap_exclude'] 	= array('Exclude from XML sitemap',
 																'Don\'t put the forum and its threads into the Google XML sitemap (XML sitemap is activated in the frontend module)');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'] 			= ['Backend Author', 'Member to be shown as author if a topic or post is created in th backend.'];
+
 
 /**
  * Legends
@@ -99,6 +102,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['groups_legend'] 		= 'Member groups';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['rights_legend'] 		= 'Permissions';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['maps_legend'] 			= 'Maps (con4gis)';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['expert_legend']  		= 'Expert settings';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['additional_legend']    = 'Additional Information';
 
 /**
  * Buttons
@@ -112,7 +116,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['delete'] 		= array('Delete forum', 'Delete 
 $GLOBALS['TL_LANG']['tl_c4g_forum']['toggle'] 		= array('Publish/unpublish forum', 'Publish/unpublish forum ID %s');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['show']   		= array('Details', 'Show details of forum ID %s');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['index']   		= array('Build Index', 'Builds the Index for the complete Forum');
-
+$GLOBALS['TL_LANG']['tl_c4g_forum']['thread']  		= array('Topics', 'Shows the children of this forum.');
 /**
  * Links
  */
@@ -168,6 +172,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['right_alllanguages']	    = 'Edit all langua
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_tickettomember']     = 'Send tickets to single admins or members';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_showsentthreads']	= 'Show sent tickets';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_closethread']        = 'Change state';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_mapedit_style']   	= 'Edit map data: Location style';
 
 
 /**
