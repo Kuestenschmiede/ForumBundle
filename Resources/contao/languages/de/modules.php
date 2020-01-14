@@ -14,9 +14,9 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Struktur', 'Foren- und Ticketbereiche verwalten.' );
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Themenliste','Übersicht von Tickets und Themen');
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Übersicht Einträge');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Forum: Struktur', 'Foren- und Ticketbereiche verwalten.' );
+$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Forum: Themenliste','Übersicht von Tickets und Themen');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Forum: Übersicht Einträge');
 $GLOBALS['TL_LANG']['MOD']['con4gis_forum']              = ['con4gis '.$GLOBALS['con4gis']['version'] . ' - Forum', 'con4gis Foren-Module.'];
 
 /**
