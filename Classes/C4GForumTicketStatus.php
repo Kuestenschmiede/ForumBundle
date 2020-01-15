@@ -11,7 +11,7 @@
  * @link       https://www.con4gis.org
  */
 
-namespace con4gis\ForumBundle\Resources\contao\classes;
+namespace con4gis\ForumBundle\Classes;
 
 class C4GForumTicketStatus
 {

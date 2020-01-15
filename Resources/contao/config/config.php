@@ -31,7 +31,7 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
         'c4g_forum' => array
         (
             'tables' 		=> array('tl_c4g_forum'),
-            'build_index' 	=> array('con4gis\ForumBundle\Resources\contao\classes\C4GForumBackend', 'buildIndex')
+            'build_index' 	=> array('con4gis\ForumBundle\Classes\C4GForumBackend', 'buildIndex')
         ),
         'c4g_forum_thread' => array
         (
@@ -59,7 +59,7 @@ $GLOBALS['BE_FFL']['avatar'] = 'con4gis\ForumBundle\Resources\contao\widgets\Ava
 /**
  * Hooks
  */
-$GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper','removeOldFeedsHook');
+$GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('con4gis\ForumBundle\Classes\C4GForumHelper','removeOldFeedsHook');
 
 /**
  * CSS

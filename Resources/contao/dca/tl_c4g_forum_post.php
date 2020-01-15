@@ -280,10 +280,10 @@ class tl_c4g_forum_post extends \Backend{
     public function get_options(DataContainer $dc)
     {
         return array(
-            1 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(1),
-            2 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(2),
-            3 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(3),
-            4 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(4)
+            1 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(1),
+            2 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(2),
+            3 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(3),
+            4 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(4)
         );
     }
 }

@@ -11,7 +11,7 @@
  * @link       https://www.con4gis.org
  */
 
-namespace con4gis\ForumBundle\Resources\contao\classes;
+namespace con4gis\ForumBundle\Classes;
 
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
@@ -19,7 +19,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 
 /**
      * Class C4GForumSubscription
-     * @package con4gis\ForumBundle\Resources\contao\classes
+     * @package con4gis\ForumBundle\Classes
      */
     class C4GForumSubscription
     {

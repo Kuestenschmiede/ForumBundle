@@ -1,6 +1,6 @@
 <?php
 
-namespace con4gis\ForumBundle\Resources\contao\classes;
+namespace con4gis\ForumBundle\Classes;
 
 use con4gis\CoreBundle\Classes\Notification\C4GNotification;
 

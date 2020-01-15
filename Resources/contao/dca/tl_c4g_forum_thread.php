@@ -277,7 +277,7 @@ class tl_c4g_forum_thread extends \Backend
         $result .= date($GLOBALS['TL_CONFIG']['dateFormat'], intval($arrRow['tstamp'])).' ';
         $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp'])).' ';
         $result .= $author['username'];
-        $state = \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState($arrRow['state']);
+        $state = \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState($arrRow['state']);
         if($state)
         {
             $result .=' : (<b>'.$state.'</b>)';
@@ -289,10 +289,10 @@ class tl_c4g_forum_thread extends \Backend
     public function get_options(DataContainer $dc)
     {
         return array(
-            1 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(1),
-            2 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(2),
-            3 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(3),
-            4 => \con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus::getState(4)
+            1 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(1),
+            2 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(2),
+            3 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(3),
+            4 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(4)
             );
     }
     

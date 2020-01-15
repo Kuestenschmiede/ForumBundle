@@ -12,8 +12,8 @@
  */
 namespace con4gis\ForumBundle\Resources\contao\widgets;
 
-use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
-use con4gis\ForumBundle\Resources\contao\classes\C4gForumSingleFileUpload;
+use con4gis\ForumBundle\Classes\C4GForumHelper;
+use con4gis\ForumBundle\Classes\C4gForumSingleFileUpload;
 use Contao\Folder;
 use Contao\System;
 use Contao\Widget;

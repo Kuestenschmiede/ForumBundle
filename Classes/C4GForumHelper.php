@@ -11,7 +11,7 @@
  * @link       https://www.con4gis.org
  */
 
-namespace con4gis\ForumBundle\Resources\contao\classes;
+namespace con4gis\ForumBundle\Classes;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
@@ -53,7 +53,7 @@ class C4GForumHelper extends \System
      */
     public function __construct($database = null, $environment = null, $user = null, $forumName = '', $frontendUrl = '', $show_realname = 'UU', $forumType = 'FORUM')
     {
-        $this->subscription = new \con4gis\ForumBundle\Resources\contao\classes\C4GForumSubscription($this, $database, $environment, $user, $forumName, $frontendUrl, $forumType);
+        $this->subscription = new \con4gis\ForumBundle\Classes\C4GForumSubscription($this, $database, $environment, $user, $forumName, $frontendUrl, $forumType);
         if ($database == null) {
             $this->import('Database');
         } else {

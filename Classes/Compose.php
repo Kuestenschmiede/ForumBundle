@@ -11,14 +11,14 @@
  * @link       https://www.con4gis.org
  */
 
-namespace con4gis\ForumBundle\Resources\contao\classes;
+namespace con4gis\ForumBundle\Classes;
 
     use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
     use Contao\FrontendUser;
 
     /**
      * Class Compose
-     * @package con4gis\ForumBundle\Resources\contao\classes
+     * @package con4gis\ForumBundle\Classes
      */
     class Compose
     {

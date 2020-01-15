@@ -708,7 +708,7 @@ class tl_c4g_forum extends \Backend
 	public function updateDCA(DataContainer $dc)
 	{
 		if ($dc->Database != null) {
-			$helper = new con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper($dc->Database);
+			$helper = new con4gis\ForumBundle\Classes\C4GForumHelper($dc->Database);
 			$GLOBALS['TL_DCA']['tl_c4g_forum']['fields']['guest_rights']['default'] =
 				$helper->getGuestDefaultRights();
 	    	$GLOBALS['TL_DCA']['tl_c4g_forum']['fields']['member_rights']['default'] =
@@ -854,7 +854,7 @@ class tl_c4g_forum extends \Backend
 	public function getGuestRightList(DataContainer $dc)
 	{
 		if ($dc->Database != null) {
-			$helper = new con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper($dc->Database);
+			$helper = new con4gis\ForumBundle\Classes\C4GForumHelper($dc->Database);
 			$rights = $helper->getGuestRightList();
 			foreach ($rights as $right) {
 				$return[$right] = $GLOBALS['TL_LANG']['tl_c4g_forum']['right_'.$right];
@@ -871,7 +871,7 @@ class tl_c4g_forum extends \Backend
 	public function getRightList(DataContainer $dc)
 	{
 		if ($dc->Database != null) {
-			$helper = new con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper($dc->Database);
+			$helper = new con4gis\ForumBundle\Classes\C4GForumHelper($dc->Database);
 			$rights = $helper->getRightList();
 			foreach ($rights as $right) {
 				$return[$right] = $GLOBALS['TL_LANG']['tl_c4g_forum']['right_'.$right];
@@ -887,7 +887,7 @@ class tl_c4g_forum extends \Backend
 	public function onSubmit(DataContainer $dc)
 	{
 		if (($dc->activeRecord != null) && ($dc->Database != null)) {
-			$helper = new con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper($dc->Database);
+			$helper = new con4gis\ForumBundle\Classes\C4GForumHelper($dc->Database);
 			$helper->updateForumRightsAndGroupInheritance($dc->activeRecord->id,$dc->activeRecord->pid);
 			$helper->updateMapEnabledInheritance($dc->activeRecord->id,$dc->activeRecord->pid);
 		}
@@ -900,7 +900,7 @@ class tl_c4g_forum extends \Backend
 		{
 			if ($dc->activeRecord->id > 0)
 			{
-				$helper = new con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper($dc->Database);
+				$helper = new con4gis\ForumBundle\Classes\C4GForumHelper($dc->Database);
 				// TODO move old threads and posts to a paper bin
 			}
 		}
