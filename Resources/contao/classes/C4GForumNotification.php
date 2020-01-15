@@ -2,7 +2,7 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
-use con4gis\CoreBundle\Resources\contao\classes\notification\C4GNotification;
+use con4gis\CoreBundle\Classes\Notification\C4GNotification;
 
 class C4GForumNotification extends C4GNotification
 {

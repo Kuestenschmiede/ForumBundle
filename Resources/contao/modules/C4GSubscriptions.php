@@ -12,7 +12,7 @@
  */
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
-use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
+use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;

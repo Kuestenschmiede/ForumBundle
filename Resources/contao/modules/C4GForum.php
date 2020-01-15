@@ -13,8 +13,8 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
-    use con4gis\CoreBundle\Resources\contao\classes\C4GJQueryGUI;
-    use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+    use con4gis\CoreBundle\Classes\C4GJQueryGUI;
+    use con4gis\CoreBundle\Classes\C4GUtils;
     use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
     use con4gis\ForumBundle\Resources\contao\classes\C4GForumHelper;
     use con4gis\ForumBundle\Resources\contao\classes\C4GForumTicketStatus;
@@ -102,7 +102,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             $this->helper = new C4GForumHelper($this->Database, null,FrontendUser::getInstance(),"","","UU",$this->c4g_forum_type);
             $this->User = FrontendUser::getInstance();
 //            ResourceLoader::loadJavaScriptResource('bundles/con4giscore/vendor/ckeditor5/ckeditor.js', ResourceLoader::HEAD);
-            \con4gis\CoreBundle\Resources\contao\classes\ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
+            \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
         }
 
         /**

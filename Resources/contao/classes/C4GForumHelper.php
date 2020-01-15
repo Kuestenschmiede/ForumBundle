@@ -13,7 +13,7 @@
 
 namespace con4gis\ForumBundle\Resources\contao\classes;
 
-use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumMember;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;

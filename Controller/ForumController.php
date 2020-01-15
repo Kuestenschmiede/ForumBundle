@@ -14,7 +14,7 @@
 namespace con4gis\ForumBundle\Controller;
 
 
-use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\ForumBundle\Resources\contao\classes\C4GForumNotification;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
