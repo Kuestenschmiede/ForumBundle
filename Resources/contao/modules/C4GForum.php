@@ -15,6 +15,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
     use con4gis\CoreBundle\Classes\C4GJQueryGUI;
     use con4gis\CoreBundle\Classes\C4GUtils;
+    use con4gis\CoreBundle\Classes\C4GVersionProvider;
     use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
     use con4gis\ForumBundle\Classes\C4GForumHelper;
     use con4gis\ForumBundle\Classes\C4GForumTicketStatus;
@@ -3895,7 +3896,7 @@ JSPAGINATE;
         {
             //TODO forum id hier übergeben, dann können wir uns das forum hier aus der db holen und abfragen
             $forum = C4gForumModel::findByPk($forumId);
-            return ($GLOBALS['con4gis']['maps']['installed']) && (($forum->enable_maps) || static::$useMaps);
+            return (C4GVersionProvider::isInstalled('con4gis/maps')) && (($forum->enable_maps) || static::$useMaps);
         }
 
 

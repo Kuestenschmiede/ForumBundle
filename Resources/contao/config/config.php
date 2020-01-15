@@ -12,11 +12,6 @@
  */
 
 /**
- * Global settings
- */
-$GLOBALS['con4gis']['forum']['installed'] = true;
-
-/**
  * Frontend modules
  */
 $GLOBALS['FE_MOD']['con4gis']['c4g_forum'] = 'con4gis\ForumBundle\Resources\contao\modules\C4GForum';

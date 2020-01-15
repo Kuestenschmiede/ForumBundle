@@ -14,6 +14,7 @@
 namespace con4gis\ForumBundle\Classes;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
+use con4gis\CoreBundle\Classes\C4GVersionProvider;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumMember;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
@@ -2796,7 +2797,7 @@ class C4GForumHelper extends \System
     public function getGuestRightList()
     {
         $return = $this->getGuestDefaultRights();
-        if ($GLOBALS['con4gis']['maps']['installed']) {
+        if (C4GVersionProvider::isInstalled('con4gis/maps')) {
             $return[] = 'mapview';
         }
 
@@ -2809,7 +2810,7 @@ class C4GForumHelper extends \System
     public function getRightList()
     {
         $return = $this->getAdminDefaultRights();
-        if ($GLOBALS['con4gis']['maps']['installed']) {
+        if (C4GVersionProvider::isInstalled('con4gis/maps')) {
             $return[] = 'mapview';
             $return[] = 'mapedit';
             $return[] = 'mapextend';
