@@ -41,7 +41,8 @@
             (
                 'mode'                    => 1,
                 'fields'                  => array(''),
-                'flag'                    => 1
+                'flag'                    => 1,
+                'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
             ),
             'label' => array
             (
@@ -83,7 +84,7 @@
                 (
                     'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum_pn']['show'],
                     'href'                => 'act=show',
-                    'icon'                => 'show.gif'
+                    'icon'                => 'show.svg'
                 )
             )
         ),

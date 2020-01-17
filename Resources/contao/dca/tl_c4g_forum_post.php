@@ -44,7 +44,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             'mode'                    => 1,
             'fields'                  => array('creation'),
             'panelLayout'             => 'sort,filter;search,limit',
-            'flag'                    => 6
+            'flag'                    => 6,
+            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
         ),
         'label' => array
         (
@@ -87,7 +88,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum_post']['show'],
                 'href'                => 'act=show',
-                'icon'                => 'show.gif'
+                'icon'                => 'show.svg'
             )
         )
     ),

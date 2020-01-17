@@ -42,7 +42,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'mode'                    => 1,
             'fields'                  => array('creation'),
             'panelLayout'             => 'sort,filter;search,limit',
-            'flag'                    => 6
+            'flag'                    => 6,
+            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
         ),
         'label' => array
         (
@@ -90,14 +91,14 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['post'],
                 'href'                => 'do=c4g_forum_post&amp;table=tl_c4g_forum_post',
-                'icon'	 		      => 'bundles/con4gisforum/icons/table.png',
+                'icon'	 		      => 'tablewizard.svg',
                 'button_callback'     => array('tl_c4g_forum_thread','forumPost')
             ),
             'show' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['show'],
                 'href'                => 'act=show',
-                'icon'                => 'show.gif'
+                'icon'                => 'show.svg'
             )
         )
     ),
