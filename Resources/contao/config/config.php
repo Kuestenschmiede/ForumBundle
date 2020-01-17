@@ -25,18 +25,20 @@ $GLOBALS['FE_MOD']['con4gis']['c4g_forum_subscription'] = 'con4gis\ForumBundle\R
 $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
         'c4g_forum' => array
         (
-            'tables' 		=> array('tl_c4g_forum'),
-            'build_index' 	=> array('con4gis\ForumBundle\Classes\C4GForumBackend', 'buildIndex')
+            'brick' => 'forum',
+            'tables' => array('tl_c4g_forum'),
+            'build_index' => array('con4gis\ForumBundle\Classes\C4GForumBackend', 'buildIndex'),
+            'icon' => 'bundles/con4gisforum/images/be-icons/forumstructure.svg'
         ),
         'c4g_forum_thread' => array
         (
             'tables'        => array('tl_c4g_forum_thread'),
-            'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
+            'icon'	 		=> 'bundles/con4gisforum/images/be-icons/forumthreads.svg'
         ),
         'c4g_forum_post' => array
         (
             'tables'        => array('tl_c4g_forum_post'),
-            'icon'	 		=> 'bundles/con4gisforum/icons/forumicon.png'
+            'icon'	 		=> 'bundles/con4gisforum/images/be-icons/forumthreads.svg'
         )
     ]
 );
