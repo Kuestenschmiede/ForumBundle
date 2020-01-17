@@ -69,6 +69,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 				'label'				  => &$GLOBALS['TL_LANG']['tl_c4g_forum']['build_index'],
 				'href'				  => 'key=build_index',
 				'class'				  => 'navigation',
+                'icon'                => 'sync.svg',
 				'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="i"'
 			),
 			'all' => array
