@@ -13,7 +13,7 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
-use con4gis\CoreBundle\Classes\C4GJQueryGUI;
+use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\ForumBundle\Classes\C4GForumHelper;
 use Contao\Database;

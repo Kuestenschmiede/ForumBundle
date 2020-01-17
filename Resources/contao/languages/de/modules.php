@@ -21,13 +21,12 @@ $GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Forum: Übersicht Ei
 /**
  * Frontend modules
  */
-$GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			= array('Forum (con4gis)',
+$GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			= array('forum: Forum',
 															    'Mit diesem Modul binden Sie ein Forum oder Ticketsystem ein.');
-$GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('Forum (con4gis) - Navigationspfad',
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('forum: Navigationspfad',
 															    'Mit diesem Modul binden Sie einen Navigationspfad für, über ein Forum verlinkte, Seiten ein.');
-$GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter']	= array('Forum (con4gis) - Persönliche Nachrichten',
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter']	= array('forum: Persönliche Nachrichten',
 															    'Mit diesem Modul binden Sie die persönlichen Nachrichten für Ihre Forenmitglieder ein.');
-
-$GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription']	= array('Forum (con4gis) - Abonnements',
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'] = array('forum: Abonnements',
     'Dieses Modul gibt erweiterten Zugriff auf Themen- und Forenbereich-Abonnements.');
 
