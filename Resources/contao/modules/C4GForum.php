@@ -289,7 +289,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
             if ($this->c4g_forum_editor === "ck") {
                 $GLOBALS['TL_HEAD'][]       = "<script>var ckEditorItems = ['" . implode("','", $aToolbarButtons) . "'];</script>";
-                $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4giscore/vendor/ckeditor/ckeditor.js';
+                $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4gisprojects/vendor/ckeditor/ckeditor.js';
             }
 
             if($this->c4g_forum_pagination_active == "1") {
