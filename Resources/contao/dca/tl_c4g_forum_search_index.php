@@ -56,5 +56,9 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_search_index'] = array
         (
             'sql'=> "smallint(5) unsigned NOT NULL default '0'"
         ),
+        'importId' => array
+        (
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+        ),
     ),
 );

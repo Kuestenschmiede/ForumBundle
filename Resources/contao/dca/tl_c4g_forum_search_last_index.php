@@ -38,6 +38,10 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_search_last_index'] = array
         (
             'sql'                     => "int(5) unsigned NOT NULL default '1'"
         ),
+        'importId' => array
+        (
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+        ),
         'first' => array
         (
             'sql'                     => "int(10) NOT NULL default '0'"

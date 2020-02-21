@@ -140,6 +140,10 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
 //            'filter'                  => true,
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
+        'importId' => array
+        (
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+        ),
         'name' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['name'],

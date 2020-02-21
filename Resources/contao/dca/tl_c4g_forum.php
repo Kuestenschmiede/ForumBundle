@@ -195,6 +195,10 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
         (
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
+        'importId' => array
+        (
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+        ),
         'sorting' => array
         (
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
