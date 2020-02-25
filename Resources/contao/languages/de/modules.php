@@ -14,19 +14,15 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Forum: Struktur', 'Foren- und Ticketbereiche verwalten.' );
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Forum: Themenliste','Übersicht von Tickets und Themen');
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Forum: Übersicht Einträge');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Struktur', 'Foren- und Ticketbereiche verwalten.' );
+$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Themenliste','Übersicht von Tickets und Themen');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Übersicht Einträge');
 
 /**
  * Frontend modules
  */
-$GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			= array('forum: Forum',
-															    'Mit diesem Modul binden Sie ein Forum oder Ticketsystem ein.');
-$GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('forum: Navigationspfad',
-															    'Mit diesem Modul binden Sie einen Navigationspfad für, über ein Forum verlinkte, Seiten ein.');
-$GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter']	= array('forum: Persönliche Nachrichten',
-															    'Mit diesem Modul binden Sie die persönlichen Nachrichten für Ihre Forenmitglieder ein.');
-$GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'] = array('forum: Abonnements',
-    'Dieses Modul gibt erweiterten Zugriff auf Themen- und Forenbereich-Abonnements.');
+$GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			= array('(forum) Forum', 'Mit diesem Modul binden Sie ein Forum oder Ticketsystem ein.');
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('(forum) Navigationspfad', 'Mit diesem Modul binden Sie einen Navigationspfad für, über ein Forum verlinkte, Seiten ein.');
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter']	= array('(forum) Persönliche Nachrichten', 'Mit diesem Modul binden Sie die persönlichen Nachrichten für Ihre Forenmitglieder ein.');
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'] = array('(forum) Abonnements', 'Dieses Modul gibt erweiterten Zugriff auf Themen- und Forenbereich-Abonnements.');
 

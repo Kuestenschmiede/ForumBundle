@@ -45,7 +45,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             'fields'                  => array('creation'),
             'panelLayout'             => 'sort,filter;search,limit',
             'flag'                    => 6,
-            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
+            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
         ),
         'label' => array
         (

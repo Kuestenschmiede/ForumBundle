@@ -56,7 +56,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'mode'                    => 5,
 			'fields'                  => array('name'),
 			'flag'                    => 1,
-            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis.org_dark.svg',
+            'icon'                    => 'bundles/con4giscore/images/be-icons/con4gis_blue.svg',
 		),
 		'label' => array
 		(
@@ -933,7 +933,7 @@ class tl_c4g_forum extends \Backend
 	 */
 	public function get_maps(DataContainer $dc)
 	{
-		$maps = $this->Database->prepare ( "SELECT * FROM tl_c4g_maps WHERE is_map=1 AND published=1" )->execute ();
+		$maps = $this->Database->prepare ( "SELECT * FROM tl_c4g_maps WHERE location_type='map' AND published=1" )->execute ();
 		if ($maps->numRows > 0) {
 			while ( $maps->next () ) {
 				$return [$maps->id] = $maps->name;

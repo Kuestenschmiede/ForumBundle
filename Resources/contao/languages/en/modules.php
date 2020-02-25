@@ -14,18 +14,14 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( 'Forum: Structure', 'Administrate forums.' );
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( 'Forum: Thread list','Overview on tickets and threads');
-$GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( 'Forum: Overview Posts');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum'] 			= array( '(forum) Structure', 'Administrate forums.' );
+$GLOBALS['TL_LANG']['MOD']['c4g_forum_thread'] 	    = array( '(forum) Thread list','Overview on tickets and threads');
+$GLOBALS['TL_LANG']['MOD']['c4g_forum_post'] 	    = array( '(forum) Overview Posts');
 
 /**
  * Frontend modules
  */
-$GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			= array('forum: Forum',
-															'This module allows you to integrate forums.');
-$GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('forum: Breadcrumb',
-															'This module allows you to integrate a forum breadcrumb on pages linked to the forum.');
-$GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter'] 	= array('forum: Private messages',
-															'With this module you can integrate the private messages for your forum.');
-$GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'] = array('forum: Subscriptions',
-    'This module allows access to subscriptions.');
+$GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			= array('(forum) Forum', 'This module allows you to integrate forums.');
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('(forum) Breadcrumb', 'This module allows you to integrate a forum breadcrumb on pages linked to the forum.');
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter'] 	= array('(forum) Private messages', 'With this module you can integrate the private messages for your forum.');
+$GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'] = array('(forum) Subscriptions', 'This module allows access to subscriptions.');
