@@ -23,8 +23,9 @@
   },
   "require": {
     "contao/core-bundle": "^4.4",
-    "con4gis/core": "^3.3",
-    "con4gis/groups": "^2.4"
+    "con4gis/core": "^4.0",
+    "con4gis/groups": "^2.5",
+    "con4gis/projects": "^2.0"
   },
   "conflict": {
     "contao/core": "*",

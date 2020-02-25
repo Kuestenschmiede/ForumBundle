@@ -42,6 +42,11 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread_translations'] = array
         (
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
+        'importId' => array
+        (
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'eval'                    => array('doNotCopy' => true)
+        ),
         'language' => array
         (
             'sql'                     => "varchar(5) NOT NULL"

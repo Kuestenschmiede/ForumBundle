@@ -46,6 +46,11 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread_subscription'] = array
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
             'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
         ),
+        'importId' => array
+        (
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'eval'                    => array('doNotCopy' => true)
+        ),
         'member' => array
         (
             'sql'                     => "int(10) NOT NULL default '0'",

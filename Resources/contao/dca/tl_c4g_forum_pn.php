@@ -124,6 +124,11 @@
             'tstamp' => array(
                 'sql'                     => "int(10) unsigned NOT NULL default '0'"
             ),
+            'importId' => array
+            (
+                'sql'                     => "int(10) unsigned NOT NULL default '0'",
+                'eval'                    => array('doNotCopy' => true)
+            ),
             'sender_id' => array(
                 'sql'                     => "int(10) unsigned NOT NULL default '0'"
             ),

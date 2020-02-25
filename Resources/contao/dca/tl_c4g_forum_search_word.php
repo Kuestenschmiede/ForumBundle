@@ -44,5 +44,10 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_search_word'] = array
         (
             'sql'=> "varchar(32) NOT NULL default ''"
         ),
+        'importId' => array
+        (
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'eval'                    => array('doNotCopy' => true)
+        ),
     ),
 );
