@@ -4361,6 +4361,7 @@ JSPAGINATE;
             }
 
             $forum      = $this->helper->getForumFromDB($forumId);
+            $forum['map_type'] = "PICK";
             $geox       = '#' . $dialogId . '_geox';
             $geoy       = '#' . $dialogId . '_geoy';
             $geodata    = '#' . $dialogId . '_geodata';
@@ -4442,10 +4443,10 @@ JSPAGINATE;
             $data .=
                 '</div>';
 
-            $this->c4g_map_id                    = $forum['map_id'];
+//            $this->c4g_map_id                    = $forum['map_id'];
             C4GForumHelper::$postIdToIgnoreInMap = $postId;
 
-            $mapData = MapDataConfigurator::prepareMapData($this, $this->Database);
+            $mapData = MapDataConfigurator::prepareMapData($this, $this->Database, ['profile' => $forum['map_profile']]);
             if ($forum['map_type'] == 'PICK') {
                 // GEO Picker
                 $mapData['geopicker'] = array

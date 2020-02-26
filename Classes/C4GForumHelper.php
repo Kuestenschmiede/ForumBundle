@@ -401,7 +401,7 @@ class C4GForumHelper extends \System
                 'SELECT a.id,a.name,a.optional_names,a.headline,a.optional_headlines,a.description,a.optional_descriptions,a.threads,a.posts,a.box_imagesrc,t.name AS last_threadname,p.creation AS last_post_creation, ' . $sqlLastUser . ' AS last_username, ' .
                 'a.member_groups, a.admin_groups, a.guest_rights, a.member_rights, a.admin_rights,' .
                 'a.use_intropage, a.intropage, a.intropage_forumbtn, a.intropage_forumbtn_jqui, a.linkurl,a.link_newwindow,a.sitemap_exclude,' .
-                'a.pretext, a.posttext, a.enable_maps, a.enable_maps_inherited, a.map_type, a.map_id, a.map_location_label, a.map_override_locationstyle, a.map_label, a.map_tooltip ' .
+                'a.pretext, a.posttext, a.enable_maps, a.enable_maps_inherited, a.map_profile, a.map_location_label, a.map_override_locationstyle, a.map_label, a.map_tooltip ' .
                 ' FROM tl_c4g_forum a ' .
                 'LEFT JOIN tl_c4g_forum_post p ON p.id = a.last_post_id ' .
                 'LEFT JOIN tl_c4g_forum_thread t ON t.id = p.pid ' .
@@ -415,7 +415,7 @@ class C4GForumHelper extends \System
                 'SELECT a.id,a.name,a.optional_names,a.headline,a.optional_headlines,a.description,a.optional_descriptions,count(b.id) AS subforums,a.threads,a.posts,a.box_imagesrc,t.name AS last_threadname,p.creation AS last_post_creation, ' . $sqlLastUser . ' AS last_username, ' .
                 'a.member_groups, a.admin_groups, a.guest_rights, a.member_rights, a.admin_rights,' .
                 'a.use_intropage, a.intropage, a.intropage_forumbtn, a.intropage_forumbtn_jqui, a.linkurl,a.link_newwindow,a.sitemap_exclude,' .
-                'a.pretext, a.posttext, a.enable_maps, a.enable_maps_inherited, a.map_type, a.map_id, a.map_location_label, a.map_override_locationstyle, a.map_label, a.map_tooltip ' .
+                'a.pretext, a.posttext, a.enable_maps, a.enable_maps_inherited, a.map_profile, a.map_location_label, a.map_override_locationstyle, a.map_label, a.map_tooltip ' .
                 ' FROM tl_c4g_forum a ' .
                 'LEFT JOIN tl_c4g_forum b ON (b.pid = a.id) AND (b.published = ?) ' .
                 'LEFT JOIN tl_c4g_forum_post p ON p.id = a.last_post_id ' .
@@ -2637,7 +2637,7 @@ class C4GForumHelper extends \System
     public function updateMapEnabledInheritance($forumId, $pid)
     {
         $objSelect = $this->Database->prepare(
-                'SELECT id,pid,enable_maps,enable_maps_inherited,map_type,map_id,map_location_label,map_label,map_tooltip,map_popup,map_link ' .
+                'SELECT id,pid,enable_maps,enable_maps_inherited,map_profile,map_location_label,map_label,map_tooltip,map_popup,map_link ' .
                 'FROM tl_c4g_forum WHERE id=? or id=? or pid=?')->execute($forumId, $pid, $forumId);
         $row = [];
         while (($r = $objSelect->fetchAssoc()) !== false) {
@@ -2652,19 +2652,14 @@ class C4GForumHelper extends \System
                     $row[$forumId]['enable_maps_inherited'] = true;
                 }
 
-                if ($row[$forumId]['map_id'] != $row[$pid]['map_id']) {
-                    $set['map_id'] = $row[$pid]['map_id'];
-                    $row[$forumId]['map_id'] = $row[$pid]['map_id'];
+                if ($row[$forumId]['map_profile'] != $row[$pid]['map_profile']) {
+                    $set['map_profile'] = $row[$pid]['map_profile'];
+                    $row[$forumId]['map_profile'] = $row[$pid]['map_profile'];
                 }
 
                 if ($row[$forumId]['map_location_label'] != $row[$pid]['map_location_label']) {
                     $set['map_location_label'] = $row[$pid]['map_location_label'];
                     $row[$forumId]['map_location_label'] = $row[$pid]['map_location_label'];
-                }
-
-                if ($row[$forumId]['map_type'] != $row[$pid]['map_type']) {
-                    $set['map_type'] = $row[$pid]['map_type'];
-                    $row[$forumId]['map_type'] = $row[$pid]['map_type'];
                 }
 
                 if ($row[$forumId]['map_label'] != $row[$pid]['map_label']) {
