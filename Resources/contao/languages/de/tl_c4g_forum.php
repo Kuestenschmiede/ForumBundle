@@ -59,14 +59,12 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['admin_rights'] 			= array('Berechtigungen f
 																		'Legen Sie fest, welche Aktionen ein Moderator durchführen darf.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['enable_maps'] 				= array('Kartenanbindung aktivieren (erfordert con4gis-Maps)',
 																		'Bei Aktivierung dieses Schalters kann ein Mitglied mit entsprechenden Rechten Beiträge mit Geo-Koordinaten versehen, vorausgesetzt die Karten-Funktionalität wurde auch im Frontend-Modul aktiviert. Funktioniert nur, wenn die Contao-Erweiterung \'c4g_maps\' installiert ist! ');
-$GLOBALS['TL_LANG']['tl_c4g_forum']['map_type'] 				= array('Lokationstyp',
-																		'Legen Sie fest, welcher Typ von Lokationen im Forum angelegt werden kann.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['map_override_locationstyle']  	= array('Überschreiben der Karten-Lokationsstile erlauben',
 																		'Mit dieser Option erlauben sie die dem Benutzer mit der Erweiterung der PopUp-Information auch den Lokationsstil zu überschreiben.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['map_override_locstyles']  	= array('Erlaubte Lokationsstile',
 																		'Wählen Sie die Lokationsstile, die dem Benutzer zur Auswahl stehen. Standard: alle');
-$GLOBALS['TL_LANG']['tl_c4g_forum']['map_id'] 					= array('Basiskarte',
-																		'Legt eine zuvor in con4gis-Maps definierte Karte fest, die als Basis für den gewählten Editor in den Beiträgen und die Anzeige der Karte verwendet wird.');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['map_profile'] 					= array('Kartenprofil',
+																		'Legt das Kartenprofil fest, welches zum Aufbauen der Karte im Forenbereich verwendet wird.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['map_location_label'] 		= array('Label Lokation',
 																		'Wenn Sie hier ein Label festlegen, so ersetzt dieses den Text "Kartenlokation" im Frontend des Forums.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['map_label'] 				= array('Label',

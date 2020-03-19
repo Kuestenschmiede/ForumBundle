@@ -63,14 +63,12 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['admin_rights'] 	= array('Forum administrato
 																'Define which actions forum administrators are allowed to perform.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['enable_maps'] 		= array('Enable maps (requires con4gis-Maps)',
 																'Check this to activate map functionality for this forum. Note that you also have to configure map functionality in the frontend module, and to assign sufficient rights to the members. Requires the Contao extension \'c4g_maps\' to be installed! ');
-$GLOBALS['TL_LANG']['tl_c4g_forum']['map_type'] 		= array('Location type',
-																'Define the type of locations that may be created inside the forum.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['map_override_locationstyle']  	= array('Allow overriding the maps locationstyle',
 																			'Checking this option allows the user to override the maps locationstyle with his/her popup-extension.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['map_override_locstyles']  	= array('allowed Location styles',
 																		'Check the location styles available for the users. Default: all');
-$GLOBALS['TL_LANG']['tl_c4g_forum']['map_id'] 			= array('Basemap',
-																'Select a map, which is defined in con4gis-Maps as base map for the choosen editor in posts, and for showing maps.');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['map_profile'] 					= array('Map profile',
+    'Define a map profile which will be used to create the map in this forum.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['map_location_label'] 	= array('Location label',
 																	'Define a label to substitute the term "map location" in the frontend.');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['map_label'] 		= array('Label',

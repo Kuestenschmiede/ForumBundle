@@ -181,7 +181,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 	'subpalettes' => array(
 		'define_groups'				  => 'member_groups,admin_groups,default_author',
 		'define_rights'				  => 'guest_rights,member_rights,admin_rights',
-		'enable_maps'			  	  => 'map_type,map_id,map_location_label,map_override_locstyles,map_label,map_tooltip,map_popup,map_link',
+		'enable_maps'			  	  => 'map_profile,map_location_label,map_override_locstyles,map_label,map_tooltip,map_popup,map_link',
 	),
 
 	// Fields
@@ -502,19 +502,17 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'eval'					  => array('submitOnChange'=>true),
             'sql'                     => "char(1) NOT NULL default ''"
 		),
-
-		'map_type' => array
-		(
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['map_type'],
+        
+        'map_profile' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['map_profile'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options'                 => array('EDIT','PICK','OSMID'),
-            'default'                 => 'EDIT',
-            'reference'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['references'],
-            'eval'					  => array('submitOnChange'=>true),
-            'sql'                     => "char(5) NOT NULL default 'PICK'"
-		),
-
+            'foreignKey'              => 'tl_c4g_map_profiles.name',
+            'eval'                    => ['tl_class'=>'long',
+                                               'submitOnChange' => true, 'chosen' => true, 'alwaysSave' => true],
+            'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+        ],
 		'map_override_locationstyle' => array
 		(
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['map_override_locationstyle'],
@@ -533,15 +531,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'options_callback'        => array('tl_c4g_forum','getAllLocStyles'),
             'eval'                    => array('mandatory'=>false, 'multiple'=>true),
             'sql'                     => "blob NULL"
-		),
-
-		'map_id' => array
-		(
-            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['map_id'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_forum', 'get_maps'),
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
 
 		'map_location_label' => array
@@ -731,7 +720,7 @@ class tl_c4g_forum extends \Backend
 	    if (!$dc->id) {
 	    	return;
 	    }
-		$objForum = $this->Database->prepare("SELECT use_intropage, map_type, map_override_locationstyle FROM tl_c4g_forum WHERE id=?")
+		$objForum = $this->Database->prepare("SELECT use_intropage, map_override_locationstyle FROM tl_c4g_forum WHERE id=?")
 			->limit(1)
 			->execute($dc->id);
 	    if ($objForum->numRows > 0) {
@@ -750,18 +739,6 @@ class tl_c4g_forum extends \Backend
 	    				$GLOBALS['TL_DCA']['tl_c4g_forum']['palettes']['default']);
 
 		    if ($objForum->numRows > 0) {
-			    if ($objForum->map_type == 'EDIT') {
-			    	$GLOBALS['TL_DCA']['tl_c4g_forum']['subpalettes']['enable_maps'] =
-			    		str_replace('map_override_locstyles,',
-			    			'', $GLOBALS['TL_DCA']['tl_c4g_forum']['subpalettes']['enable_maps']);
-			    }
-
-			    if ($objForum->map_type == 'OSMID') {
-			    	$GLOBALS['TL_DCA']['tl_c4g_forum']['subpalettes']['enable_maps'] =
-			    		str_replace('map_id,map_location_label,map_override_locstyles,map_label,map_tooltip,map_popup,map_link',
-			    			'map_override_locationstyle,map_id', $GLOBALS['TL_DCA']['tl_c4g_forum']['subpalettes']['enable_maps']);
-			    }
-
 			    if ($objForum->map_override_locationstyle) {
 			    	$GLOBALS['TL_DCA']['tl_c4g_forum']['subpalettes']['enable_maps'] =
 			    		str_replace('map_override_locationstyle,',
