@@ -507,10 +507,9 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['map_profile'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'foreignKey'              => 'tl_c4g_map_profiles.name',
+            'options_callback'        => ['tl_c4g_forum', 'loadMapProfiles'],
             'eval'                    => ['tl_class'=>'long',
                                                'submitOnChange' => true, 'chosen' => true, 'alwaysSave' => true],
-            'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
 		'map_override_locationstyle' => array
@@ -659,6 +658,19 @@ class tl_c4g_forum extends \Backend
 		$this->loadLanguageFile('stopwords');
 
 	}
+	
+	public function loadMapProfiles() {
+	    if (C4GVersionProvider::isInstalled('con4gis/maps')) {
+	        $arrProfiles = \con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel::findAll();
+	        $arrResult = [];
+	        foreach ($arrProfiles as $profile) {
+	            $arrResult[$profile->id] = $profile->name;
+            }
+	        return $arrResult;
+        } else {
+	        return [];
+        }
+    }
 
 
     public function setMailTextDefault($varValue, DataContainer $dc){

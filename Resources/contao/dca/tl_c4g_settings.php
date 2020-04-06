@@ -11,7 +11,10 @@
  * @link       https://www.con4gis.org
  */
 
-$GLOBALS['TL_DCA']['tl_c4g_settings']['palettes']['default'] .= '{c4g_forum_legend},c4g_forum_type;';
+Contao\CoreBundle\DataContainer\PaletteManipulator::create()
+    ->addLegend('c4g_forum_legend', 'expert_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE, true)
+    ->addField('c4g_forum_type', 'c4g_forum_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+    ->applyToPalette('default', 'tl_c4g_settings');
 
 $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['c4g_forum_type'] = array
 (
