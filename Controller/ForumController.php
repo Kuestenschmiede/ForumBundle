@@ -112,7 +112,7 @@ class ForumController extends Controller
                     if (!empty($arrFragments[1])) {
                         $sType      = $arrFragments[1];
                         $aReturn    = array();
-                        $sClassName = "con4gis\\ForumBundle\\Resources\\contao\\classes\\" . ucfirst($sType);
+                        $sClassName = "con4gis\\ForumBundle\\Classes\\" . ucfirst($sType);
                         if (class_exists($sClassName)) {
                             $aData = \Input::get('data');
 
