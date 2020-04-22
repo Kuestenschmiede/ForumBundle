@@ -5,7 +5,7 @@
  */
 
 @font-face {
-	font-family: 'FontAwesome';
+	font-family: 'Font Awesome 5 Free';
 	font-weight: 100;
 	font-style: normal;
 }
@@ -356,7 +356,7 @@
 .rating_static > label:before {
     margin: 4px;
     font-size: 1.25em;
-    font-family: FontAwesome;
+    font-family: 'Font Awesome 5 Free';
     display: inline-block;
     content: "\f005";
 }
