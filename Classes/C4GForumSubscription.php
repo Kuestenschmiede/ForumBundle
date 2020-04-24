@@ -14,8 +14,11 @@
 namespace con4gis\ForumBundle\Classes;
 
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
+use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
+use Contao\MemberModel;
+use Contao\StringUtil;
 
 /**
      * Class C4GForumSubscription
@@ -112,21 +115,77 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
          *
          * @return mixed
          */
-        public function getForumSubscribersFromDB($forumId, $all)
+        public function getForumSubscribersFromDB($forumId)
         {
-            if ($all) {
-                $aReturn = $this->Database->prepare('SELECT a.member AS memberId, b.email AS email, b.username as username, 1 AS type ' . 'FROM tl_c4g_forum_subforum_subscription a ' . 'LEFT JOIN tl_member b ON b.id = a.member ' . 'WHERE a.pid = ?')->execute($forumId)->fetchAllAssoc();
-            } else {
-                $aReturn = $this->Database->prepare('SELECT a.member AS memberId, b.email AS email, b.username as username, 1 as type ' . 'FROM tl_c4g_forum_subforum_subscription a ' . 'LEFT JOIN tl_member b ON b.id = a.member ' . 'WHERE a.pid = ? AND a.thread_only = 0')->execute($forumId)->fetchAllAssoc();
+            $subModels = C4GForumSubscriptionModel::findBy('pid', $forumId);
+            $subs = [];
+            if ($subModels !== null) {
+                foreach ($subModels as $subModel) {
+                    try {
+                        $subs[$subModel->member] = [];
+                        if ($subModel->newThread === '1') {
+                            $subs[$subModel->member][] = 'newThread';
+                        }
+                        if ($subModel->movedThread === '1') {
+                            $subs[$subModel->member][] = 'movedThread';
+                        }
+                        if ($subModel->deletedThread === '1') {
+                            $subs[$subModel->member][] = 'deletedThread';
+                        }
+                        if ($subModel->newPost === '1') {
+                            $subs[$subModel->member][] = 'newPost';
+                        }
+                        if ($subModel->editedPost === '1') {
+                            $subs[$subModel->member][] = 'editedPost';
+                        }
+                        if ($subModel->deletedPost === '1') {
+                            $subs[$subModel->member][] = 'deletedPost';
+                        }
+                    } catch (\Throwable $throwable) {
+                        continue;
+                    }
+                }
             }
+            $forum = C4gForumModel::findByPk($forumId);
+            if ($forum !== null) {
+                if ($forum->auto_subscribe === '1') {
+                    $forum = $this->Database->prepare(
+                        'SELECT member_groups, admin_groups FROM tl_c4g_forum WHERE id=?')
+                        ->execute($forumId)->fetchAssoc();
 
-            foreach ($aReturn as $key => $aItem) {
-                if (empty($aReturn[$key]['username'])) {
-                    $aReturn[$key]['username'] = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['DELETED_USER'];
+                    $forumMemGroups = StringUtil::deserialize($forum['member_groups'], true);
+                    $forumAdGroups = StringUtil::deserialize($forum['admin_groups'], true);
+
+                    $groups = array_merge($forumMemGroups, $forumAdGroups);
+
+                    $memberModels = MemberModel::findAll();
+                    if ($memberModels !== null) {
+                        foreach ($memberModels as $memberModel) {
+                            $memberGroups = StringUtil::deserialize($memberModel->groups);
+                            foreach ($memberGroups as $memberGroup) {
+                                if (in_array($memberGroup, $groups)) {
+                                    $subs[$memberModel->id] = [
+                                        'newThread',
+                                        'movedThread',
+                                        'deletedThread',
+                                        'newPost',
+                                        'editedPost',
+                                        'deletedPost'
+                                    ];
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
-            return $aReturn;
+            $subObjects = [];
+            if (!empty($subs)) {
+                foreach ($subs as $key => $sub) {
+                    $subObjects[$key] = new Subscription(MemberModel::findByPk($key), $sub);
+                }
+            }
+            return $subObjects;
         }
 
         /**
@@ -138,15 +197,20 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
          */
         public function getThreadSubscribersFromDB($threadId)
         {
-            $aReturn = $this->Database->prepare('SELECT a.member AS memberId, b.email AS email, b.username as username, 0 as type ' . 'FROM tl_c4g_forum_thread_subscription a ' . 'LEFT JOIN tl_member b ON b.id = a.member ' . 'WHERE a.pid = ?')->execute($threadId)->fetchAllAssoc();
-
-            foreach ($aReturn as $key => $aItem) {
-                if (empty($aReturn[$key]['username'])) {
-                    $aReturn[$key]['username'] = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['DELETED_USER'];
-                }
+            $subscriptionModels = C4GForumSubscriptionModel::findBy('pid', $threadId);
+            $subs = [];
+            foreach ($subscriptionModels as $model) {
+                $subs[$model->member] = new Subscription(MemberModel::findByPk($model->member), [
+                    'newThread',
+                    'movedThread',
+                    'deletedThread',
+                    'newPost',
+                    'editedPost',
+                    'deletedPost'
+                ]);
             }
 
-            return $aReturn;
+            return $subs;
         }
 
         /**
@@ -271,7 +335,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
         }
 
         /**
-         * @param $subscribers
+         * @param $subscriptions
          * @param $threadId
          * @param $sendKind
          * @param $forumModule
@@ -279,15 +343,16 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
          * @param string $forumType
          * @param null $headline
          */
-        public function sendSubscriptionEMail($subscribers, $threadId, $sendKind, $forumModule, $sUrl = false, $forumType = 'DISCUSSIONS', $headline = null)
+        public function sendSubscriptionEMail($subscriptions, $threadId, $sendKind, $forumModule, $sUrl = false, $forumType = 'DISCUSSIONS', $headline = null)
         {
             \System::loadLanguageFile('tl_c4g_forum');
             $thread = $this->helper->getThreadAndForumNameAndMailTextFromDBUncached($threadId);
             $forumId = $thread['forumid'];
             $addresses = [];
-            foreach ($subscribers as $subscriber) {
-                if ((!$addresses[$subscriber['email']]) && ($subscriber['memberId'] != $this->User->id)) {
-                    if ($subscriber['type'] == 1) {
+            foreach ($subscriptions as $subscription) {
+                $subscriber = $subscription->getMemberModel();
+                if ((!$addresses[$subscriber->email]) && ($subscriber->id != $this->User->id)) {
+                    if ($subscriber->type == 1) {
                         $sType = 'SUBFORUM';
                         $sPerm = 'subscribeforum';
                     } else {
@@ -296,16 +361,13 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                     }
 
                     // check if subscriber still has permission to get subscription mails
-                    if ($this->helper->checkPermission($thread['forumid'], $sPerm, $subscriber['memberId'])) {
+                    if ($this->helper->checkPermission($thread['forumid'], $sPerm, $subscriber->memberId)) {
                         /* Send Notifications via Notification center*/
 
                         try {
                             switch ($sendKind) {
                                 case 'new':
-                                    if (!$this->isSubscriptionValid(
-                                        'newPost',
-                                        C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $subscriber['memberId']),
-                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
+                                    if (!$subscription->isSubscriptionValid('newPost')) {
                                         break 2;
                                     }
                                     $notification = new C4GForumNotification(C4GForumNotification::SUB_NEW_POST);
@@ -314,10 +376,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 
                                     break;
                                 case 'edit':
-                                    if (!$this->isSubscriptionValid(
-                                        'editedPost',
-                                        C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $subscriber['memberId']),
-                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
+                                    if (!$subscription->isSubscriptionValid('editedPost')) {
                                         break 2;
                                     }
                                     $notification = new C4GForumNotification(C4GForumNotification::SUB_EDITED_POST);
@@ -325,10 +384,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 
                                     break;
                                 case 'delete':
-                                    if (!$this->isSubscriptionValid(
-                                        'deletedPost',
-                                        C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $subscriber['memberId']),
-                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
+                                    if (!$subscription->isSubscriptionValid('deletedPost')) {
                                         break 2;
                                     }
                                     $notification = new C4GForumNotification(C4GForumNotification::SUB_DELETED_POST);
@@ -336,10 +392,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 
                                     break;
                                 case 'delThread':
-                                    if (!$this->isSubscriptionValid(
-                                        'deletedThread',
-                                        null,
-                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
+                                    if (!$subscription->isSubscriptionValid('deletedThread')) {
                                         break 2;
                                     }
                                     $notification = new C4GForumNotification(C4GForumNotification::SUB_DELETED_THREAD);
@@ -347,10 +400,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 
                                     break;
                                 case 'moveThread':
-                                    if (!$this->isSubscriptionValid(
-                                        'movedThread',
-                                        null,
-                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
+                                    if (!$subscription->isSubscriptionValid('movedThread')) {
                                         break 2;
                                     }
                                     $notification = new C4GForumNotification(C4GForumNotification::SUB_MOVED_THREAD);
@@ -358,10 +408,7 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 
                                     break;
                                 case 'newThread':
-                                    if (!$this->isSubscriptionValid(
-                                        'newThread',
-                                        null,
-                                        C4GForumSubscriptionModel::findByForumAndMember($forumId, $subscriber['memberId']))) {
+                                    if (!$subscription->isSubscriptionValid('newThread')) {
                                         break 2;
                                     }
                                     $notification = new C4GForumNotification(C4GForumNotification::SUB_NEW_THREAD);
@@ -373,14 +420,14 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
                             }
 
                             $notification->setTokenValue('admin_email', $GLOBALS['TL_CONFIG']['adminEmail']);
-                            $notification->setTokenValue('user_email', $subscriber['email']);
-                            $notification->setTokenValue('user_name', $subscriber['username']);
+                            $notification->setTokenValue('user_email', $subscriber->email);
+                            $notification->setTokenValue('user_name', $subscriber->username);
                             $notification->setTokenValue('threadname', $thread['threadname']);
                             $notification->setTokenValue('forumname', $thread['forumname']);
                             $notification->setTokenValue('responsible_username', $this->User->username);
                             $notification->setTokenValue('link', $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl));
-                            $notification->setTokenValue('unsubscribe_link', $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber['email'], $sUrl));
-                            $notification->setTokenValue('unsubscribe_all_link', $this->generateUnsubscribeLinkAll($subscriber['email'], $sUrl));
+                            $notification->setTokenValue('unsubscribe_link', $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber->email, $sUrl));
+                            $notification->setTokenValue('unsubscribe_all_link', $this->generateUnsubscribeLinkAll($subscriber->email, $sUrl));
                             $notification->send($notificationIDs);
                         } catch (\Throwable $e) {
                             C4gLogModel::addLogEntry('forum', $e->getMessage() . "\n" . $e->getTraceAsString());

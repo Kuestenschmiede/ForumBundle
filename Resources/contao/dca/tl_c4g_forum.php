@@ -164,7 +164,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 										 '{additional_legend:hide},tags;'.
 										 '{groups_legend:hide},define_groups;'.
 										 '{rights_legend:hide},define_rights;'.
-										 '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude;mail_subscription_text',
+										 '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude,auto_subscribe;',
 
 	    // used in updateDCA(), because subpalettes don't work well with TinyMCE fields!!
 		'with_intropage'              => '{general_legend},name,optional_names,headline,optional_headlines,description,optional_descriptions,published;'.
@@ -174,7 +174,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 										 '{infotext_legend:hide},pretext,posttext;'.
 										 '{groups_legend:hide},define_groups;'.
 										 '{rights_legend:hide},define_rights;'.
-										 '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude;',
+										 '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude,auto_subscribe;',
 
 	),
 
@@ -608,6 +608,14 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 		'sitemap_exclude' => array
 		(
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['sitemap_exclude'],
+            'exclude'                 => true,
+            'default'                 => '',
+            'inputType'               => 'checkbox',
+            'sql'                     => "char(1) NOT NULL default ''"
+		),
+        'auto_subscribe' => array
+		(
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['auto_subscribe'],
             'exclude'                 => true,
             'default'                 => '',
             'inputType'               => 'checkbox',

@@ -13,11 +13,13 @@
 
 namespace con4gis\ForumBundle\Resources\contao\models;
 
-    /**
-     * Class C4gForumModel
-     * @package con4gis\ForumBundle\Resources\contao\models
-     */
-    class C4gForumModel extends \Model {
+use Contao\Model;
 
-        protected static $strTable = "tl_c4g_forum";
-    }
+/**
+ * Class C4gForumModel
+ * @package con4gis\ForumBundle\Resources\contao\models
+ */
+class C4gForumModel extends Model {
+
+    protected static $strTable = "tl_c4g_forum";
+}

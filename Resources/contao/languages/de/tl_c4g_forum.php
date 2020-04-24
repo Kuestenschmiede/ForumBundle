@@ -82,6 +82,8 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['link_newwindow'] 			= array('Links in neuem
 $GLOBALS['TL_LANG']['tl_c4g_forum']['sitemap_exclude'] 			= array('Nicht in XML-Sitemap aufnehmen',
 																		'Den Forenbereich und die Themen nicht in die Google XML-Sitemap aufnehmen (die Sitemap wird im Frontend-Modul aktiviert)');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'] 			= array('Autor für Backend', 'Benutzer, der als Autor angezeigt werden soll, wenn ein Forenelement im Backend erstellt wird.');
+$GLOBALS['TL_LANG']['tl_c4g_forum']['auto_subscribe'] = ['Immer benachrichtigen', 'Falls gesetzt, werden Mitglieder und Moderatoren des Forenbereichs immer benachrichtigt, wenn in diesem Forum etwas Neues passiert.'];
+
 
 /**
  * Legends

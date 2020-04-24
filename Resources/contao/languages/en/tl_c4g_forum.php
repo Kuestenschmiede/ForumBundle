@@ -86,6 +86,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['link_newwindow'] 	= array('Open links in ne
 $GLOBALS['TL_LANG']['tl_c4g_forum']['sitemap_exclude'] 	= array('Exclude from XML sitemap',
 																'Don\'t put the forum and its threads into the Google XML sitemap (XML sitemap is activated in the frontend module)');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'] 			= ['Backend Author', 'Member to be shown as author if a topic or post is created in th backend.'];
+$GLOBALS['TL_LANG']['tl_c4g_forum']['auto_subscribe'] = ['Always notify', 'If checked, members and moderators of this forum will be notified of anything happening in this forum.'];
 
 
 /**

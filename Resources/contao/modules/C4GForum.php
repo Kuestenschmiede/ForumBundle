@@ -2226,7 +2226,7 @@ JSPAGINATE;
                 }
 
                 $threadSubscribers = $this->helper->subscription->getThreadSubscribersFromDB($threadId);
-                $forumSubscribers  = $this->helper->subscription->getForumSubscribersFromDB($forumId, 0);
+                $forumSubscribers  = $this->helper->subscription->getForumSubscribersFromDB($forumId);
                 if ($threadSubscribers || $forumSubscribers) {
                     $this->helper->subscription->MailCache ['subject']  = $this->putVars['subject'];
                     $this->helper->subscription->MailCache ['post']     = $this->putVars['post'];
@@ -2461,7 +2461,7 @@ JSPAGINATE;
                 $return ['performaction'] = "readthread:" . $result['thread_id'];
                 $return ['usermessage']   = C4GForumHelper::getTypeText($this->c4g_forum_type,'SUCCESS_SAVE_THREAD');
 
-                $forumSubscribers = $this->helper->subscription->getForumSubscribersFromDB($forumId, 1);
+                $forumSubscribers = $this->helper->subscription->getForumSubscribersFromDB($forumId);
                 if ($forumSubscribers) {
                     $this->helper->subscription->MailCache ['subject']  = $this->putVars['subject'];
                     $this->helper->subscription->MailCache ['post']     = $this->putVars['post'];
@@ -2859,7 +2859,7 @@ JSPAGINATE;
             }
 
             $threadSubscribers = $this->helper->subscription->getThreadSubscribersFromDB($threadId);
-            $forumSubscribers  = $this->helper->subscription->getForumSubscribersFromDB($forumId, 1);
+            $forumSubscribers  = $this->helper->subscription->getForumSubscribersFromDB($forumId);
 
 
             if ($threadSubscribers || $forumSubscribers) {
@@ -3244,8 +3244,8 @@ JSPAGINATE;
             }
 
             $threadSubscribers   = $this->helper->subscription->getThreadSubscribersFromDB($threadId);
-            $forumSubscribers    = $this->helper->subscription->getForumSubscribersFromDB($forumId, 1);
-            $newForumSubscribers = $this->helper->subscription->getForumSubscribersFromDB($newForumId, 1);
+            $forumSubscribers    = $this->helper->subscription->getForumSubscribersFromDB($forumId);
+            $newForumSubscribers = $this->helper->subscription->getForumSubscribersFromDB($newForumId);
 
             if ($threadSubscribers || $forumSubscribers || $newForumSubscribers) {
                 $threadOld                                                   = $this->helper->getThreadAndForumNameFromDB($threadId);
@@ -3482,7 +3482,7 @@ JSPAGINATE;
                 $return ['performaction'] = "readthread:" . $post['threadid'];
 
                 $threadSubscribers = $this->helper->subscription->getThreadSubscribersFromDB($post ['threadid']);
-                $forumSubscribers  = $this->helper->subscription->getForumSubscribersFromDB($post ['forumid'], 0);
+                $forumSubscribers  = $this->helper->subscription->getForumSubscribersFromDB($post ['forumid']);
 
                 if ($threadSubscribers || $forumSubscribers) {
                     $this->helper->subscription->MailCache ['subject']  = $post ['subject'];
@@ -3623,7 +3623,7 @@ JSPAGINATE;
                 }
 
                 $threadSubscribers = $this->helper->subscription->getThreadSubscribersFromDB($post['threadid']);
-                $forumSubscribers  = $this->helper->subscription->getForumSubscribersFromDB($post['forumid'], 0);
+                $forumSubscribers  = $this->helper->subscription->getForumSubscribersFromDB($post['forumid']);
 
                 if ($threadSubscribers || $forumSubscribers) {
                     $this->helper->subscription->MailCache ['subject']  = $this->putVars['subject'];
