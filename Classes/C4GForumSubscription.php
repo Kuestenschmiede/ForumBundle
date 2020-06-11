@@ -170,7 +170,7 @@ use Contao\StringUtil;
                                         'deletedThread',
                                         'newPost',
                                         'editedPost',
-                                        'deletedPost'
+                                        'deletedPost',
                                     ];
                                 }
                             }
@@ -185,6 +185,7 @@ use Contao\StringUtil;
                     $subObjects[$key] = new Subscription(MemberModel::findByPk($key), $sub);
                 }
             }
+
             return $subObjects;
         }
 
@@ -206,7 +207,7 @@ use Contao\StringUtil;
                     'deletedThread',
                     'newPost',
                     'editedPost',
-                    'deletedPost'
+                    'deletedPost',
                 ]);
             }
 

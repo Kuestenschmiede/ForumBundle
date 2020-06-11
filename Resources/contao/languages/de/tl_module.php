@@ -87,7 +87,7 @@
     );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes']                       = array(
         'Editor verwenden',
-        'Deaktivieren Sie diese Checkbox, falls Sie Bden Editor komplett deaktivieren möchten! Dies kann zu Formatfehlern führen, wenn der Editor in einem bereits laufenden Forum zuvor aktiviert waren. Ohne Editor sind Formatierungen nicht mehr möglich.'
+        'Deaktivieren Sie diese Checkbox, falls Sie den Editor komplett deaktivieren möchten! Dies kann zu Formatfehlern führen, wenn der Editor in einem bereits laufenden Forum zuvor aktiviert waren. Ohne Editor sind Formatierungen nicht mehr möglich.'
     );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = array('Editor Toolbar Schaltflächen', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('Editor', '');
