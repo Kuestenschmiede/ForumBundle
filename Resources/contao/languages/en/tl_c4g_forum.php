@@ -87,6 +87,8 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['sitemap_exclude'] 	= array('Exclude from XM
 																'Don\'t put the forum and its threads into the Google XML sitemap (XML sitemap is activated in the frontend module)');
 $GLOBALS['TL_LANG']['tl_c4g_forum']['default_author'] 			= ['Backend Author', 'Member to be shown as author if a topic or post is created in th backend.'];
 $GLOBALS['TL_LANG']['tl_c4g_forum']['auto_subscribe'] = ['Always notify', 'If checked, members and moderators of this forum will be notified of anything happening in this forum.'];
+$GLOBALS['TL_LANG']['tl_c4g_forum']['maxPostsPerThread'] = ['Post limit', 'Limits the number of posts a member may post in a single topic in this forum. 0 = Unlimited.'];
+$GLOBALS['TL_LANG']['tl_c4g_forum']['charLimitPerPost'] = ['Character limit', 'Limits the number of characters that may be posted in a single post. 0 = Unlimited.'];
 
 
 /**

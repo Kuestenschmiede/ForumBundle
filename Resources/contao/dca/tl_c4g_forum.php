@@ -164,7 +164,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 										 '{additional_legend:hide},tags;'.
 										 '{groups_legend:hide},define_groups;'.
 										 '{rights_legend:hide},define_rights;'.
-										 '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude,auto_subscribe;',
+										 '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude,auto_subscribe,maxPostsPerThread,charLimitPerPost;',
 
 	    // used in updateDCA(), because subpalettes don't work well with TinyMCE fields!!
 		'with_intropage'              => '{general_legend},name,optional_names,headline,optional_headlines,description,optional_descriptions,published;'.
@@ -174,7 +174,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 										 '{infotext_legend:hide},pretext,posttext;'.
 										 '{groups_legend:hide},define_groups;'.
 										 '{rights_legend:hide},define_rights;'.
-										 '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude,auto_subscribe;',
+										 '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude,auto_subscribe,maxPostsPerThread,charLimitPerPost;',
 
 	),
 
@@ -620,6 +620,28 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'default'                 => '',
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
+		),
+        'maxPostsPerThread' => array
+		(
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['maxPostsPerThread'],
+            'exclude'                 => true,
+            'default'                 => 0,
+            'inputType'               => 'text',
+            'eval'                    => [
+                'rgxp' => 'natural'
+            ],
+            'sql'                     => "int NOT NULL default 0"
+		),
+        'charLimitPerPost' => array
+		(
+            'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['charLimitPerPost'],
+            'exclude'                 => true,
+            'default'                 => 0,
+            'inputType'               => 'text',
+            'eval'                    => [
+                'rgxp' => 'natural'
+            ],
+            'sql'                     => "int NOT NULL default 0"
 		),
 		'tags' => array
 		(
