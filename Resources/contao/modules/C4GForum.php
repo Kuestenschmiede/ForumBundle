@@ -1513,9 +1513,6 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             foreach ($posts as $post) {
                 $data .= $this->generatePostAsHtml($post, true);
             }
-            if (count($posts) == 1) {
-//                $posts = $posts[0];
-            }
             list($access, $message) = $this->checkPermission($posts[0]['forumid']);
             if (!$access) {
                 return $this->getPermissionDenied($message);
@@ -2176,7 +2173,6 @@ JSPAGINATE;
          */
         public function sendPost($threadId)
         {
-
             $sUrl = $this->putVars['site'];
             $sHashedUrl = $this->putVars['hsite'];
             $sUrlCheckValue =  md5($sUrl . \Config::get('encryptionKey'));
