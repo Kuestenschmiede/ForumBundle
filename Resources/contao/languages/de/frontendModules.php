@@ -178,6 +178,8 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['BOX_LAST_POST'] = 'Letzter Beitrag am %s von %s im Thema %s';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['USER_NOT_LOGGED_IN'] = 'Mitglied ist nicht angemeldet.';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS'] = 'Die maximale Anzahl Beiträge in diesem Thema wurde bereits erreicht.';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS'] = 'Der Betrag enthält mehr Zeichen als erlaubt.';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_PERMISSION']      = 'Keine Berechtigung.';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PHP_ERROR'] = 'PHP Fehler! Versuchen Sie es noch einmal, oder wenden Sie sich an eine Kontaktperson des Forums!';

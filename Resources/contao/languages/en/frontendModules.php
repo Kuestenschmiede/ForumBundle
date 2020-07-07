@@ -231,6 +231,8 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_THREAD_SUCCESS']  = 'Ticket deleted successfully.';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['USER_NOT_LOGGED_IN'] = 'Member not logged in.';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS'] = 'The maximum number of posts is already reached.';
+    $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS'] = 'The post contains too many characters.';
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_PERMISSION']      = 'Permission denied.';
 
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PHP_ERROR'] = 'PHP Error! Please try again, or contact the administration of this forum!';
