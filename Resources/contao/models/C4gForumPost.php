@@ -12,11 +12,13 @@
  */
 namespace con4gis\ForumBundle\Resources\contao\models;
 
+use Contao\Model;
+
 /**
  * Class C4gForumPost
  * @package con4gis\ForumBundle\Resources\contao\models
  */
-class C4gForumPost extends \Model
+class C4gForumPost extends Model
 {
 
     /**
