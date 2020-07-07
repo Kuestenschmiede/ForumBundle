@@ -13,6 +13,7 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
+    use con4gis\ForumBundle\Resources\contao\models\C4GThreadModel;
     use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
     use con4gis\CoreBundle\Classes\C4GUtils;
     use con4gis\CoreBundle\Classes\C4GVersionProvider;
@@ -2201,6 +2202,19 @@ JSPAGINATE;
                 return $return;
             }
 
+            $forumModel = C4gForumModel::findByPk($forumId);
+            $userId = FrontendUser::getInstance()->id;
+            if ($forumModel->maxPostsPerThread) {
+                $database = Database::getInstance();
+                $count = $database->prepare("SELECT * FROM tl_c4g_forum_post where pid = ? and author = ?")
+                    ->execute($threadId, $userId)->fetchAssoc()['count'];
+                if ($forumModel->maxPostsPerThread >= $count) {
+                    return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS']];
+                }
+            } elseif ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
+                return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
+            }
+
 
             if (!isset($this->putVars['rating'])) {
                 $this->putVars['rating'] = 0;
@@ -3589,6 +3603,13 @@ JSPAGINATE;
                 $return['usermessage'] = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBJECT_MISSING'];
 
                 return $return;
+            }
+
+            $threadModel = C4GThreadModel::findByPk($post['threadid']);
+            $forumModel = C4gForumModel::findByPk($threadModel->pid);
+            $userId = FrontendUser::getInstance()->id;
+            if ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
+                return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
             }
 
             if (!isset($this->putVars['rating'])) {
