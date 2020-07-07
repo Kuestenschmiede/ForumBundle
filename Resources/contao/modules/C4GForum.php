@@ -1501,7 +1501,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
         /**
          * @param $id
-         *
+         * @deprecated It seems this method is never called
          * @return array
          */
         public function getPostAsHtml($id)
