@@ -3603,7 +3603,6 @@ JSPAGINATE;
 
             $threadModel = C4GThreadModel::findByPk($post['threadid']);
             $forumModel = C4gForumModel::findByPk($threadModel->pid);
-            $userId = FrontendUser::getInstance()->id;
             if ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
                 return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
             }
