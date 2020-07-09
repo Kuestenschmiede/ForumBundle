@@ -1661,15 +1661,32 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
             }
 
             if ($this->helper->checkPermission($thread['forumid'], 'newpost') && $thread['state'] != 3) {
-                array_insert($dialogbuttons, 0,
-                             array(
-                                 array(
-                                     "action" => 'newpost:' . $id . ':thread' . $id,
-                                     "type"   => 'get',
-                                     "text"   => C4GForumHelper::getTypeText($this->c4g_forum_type,'NEW_POST')
-                                 )
-                             )
-                );
+                $allowed = true;
+                $threadModel = C4GThreadModel::findByPk($id);
+                $forumModel = C4gForumModel::findByPk($threadModel->pid);
+                do {
+                    $userId = FrontendUser::getInstance()->id;
+                    if ($forumModel->maxPostsPerThread) {
+                        $database = Database::getInstance();
+                        $count = $database->prepare("SELECT * FROM tl_c4g_forum_post where pid = ? and author = ?")
+                            ->execute($id, $userId)->fetchAssoc()['count'];
+                        if ($forumModel->maxPostsPerThread <= $count) {
+                            $allowed = false;
+                        }
+                    }
+                    $forumModel = C4gForumModel::findByPk($forumModel->pid);
+                } while ($forumModel !== null);
+                if ($allowed) {
+                    array_insert($dialogbuttons, 0,
+                        array(
+                            array(
+                                "action" => 'newpost:' . $id . ':thread' . $id,
+                                "type" => 'get',
+                                "text" => C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEW_POST')
+                            )
+                        )
+                    );
+                }
             }
             if ($this->helper->checkPermission($thread['forumid'], 'closethread') && $thread['state'] != 3) {
                 array_insert($dialogbuttons, 0,
