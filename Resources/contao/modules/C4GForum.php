@@ -2200,17 +2200,20 @@ JSPAGINATE;
             }
 
             $forumModel = C4gForumModel::findByPk($forumId);
-            $userId = FrontendUser::getInstance()->id;
-            if ($forumModel->maxPostsPerThread) {
-                $database = Database::getInstance();
-                $count = $database->prepare("SELECT * FROM tl_c4g_forum_post where pid = ? and author = ?")
-                    ->execute($threadId, $userId)->fetchAssoc()['count'];
-                if ($forumModel->maxPostsPerThread >= $count) {
-                    return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS']];
+            do {
+                $userId = FrontendUser::getInstance()->id;
+                if ($forumModel->maxPostsPerThread) {
+                    $database = Database::getInstance();
+                    $count = $database->prepare("SELECT * FROM tl_c4g_forum_post where pid = ? and author = ?")
+                        ->execute($threadId, $userId)->fetchAssoc()['count'];
+                    if ($forumModel->maxPostsPerThread >= $count) {
+                        return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS']];
+                    }
+                } elseif ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
+                    return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
                 }
-            } elseif ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
-                return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
-            }
+                $forumModel = C4gForumModel::findByPk($forumModel->pid);
+            } while ($forumModel !== null);
 
 
             if (!isset($this->putVars['rating'])) {
@@ -3604,9 +3607,12 @@ JSPAGINATE;
 
             $threadModel = C4GThreadModel::findByPk($post['threadid']);
             $forumModel = C4gForumModel::findByPk($threadModel->pid);
-            if ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
-                return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
-            }
+            do {
+                if ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
+                    return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
+                }
+                $forumModel = C4gForumModel::findByPk($forumModel->pid);
+            } while ($forumModel !== null);
 
             if (!isset($this->putVars['rating'])) {
                 $this->putVars['rating'] = 0;
