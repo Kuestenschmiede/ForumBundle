@@ -2206,7 +2206,7 @@ JSPAGINATE;
                     $database = Database::getInstance();
                     $count = $database->prepare("SELECT * FROM tl_c4g_forum_post where pid = ? and author = ?")
                         ->execute($threadId, $userId)->fetchAssoc()['count'];
-                    if ($forumModel->maxPostsPerThread >= $count) {
+                    if ($forumModel->maxPostsPerThread <= $count) {
                         return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS']];
                     }
                 } elseif ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
