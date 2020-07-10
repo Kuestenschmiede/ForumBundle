@@ -1660,22 +1660,26 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
                 }
             }
 
+
             if ($this->helper->checkPermission($thread['forumid'], 'newpost') && $thread['state'] != 3) {
                 $allowed = true;
+                $userId = FrontendUser::getInstance()->id;
                 $threadModel = C4GThreadModel::findByPk($id);
                 $forumModel = C4gForumModel::findByPk($threadModel->pid);
-                do {
-                    $userId = FrontendUser::getInstance()->id;
-                    if ($forumModel->maxPostsPerThread) {
-                        $database = Database::getInstance();
-                        $count = $database->prepare("SELECT * FROM tl_c4g_forum_post where pid = ? and author = ?")
-                            ->execute($id, $userId)->fetchAssoc()['count'];
-                        if ($forumModel->maxPostsPerThread <= $count) {
-                            $allowed = false;
+                if (!C4GForumHelper::isMemberModeratorOfForum($userId, $forumModel->id)) {
+                    do {
+                        $userId = FrontendUser::getInstance()->id;
+                        if ($forumModel->maxPostsPerThread) {
+                            $database = Database::getInstance();
+                            $count = $database->prepare("SELECT COUNT(*) as count FROM tl_c4g_forum_post where pid = ? and author = ?")
+                                ->execute($id, $userId)->fetchAssoc()['count'];
+                            if ($forumModel->maxPostsPerThread <= $count) {
+                                $allowed = false;
+                            }
                         }
-                    }
-                    $forumModel = C4gForumModel::findByPk($forumModel->pid);
-                } while ($forumModel !== null);
+                        $forumModel = C4gForumModel::findByPk($forumModel->pid);
+                    } while ($forumModel !== null);
+                }
                 if ($allowed) {
                     array_insert($dialogbuttons, 0,
                         array(
@@ -2216,21 +2220,23 @@ JSPAGINATE;
                 return $return;
             }
 
-            $forumModel = C4gForumModel::findByPk($forumId);
-            do {
-                $userId = FrontendUser::getInstance()->id;
-                if ($forumModel->maxPostsPerThread) {
-                    $database = Database::getInstance();
-                    $count = $database->prepare("SELECT * FROM tl_c4g_forum_post where pid = ? and author = ?")
-                        ->execute($threadId, $userId)->fetchAssoc()['count'];
-                    if ($forumModel->maxPostsPerThread <= $count) {
-                        return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS']];
+            $userId = FrontendUser::getInstance()->id;
+            if (!C4GForumHelper::isMemberModeratorOfForum($userId, $forumId)) {
+                $forumModel = C4gForumModel::findByPk($forumId);
+                do {
+                    if ($forumModel->maxPostsPerThread) {
+                        $database = Database::getInstance();
+                        $count = $database->prepare("SELECT COUNT(*) as count FROM tl_c4g_forum_post where pid = ? and author = ?")
+                            ->execute($threadId, $userId)->fetchAssoc()['count'];
+                        if ($forumModel->maxPostsPerThread <= $count) {
+                            return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS']];
+                        }
+                    } elseif ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
+                        return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
                     }
-                } elseif ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
-                    return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
-                }
-                $forumModel = C4gForumModel::findByPk($forumModel->pid);
-            } while ($forumModel !== null);
+                    $forumModel = C4gForumModel::findByPk($forumModel->pid);
+                } while ($forumModel !== null);
+            }
 
 
             if (!isset($this->putVars['rating'])) {
@@ -3624,12 +3630,15 @@ JSPAGINATE;
 
             $threadModel = C4GThreadModel::findByPk($post['threadid']);
             $forumModel = C4gForumModel::findByPk($threadModel->pid);
-            do {
-                if ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
-                    return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
-                }
-                $forumModel = C4gForumModel::findByPk($forumModel->pid);
-            } while ($forumModel !== null);
+            $userId = FrontendUser::getInstance()->id;
+            if (!C4GForumHelper::isMemberModeratorOfForum($userId, $forumModel->id)) {
+                do {
+                    if ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
+                        return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
+                    }
+                    $forumModel = C4gForumModel::findByPk($forumModel->pid);
+                } while ($forumModel !== null);
+            }
 
             if (!isset($this->putVars['rating'])) {
                 $this->putVars['rating'] = 0;

@@ -17,7 +17,10 @@ use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumMember;
+use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
+use Contao\MemberModel;
+use Contao\StringUtil;
 use Contao\System;
 
 /**
@@ -3379,5 +3382,19 @@ class C4GForumHelper extends \System
     {
         $forum = new C4GForum(\ModuleModel::findByPk($forumId));
         $forum->autoTicket($forumId, $groupId, $subject, $text, $ticketId);
+    }
+
+    public static function isMemberModeratorOfForum($memberId, $forumId) {
+        $forumModel = C4gForumModel::findByPk($forumId);
+        $memberModel = MemberModel::findByPk($memberId);
+        $moderatorGroups = StringUtil::deserialize($forumModel->admin_groups);
+        $memberGroups = StringUtil::deserialize($memberModel->groups);
+
+        foreach($moderatorGroups as $group) {
+            if (in_array($group, $memberGroups)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
