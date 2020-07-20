@@ -106,6 +106,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 //            ResourceLoader::loadJavaScriptResource('bundles/con4giscore/vendor/ckeditor5/ckeditor.js', ResourceLoader::HEAD);
             \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
             \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/js/historyPush.js');
+            \con4gis\CoreBundle\Classes\ResourceLoader::loadCssResource('bundles/con4gisforum/css/icons.css');
         }
 
         /**
