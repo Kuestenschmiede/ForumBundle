@@ -2232,7 +2232,8 @@ JSPAGINATE;
                         if ($forumModel->maxPostsPerThread <= $count) {
                             return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS']];
                         }
-                    } elseif ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
+                    }
+                    if ($forumModel->charLimitPerPost && (mb_strlen(strip_tags($this->putVars['post'])) > $forumModel->charLimitPerPost)) {
                         return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TOO_MANY_CHARS']];
                     }
                     $forumModel = C4gForumModel::findByPk($forumModel->pid);
