@@ -23,7 +23,7 @@ while (index < forumSubsSubmitChange.length) {
                     showInfoDialog(response.message, response.title, 'Ok');
                 }
             }
-        )
+        );
     });
     index += 1;
 }
