@@ -6,19 +6,18 @@ while (index < forumSubsSubmitChange.length) {
     currentButton.addEventListener('click', function(){
         let url = currentButton.parentNode.action;
         let checkboxes = currentButton.parentNode.getElementsByTagName('input');
+        let data = {};
+        data.target = currentButton.dataset.target;
+        data.deletesub = 0;
+        let i = 0;
+        while (i < checkboxes.length) {
+            data[checkboxes.item(i).value] = checkboxes.item(i).checked ? 1 : 0;
+            i += 1;
+        }
         jQuery.ajax(url,
             {
                 method: "post",
-                data: {
-                    target: currentButton.dataset.target,
-                    newthreads: checkboxes.item(0).checked ? 1 : 0,
-                    movedthreads: checkboxes.item(1).checked ? 1 : 0,
-                    deletedthreads: checkboxes.item(2).checked ? 1 : 0,
-                    newposts: checkboxes.item(3).checked ? 1 : 0,
-                    editedposts: checkboxes.item(4).checked ? 1 : 0,
-                    deletedposts: checkboxes.item(5).checked ? 1 : 0,
-                    deletesub: 0
-                },
+                data: data,
                 success: function(response, status, jqXHR) {
                     showInfoDialog(response.message, response.title, 'Ok');
                 }
@@ -72,16 +71,18 @@ while (index < threadSubsSubmitChange.length) {
     currentButton.addEventListener('click', function(){
         let url = currentButton.parentNode.action;
         let checkboxes = currentButton.parentNode.getElementsByTagName('input');
+        let data = {};
+        data.target = currentButton.dataset.target;
+        data.deletesub = 0;
+        let i = 0;
+        while (i < checkboxes.length) {
+            data[checkboxes.item(i).value] = checkboxes.item(i).checked ? 1 : 0;
+            i += 1;
+        }
         jQuery.ajax(url,
             {
                 method: "post",
-                data: {
-                    target: currentButton.dataset.target,
-                    newposts: checkboxes.item(0).checked ? 1 : 0,
-                    editedposts: checkboxes.item(1).checked ? 1 : 0,
-                    deletedposts: checkboxes.item(2).checked ? 1 : 0,
-                    deletesub: 0
-                },
+                data: data,
                 success: function(response, status, jqXHR) {
                     showInfoDialog(response.message, response.title, 'Ok');
                 }

@@ -46,12 +46,12 @@ class SubscriptionController extends Controller
                     'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE_DELETE']
                 ));
             } else {
-                $model->newThread = $request->request->get('newthreads');
-                $model->movedThread = $request->request->get('movedthreads');
-                $model->deletedThread = $request->request->get('deletedthreads');
-                $model->newPost = $request->request->get('newposts');
-                $model->editedPost = $request->request->get('editedposts');
-                $model->deletedPost = $request->request->get('deletedposts');
+                $model->newThread = $request->request->get('newthread') ?: '0';
+                $model->movedThread = $request->request->get('movedthread') ?: '0';
+                $model->deletedThread = $request->request->get('deletedthread') ?: '0';
+                $model->newPost = $request->request->get('newpost') ?: '0';
+                $model->editedPost = $request->request->get('editedpost') ?: '0';
+                $model->deletedPost = $request->request->get('deletedpost') ?: '0';
                 $model->save();
                 $response = new JsonResponse();
                 $response->setData(array(
@@ -91,9 +91,9 @@ class SubscriptionController extends Controller
                     'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE_DELETE']
                 ));
             } else {
-                $model->newPost = $request->request->get('newposts');
-                $model->editedPost = $request->request->get('editedposts');
-                $model->deletedPost = $request->request->get('deletedposts');
+                $model->newPost = $request->request->get('newpost') ?: '0';
+                $model->editedPost = $request->request->get('editedpost') ?: '0';
+                $model->deletedPost = $request->request->get('deletedpost') ?: '0';
                 $model->save();
                 $response = new JsonResponse();
                 $response->setData(array(
