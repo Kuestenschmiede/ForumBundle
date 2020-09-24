@@ -218,6 +218,7 @@ namespace con4gis\ForumBundle\Resources\contao\modules;
 
             // $data['ajaxData'] = "action=fmd&id=".$this->id."&language=".$GLOBALS['TL_LANGUAGE']."&page=".$objPage->id;
             $data['ajaxData'] = $this->id;
+            $data['currentLanguage'] = $data['currentLanguage'] ?: $GLOBALS['TL_LANGUAGE'];
 
             $size = deserialize($this->c4g_forum_size, true);
             $data['width'] = ($size[0] != 0) ? $size[0] . $size[2] : 'auto';
