@@ -1858,19 +1858,27 @@ class C4GForumHelper extends \System
         $result = [];
 
         $finished = false;
-        while (!$finished) {
+        $counter = 0;
+        while (!$finished && $counter < 50) {
+            $counter ++;
             if ($id == 0) {
-                array_insert($result, 0, [[id => $rootForumId, name => $this->ForumName,use_intropage => false,subforums => true]]);
+                $insertArray = [[id => $rootForumId, name => $this->ForumName,use_intropage => false,subforums => true]];
+                if ($insertArray !== $result[0]) {
+                    array_insert($result, 0, $insertArray);
+                }
             } else {
                 if (!isset($data[$id])) {
                     break;
                 }
-                array_insert($result, 0, [[
+                $insertArray = [[
                     id => $id,
                     name => $data[$id]['name'],
                     optional_names => $data[$id]['optional_names'],
                     use_intropage => $data[$id]['use_intropage'],
-                    subforums => $data[$id]['subforums'], ]]);
+                    subforums => $data[$id]['subforums'], ]];
+                if ($insertArray !== $result[0]) {
+                    array_insert($result, 0, $insertArray);
+                }
             }
             if ($id == $rootForumId) {
                 $finished = true;
