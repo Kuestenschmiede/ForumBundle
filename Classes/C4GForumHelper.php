@@ -1886,6 +1886,9 @@ class C4GForumHelper extends \System
                 $id = $data[$id]['pid'];
             }
         }
+        if ($counter > 40) {
+            return [$result[count($result) - 1]];
+        }
 
         return $result;
     }
