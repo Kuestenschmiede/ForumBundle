@@ -182,7 +182,10 @@ use Contao\StringUtil;
             $subObjects = [];
             if (!empty($subs)) {
                 foreach ($subs as $key => $sub) {
-                    $subObjects[$key] = new Subscription(MemberModel::findByPk($key), $sub);
+                    $member = MemberModel::findByPk($key);
+                    if ($member) {
+                        $subObjects[$key] = new Subscription($member, $sub);
+                    }
                 }
             }
 
