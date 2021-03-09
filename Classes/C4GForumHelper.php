@@ -3395,17 +3395,19 @@ class C4GForumHelper extends \System
         $forum->autoTicket($forumId, $groupId, $subject, $text, $ticketId);
     }
 
-    public static function isMemberModeratorOfForum($memberId, $forumId) {
+    public static function isMemberModeratorOfForum($memberId, $forumId)
+    {
         $forumModel = C4gForumModel::findByPk($forumId);
         $memberModel = MemberModel::findByPk($memberId);
         $moderatorGroups = StringUtil::deserialize($forumModel->admin_groups);
         $memberGroups = StringUtil::deserialize($memberModel->groups);
 
-        foreach($moderatorGroups as $group) {
+        foreach ($moderatorGroups as $group) {
             if (in_array($group, $memberGroups)) {
                 return true;
             }
         }
+
         return false;
     }
 }
