@@ -494,6 +494,8 @@
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_MULTIPLE'] = "Ratings";
     $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_SINGLE']   = "Rating";
 
+$GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'] = "Like";
+$GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'] = "Stopped Liking";
     /**
      * States
     */
