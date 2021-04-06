@@ -230,6 +230,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_last_post_on_new'] = array("Beim Neuanlegen letzten Post anzeigen", "");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_enabled'] = array("Bewertungen aktivieren", "Zeigt ein fünf Sterne Bewertungssystem beim schreiben von Beiträgen an.");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_color'] = array("Farbe der Bewertungssterne", "Hier kann die Farbe der Bewertungssterne angepasst werden. Standardmäßig entspricht sie der globalen Textfarbe");
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_reaction_enabled'] = array("Reaktionen aktivieren", "Ermöglicht \"Gefällt mir\" Angaben an Beiträgen anderer Mitglieder.");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_post_count'] = array("Beitragszahl anzeigen", "Zeige die Anzahl der Beiträge unter dem Autorennamen an.");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_avatars'] = array("Avatare anzeigen", "Aktiviere die Mitglieder-Avatare.");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_avatar_size'] = array("Avatar-Größe (Breite, Höhe)", "Die Breite und Höhe der User-Avatare.");
