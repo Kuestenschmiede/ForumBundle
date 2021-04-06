@@ -1384,6 +1384,7 @@ class C4GForum extends \Module
             $sUserData .
             '<div class="c4gForumPostText' . $textClass . '">' .
             $text .
+            $this->generateReactionBarAsHTML((int) $post['id'], (int) $post['authorid']) .
             '</div>' .
             $sSignatureArea .
             '</div>' .
@@ -1424,12 +1425,82 @@ class C4GForum extends \Module
         if (!$this->c4g_forum_posts_jqui) {
             $data .= '<hr>';
         }
-
-//            $data .=
-//                '</div>';
-
-
         return $data;
+    }
+
+    public function generateReactionBarAsHTML(int $postId, int $postAuthorId): string
+    {
+        if ($this->c4g_forum_reaction_enabled !== '1') {
+            return '';
+        }
+        $memberId = (int) $this->User->id;
+
+        $database = Database::getInstance();
+        $stmt = $database->prepare(
+            'SELECT * FROM tl_c4g_forum_post_reaction WHERE postId = ? AND reactionId = ?'
+        );
+        $reactions = $stmt->execute($postId, 0)->fetchAllAssoc();
+
+        if ($memberId !== 0) {
+            $stmt = $database->prepare(
+                'SELECT * FROM tl_c4g_forum_post_reaction WHERE postId = ? AND reactionId = ? AND memberId = ?'
+            );
+            $hasMemberReacted = $stmt->execute($postId, 0, $memberId)->numRows > 0;
+        } else {
+            $hasMemberReacted = false;
+        }
+
+        $reactionTypes = [[
+            'text' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'],
+            'stop' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'],
+            'count' => count($reactions)
+        ]];
+
+        $html = '<div class="c4g-forum-post-reaction-bar">';
+        foreach ($reactionTypes as $reactionType) {
+            if ($memberId === 0 || $memberId === $postAuthorId) {
+                if ($reactionType['count'] === 0) {
+                    $html .= '';
+                } else {
+                    $html .= '<div class="c4g-forum-post-reaction-wrapper">'.
+                        '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">'.
+                        $reactionType['count'].
+                        '</span>'.
+                        '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">'.
+                        $reactionType['text'].
+                        '</span>'.
+                        '</div>';
+                }
+            } else if ($hasMemberReacted === true) {
+                $html .= '<div class="c4g-forum-post-reaction-wrapper">'.
+                    '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">'.
+                    $reactionType['count'].
+                    '</span>'.
+                    '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">'.
+                    $reactionType['text'].
+                    '</span>'.
+                    '<button class="c4g-forum-post-reaction-button c4g-forum-post-reaction-button-like" type="button">'.
+                    $reactionType['stop'].
+                    '</button>'.
+                    '</div>';
+            } else {
+                $html .= '<div class="c4g-forum-post-reaction-wrapper">';
+                if ($reactionType['count'] > 0) {
+                    $html .= '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">'.
+                        $reactionType['count'].
+                        '</span>'.
+                        '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">'.
+                        $reactionType['text'].
+                        '</span>';
+                }
+                $html .= '<button class="c4g-forum-post-reaction-button c4g-forum-post-reaction-button-like" type="button">'.
+                $reactionType['text'].
+                '</button>'.
+                '</div>';
+            }
+        }
+        $html .= '</div>';
+        return $html;
     }
 
 
