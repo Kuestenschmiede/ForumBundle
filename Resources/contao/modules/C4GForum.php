@@ -1106,7 +1106,6 @@ class C4GForum extends \Module
             $post['tags'] = explode(", ", $post['tags']);
         }
 
-        //$collapse = $this->c4g_forum_collapsible_posts;
         $first = ($post['post_number'] == 1);
         $last = ($post['post_number'] == $post['posts']);
         $targetClass        = '';
@@ -1184,9 +1183,6 @@ class C4GForum extends \Module
         }
 
         if ((!$preview) && (!$singlePost)) {
-//            if (!$preview) {
-            // change buttons for post
-            // change buttons for post
             $act = $this->getChangeActionsForPost($post);
             foreach ($act as $key => $value) {
                 $data .= '<a href="#" data-action="' . $key . '" class="c4gForumPostHeaderChangeButton c4gGuiAction' . $linkClass . $triggerTargetClass . '">' . $value . '</a>';
@@ -1301,14 +1297,8 @@ class C4GForum extends \Module
         $text = $post['text'];
         $text = html_entity_decode($text);
 
-
-        // search in the forum text for lib and replace by assets/vendor (file download compatibility)
         $text = str_replace('/lib', '/assets/vendor', $text);
 
-        /**
-         * Member data
-         */
-        // Get member object from post author.
         $iAuthorId = $post['authorid'];
         $oMember = \Contao\MemberModel::findOneBy('id', $iAuthorId);
         if ($this->c4g_forum_show_post_count) {
@@ -1366,17 +1356,13 @@ class C4GForum extends \Module
             $oUserDataTemplate->aMemberLinks = array_filter($aMemberLinks);
         }
 
-        // Online status.
         if ($this->c4g_forum_show_online_status && !$preview) {
             $bIsOnline = C4gForumSession::getOnlineStatusByMemberId($iAuthorId, $this->c4g_forum_member_online_time);
             $oUserDataTemplate->bShowOnlineStatus = true;
             $oUserDataTemplate->bIsOnline = $bIsOnline;
         }
 
-
-        // Get member rank by language and member post count.
         if ($this->c4g_forum_show_ranks) {
-            // pass true as param to force return value to be array
             $aUserRanks = deserialize($this->c4g_forum_member_ranks, true);
             $sUserRank = '';
             foreach ($aUserRanks as $aUserRank) {
@@ -1387,21 +1373,12 @@ class C4GForum extends \Module
             $oUserDataTemplate->sUserRank = $sUserRank;
         }
 
-
-        // Store generated template in a variable for later usage.
         $sUserData = $oUserDataTemplate->parse();
-
-        // Get the members signature and store it inside a variable for later usage.
         $sSignature = $oMember->memberSignature;
         $sSignatureArea = '';
         if (!empty($sSignature)) {
             $sSignatureArea = '<div class="signature_wrapper"><hr>' . $sSignature . '</div>';
         }
-        /**
-         * Member data end
-         */
-
-        // Include the former generated member information in the forum's post body.
         $data .=
             '</div>' .
             '<div class="c4gForumPostBody' . $divClass . $targetClass . '">' .
