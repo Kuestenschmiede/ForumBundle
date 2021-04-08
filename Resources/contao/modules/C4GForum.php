@@ -28,6 +28,7 @@ use Contao\Database;
 use Contao\FrontendUser;
 use Contao\Input;
 use Contao\Module;
+use Contao\System;
 
 $GLOBALS['c4gForumErrors']           = array();
 $GLOBALS['c4gForumSearchParamCache'] = array();
@@ -1453,8 +1454,10 @@ class C4GForum extends \Module
         $reactionTypes = [[
             'text' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'],
             'stop' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'],
-            'count' => count($reactions)
+            'count' => count($reactions),
+            'id' => 0
         ]];
+
 
         $html = '<div class="c4g-forum-post-reaction-bar">';
         foreach ($reactionTypes as $reactionType) {
@@ -1471,32 +1474,75 @@ class C4GForum extends \Module
                         '</span>'.
                         '</div>';
                 }
-            } else if ($hasMemberReacted === true) {
-                $html .= '<div class="c4g-forum-post-reaction-wrapper">'.
-                    '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">'.
-                    $reactionType['count'].
-                    '</span>'.
-                    '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">'.
-                    $reactionType['text'].
-                    '</span>'.
-                    '<button class="c4g-forum-post-reaction-button c4g-forum-post-reaction-button-like" type="button">'.
-                    $reactionType['stop'].
-                    '</button>'.
-                    '</div>';
             } else {
-                $html .= '<div class="c4g-forum-post-reaction-wrapper">';
-                if ($reactionType['count'] > 0) {
-                    $html .= '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">'.
-                        $reactionType['count'].
-                        '</span>'.
-                        '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">'.
-                        $reactionType['text'].
-                        '</span>';
+                $tokenManager = System::getContainer()->get('contao.csrf.token_manager');
+                $token = $tokenManager->getToken('REQUEST_TOKEN')->getValue();
+                $onclick = 'let data = {};data.REQUEST_TOKEN = \''.$token.'\';'.
+                    'data.reactionId = '.$reactionType['id'].';'.
+                    'data.postId = '.$postId.';'.
+                    'let callback = function() {'.
+                    'let countSpan = this.parentNode.firstChild;'.
+                    'let count = parseInt(this.parentNode.firstChild.innerText);'.
+                    'let textSpan = this.parentNode.childNodes.item(1);'.
+                    'if (parseInt(this.dataset.reacted) === 1) {'.
+                    'count -= 1;'.
+                    'this.dataset.reacted = 0;'.
+                    'this.innerHTML = this.dataset.text;'.
+                    '} else {'.
+                    'count += 1;'.
+                    'this.dataset.reacted = 1;'.
+                    'this.innerHTML = this.dataset.stop;'.
+                    '}'.
+                    'if (count > 0) {'.
+                    'countSpan.hidden = false;'.
+                    'textSpan.hidden = false;'.
+                    'countSpan.innerHTML = count;'.
+                    '} else {'.
+                    'countSpan.hidden = true;'.
+                    'textSpan.hidden = true;'.
+                    'countSpan.innerHTML = 0;'.
+                    '}};'.
+                    'jQuery.post(\'c4g_forum/reaction\', data).'.
+                    'done(callback.bind(this));';
+                if ($hasMemberReacted === true) {
+                    $html .= '<div class="c4g-forum-post-reaction-wrapper">' .
+                        '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
+                        $reactionType['count'] .
+                        '</span>' .
+                        '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
+                        $reactionType['text'] .
+                        '</span>' .
+                        '<button data-reacted="1" data-stop="'. $reactionType['stop'] .'" '.
+                        'data-text="'. $reactionType['text'] .'" '.'class="c4g-forum-post-reaction-button c4g-forum-post-reaction-button-like" '.
+                        'type="button" onclick="'.$onclick.'">' .
+                        $reactionType['stop'] .
+                        '</button>' .
+                        '</div>';
+                } else {
+                    $html .= '<div class="c4g-forum-post-reaction-wrapper">';
+                    if ($reactionType['count'] > 0) {
+                        $html .= '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
+                            $reactionType['count'] .
+                            '</span>' .
+                            '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
+                            $reactionType['text'] .
+                            '</span>';
+                    } else {
+                        $html .= '<span hidden class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
+                            $reactionType['count'] .
+                            '</span>' .
+                            '<span hidden class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
+                            $reactionType['text'] .
+                            '</span>';
+                    }
+                    $html .= '<button data-reacted="0" data-stop="'. $reactionType['stop'] .'" '.
+                        'data-text="'. $reactionType['text'] .'" '
+                        .'class="c4g-forum-post-reaction-button c4g-forum-post-reaction-button-like" type="button" '.
+                        'onclick="'.$onclick.'">' .
+                        $reactionType['text'] .
+                        '</button>' .
+                        '</div>';
                 }
-                $html .= '<button class="c4g-forum-post-reaction-button c4g-forum-post-reaction-button-like" type="button">'.
-                $reactionType['text'].
-                '</button>'.
-                '</div>';
             }
         }
         $html .= '</div>';
