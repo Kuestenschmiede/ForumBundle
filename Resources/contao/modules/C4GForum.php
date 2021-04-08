@@ -17,7 +17,6 @@ use con4gis\ForumBundle\Resources\contao\models\C4GThreadModel;
 use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
-use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Classes\C4GForumHelper;
 use con4gis\ForumBundle\Classes\C4GForumTicketStatus;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
