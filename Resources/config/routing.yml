@@ -36,3 +36,7 @@ forum_sub:
         _scope: frontend
         _controller: "con4gisForumBundle:Subscription:changeForumSubscription"
         methods: [POST]
+
+controllers:
+    resource: '../../Controller/'
+    type:     annotation
