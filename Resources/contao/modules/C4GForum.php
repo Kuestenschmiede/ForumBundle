@@ -14,6 +14,7 @@
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadModel;
+use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
 use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
@@ -24,10 +25,12 @@ use con4gis\ForumBundle\Resources\contao\models\C4gForumPost;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumSession;
 use con4gis\MapsBundle\Classes\MapDataConfigurator;
 use con4gis\MapsBundle\Classes\ResourceLoader;
+use Contao\Controller;
 use Contao\Database;
 use Contao\FrontendUser;
 use Contao\Input;
 use Contao\Module;
+use Contao\StringUtil;
 use Contao\System;
 
 $GLOBALS['c4gForumErrors']           = array();
@@ -1340,6 +1343,22 @@ class C4GForum extends \Module
                 break;
         }
         $oUserDataTemplate->iUserPostCount = $iUserPostCount;
+
+        $stats = StringUtil::deserialize($this->c4g_forum_user_statistics, true);
+        if ($stats !== []) {
+            $userStatistics = [];
+            System::loadLanguageFile('tl_member');
+            Controller::loadDataContainer('tl_member');
+            foreach ($stats as $stat) {
+                $translation = $GLOBALS['TL_DCA']['tl_member']['fields'][$stat]['label'][0] ?:
+                    $GLOBALS['TL_LANG']['tl_member'][$stat][0] ?: '';
+                if ($translation !== '' && (string) $oMember->$stat !== '') {
+                    $userStatistics[$translation] = (string) $oMember->$stat;
+                }
+            }
+            $oUserDataTemplate->userStatistics = $userStatistics;
+        }
+
         if ($this->c4g_forum_show_avatars) {
             $sImage = C4GForumHelper::getAvatarByMemberId($iAuthorId, deserialize($this->c4g_forum_avatar_size));
             $oUserDataTemplate->sAvatarImage = $sImage;
