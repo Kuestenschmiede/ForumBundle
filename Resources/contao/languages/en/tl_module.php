@@ -96,6 +96,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_color'] = array("Ratingstar color", "Changes the color of ratingstars. Default: global textcolor");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button']                = array('Private messages','Show button for private messages');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sub_title']                     = array('Name for subscription','Name shown in the subject of a subscription-mail');
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_statistics'] = ['Other member data to be displayed','Displays additional member data in the post.'];
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = array('WYSIWYG-Editor Toolbar Buttons', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imguploadpath']  = array('Image Upload-Folder', 'Decide where uploaded images should be stored. An additional folder named by date is created in here');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_fileuploadpath'] = array('File Upload-Folder', 'Decide where uploaded files should be stored. An additional folder named by date is created in here');

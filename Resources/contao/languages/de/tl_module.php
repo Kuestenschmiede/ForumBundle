@@ -91,6 +91,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = ar
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('Editor', '');
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button']                = array('Persönliche Nachrichten', 'Button für Persönliche Nachrichten im Profil anzeigen');
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sub_title']                     = array('Titel für Abonnement','Titel der im Betreff einer Mail bei Abonnement angezeigt wird');
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_statistics'] = ['Weitere Anzuzeigende Mitgliedsdaten','Zeigt im Beitrag weitere Mitgliedsdaten an.'];
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "CKEditor verwenden";
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no']           = "Keinen Editor verwenden";
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imguploadpath']  = array('Bildupload-Verzeichnis', 'Wählen Sie das Verzeichnis aus, in dem die Bilder gespeichert werden sollen. Es wird je Tag ein extra Ordner innerhalb dieses Ordners angelegt.');
