@@ -176,6 +176,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ERROR_SAVE_THREAD']   = 'Fehler 
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUCCESS_SAVE_THREAD'] = 'Neues Thema erfolgreich angelegt!';
 
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['BOX_LAST_POST'] = 'Letzter Beitrag am %s von %s im Thema %s';
+$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['BOX_LATEST_THREAD'] = 'Letztes Thema: %s vom %s von %s';
 
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['USER_NOT_LOGGED_IN'] = 'Mitglied ist nicht angemeldet.';
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS'] = 'Die maximale Anzahl Beiträge in diesem Thema wurde bereits erreicht.';
@@ -194,6 +195,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUCCESS_SAVE_POST']  = 'Neuer Kom
 $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['ERROR_SAVE_THREAD']   = 'Fehler beim Anlegen der Frage! Versuchen Sie es noch einmal, oder wenden Sie sich an eine Kontaktperson des Forums!';
 $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUCCESS_SAVE_THREAD'] = 'Neue Frage erfolgreich angelegt!';
 $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['BOX_LAST_POST']      = 'Letzter Kommentar am %s von %s in Frage %s';
+$GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['BOX_LATEST_THREAD'] = 'Letzte Frage: %s vom %s von %s';
 $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['DEL_THREAD_WARNING']  = 'Möchten Sie die Frage <b>%s</b> aus FAQ <b>%s</b> wirklich unwiderruflich löschen?';
 $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['DEL_THREAD_ERROR']    = 'Fehler beim Löschen der Frage!';
 $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['DEL_THREAD_SUCCESS']  = 'Frage erfolgreich gelöscht.';
@@ -204,6 +206,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUCCESS_SAVE_POST']  = 'Neue Nachric
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['ERROR_SAVE_THREAD']   = 'Fehler beim Anlegen des Tickets! Versuchen Sie es noch einmal, oder wenden Sie sich an eine Kontaktperson der Website!';
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUCCESS_SAVE_THREAD'] = 'Neues Ticket erfolgreich angelegt!';
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['BOX_LAST_POST']      = 'Letzte Nachricht am %s von %s in Ticket %s';
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['BOX_LATEST_THREAD'] = 'Letztes Ticket: %s vom %s von %s';
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_THREAD_WARNING']  = 'Möchten Sie das Ticket <b>%s</b> aus <b>%s</b> wirklich unwiderruflich löschen?';
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_THREAD_ERROR']    = 'Fehler beim Löschen des Tickets!';
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['DEL_THREAD_SUCCESS']  = 'Ticket erfolgreich gelöscht.';
