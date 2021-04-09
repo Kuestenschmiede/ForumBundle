@@ -2824,7 +2824,6 @@ JSPAGINATE;
             }
             $data .= '<div class="' . $divClass . '" id="' . $divId . '" title="' . C4GUtils::secure_ugc($this->getForumLanguageConfig($forum,'description')) . '" data-action="' . $action . '" data-hoverclass="' . $hoverClass . '"' . $href . '>';
             $break = false;
-// TODO
             if ($forum['box_imagesrc']) { // check if bin is empty !!!!
                 $imgClass = "c4gForumBoxImage";
                 if ($this->c4g_forum_boxes_jqui_layout) {
