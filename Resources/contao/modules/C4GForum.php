@@ -2875,18 +2875,58 @@ JSPAGINATE;
                     $data .= '</div>';
                 }
 
+                $lastPostData = '';
+                if (($forum['posts'] > 0) && ($this->c4g_forum_boxes_lastthread)) {
+                    $database = Database::getInstance();
+                    $stmt = $database->prepare(
+                        'SELECT *, m.username, m.lastname, m.firstname FROM tl_c4g_forum_thread t '.
+                        'JOIN tl_member m ON t.author = m.id '.
+                        'ORDER BY t.creation DESC LIMIT 1'
+                    );
+                    $result = $stmt->execute()->fetchAssoc();
+                    if (count($result) > 0) {
+                        switch ($this->c4g_forum_show_realname) {
+                            case 'FF';
+                                $author = $result['firstname'];
+                                break;
+                            case 'LL';
+                                $author = $result['lastname'];
+                                break;
+                            case 'FL';
+                                $author = $result['firstname'] . ' ' . $result['lastname'];
+                                break;
+                            case 'LF';
+                                $author = $result['lastname'] . ' ' . $result['firstname'];
+                                break;
+                            default;
+                                $author = $result['username'] ?: '';
+                                break;
+                        }
+                        $lastPostData .=
+                            '<div>' .
+                            sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'BOX_LATEST_THREAD'),
+                                '<span class="c4gForumBoxLastThread">' . $result['name'] . '</span>',
+                                '<span class="c4gForumBoxLastDate">' . $this->helper->getDateTimeString($result['creation']) . '</span>',
+                                '<span class="c4gForumBoxLastAuthor">' . $author . '</span>').
+                            '</div>';
+                    }
+                }
+
                 if (($forum['posts'] > 0) && ($this->c4g_forum_boxes_lastpost)) {
                     $lastname = $this->helper->checkThreadname($forum['last_threadname']);
                     if (strlen($lastname) > 100) {
                         $lastname = substr($lastname, 0, 97) . '...';
                     }
-                    $data .=
-                        '<div class="c4gForumBoxLastPost">' .
+                    $lastPostData .=
+                        '<div>' .
                         sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type,'BOX_LAST_POST'),
                                 '<span class="c4gForumBoxLastDate">' . $this->helper->getDateTimeString($forum['last_post_creation']) . '</span>',
                                 '<span class="c4gForumBoxLastAuthor">' . $forum['last_username'] . '</span>',
                                 '<span class="c4gForumBoxLastThread">' . $lastname . '</span>') .
                         '</div>';
+                }
+                if ($lastPostData !== '') {
+                    $data .= '<div class="c4gForumBoxLastPost">'.$lastPostData.'</div>';
                 }
             }
 
@@ -5834,7 +5874,6 @@ JSPAGINATE;
                 break;
             case 'readpostnumber':
                 $return = $this->getPostNumberOfThreadAsHtml($values[1], $values[2]);
-//                    $return = $this->getPostAsHtml($values[1]);
                 break;
             case 'newpost':
                 $return = $this->generateNewPostForm($values[1], $values[2]);
