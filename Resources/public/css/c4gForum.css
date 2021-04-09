@@ -443,3 +443,7 @@ label.search-label{
 	margin-bottom:4px;
 	pading-left:5px;
 }
+
+.c4gForumBoxLastPost > div:first-child {
+	margin-bottom: 5px;
+}
