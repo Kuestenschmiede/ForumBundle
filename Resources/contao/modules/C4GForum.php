@@ -2804,7 +2804,6 @@ JSPAGINATE;
             if ($this->c4g_forum_boxes_jqui_layout) {
                 $divClass .= " ui-widget";
             }
-// TODO
 
             $objFile               = \FilesModel::findByUuid($forum['box_imagesrc']);
             $forum['box_imagesrc'] = $objFile->path;
