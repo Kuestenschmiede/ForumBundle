@@ -113,6 +113,10 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_lastpost'] = array(
     'Navigationskacheln: Informationen zum letzten Beitrag anzeigen ',
     'Wählen Sie, ob auf den Navigationskacheln Informationen zum letzten Beitrag im Forum angezeigt werden sollen oder nicht.'
 );
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_lastthread'] = array(
+    'Navigationskacheln: Informationen zum letzten erstellten Thema anzeigen',
+    'Wählen Sie, ob auf den Navigationskacheln Informationen zum zuletzt erstellten Thema im Forum angezeigt werden sollen oder nicht.'
+);
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_center']   = array(
     'Navigationskacheln zentrieren ',
     'Wählen Sie diese Option, wenn die Navigationskacheln zentriert angezeigt werden sollen.'

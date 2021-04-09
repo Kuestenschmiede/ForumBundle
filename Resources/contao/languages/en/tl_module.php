@@ -117,6 +117,10 @@
         'Box navigation: display last post information',
         'Check this to display information regarding the last post in the forum.'
     );
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_lastthread'] = array(
+        'Box navigation: display last thread information',
+        'Check this to display information regarding the last thread created in the forum.'
+    );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_center']   = array(
         'Center box navigation',
         'Check this to center the block containing the boxes.'

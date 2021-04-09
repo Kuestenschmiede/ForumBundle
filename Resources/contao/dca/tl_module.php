@@ -20,7 +20,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] =
     '{c4g_forum_sizes_legend:hide},c4g_forum_size,c4g_forum_scroll;' .
     '{c4g_forum_pagination_legend:hide},c4g_forum_threads_perpage, c4g_forum_threads_perpage_selection, c4g_forum_pagination_active,c4g_forum_pagination_perpage,c4g_forum_pagination_format;' .
     '{c4g_forum_search_legend:hide},c4g_forum_search_onlythreads, c4g_forum_search_wholewords, c4g_forum_use_tags_in_search, c4g_forum_search_forums, c4g_forum_search_displayonly;' .
-    '{c4g_forum_boxes_legend:hide},c4g_forum_boxes_text,c4g_forum_boxes_subtext,c4g_forum_boxes_lastpost,c4g_forum_boxes_center;' .
+    '{c4g_forum_boxes_legend:hide},c4g_forum_boxes_text,c4g_forum_boxes_subtext,c4g_forum_boxes_lastpost,c4g_forum_boxes_lastthread,c4g_forum_boxes_center;' .
     '{c4g_forum_jqui_legend:hide},c4g_forum_jqui;' .
     '{c4g_forum_lib_legend:hide},c4g_forum_jquery_lib,c4g_forum_jqtable_lib,c4g_forum_jqhistory_lib,c4g_forum_jqtooltip_lib,c4g_forum_jqscrollpane_lib;' .
     '{c4g_forum_sitemap_legend:hide},c4g_forum_sitemap;' .
@@ -636,6 +636,14 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_lastpost'] = array
     'default'   => true,
     'inputType' => 'checkbox',
     'sql'       => "char(1) NOT NULL default '1'"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_lastthread'] = array
+(
+    'exclude'   => true,
+    'default'   => false,
+    'inputType' => 'checkbox',
+    'sql'       => "char(1) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_center'] = array
