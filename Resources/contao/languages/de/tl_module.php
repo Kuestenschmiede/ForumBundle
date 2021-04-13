@@ -290,7 +290,6 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_general_legend'] = 'Forum - Grundein
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_legend']    = 'Forum - Benutzereinstellungen';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sizes_legend']   = 'Forum - Größeneinstellungen';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_legend'] = 'Forum - Editoreinstellungen';
-//$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pn_legend']      = 'Forum - Persönliche Nachrichten';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_legend']   = 'Forum - Einstellungen für Kachelsicht';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqui_legend']    = 'Forum - Styling (jQuery UI)';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_maps_legend']    = 'Forum - Kartenanbindung (con4gis-Maps)';
