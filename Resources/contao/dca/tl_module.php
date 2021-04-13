@@ -42,6 +42,10 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_subscription'] =
     '{thread_sub_legend},thread_headline,thread_change_sub_caption,thread_delete_sub_caption;'.
     '{misc_legend},no_subs_text';
 
+$GLOBALS['TL_DCA']['tl_module']['palettes']['profile_page_module'] =
+    '{title_legend},name,type;{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_show_ranks,c4g_forum_user_statistics;'.
+    '{c4g_forum_page_legend},c4g_forum_module_page';
+
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_bbcodes';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_jqui';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_sitemap';
@@ -201,6 +205,14 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_user_statistics'] = array
         'multiple' => true
     ],
     'sql'       => "TEXT NOT NULL default ".serialize([])
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_module_page'] = array
+(
+    'exclude'   => true,
+    'inputType' => 'pageTree',
+    'eval'      => array('fieldType' => 'radio'),
+    'sql'       => "int(10) unsigned NOT NULL default '0'"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_perpage'] = array
