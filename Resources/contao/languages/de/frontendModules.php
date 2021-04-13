@@ -490,3 +490,17 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][1]      = "Backoffice Ungele
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][2]      = "In Bearbeitung";
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][3]      = "Geschlossen";
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][4]      = "Neu";
+
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['post_count'] = 'Beiträge';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['thread_count'] = 'Themen';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['date_added'] = 'Mitglied seit';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['last_online'] = 'Zuletzt online';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['member_data'] = 'Mitgliedsdaten';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['rank'] = 'Rang';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['minutes_ago'] = 'vor %s Minuten';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['hours_ago'] = 'vor %s Stunden';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['one_hour_ago'] = 'vor 1 Stunde';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['days_ago'] = 'vor %s Tagen';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['weeks_ago'] = 'vor %s Wochen';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['months_ago'] = 'vor %s Monaten';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['years_ago'] = 'vor %s Jahren';

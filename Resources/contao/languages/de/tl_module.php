@@ -233,7 +233,8 @@ $GLOBALS['TL_LANG']['tl_module']['ticketredirectsite'] = array(
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_last_post_on_new'] = array("Beim Neuanlegen letzten Post anzeigen", "");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_enabled'] = array("Bewertungen aktivieren", "Zeigt ein fünf Sterne Bewertungssystem beim schreiben von Beiträgen an.");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_color'] = array("Farbe der Bewertungssterne", "Hier kann die Farbe der Bewertungssterne angepasst werden. Standardmäßig entspricht sie der globalen Textfarbe");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_reaction_enabled'] = array("Reaktionen aktivieren", "Ermöglicht \"Gefällt mir\" Angaben an Beiträgen anderer Mitglieder.");
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_reaction_enabled'] = ["Reaktionen aktivieren", "Ermöglicht \"Gefällt mir\" Angaben an Beiträgen anderer Mitglieder."];
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_module_page'] = ["Seite des Forenmoduls", "Die Seite, auf der das Forenmodul eingebunden ist. Wird für Verlinkungen benötigt."];
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_post_count'] = array("Beitragszahl anzeigen", "Zeige die Anzahl der Beiträge unter dem Autorennamen an.");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_avatars'] = array("Avatare anzeigen", "Aktiviere die Mitglieder-Avatare.");
@@ -297,6 +298,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_lib_legend']     = 'Forum - jQuery B
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap_legend'] = 'Forum - XML-Sitemap';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_legend']       = 'Forum - Sucheinstellungen';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_legend']   = 'Forum - Seiten und Nummerierung';
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_page_legend'] = 'Seiteneinstellungen';
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_breadcrumb_legend'] = 'Navigationspfad';
 $GLOBALS['TL_LANG']['tl_module']['pm_center_forum_module_legend'] = 'Forenmodul';

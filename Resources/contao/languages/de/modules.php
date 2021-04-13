@@ -25,4 +25,5 @@ $GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			= array('(forum) Forum', 'Mit diesem 
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	= array('(forum) Navigationspfad', 'Mit diesem Modul binden Sie einen Navigationspfad für, über ein Forum verlinkte, Seiten ein.');
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter']	= array('(forum) Persönliche Nachrichten', 'Mit diesem Modul binden Sie die persönlichen Nachrichten für Ihre Forenmitglieder ein.');
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'] = array('(forum) Abonnements', 'Dieses Modul gibt erweiterten Zugriff auf Themen- und Forenbereich-Abonnements.');
+$GLOBALS['TL_LANG']['FMD']['profile_page_module'] = ['(forum) Profilseite', ''];
 

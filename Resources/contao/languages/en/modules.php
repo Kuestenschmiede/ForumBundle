@@ -25,3 +25,4 @@ $GLOBALS['TL_LANG']['FMD']['c4g_forum'] 			 = array('(forum) Forum', 'This modul
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'] 	 = array('(forum) Breadcrumb', 'This module allows you to integrate a forum breadcrumb on pages linked to the forum.');
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter'] 	 = array('(forum) Private messages', 'With this module you can integrate the private messages for your forum.');
 $GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'] = array('(forum) Subscriptions', 'This module allows access to subscriptions.');
+$GLOBALS['TL_LANG']['FMD']['profile_page_module'] = ['(forum) Profile page', ''];

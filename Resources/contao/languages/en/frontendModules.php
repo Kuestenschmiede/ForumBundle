@@ -500,6 +500,20 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_SINGLE']   = "Rating";
 $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'] = "Like";
 $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'] = "Stopped Liking";
 
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['post_count'] = 'Posts';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['thread_count'] = 'Threads';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['date_added'] = 'Member since';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['last_online'] = 'Last online';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['member_data'] = 'Member data';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['rank'] = 'Rank';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['minutes_ago'] = '%s minutes ago';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['hours_ago'] = '%s hours ago';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['one_hour_ago'] = '1 hour ago';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['days_ago'] = '%s days ago';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['weeks_ago'] = '%s weeks ago';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['months_ago'] = '%s months ago';
+$GLOBALS['TL_LANG']['c4g_forum']['profile']['years_ago'] = '%s years ago';
+
 /**
  * States
 */
