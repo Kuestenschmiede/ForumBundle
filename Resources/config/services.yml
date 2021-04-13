@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  con4gis\ForumBundle\Controller\ProfilePageModuleController:
+    tags:
+      -
+        name: contao.frontend_module
+        category: con4gis
+        renderer: forward
+        template: mod_c4g_forum_profile_page
