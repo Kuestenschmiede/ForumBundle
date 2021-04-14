@@ -5,6 +5,7 @@ namespace con4gis\ForumBundle\Controller;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\ResourceLoader;
+use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\ForumBundle\Classes\PageUrlService;
 use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
 use Contao\Config;
@@ -52,6 +53,20 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
             throw new PageNotFoundException();
         }
         System::loadLanguageFile('frontendModules');
+
+        ResourceLoader::loadCssResource('bundles/con4gisforum/css/c4gForum.css');
+        ResourceLoader::loadCssResource('bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.css');
+        $settings = C4gSettingsModel::findSettings();
+        if ($settings && $settings->c4g_appearance_themeroller_css) {
+            $objFile = \FilesModel::findByUuid($settings->c4g_appearance_themeroller_css);
+            ResourceLoader::loadCssResource($objFile->path);
+        } else if ($settings && $settings->c4g_uitheme_css_select) {
+            $theme = $settings->c4g_uitheme_css_select;
+            ResourceLoader::loadCssResource('bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css');
+        } else {
+            ResourceLoader::loadCssResource('bundles/con4giscore/vendor/jQuery/ui-themes/themes/base/jquery-ui.css');
+        }
+
         $statement = $database->prepare(
             'SELECT COUNT(0) as posts FROM tl_c4g_forum_post WHERE author = ?'
         );
