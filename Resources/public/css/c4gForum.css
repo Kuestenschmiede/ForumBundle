@@ -12,6 +12,7 @@
 
 .mod_c4g_forum, .c4gGuiDialogWrapper {
     padding: 2px;
+    line-height: 1.5;
 }
 
 .mod_c4g_forum .ui-widget, .c4gGuiDialogWrapper.ui-widget, .dataTables_wrapper {
@@ -475,4 +476,34 @@ label.search-label {
 
 .user_data_statistics > li {
     word-break: break-all;
+}
+
+/* Profile Page */
+.c4g-forum-profile-header {
+    padding: 10px;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    grid-gap: 1em;
+}
+
+.c4g-forum-profile-header-name-wrapper > div {
+    margin-bottom: 1em;
+}
+
+.c4g-forum-profile-header-name {
+    font-size: 2em;
+}
+
+.c4g-forum-profile-header-avatar-wrapper {
+    max-width: 210px;
+}
+
+.c4g-forum-profile-page > div,
+.c4g-forum-profile-body-posts > div {
+    margin-bottom: 1em;
+}
+
+.c4g-forum-profile-body-posts > div > div {
+    padding: 10px;
 }
