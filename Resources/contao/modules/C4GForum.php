@@ -1483,11 +1483,11 @@ class C4GForum extends \Module
                 } else {
                     $html .= '<div class="c4g-forum-post-reaction-wrapper">' .
                         '<div class="c4g-forum-post-reaction__like-wrapper">' .
-                        '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
-                        $reactionType['count'] .
-                        '</span>' .
                         '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
                         $reactionType['text'] .
+                        '</span>' .
+                        '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
+                        $reactionType['count'] .
                         '</span>' .
                         '</div>' .
                         '</div>';
@@ -1525,11 +1525,11 @@ class C4GForum extends \Module
                 if ($hasMemberReacted === true) {
                     $html .= '<div class="c4g-forum-post-reaction-wrapper">' .
                         '<div class="c4g-forum-post-reaction__like-wrapper">' .
-                        '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
-                        $reactionType['count'] .
-                        '</span>' .
                         '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
                         $reactionType['text'] .
+                        '</span>' .
+                        '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
+                        $reactionType['count'] .
                         '</span>' .
                         '</div>' .
                         '<button data-reacted="1" data-stop="' . $reactionType['stop'] . '" ' .
@@ -1542,20 +1542,22 @@ class C4GForum extends \Module
                     $html .= '<div class="c4g-forum-post-reaction-wrapper">';
                     if ($reactionType['count'] > 0) {
                         $html .= '<div class="c4g-forum-post-reaction__like-wrapper">' .
+                            '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
+                            $reactionType['text'] .
+                            '</span>' .
                             '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
                             $reactionType['count'] .
                             '</span>' .
-                            '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
-                            $reactionType['text'] .
-                            '</span>' . '</div>';
+                            '</div>';
                     } else {
                         $html .= '<div class="c4g-forum-post-reaction__like-wrapper">' .
+                            '<span hidden class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
+                            $reactionType['text'] .
+                            '</span>' .
                             '<span hidden class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
                             $reactionType['count'] .
                             '</span>' .
-                            '<span hidden class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
-                            $reactionType['text'] .
-                            '</span>' . '</div>';
+                            '</div>';
                     }
                     $html .= '<button data-reacted="0" data-stop="' . $reactionType['stop'] . '" ' .
                         'data-text="' . $reactionType['text'] . '" '
