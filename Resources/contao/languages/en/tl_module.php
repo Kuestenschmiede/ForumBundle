@@ -96,6 +96,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_color'] = array("Ratingstar color", "Changes the color of ratingstars. Default: global textcolor");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_reaction_enabled'] = ["Enable reactions", "Allows \"Like\" information on contributions of other members."];
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_module_page'] = ["Forum module page", "The page where the forum module is embedded. Is needed for linking."];
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_profile_page'] = ["Profile module page", "The page where the profile module is embedded. Is needed for linking."];
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button']                = array('Private messages','Show button for private messages');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sub_title']                     = array('Name for subscription','Name shown in the subject of a subscription-mail');

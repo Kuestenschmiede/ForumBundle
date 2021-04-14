@@ -30,6 +30,7 @@ use Contao\Database;
 use Contao\FrontendUser;
 use Contao\Input;
 use Contao\Module;
+use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 
@@ -1339,6 +1340,19 @@ class C4GForum extends \Module
                 break;
             default;
                 break;
+        }
+        if ($this->c4g_forum_user_profile_page) {
+            $page = PageModel::findByPk($this->c4g_forum_user_profile_page);
+            if ($page !== null) {
+                $url = $page->getAbsoluteUrl();
+                $alias = strtolower($oMember->username);
+                if (C4GUtils::endsWith($url, '.html')) {
+                    $url = str_replace('.html', "/$alias.html", $url);
+                } else {
+                    $url = $url."/$alias";
+                }
+                $oUserDataTemplate->userProfileLink = $url;
+            }
         }
         $oUserDataTemplate->iUserPostCount = $iUserPostCount;
 

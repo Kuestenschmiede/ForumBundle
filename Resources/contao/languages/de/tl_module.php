@@ -235,6 +235,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_enabled'] = array("Bewertunge
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_color'] = array("Farbe der Bewertungssterne", "Hier kann die Farbe der Bewertungssterne angepasst werden. Standardmäßig entspricht sie der globalen Textfarbe");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_reaction_enabled'] = ["Reaktionen aktivieren", "Ermöglicht \"Gefällt mir\" Angaben an Beiträgen anderer Mitglieder."];
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_module_page'] = ["Seite des Forenmoduls", "Die Seite, auf der das Forenmodul eingebunden ist. Wird für Verlinkungen benötigt."];
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_profile_page'] = ["Seite des Profilmoduls", "Die Seite, auf der das Profilmodul eingebunden ist. Wird für Verlinkungen benötigt."];
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_post_count'] = array("Beitragszahl anzeigen", "Zeige die Anzahl der Beiträge unter dem Autorennamen an.");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_avatars'] = array("Avatare anzeigen", "Aktiviere die Mitglieder-Avatare.");
