@@ -54,6 +54,9 @@
             </div>
             <div class="c4g-forum-profile-body-member-data-body">
                 <div class="c4g-forum-profile-body-member-data">
+                    <?php
+                    if ((string) $this->member['rank'] !== '') {
+                    ?>
                     <div class="c4g-forum-profile-body-member-data-row">
                         <span class="c4g-forum-profile-body-member-data-row-label">
                             <?php echo $this->language['rank'].':'; ?>
@@ -63,6 +66,7 @@
                         </span>
                     </div>
                     <?php
+                    }
                     foreach ($this->member['user_statistics'] as $key => $statistic) {
                     ?>
                     <div class="c4g-forum-profile-body-member-data-row">
