@@ -1,124 +1,130 @@
-<div class="c4g-forum-profile-page">
-    <div class="c4g-forum-profile-header">
-        <?php if ((string) $this->member['avatarUrl'] !== '') { ?>
-        <div class="c4g-forum-profile-header-avatar-wrapper">
-            <img src="<?php echo $this->member['avatarUrl']; ?>" alt="Avatar">
-        </div>
+<div class="c4g-forum-profile-page mod_c4g_forum">
+    <div class="c4g-forum-profile-header ui-widget ui-widget-header ui-corner-top">
+        <?php if ((string)$this->member['avatarUrl'] !== '') { ?>
+            <div class="c4g-forum-profile-header-avatar-wrapper">
+                <img src="<?php echo $this->member['avatarUrl']; ?>"
+                     alt="Avatar">
+            </div>
         <?php } ?>
         <div class="c4g-forum-profile-header-name-wrapper">
-            <span class="c4g-forum-profile-header-name">
+            <div class="c4g-forum-profile-header-name">
                 <?php echo $this->member['name']; ?>
-            </span>
-        </div>
-        <div class="c4g-forum-profile-header-info-wrapper">
-            <div class="c4g-forum-profile-header-info-post-count">
+            </div>
+
+            <div class="c4g-forum-profile-header-info-wrapper">
+                <div class="c4g-forum-profile-header-info-post-count">
                 <span class="c4g-forum-profile-header-info-label">
-                    <?php echo $this->language['post_count']; ?>
+                    <?php echo $this->language['post_count'] . ':'; ?>
                 </span>
-                <span class="c4g-forum-profile-header-info-data">
+                    <span class="c4g-forum-profile-header-info-data">
                     <?php echo $this->member['postCount']; ?>
                 </span>
-            </div>
-            <div class="c4g-forum-profile-header-info-thread-count">
+                </div>
+                <div class="c4g-forum-profile-header-info-thread-count">
                 <span class="c4g-forum-profile-header-info-label">
-                    <?php echo $this->language['thread_count']; ?>
+                    <?php echo $this->language['thread_count'] . ':'; ?>
                 </span>
-                <span class="c4g-forum-profile-header-info-data">
+                    <span class="c4g-forum-profile-header-info-data">
                     <?php echo $this->member['threadCount']; ?>
                 </span>
-            </div>
-            <div class="c4g-forum-profile-header-info-date-added">
+                </div>
+                <div class="c4g-forum-profile-header-info-date-added">
                 <span class="c4g-forum-profile-header-info-label">
-                    <?php echo $this->language['date_added']; ?>
+                    <?php echo $this->language['date_added'] . ':'; ?>
                 </span>
-                <span class="c4g-forum-profile-header-info-data">
+                    <span class="c4g-forum-profile-header-info-data">
                     <?php echo $this->member['dateAdded']; ?>
                 </span>
-            </div>
-            <div class="c4g-forum-profile-header-info-last-online">
+                </div>
+                <div class="c4g-forum-profile-header-info-last-online">
                 <span class="c4g-forum-profile-header-info-label">
-                    <?php echo $this->language['last_online']; ?>
+                    <?php echo $this->language['last_online'] . ':'; ?>
                 </span>
-                <span class="c4g-forum-profile-header-info-data">
+                    <span class="c4g-forum-profile-header-info-data">
                     <?php echo $this->member['lastOnline']; ?>
                 </span>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="c4g-forum-profile-body">
-        <div class="c4g-forum-profile-body-member-data">
-            <div class="c4g-forum-profile-body-member-data-header">
+
+            <div class="c4g-forum-profile-body-member-data">
+                <div class="c4g-forum-profile-body-member-data-header">
                 <span class="c4g-forum-profile-body-member-data-headline">
                     <?php echo $this->language['member_data']; ?>
                 </span>
-            </div>
-            <div class="c4g-forum-profile-body-member-data-body">
-                <div class="c4g-forum-profile-body-member-data">
-                    <?php
-                    if ((string) $this->member['rank'] !== '') {
-                    ?>
-                    <div class="c4g-forum-profile-body-member-data-row">
+                </div>
+                <div class="c4g-forum-profile-body-member-data-body">
+                    <div class="c4g-forum-profile-body-member-data">
+                        <div class="c4g-forum-profile-body-member-data-row">
                         <span class="c4g-forum-profile-body-member-data-row-label">
-                            <?php echo $this->language['rank'].':'; ?>
+                            <?php echo $this->language['rank'] . ':'; ?>
                         </span>
-                        <span class="c4g-forum-profile-body-member-data-row-item">
+                            <span class="c4g-forum-profile-body-member-data-row-item">
                             <?php echo $this->member['rank']; ?>
                         </span>
-                    </div>
-                    <?php
-                    }
-                    foreach ($this->member['user_statistics'] as $key => $statistic) {
-                    ?>
-                    <div class="c4g-forum-profile-body-member-data-row">
+                        </div>
+                        <?php
+                        foreach ($this->member['user_statistics'] as $key => $statistic) {
+                            ?>
+                            <div class="c4g-forum-profile-body-member-data-row">
                         <span class="c4g-forum-profile-body-member-data-row-label">
-                            <?php echo $key.':'; ?>
+                            <?php echo $key . ':'; ?>
                         </span>
-                        <span class="c4g-forum-profile-body-member-data-row-item">
+                                <span class="c4g-forum-profile-body-member-data-row-item">
                             <?php echo $statistic; ?>
                         </span>
+                            </div>
+                            <?php
+                        }
+                        ?>
                     </div>
-                    <?php
-                    }
-                    ?>
                 </div>
             </div>
         </div>
+
+    </div>
+
+    <div class="c4g-forum-profile-body">
+
         <div class="c4g-forum-profile-body-posts">
             <?php
             foreach ($this->posts as $post) {
                 if ($post['text'] !== '') {
-            ?>
-                <div class="c4g-forum-profile-body-post">
-                    <div class="c4g-forum-profile-body-thread-name-wrapper">
-                        <?php if ((string) $post['threadUrl'] === '') { ?>
-                        <span class="c4g-forum-profile-body-thread-name">
+                    ?>
+                    <div class="c4g-forum-profile-body-post">
+                        <div class="c4g-forum-profile-body-thread-name-wrapper ui-widget ui-widget-header ui-corner-top">
+                            <?php if ((string)$post['threadUrl'] === '') { ?>
+                                <span class="c4g-forum-profile-body-thread-name">
                             <?php echo $post['threadName']; ?>
                         </span>
-                        <?php } else { ?>
-                        <a class="c4g-forum-profile-body-thread-link" href="<?php echo $post['threadUrl']; ?>">
+                            <?php } else { ?>
+                                <a class="c4g-forum-profile-body-thread-link"
+                                   href="<?php echo $post['threadUrl']; ?>">
                             <span class="c4g-forum-profile-body-thread-name">
                                 <?php echo $post['threadName']; ?>
                             </span>
-                        </a>
-                        <?php } ?>
-                    </div>
-                    <div class="c4g-forum-profile-body-forum-name-wrapper">
-                        <span class="c4g-forum-profile-body-forum-name">
-                            <?php echo $post['forumName']; ?>
+
+                                </a>
+                                <div>
+                                    <span class="c4g-forum-profile-body-forum-name">
+                            Forum: <?php echo $post['forumName']; ?>
                         </span>
-                    </div>
-                    <div class="c4g-forum-profile-body-post-text-wrapper">
+                                </div>
+                                <div class="c4g-forum-profile-body-post-creation-wrapper">
+                        <span class="c4g-forum-profile-body-post-creation">
+                            Erstellt am: <?php echo $post['creation']; ?>
+                        </span>
+                                </div>
+                            <?php } ?>
+                        </div>
+
+                        <div class="c4g-forum-profile-body-post-text-wrapper ui-widget ui-widget-content ui-corner-bottom">
                         <span class="c4g-forum-profile-body-post-text">
                             <?php echo $post['text']; ?>
                         </span>
+                        </div>
+
                     </div>
-                    <div class="c4g-forum-profile-body-post-creation-wrapper">
-                        <span class="c4g-forum-profile-body-post-creation">
-                            <?php echo $post['creation']; ?>
-                        </span>
-                    </div>
-                </div>
-            <?php
+                    <?php
                 }
             }
             ?>
