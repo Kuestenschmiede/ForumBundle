@@ -94,8 +94,13 @@
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_enabled'] = array("Enable rating", "Enables a five star rating system, when writing posts.");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_color'] = array("Ratingstar color", "Changes the color of ratingstars. Default: global textcolor");
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_reaction_enabled'] = ["Enable reactions", "Allows \"Like\" information on contributions of other members."];
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_module_page'] = ["Forum module page", "The page where the forum module is embedded. Is needed for linking."];
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_profile_page'] = ["Profile module page", "The page where the profile module is embedded. Is needed for linking."];
+
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button']                = array('Private messages','Show button for private messages');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sub_title']                     = array('Name for subscription','Name shown in the subject of a subscription-mail');
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_statistics'] = ['Other member data to be displayed','Displays additional member data in the post.'];
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems']   = array('WYSIWYG-Editor Toolbar Buttons', '');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imguploadpath']  = array('Image Upload-Folder', 'Decide where uploaded images should be stored. An additional folder named by date is created in here');
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_fileuploadpath'] = array('File Upload-Folder', 'Decide where uploaded files should be stored. An additional folder named by date is created in here');
@@ -116,6 +121,10 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_lastpost'] = array(
         'Box navigation: display last post information',
         'Check this to display information regarding the last post in the forum.'
+    );
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_lastthread'] = array(
+        'Box navigation: display last thread information',
+        'Check this to display information regarding the last thread created in the forum.'
     );
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_center']   = array(
         'Center box navigation',
@@ -300,6 +309,7 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_format'] = array("Paginator-Format", "See <a onclick='window.open(this.href);return false;' href='http://www.xarg.org/2011/09/jquery-pagination-revised'>http://www.xarg.org/2011/09/jquery-pagination-revised</a>");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_perpage'] = array("Entries per page", "");
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_legend'] = 'Forum - Pagination';
+    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_page_legend'] = 'Page options';
 
 
     /**

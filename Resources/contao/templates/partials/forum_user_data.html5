@@ -1,21 +1,59 @@
 <script src="bundles/con4gisforum/js/c4g.pn.js"></script>
 
 <div class="c4g_forum_post_user_data">
-    <strong class="user_name"><?php echo $this->sUserName; ?><?php if ($this->bShowOnlineStatus): ?> <i class="online_status <?php if ($this->bIsOnline): ?>online<?php else: ?>offline<?php endif; ?> ui-button ui-widget ui-state-default"></i><?php endif; ?></strong>
+    <?php
+    if ((string) $this->userProfileLink !== '') {
+    ?>
+        <a href="<?php echo $this->userProfileLink; ?>">
+            <strong class="user_name">
+                <?php echo $this->sUserName; ?>
+                <?php if ($this->bShowOnlineStatus): ?>
+                <i class="online_status
+                    <?php if ($this->bIsOnline): ?>
+                    online
+                    <?php else: ?>
+                    offline
+                    <?php endif; ?>
+                     ui-button ui-widget ui-state-default">
+                </i>
+                <?php endif; ?>
+            </strong>
+        </a>
+    <?php
+    } else {
+    ?>
+        <strong class="user_name"><?php echo $this->sUserName; ?><?php if ($this->bShowOnlineStatus): ?> <i class="online_status <?php if ($this->bIsOnline): ?>online<?php else: ?>offline<?php endif; ?> ui-button ui-widget ui-state-default"></i><?php endif; ?></strong>
+    <?php
+    }
+    ?>
     <?php if ($this->sUserRank): ?><span class="user_rank"><?php echo $this->sUserRank; ?></span><?php endif; ?>
     <?php if ($this->sAvatarImage): ?>
         <img class="user_image" src="<?php echo $this->sAvatarImage; ?>" alt="<?php echo $this->sUserName; ?>">
     <?php endif; ?>
-    <p class="user_data_statistics">
-        <?php if ($this->iUserPostCount): ?>
-          <?php if ($this->sForumType == 'DISCUSSIONS'): ?>
-            <?php echo $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_COUNT']; ?>: <?php echo $this->iUserPostCount; ?>
-          <?php endif; ?>
-          <?php if ($this->sForumType == 'QUESTIONS'): ?>
-            <?php echo $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['POST_COUNT']; ?>: <?php echo $this->iUserPostCount; ?>
-          <?php endif; ?>
-        <?php endif; ?>
-    </p>
+    <ul class="user_data_statistics">
+        <li class="user_data_statistics_item">
+            <?php if ($this->iUserPostCount): ?>
+              <?php if ($this->sForumType == 'DISCUSSIONS'): ?>
+                <?php echo $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_COUNT']; ?>:&nbsp;<?php echo $this->iUserPostCount; ?>
+              <?php endif; ?>
+              <?php if ($this->sForumType == 'QUESTIONS'): ?>
+                <?php echo $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['POST_COUNT']; ?>:&nbsp;<?php echo $this->iUserPostCount; ?>
+              <?php endif; ?>
+            <?php endif; ?>
+        </li>
+        <?php if (is_array($this->userStatistics) && count($this->userStatistics) > 0) {
+            foreach ($this->userStatistics as $key => $value) {
+                ?>
+                <li>
+                    <?php
+                    echo "$key:&nbsp;".str_replace(' ', '&nbsp;', $value);
+                    ?>
+                </li>
+                <?php
+            }
+        }
+        ?>
+    </ul>
 
     <?php if($this->c4g_forum_show_pn_button): ?>
         <p class="user_data_pn">
