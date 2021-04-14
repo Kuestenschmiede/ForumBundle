@@ -498,6 +498,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_MULTIPLE'] = "Ratings";
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_SINGLE']   = "Rating";
 
 $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'] = "Like";
+$GLOBALS['TL_LANG']['c4g_forum']['discussion']['liked'] = "Liked by";
 $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'] = "Stopped Liking";
 
 $GLOBALS['TL_LANG']['c4g_forum']['profile']['post_count'] = 'Posts';

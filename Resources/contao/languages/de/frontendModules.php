@@ -484,6 +484,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_MULTIPLE'] = "Bewertunge
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_SINGLE']   = "Bewertung";
 
 $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'] = "Gefällt mir";
+$GLOBALS['TL_LANG']['c4g_forum']['discussion']['liked'] = "Gefällt";
 $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'] = "Gefällt mir nicht mehr";
 
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['STATE'][1]      = "Backoffice Ungelesen";
