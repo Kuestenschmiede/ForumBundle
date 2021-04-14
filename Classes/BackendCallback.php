@@ -1,6 +1,5 @@
 <?php
 
-
 namespace con4gis\ForumBundle\Classes;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
@@ -60,6 +59,7 @@ class BackendCallback
                 $options[$field['name']] = $translation;
             }
         }
+
         return $options;
     }
 }

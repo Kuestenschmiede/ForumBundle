@@ -1515,9 +1515,9 @@ class C4GForum extends \Module
                     'data.reactionId = ' . $reactionType['id'] . ';' .
                     'data.postId = ' . $postId . ';' .
                     'let callback = function() {' .
-                    'let countSpan = this.parentNode.firstChild;' .
-                    'let count = parseInt(this.parentNode.firstChild.innerText);' .
-                    'let textSpan = this.parentNode.childNodes.item(1);' .
+                    'let countSpan = this.parentNode.firstChild.children[1];' .
+                    'let count = parseInt(countSpan.innerText);' .
+                    'let textSpan = this.parentNode.firstChild.children[0];' .
                     'if (parseInt(this.dataset.reacted) === 1) {' .
                     'count -= 1;' .
                     'this.dataset.reacted = 0;' .
