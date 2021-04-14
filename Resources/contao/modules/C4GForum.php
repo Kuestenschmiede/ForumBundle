@@ -1469,6 +1469,7 @@ class C4GForum extends \Module
 
         $reactionTypes = [[
             'text' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'],
+            'text_liked' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['liked'],
             'stop' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'],
             'count' => count($reactions),
             'id' => 0
@@ -1484,7 +1485,7 @@ class C4GForum extends \Module
                     $html .= '<div class="c4g-forum-post-reaction-wrapper">' .
                         '<div class="c4g-forum-post-reaction__like-wrapper">' .
                         '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
-                        $reactionType['text'] .
+                        $reactionType['text_liked'] .
                         '</span>' .
                         '<span class="ui-state-highlight ui-corner-all c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
                         $reactionType['count'] .
@@ -1526,7 +1527,7 @@ class C4GForum extends \Module
                     $html .= '<div class="c4g-forum-post-reaction-wrapper">' .
                         '<div class="c4g-forum-post-reaction__like-wrapper">' .
                         '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
-                        $reactionType['text'] .
+                        $reactionType['text_liked'] .
                         '</span>' .
                         '<span class="ui-state-highlight ui-corner-all c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
                         $reactionType['count'] .
@@ -1543,7 +1544,7 @@ class C4GForum extends \Module
                     if ($reactionType['count'] > 0) {
                         $html .= '<div class="c4g-forum-post-reaction__like-wrapper">' .
                             '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
-                            $reactionType['text'] .
+                            $reactionType['text_liked'] .
                             '</span>' .
                             '<span class="ui-state-highlight ui-corner-all c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
                             $reactionType['count'] .
@@ -1552,7 +1553,7 @@ class C4GForum extends \Module
                     } else {
                         $html .= '<div class="c4g-forum-post-reaction__like-wrapper">' .
                             '<span hidden class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
-                            $reactionType['text'] .
+                            $reactionType['text_liked'] .
                             '</span>' .
                             '<span hidden class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
                             $reactionType['count'] .
