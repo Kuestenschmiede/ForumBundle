@@ -1483,7 +1483,8 @@ class C4GForum extends \Module
 
         $reactionTypes = [[
             'text' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'],
-            'text_liked' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['liked'],
+//            'text_liked' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['liked'],
+            'text_liked' => '<i class="fa fa-thumbs-up" aria-hidden="true"></i>',
             'stop' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'],
             'count' => count($reactions),
             'id' => 0
