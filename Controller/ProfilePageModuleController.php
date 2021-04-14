@@ -142,7 +142,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
             } else {
                 $post['threadUrl'] = '';
             }
-            $post['creation'] = date($GLOBALS['TL_CONFIG']['dateFormat'], $post['creation']);
+            $post['creation'] = date($GLOBALS['TL_CONFIG']['datimFormat'], $post['creation']);
             $posts[$key] = $post;
         }
 
