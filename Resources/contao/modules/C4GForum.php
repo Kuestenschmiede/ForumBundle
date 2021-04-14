@@ -1486,7 +1486,7 @@ class C4GForum extends \Module
                         '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
                         $reactionType['text'] .
                         '</span>' .
-                        '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
+                        '<span class="ui-state-highlight ui-corner-all c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
                         $reactionType['count'] .
                         '</span>' .
                         '</div>' .
@@ -1528,12 +1528,12 @@ class C4GForum extends \Module
                         '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
                         $reactionType['text'] .
                         '</span>' .
-                        '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
+                        '<span class="ui-state-highlight ui-corner-all c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
                         $reactionType['count'] .
                         '</span>' .
                         '</div>' .
                         '<button data-reacted="1" data-stop="' . $reactionType['stop'] . '" ' .
-                        'data-text="' . $reactionType['text'] . '" ' . 'class="c4g-forum-post-reaction-button c4g-forum-post-reaction-button-like" ' .
+                        'data-text="' . $reactionType['text'] . '" ' . 'class="ui-button ui-corner-all ui-widget c4g-forum-post-reaction-button c4g-forum-post-reaction-button-like" ' .
                         'type="button" onclick="' . $onclick . '">' .
                         $reactionType['stop'] .
                         '</button>' .
@@ -1545,7 +1545,7 @@ class C4GForum extends \Module
                             '<span class="c4g-forum-post-reaction-text c4g-forum-post-reaction-text-like">' .
                             $reactionType['text'] .
                             '</span>' .
-                            '<span class="c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
+                            '<span class="ui-state-highlight ui-corner-all c4g-forum-post-reaction-count c4g-forum-post-reaction-count-like">' .
                             $reactionType['count'] .
                             '</span>' .
                             '</div>';
@@ -1561,7 +1561,7 @@ class C4GForum extends \Module
                     }
                     $html .= '<button data-reacted="0" data-stop="' . $reactionType['stop'] . '" ' .
                         'data-text="' . $reactionType['text'] . '" '
-                        . 'class="c4g-forum-post-reaction-button c4g-forum-post-reaction-button-like" type="button" ' .
+                        . 'class="ui-button ui-corner-all ui-widget c4g-forum-post-reaction-button c4g-forum-post-reaction-button-like" type="button" ' .
                         'onclick="' . $onclick . '">' .
                         $reactionType['text'] .
                         '</button>' .
