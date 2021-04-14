@@ -495,7 +495,7 @@ label.search-label {
     font-size: 2em;
 }
 
-.c4g-forum-profile-header-avatar-wrapper {
+.c4g-forum-profile-header-avatar-wrapper, .c4g-forum-profile-header-avatar-wrapper img {
     max-width: 210px;
 }
 
