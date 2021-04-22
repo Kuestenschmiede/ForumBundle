@@ -2912,11 +2912,12 @@ JSPAGINATE;
                 if (($forum['posts'] > 0) && ($this->c4g_forum_boxes_lastthread)) {
                     $database = Database::getInstance();
                     $stmt = $database->prepare(
-                        'SELECT *, m.username, m.lastname, m.firstname FROM tl_c4g_forum_thread t ' .
+                        'SELECT t.*, m.username, m.lastname, m.firstname FROM tl_c4g_forum_thread t ' .
                         'JOIN tl_member m ON t.author = m.id ' .
+                        'WHERE t.pid = ? ' .
                         'ORDER BY t.creation DESC LIMIT 1'
                     );
-                    $result = $stmt->execute()->fetchAssoc();
+                    $result = $stmt->execute($forum['id'])->fetchAssoc();
                     if (count($result) > 0) {
                         switch ($this->c4g_forum_show_realname) {
                             case 'FF';
