@@ -507,3 +507,8 @@ label.search-label {
 .c4g-forum-profile-body-posts > div > div {
     padding: 10px;
 }
+
+.user_data_statistics_item_key,
+.user_data_statistics_item_value {
+    display: inline-block;
+}

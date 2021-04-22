@@ -32,22 +32,37 @@
     <?php endif; ?>
     <ul class="user_data_statistics">
         <li class="user_data_statistics_item">
-            <?php if ($this->iUserPostCount): ?>
-              <?php if ($this->sForumType == 'DISCUSSIONS'): ?>
-                <?php echo $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_COUNT']; ?>:&nbsp;<?php echo $this->iUserPostCount; ?>
-              <?php endif; ?>
-              <?php if ($this->sForumType == 'QUESTIONS'): ?>
-                <?php echo $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['POST_COUNT']; ?>:&nbsp;<?php echo $this->iUserPostCount; ?>
-              <?php endif; ?>
-            <?php endif; ?>
+            <span class="user_data_statistics_item_key">
+                <?php
+                if ($this->iUserPostCount) {
+                    if ($this->sForumType === 'DISCUSSIONS') {
+                        echo $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['POST_COUNT'].':';
+                    } else if ($this->sForumType === 'QUESTIONS') {
+                        echo $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['POST_COUNT'].':';
+                    }
+                }
+                ?>
+            </span>
+            <span class="user_data_statistics_item_value">
+                <?php
+                echo $this->iUserPostCount;
+                ?>
+            </span>
         </li>
         <?php if (is_array($this->userStatistics) && count($this->userStatistics) > 0) {
             foreach ($this->userStatistics as $key => $value) {
                 ?>
-                <li>
+                <li class="user_data_statistics_item">
+                    <span class="user_data_statistics_item_key">
                     <?php
-                    echo "$key:&nbsp;".str_replace(' ', '&nbsp;', $value);
+                    echo "$key:";
                     ?>
+                    </span>
+                    <span class="user_data_statistics_item_value">
+                    <?php
+                    echo str_replace(' ', '&nbsp;', $value);
+                    ?>
+                    </span>
                 </li>
                 <?php
             }
