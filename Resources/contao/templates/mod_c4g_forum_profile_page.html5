@@ -115,6 +115,19 @@
                         </span>
                                 </div>
                             <?php } ?>
+                            <div class="c4g-forum-profile-body-post-toggle-wrapper">
+                                <button class="c4g-forum-profile-body-post-show"
+                                        onclick="this.parentNode.parentNode.parentNode.childNodes.item(3).hidden=0;
+                                                this.hidden=1;this.parentNode.childNodes.item(3).hidden=0;"
+                                        hidden>
+                                    Anzeigen
+                                </button>
+                                <button class="c4g-forum-profile-body-post-hide"
+                                        onclick="this.parentNode.parentNode.parentNode.childNodes.item(3).hidden=1;
+                                                this.hidden=1;this.parentNode.childNodes.item(1).hidden=0;">
+                                    Verstecken
+                                </button>
+                            </div>
                         </div>
 
                         <div class="c4g-forum-profile-body-post-text-wrapper ui-widget ui-widget-content ui-corner-bottom">
