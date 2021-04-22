@@ -1379,7 +1379,13 @@ class C4GForum extends \Module
         // Get all fields from the tl_member DCA that are marked with the memberLink eval key.
         foreach ($GLOBALS['TL_DCA']['tl_member']['fields'] as $sKey => $aField) {
             if ($aField['eval']['memberLink']) {
-                $aMemberLinks[$sKey] = $oMember->$sKey;
+                if ($oMember->$sKey !== '') {
+                    if (C4GUtils::startsWith($oMember->$sKey, 'https://') || C4GUtils::startsWith($oMember->$sKey, 'http://')) {
+                        $aMemberLinks[$sKey] = $oMember->$sKey;
+                    } else {
+                        $aMemberLinks[$sKey] = 'https://' . $oMember->$sKey;
+                    }
+                }
             }
         }
         // Remove empty values with "array_filter()" from aMemberLinks-array before handing it over to the template.
