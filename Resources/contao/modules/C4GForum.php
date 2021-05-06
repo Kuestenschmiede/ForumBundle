@@ -284,7 +284,7 @@ class C4GForum extends \Module
 
 
         $GLOBALS['TL_CSS'][] = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.css';
-        $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.jquery.min.js';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.jquery.min.js|async|static';
 
         if ($this->c4g_forum_bbcodes != "1") {
             $GLOBALS['TL_HEAD'][] = "<script>var ckRemovePlugins = 'bbcode';</script>";
@@ -294,12 +294,12 @@ class C4GForum extends \Module
 
         if ($this->c4g_forum_editor === "ck") {
             $GLOBALS['TL_HEAD'][] = "<script>var ckEditorItems = ['" . implode("','", $aToolbarButtons) . "'];</script>";
-            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4gisprojects/vendor/ckeditor/ckeditor.js';
+            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4gisprojects/vendor/ckeditor/ckeditor.js|async|static';
         }
 
         if ($this->c4g_forum_pagination_active == "1") {
-            $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/js/jquery.pagination.min.js";
-            $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/js/jquery.hashchange.min.js";
+            $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/js/jquery.pagination.min.js|async|static";
+            $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/js/jquery.hashchange.min.js|async|static";
         }
 
         if ($enableMaps) {
