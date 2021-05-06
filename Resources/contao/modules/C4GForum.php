@@ -1,14 +1,12 @@
 <?php
 /*
- * This file is part of con4gis,
- * the gis-kit for Contao CMS.
- *
- * @package    con4gis
- * @version    7
- * @author     con4gis contributors (see "authors.txt")
- * @license    LGPL-3.0-or-later
- * @copyright  Küstenschmiede GmbH Software & Design
- * @link       https://www.con4gis.org
+ * This file is part of con4gis, the gis-kit for Contao CMS.
+ * @package con4gis
+ * @version 8
+ * @author con4gis contributors (see "authors.txt")
+ * @license LGPL-3.0-or-later
+ * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @link https://www.con4gis.org
  */
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
@@ -109,7 +107,7 @@ class C4GForum extends \Module
         $this->User = FrontendUser::getInstance();
 //            ResourceLoader::loadJavaScriptResource('bundles/con4giscore/vendor/ckeditor5/ckeditor.js', ResourceLoader::HEAD);
         \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
-        \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/js/historyPush.js');
+        \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/js/historyPush.js|async|static');
         \con4gis\CoreBundle\Classes\ResourceLoader::loadCssResource('bundles/con4gisforum/css/icons.css');
     }
 

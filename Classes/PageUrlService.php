@@ -1,4 +1,13 @@
 <?php
+/*
+ * This file is part of con4gis, the gis-kit for Contao CMS.
+ * @package con4gis
+ * @version 8
+ * @author con4gis contributors (see "authors.txt")
+ * @license LGPL-3.0-or-later
+ * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @link https://www.con4gis.org
+ */
 
 namespace con4gis\ForumBundle\Classes;
 
@@ -61,8 +70,8 @@ class PageUrlService
             return str_replace('/' . $this->alias, '/' . $alias, $this->pageUrl);
         } elseif (C4GUtils::endsWith($this->pageUrl, '.html')) {
             return str_replace('.html', "/$alias.html", $this->pageUrl);
-        } else {
-            return $this->pageUrl . "/$alias";
         }
+
+        return $this->pageUrl . "/$alias";
     }
 }
