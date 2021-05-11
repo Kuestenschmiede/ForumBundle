@@ -314,7 +314,7 @@ class tl_c4g_forum_thread extends \Backend
             }
         }
         else{
-            $GLOBALS['TL_CSS'][] = "bundles/con4gisforum/css/c4gForumBackendButton.css";
+            $GLOBALS['TL_CSS'][] = "bundles/con4gisforum/dist/css/c4gForumBackendButton.min.css";
             $root = $dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread")
                 ->execute()
                 ->fetchEach('id');

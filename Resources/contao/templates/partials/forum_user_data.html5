@@ -1,4 +1,4 @@
-<script src="bundles/con4gisforum/js/c4g.pn.js"></script>
+<script src="bundles/con4gisforum/dist/js/c4g.pn.js"></script>
 
 <div class="c4g_forum_post_user_data">
     <?php

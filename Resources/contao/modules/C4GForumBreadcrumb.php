@@ -172,7 +172,7 @@ use Contao\Database;
                     }
                 }
 
-                $GLOBALS ['TL_CSS'][] = 'bundles/con4gisforum/css/c4gForum.css';
+                $GLOBALS ['TL_CSS'][] = 'bundles/con4gisforum/dist/css/c4gForum.min.css';
 
             }
 

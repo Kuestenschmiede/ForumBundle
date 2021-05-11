@@ -60,7 +60,7 @@ $GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('con4gis\ForumBundle\Classes\C4
  * CSS
  */
 if(TL_MODE == "BE") {
-    $GLOBALS['TL_CSS']['c4g_forum_backend'] = 'bundles/con4gisforum/css/c4gForumBackend.css';
+    $GLOBALS['TL_CSS']['c4g_forum_backend'] = 'bundles/con4gisforum/dist/css/c4gForumBackend.min.css';
 }
 
 /**

@@ -105,10 +105,11 @@ class C4GForum extends \Module
         parent::__construct($objModule, $strColumn = 'main');
         $this->helper = new C4GForumHelper($this->Database, null, FrontendUser::getInstance(), "", "", "UU", $this->c4g_forum_type);
         $this->User = FrontendUser::getInstance();
-//            ResourceLoader::loadJavaScriptResource('bundles/con4giscore/vendor/ckeditor5/ckeditor.js', ResourceLoader::HEAD);
-        \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
-        \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/historyPush.js|async|static');
-        \con4gis\CoreBundle\Classes\ResourceLoader::loadCssResource('bundles/con4gisforum/css/icons.css');
+
+        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/c4g-vendor-ckeditor.js',ResourceLoader::HEAD);
+        ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
+//        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/historyPush.js|async|static');
+//        ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/icons.min.css');
     }
 
     /**
@@ -208,8 +209,8 @@ class C4GForum extends \Module
             $GLOBALS ['TL_HEAD'][] = '<style>.rating_static > span.checked ~ label{color:#' . $this->c4g_forum_rating_color . ' !important;}</style>';
         }
 
-        $GLOBALS ['TL_CSS'][] = 'bundles/con4gisforum/css/c4gForum.css';
-        //$GLOBALS ['TL_CSS'][] = 'system/modules/con4gis_forum/html/css/bbcodes.css';
+        $GLOBALS ['TL_CSS'][] = 'bundles/con4gisforum/dist/css/c4gForum.min.css';
+        //$GLOBALS ['TL_CSS'][] = 'system/modules/con4gis_forum/html/dist/css/bbcodes.min.css';
         $data['id'] = $this->id;
         // set global js var to inidcate api endpoint
         $data['forumAjaxUrl'] = "con4gis/forumService";
@@ -294,12 +295,12 @@ class C4GForum extends \Module
 
         if ($this->c4g_forum_editor === "ck") {
             $GLOBALS['TL_HEAD'][] = "<script>var ckEditorItems = ['" . implode("','", $aToolbarButtons) . "'];</script>";
-            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4gisprojects/vendor/ckeditor/ckeditor.js|async|static';
+            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4gisprojects/Resources/dist/js/c4g-.js|async|static';
         }
 
         if ($this->c4g_forum_pagination_active == "1") {
-            $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/js/jquery.pagination.min.js|async|static";
-            $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/js/jquery.hashchange.min.js|async|static";
+            $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/vendor/js/jquery.pagination.min.js|async|static";
+            $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/vendor/js/jquery.hashchange.min.js|async|static";
         }
 
         if ($enableMaps) {

@@ -63,7 +63,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
         }
         System::loadLanguageFile('frontendModules');
 
-        ResourceLoader::loadCssResource('bundles/con4gisforum/css/c4gForum.css');
+        ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/c4gForum.min.css');
         ResourceLoader::loadCssResource('bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.css');
         $settings = C4gSettingsModel::findSettings();
         if ($settings && $settings->c4g_appearance_themeroller_css) {
