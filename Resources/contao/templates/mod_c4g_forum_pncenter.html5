@@ -1,3 +1,4 @@
+    <script src="bundles/con4gisprojects/dist/js/c4g-vendor-ckeditor.js"></script>
     <script src="bundles/con4gisforum/dist/js/c4g.pn.js"></script>
     <link rel="stylesheet" href="bundles/con4gisforum/dist/css/c4g.pn.min.css">
     <link rel="stylesheet" href="bundles/con4giscore/vendor/fontawesome/css/fontawesome.min.css">

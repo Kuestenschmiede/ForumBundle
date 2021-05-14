@@ -106,8 +106,10 @@ class C4GForum extends \Module
         $this->helper = new C4GForumHelper($this->Database, null, FrontendUser::getInstance(), "", "", "UU", $this->c4g_forum_type);
         $this->User = FrontendUser::getInstance();
 
-        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/historyPush.js|async|static');
-        ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/icons.min.css');
+        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/c4g-vendor-ckeditor.js',ResourceLoader::HEAD);
+        ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
+//        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/historyPush.js|async|static');
+//        ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/icons.min.css');
     }
 
     /**
@@ -282,8 +284,6 @@ class C4GForum extends \Module
         $aToolbarButtons = explode(",", $this->c4g_forum_bbcodes_editor_toolbaritems);
 
 
-        //ToDo use ResourceLoader
-
         $GLOBALS['TL_CSS'][] = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.css';
         $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.jquery.min.js|async|static';
 
@@ -295,7 +295,7 @@ class C4GForum extends \Module
 
         if ($this->c4g_forum_editor === "ck") {
             $GLOBALS['TL_HEAD'][] = "<script>var ckEditorItems = ['" . implode("','", $aToolbarButtons) . "'];</script>";
-            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4gisprojects/Resources/vendor/ckeditor/ckeditor.js|async|static'; //ToDo
+            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4gisprojects/Resources/dist/js/c4g-.js|async|static';
         }
 
         if ($this->c4g_forum_pagination_active == "1") {
