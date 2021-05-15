@@ -106,7 +106,7 @@ class C4GForum extends \Module
         $this->helper = new C4GForumHelper($this->Database, null, FrontendUser::getInstance(), "", "", "UU", $this->c4g_forum_type);
         $this->User = FrontendUser::getInstance();
 
-        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/c4g-vendor-ckeditor.js',ResourceLoader::HEAD);
+        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/vendor/ckeditor/ckeditor.js',ResourceLoader::HEAD);
         ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
 //        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/historyPush.js|async|static');
 //        ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/icons.min.css');
