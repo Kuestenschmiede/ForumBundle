@@ -107,10 +107,16 @@ class C4GForum extends \Module
         $this->helper = new C4GForumHelper($this->Database, null, FrontendUser::getInstance(), "", "", "UU", $this->c4g_forum_type);
         $this->User = FrontendUser::getInstance();
 
-        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/vendor/ckeditor/ckeditor.js',ResourceLoader::HEAD);
-        ResourceLoader::loadJavaScriptResourceTag('var ckeditor5instances = {};');
-//        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/historyPush.js|async|static');
-//        ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/icons.min.css');
+        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/historyPush.js|async|static');
+        ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/icons.min.css');
+        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/c4g-vendor-trix.js');
+        ResourceLoader::loadCssResource('bundles/con4gisprojects/dist/css/trix.css');
+        global $objPage;
+        $get = ['h2=1', 'h3=1', 'href=1', 'attach=1'];
+        ResourceLoader::loadJavaScriptResource(
+            'bundles/con4gisprojects/dist/js/trixconfig.php?'.
+            'lang='.$objPage->language.'&'.implode('&', $get)
+        );
     }
 
     /**
@@ -2130,7 +2136,8 @@ JSPAGINATE;
             '<input type="hidden" name="uploadPath" value="' . $imageUploadPath->path . '">' .
             '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
             '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
-            '<textarea' . $editorId . ' name="post" cols="80" rows="15" class="formdata ui-corner-all"></textarea><br/>' .
+            '<input id="editor" type="hidden" name="post" class="formdata">'.
+            '<trix-editor input="editor" class="ui-corner-all"></trix-editor>'.
             '</div>';
         $data .= $this->getPostlinkForForm('c4gForumNewThreadPostLink', $forumId, 'newthread', '', '');
         $data .= $this->getPostMapEntryForForm('c4gForumNewThreadMapData', $forumId, 'newthread', '', '', '', '', '', '', '', '');
@@ -2275,7 +2282,8 @@ JSPAGINATE;
             '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
             '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
             '<input type="hidden" name="uploadPath" value="' . $imageUploadPath->path . '">' .
-            '<textarea' . $editorId . ' name="post" cols="80" rows="15" class="formdata ui-corner-all"></textarea>' .
+            '<input id="editor" type="hidden" name="post" class="formdata">'.
+            '<trix-editor input="editor" class="ui-corner-all"></trix-editor>'.
             '</div>';
 
         $data .= '<input type="hidden" class=formdata ui-corner-all name="recipient" value="' . htmlspecialchars($thread['owner']) . '">
@@ -4378,7 +4386,8 @@ JSPAGINATE;
             '<input type="hidden" name="uploadPath" value="' . $imageUploadPath->path . '">' .
             '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
             '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
-            '<textarea' . $editorId . ' name="post" cols="80" rows="15" class="formdata ui-corner-all">' . $post['text'] . '</textarea>' .
+            '<input id="editor" type="hidden" name="post" class="formdata" value="'.$post['text'].'">'.
+            '<trix-editor input="editor" class="ui-corner-all"></trix-editor>'.
             '</div>';
 
         $data .= $this->getPostlinkForForm('c4gForumEditPostLink', $post['forumid'], $dialogId, $post['linkname'], $post['linkurl']);
