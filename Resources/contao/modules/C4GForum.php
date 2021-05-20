@@ -22,7 +22,8 @@ use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumPost;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumSession;
 use con4gis\MapsBundle\Classes\MapDataConfigurator;
-use con4gis\MapsBundle\Classes\ResourceLoader;
+use con4gis\MapsBundle\Classes\ResourceLoader as MapsResourceLoader;
+use con4gis\CoreBundle\Classes\ResourceLoader;
 use Contao\Controller;
 use Contao\Database;
 use Contao\FrontendUser;
@@ -304,11 +305,11 @@ class C4GForum extends \Module
         }
 
         if ($enableMaps) {
-            ResourceLoader::loadResources();
-            ResourceLoader::loadTheme();
+            MapsResourceLoader::loadResources();
+            MapsResourceLoader::loadTheme();
             static::$useMaps = $enableMaps;
             // load core resources for maps
-            ResourceLoader::loadResourcesForModule('maps');
+            MapsResourceLoader::loadResourcesForModule('maps');
         }
 
         $data['breadcrumbDelim'] = $this->c4g_forum_breadcrumb_jqui_layout ? '' : '>';
