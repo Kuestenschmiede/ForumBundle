@@ -32,7 +32,7 @@
 
   /**
    *
-   * @returns {{sendMessage: _sendMessage, deleteMessage: _deleteMessage, openModal: _openModal, parseHTMLCode: _parseHTMLCode, initCKEditor: _initCKEditor}}
+   * @returns {{sendMessage: _sendMessage, deleteMessage: _deleteMessage, openModal: _openModal, parseHTMLCode: _parseHTMLCode}}
    * @constructor
    */
   var C4gPn = function () {
@@ -206,45 +206,6 @@
       jQuery(selector).html( jQuery(cont).text() );
     };
 
-
-    /**
-     *
-     * @private
-     */
-    var _initCKEditor = function () {
-
-
-      var ckEditorItems = ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'Blockquote', '-', 'RemoveFormat', 'NumberedList', 'BulletedList', 'Link', 'Unlink', 'Anchor', 'Image', 'TextColor', 'BGColor'];
-      var editor = CKEDITOR.replace('ckeditor', {
-        toolbar: [{
-          name: 'all',
-          items: ckEditorItems
-        }],
-        // removePlugins:'',
-        extraPlugins: 'justify,fileUpload,bbcode,panelbutton,floatpanel,colorbutton,blockquote,youtube',
-        language: sCurrentLang,
-        defaultLanguage: "en",
-        height:'360',
-        disableObjectResizing: true,
-        filebrowserImageUploadUrl: "con4gis/upload/image",
-        filebrowserUploadUrl: 'bundles/con4giscore/vendor/C4GFileUpload.php',
-        // codeSnippet_languages: {
-        // }
-      });
-
-      CKEDITOR.on('instanceReady', function () {
-        jQuery.each(CKEDITOR.instances, function (instance) {
-          CKEDITOR.instances[instance].on("change", function (e) {
-            for (instance in CKEDITOR.instances)
-              CKEDITOR.instances[instance].updateElement();
-          });
-        });
-      });
-
-      editor.focus();
-    };
-
-
     var _markAsRead = function (id) {
       var data = {
         status: 1,
@@ -272,7 +233,6 @@
       deleteMessage: _deleteMessage,
       openModal: _openModal,
       parseHTMLCode: _parseHTMLCode,
-      initCKEditor: _initCKEditor,
       markAsRead: _markAsRead
     };
   };

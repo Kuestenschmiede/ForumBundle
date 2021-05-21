@@ -14,7 +14,6 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] =
     '{title_legend},name,headline,type;' .
     '{c4g_forum_general_legend},c4g_forum_type,c4g_forum_startforum,c4g_forum_navigation,c4g_forum_boxlength,c4g_forum_threadclick,c4g_forum_postsort,c4g_forum_collapsible_posts,c4g_forum_breadcrumb,c4g_forum_hide_intropages,c4g_forum_jumpTo,c4g_forum_language,c4g_forum_multilingual,c4g_forum_tooltip,c4g_forum_show_last_post_on_new;' .
     '{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_rating_enabled,c4g_forum_rating_color,c4g_forum_reaction_enabled,c4g_forum_show_post_count,c4g_forum_show_avatars,c4g_forum_show_online_status,c4g_forum_show_ranks,c4g_forum_show_pn_button,c4g_forum_sub_title,c4g_forum_user_statistics,c4g_forum_user_profile_page;'.
-    '{c4g_forum_bbcodes_legend:hide},c4g_forum_bbcodes;' .
     '{c4g_forum_sizes_legend:hide},c4g_forum_size,c4g_forum_scroll;' .
     '{c4g_forum_pagination_legend:hide},c4g_forum_threads_perpage, c4g_forum_threads_perpage_selection, c4g_forum_pagination_active,c4g_forum_pagination_perpage,c4g_forum_pagination_format;' .
     '{c4g_forum_search_legend:hide},c4g_forum_search_onlythreads, c4g_forum_search_wholewords, c4g_forum_use_tags_in_search, c4g_forum_search_forums, c4g_forum_search_displayonly;' .
@@ -44,7 +43,6 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['profile_page_module'] =
     '{title_legend},name,type;{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_show_ranks,c4g_forum_user_statistics;'.
     '{c4g_forum_page_legend},c4g_forum_module_page';
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_bbcodes';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_jqui';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_sitemap';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_show_avatars';
@@ -53,7 +51,6 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_show
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_multilingual';
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_forum_jqui']    = 'c4g_forum_jqui_lib,c4g_forum_uitheme_css_select,c4g_forum_uitheme_css_src,c4g_forum_dialogsize,c4g_forum_dialogs_embedded,c4g_forum_embdialogs_jqui,c4g_forum_breadcrumb_jqui_layout,c4g_forum_buttons_jqui_layout,c4g_forum_table_jqui_layout,c4g_forum_posts_jqui,c4g_forum_boxes_jqui_layout,c4g_forum_enable_scrollpane';
-$GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_forum_bbcodes'] = 'c4g_forum_editor, c4g_forum_bbcodes_editor_imguploadpath, c4g_forum_bbcodes_editor_fileuploadpath, c4g_forum_bbcodes_editor_toolbaritems, c4g_forum_bbcodes_editor_uploadTypes,c4g_forum_bbcodes_editor_maxFileSize,c4g_forum_bbcodes_editor_imageWidth, c4g_forum_bbcodes_editor_imageHeight'; //, c4g_forum_bbcodes_smileys,c4g_forum_bbcodes_smileys_url,c4g_forum_bbcodes_autourl';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_forum_sitemap'] = 'c4g_forum_sitemap_filename,c4g_forum_sitemap_contents';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_forum_show_avatars']       = 'c4g_forum_avatar_size';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_forum_show_online_status'] = 'c4g_forum_member_online_time';
@@ -498,40 +495,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_multilingual_languages'] = 
     'sql'        => "blob NULL"
 );
 
-/***
- * Fields - BBCodes
- */
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes'] = array
-(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes'],
-    'exclude'   => true,
-    'default'   => true,
-    'inputType' => 'checkbox',
-    'eval'      => array('submitOnChange' => true),
-    'sql'       => "char(1) NOT NULL default '1'"
-
-);
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_editor'] = array
-(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor'],
-    'exclude'   => true,
-    'default'   => false,
-    'inputType' => 'checkbox',
-    'sql'       => "char(1) NOT NULL default '0'"
-);
-
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_ckeditor'] = array
-(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_ckeditor'],
-    'exclude'   => true,
-    'default'   => false,
-    'inputType' => 'checkbox',
-    'sql'       => "char(1) NOT NULL default '0'"
-);
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_editor'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor'],
     'exclude'   => true,
@@ -543,56 +506,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_editor'] = array(
         //'no' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no'],
     ),
     'sql'       => "char(2) NOT NULL default 'ck'"
-);
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_editor_imguploadpath']  = array
-(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imguploadpath'],
-    'exclude'   => true,
-    'default'   => '/files/c4g_forum/images/',
-    'inputType'               => 'fileTree',
-    'eval'                    => array('fieldType' => 'radio', 'mandatory' => true),
-    'sql'                     => "blob NULL"
-);
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_editor_fileuploadpath'] = array
-(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_fileuploadpath'],
-    'exclude'   => true,
-    'default'   => '/files/c4g_forum/files/',
-    'inputType'               => 'fileTree',
-    'eval'                    => array('fieldType'=>'radio', 'mandatory' => true,),
-    'sql'                     => "blob NULL"
-);
-
-if ((version_compare( VERSION, '4', '>=' ))) {
-    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_editor_toolbaritems']   = array
-    (
-        'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems'],
-        'exclude'   => true,
-        'default'   => 'Cut,Copy,Paste,PasteText,PasteFromWord,-,Undo,Redo,TextColor,Bold,Italic,Underline,Strike,Subscript,Superscript,-,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,-,RemoveFormat,NumberedList,BulletedList,Link,Unlink,Anchor,-,Image,Youtube,FileUpload,-,Table,Smiley,-,Maximize',
-        'inputType' => 'text',
-        'eval'      => array('class' => '', 'style' => 'width:662px'),
-        'sql'       => 'varchar(600) NOT NULL default "Cut,Copy,Paste,PasteText,PasteFromWord,-,Undo,Redo,TextColor,Bold,Italic,Underline,Strike,Subscript,Superscript,-,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,-,RemoveFormat,NumberedList,BulletedList,Link,Unlink,Anchor,-,Image,Youtube,FileUpload,-,Smiley,-,Maximize"'
-    );
-} else {
-    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_editor_toolbaritems']   = array
-    (
-        'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_toolbaritems'],
-        'exclude'   => true,
-        'default'   => 'Cut,Copy,Paste,PasteText,PasteFromWord,-,Undo,Redo,TextColor,Bold,Italic,Underline,Strike,Subscript,Superscript,-,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,-,RemoveFormat,NumberedList,BulletedList,Link,Unlink,Anchor,-,Image,Youtube,FileUpload,-,Table,Smiley,-,Maximize',
-        'inputType' => 'text',
-        'eval'      => array('class' => '', 'style' => 'width:662px'),
-        'sql'       => "varchar(600) NOT NULL default 'Cut,Copy,Paste,PasteText,PasteFromWord,-,Undo,Redo,TextColor,Bold,Italic,Underline,Strike,Subscript,Superscript,-,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,-,RemoveFormat,NumberedList,BulletedList,Link,Unlink,Anchor,-,Image,Youtube,FileUpload,-,Smiley,-,Maximize'"
-    );
-}
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_smileys'] = array
-(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_smileys'],
-    'exclude'   => true,
-    'default'   => true,
-    'inputType' => 'checkbox',
-    'sql'       => "char(1) NOT NULL default '1'"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_tooltip']         = array
@@ -612,26 +525,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_tooltip']         = array
     ),
     'sql'       => "varchar(50) NOT NULL default 'body_first_post'"
 );
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_smileys_url'] = array
-(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_smileys_url'],
-    'exclude'   => true,
-    'default'   => 'src/con4gis/ForumBundle/Resources/public/images/smileys',
-    'inputType' => 'text',
-    'eval'      => array('maxlength' => 128, "style" => 'width: 200px'),
-    'sql'       => "char(128) NOT NULL default 'bundles/con4giscore/vendor/wswgEditor/images/smilies'"
-);
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_autourl'] = array
-(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_autourl'],
-    'exclude'   => true,
-    'default'   => true,
-    'inputType' => 'checkbox',
-    'sql'       => "char(1) NOT NULL default '1'"
-);
-
 
 /***
  * Fields - Boxes
@@ -901,46 +794,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_root'] = array
     'inputType' => 'pageTree',
     'eval'      => array('mandatory'=>true),
     'sql'       => "int(10) unsigned NOT NULL default '0'"
-);
-
-if ((version_compare( VERSION, '4', '>=' ))) {
-    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_editor_uploadTypes'] = array(
-        'label' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_uploadTypes'],
-        'inputType' => 'text',
-        'default' => 'jpg,png,gif,zip,pdf',
-        'eval' => array('tl_class' => 'w50'),
-        'sql' => 'varchar(255) NOT NULL default "jpg,png,gif,zip,pdf"'
-    );
-} else {
-    $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_editor_uploadTypes'] = array(
-        'label' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_uploadTypes'],
-        'inputType' => 'text',
-        'default' => 'jpg,png,gif,zip,pdf',
-        'eval' => array('tl_class' => 'w50'),
-        'sql' => "varchar(255) NOT NULL default 'jpg,png,gif,zip,pdf'"
-    );
-}
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_editor_maxFileSize'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_maxFileSize'],
-    'inputType' => 'text',
-    'default'   => '2048000',
-    'eval'      => array('mandatory' => true, 'rgxp' => 'digit', 'nospace' => true, 'tl_class' => 'w50'),
-    'sql'       => "varchar(255) NOT NULL default '2048000'"
-);
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_editor_imageWidth'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imageWidth'],
-    'inputType' => 'text',
-    'eval'      => array('mandatory' => true, 'rgxp' => 'digit', 'nospace' => true, 'tl_class' => 'w50'),
-    'sql'       => "varchar(10) NOT NULL default '800'"
-);
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_bbcodes_editor_imageHeight'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imageHeight'],
-    'inputType' => 'text',
-    'eval'      => array('mandatory' => true, 'rgxp' => 'digit', 'nospace' => true, 'tl_class' => 'w50'),
-    'sql'       => "varchar(10) NOT NULL default '600'"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_appearance_themeroller_css'] = array

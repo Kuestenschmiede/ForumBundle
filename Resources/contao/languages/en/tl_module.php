@@ -380,7 +380,6 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['disabled']         = "disabled";
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('WYSIWYG-Editor', '');
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck']           = "CKEditor";
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_appearance_themeroller_css'] = array('jQuery UI ThemeRoller CSS fille', 'select a jQuery UI CSS file.');
     $GLOBALS['TL_LANG']['tl_module']['fields']['pm_center_forum_module'] = array('Forum module', 'Pick the forum module associated with this module.');

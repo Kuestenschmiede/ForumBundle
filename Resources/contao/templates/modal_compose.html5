@@ -50,8 +50,4 @@
             </div>
         </div>
     </form>
-
-    <script>
-        C4gPn.initCKEditor();
-    </script>
 </div>

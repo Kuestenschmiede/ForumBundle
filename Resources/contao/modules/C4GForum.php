@@ -300,11 +300,6 @@ class C4GForum extends \Module
             $GLOBALS['TL_HEAD'][] = "<script>var ckRemovePlugins = '';</script>";
         }
 
-        if ($this->c4g_forum_editor === "ck") {
-            $GLOBALS['TL_HEAD'][] = "<script>var ckEditorItems = ['" . implode("','", $aToolbarButtons) . "'];</script>";
-            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4gisprojects/Resources/dist/js/c4g-.js|async|static';
-        }
-
         if ($this->c4g_forum_pagination_active == "1") {
             $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/vendor/js/jquery.pagination.min.js|async|static";
             $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/vendor/js/jquery.hashchange.min.js|async|static";
@@ -2095,16 +2090,6 @@ JSPAGINATE;
         $data .= $this->getThreadDescForForm('c4gForumNewThreadDesc', $forumId, 'newthread', '');
         $data .= $this->getThreadSortForForm('c4gForumNewThreadSort', $forumId, 'newthread', '999');
 
-        $editorId = '';
-
-        if ($this->c4g_forum_editor === "bb") {
-            $editorId = ' id="editor"';
-        } elseif ($this->c4g_forum_editor === "ck") {
-            $editorId = ' id="ckeditor"';
-        } else {
-            $editorId = '';
-        }
-
         $aPost = array(
             "forumid" => $forumId,
             "tags" => array()
@@ -2123,17 +2108,9 @@ JSPAGINATE;
         $sCurrentSite = strtok(\Environment::get('httpReferer'), '?');
         $sCurrentSiteHashed = md5($sCurrentSite . \Config::get('encryptionKey'));
 
-        $binImageUuid = $this->c4g_forum_bbcodes_editor_imguploadpath;
-        if ($binImageUuid) {
-            $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid));
-
-        }
-
         $data .= $this->getTagForm('c4gForumNewThreadPostTags', $aPost, 'newthread');
         $data .= '<div class="c4gForumNewThreadContent">' .
             C4GForumHelper::getTypeText($this->c4g_forum_type, 'POST') . ':<br/>' .
-            '<input type="hidden" name="uploadEnv" value="' . $sSite . '">' .
-            '<input type="hidden" name="uploadPath" value="' . $imageUploadPath->path . '">' .
             '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
             '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
             '<input id="editor" type="hidden" name="post" class="formdata">'.
@@ -2205,14 +2182,6 @@ JSPAGINATE;
         if (!$access) {
             return $this->getPermissionDenied($message);
         }
-        $editorId = '';
-        if ($this->c4g_forum_editor === "bb") {
-            $editorId = ' id="editor"';
-        } elseif ($this->c4g_forum_editor === "ck") {
-            $editorId = ' id="ckeditor"';
-        } else {
-            $editorId = '';
-        }
 
         $aPost = array(
             "forumid" => $thread['forumid'],
@@ -2230,10 +2199,6 @@ JSPAGINATE;
         }
 
         $sCurrentSiteHashed = md5($sCurrentSite . \Config::get('encryptionKey'));
-
-        if (substr($sSite, -1, 1) != "/") {
-            $sSite .= "/";
-        }
 
         $data = $sLastPost;
 
@@ -2271,17 +2236,10 @@ JSPAGINATE;
         ';
         }
 
-        $binImageUuid = $this->c4g_forum_bbcodes_editor_imguploadpath;
-        if ($binImageUuid) {
-            $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid));
-        }
-
         $data .= '<div class="c4gForumNewPostContent">' .
             C4GForumHelper::getTypeText($this->c4g_forum_type, 'POST') . ':<br/>' .
-            '<input type="hidden" name="uploadEnv" value="' . $sSite . '">' .
             '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
             '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
-            '<input type="hidden" name="uploadPath" value="' . $imageUploadPath->path . '">' .
             '<input id="editor" type="hidden" name="post" class="formdata">'.
             '<trix-editor input="editor" class="ui-corner-all"></trix-editor>'.
             '</div>';
@@ -4322,15 +4280,6 @@ JSPAGINATE;
         if (!$this->helper->checkPermissionForAction($post['forumid'], $action, null, $this->c4g_forum_param_forumbox, $this->c4g_forum_param_forum)) {
             return $this->getPermissionDenied($this->helper->permissionError);
         }
-        $editorId = '';
-        if ($this->c4g_forum_editor === "bb") {
-            $editorId = ' id="editor"';
-        } elseif ($this->c4g_forum_editor === "ck") {
-            $editorId = ' id="ckeditor"';
-        } else {
-            $editorId = '';
-        }
-
 
         $sServerName = \Environment::get("serverName");
         $sHttps = \Environment::get("https");
@@ -4374,16 +4323,8 @@ JSPAGINATE;
         $sCurrentSite = strtok(\Environment::get('httpReferer'), '?');
         $sCurrentSiteHashed = md5($sCurrentSite . \Config::get('encryptionKey'));
 
-        $binImageUuid = $this->c4g_forum_bbcodes_editor_imguploadpath;
-        if ($binImageUuid) {
-            $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid));
-        }
-
-
         $data .= '<div class="c4gForumEditPostContent">' .
             C4GForumHelper::getTypeText($this->c4g_forum_type, 'POST') . ':<br/>' .
-            '<input type="hidden" name="uploadEnv" value="' . $sSite . '">' .
-            '<input type="hidden" name="uploadPath" value="' . $imageUploadPath->path . '">' .
             '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
             '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
             '<input id="editor" type="hidden" name="post" class="formdata" value="'.$post['text'].'">'.
