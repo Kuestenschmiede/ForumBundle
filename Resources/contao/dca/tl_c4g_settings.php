@@ -23,6 +23,3 @@ $GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['c4g_forum_type'] = array
     'reference' => &$GLOBALS['TL_LANG']['tl_c4g_settings']['c4g_references'],
     'sql'       => "varchar(255) NOT NULL default 'DISCUSSIONS'"
 );
-
-$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['uploadPathImages']['eval']['mandatory'] = true;
-$GLOBALS['TL_DCA']['tl_c4g_settings']['fields']['uploadPathDocuments']['eval']['mandatory'] = true;
