@@ -122,14 +122,12 @@ class ForumController extends Controller
                         $response->setStatusCode(400);
                         return $response;
                     }
-                    break;
                 case "delete":
                     $iId = $arrFragments[1];
                     $oPn = C4gForumPn::getById($iId);
                     $res = $oPn->delete();
                     $response->setData(['success' => $res]);
                     return $response;
-                    break;
                 case "mark":
                     $iStatus = intval(\Input::post('status'));
                     $iId = intval(\Input::post('id'));
@@ -139,7 +137,6 @@ class ForumController extends Controller
                     $oPn->update();
                     $response->setData(['success' => true]);
                     return $response;
-                    break;
                 case "send":
                     $iRecipientId = \Input::post('recipient_id');
                     $sRecipient = \Input::post('recipient');
@@ -191,11 +188,9 @@ class ForumController extends Controller
                     }
                     $response->setData(['success' => true]);
                     return $response;
-                    break;
                 default:
                     $response->setStatusCode(400);
                     return $response;
-                    break;
             }
         } catch (\Exception $e) {
             $response->setData(['success' => false, "message" => $e->getMessage()]);
