@@ -1,0 +1,16 @@
+## Authors ordered by first contribution.
+
+- Matthias Eilers (https://kuestenschmiede.de)
+- Jürgen Witte (https://kuestenschmiede.de)
+- Thomas Budrat (https://kuestenschmiede.de)
+- Tobias Dobbrunz (https://kuestenschmiede.de)
+- Dirk Trauernicht (https://kuestenschmiede.de)
+- Roman Wollenburg (https://slash-works.de)
+- Stefan Beutler (https://slash-works.de)
+- Claudio Ross (https://kuestenschmiede.de)
+- Joona Ilomäki (https://kuestenschmiede.de)
+- Sebastian Turk (https://kuestenschmiede.de)
+- Friedrich Schute (https://kuestenschmiede.de)
+- MicioMax (https://github.com/MicioMax/)
+- Raphael Ross (https://kuestenschmiede.de)
+- Artur Jozefiak (https://kuestenschmiede.de)
