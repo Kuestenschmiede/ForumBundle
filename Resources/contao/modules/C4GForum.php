@@ -110,7 +110,7 @@ class C4GForum extends \Module
         ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/historyPush.js|async|static');
         ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/icons.min.css');
         ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/c4g-vendor-trix.js');
-        ResourceLoader::loadCssResource('bundles/con4gisprojects/dist/css/trix.css');
+        ResourceLoader::loadCssResource('bundles/con4gisprojects/dist/css/trix.min.css');
         global $objPage;
         $get = ['h2=1', 'h3=1', 'href=1', 'attach=1'];
         ResourceLoader::loadJavaScriptResource(

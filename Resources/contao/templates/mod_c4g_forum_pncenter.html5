@@ -1,7 +1,7 @@
     <script src="bundles/con4gisprojects/dist/js/c4g-vendor-trix.js"></script>
     <script src="bundles/con4gisforum/dist/js/c4g.pn.js"></script>
     <link rel="stylesheet" href="bundles/con4gisforum/dist/css/c4g.pn.min.css">
-    <link rel="stylesheet" href="bundles/con4gisprojects/dist/css/trix.css">
+    <link rel="stylesheet" href="bundles/con4gisprojects/dist/css/trix.min.css">
     <link rel="stylesheet" href="bundles/con4giscore/vendor/fontawesome/css/fontawesome.min.css">
     <div class="mod_article first last block" id="linke-spalte">
 
