@@ -3333,13 +3333,13 @@ class C4GForumHelper extends \System
     public function removeOldFeedsHook()
     {
         $arrFeeds = [];
-        $objSitemaps = \Database::getInstance()->execute("SELECT c4g_forum_sitemap_filename FROM tl_module WHERE type='c4g_forum' AND c4g_forum_sitemap=1 AND c4g_forum_sitemap_filename!=''");
+        $objSitemaps = \Database::getInstance()->execute("SELECT c4g_forum_sitemap_filename FROM tl_module WHERE type='c4g_forum' AND c4g_forum_sitemap='1' AND c4g_forum_sitemap_filename!=''");
 
         while ($objSitemaps->next()) {
             $arrFeeds[] = $objSitemaps->c4g_forum_sitemap_filename;
         }
 
-        \Database::getInstance()->execute("UPDATE tl_module  SET c4g_forum_sitemap_updated=0 WHERE type='c4g_forum' AND c4g_forum_sitemap=1 AND c4g_forum_sitemap_filename!=''");
+        \Database::getInstance()->execute("UPDATE tl_module  SET c4g_forum_sitemap_updated=0 WHERE type='c4g_forum' AND c4g_forum_sitemap='1' AND c4g_forum_sitemap_filename!=''");
 
         return $arrFeeds;
     }
