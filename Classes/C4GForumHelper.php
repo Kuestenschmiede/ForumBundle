@@ -186,7 +186,7 @@ class C4GForumHelper extends \System
             switch ($right) {
                 case 'newpost':
                 case 'newthread':
-                    $this->permissionError = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['USER_NOT_LOGGED_IN'];
+                    $this->permissionError = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['USER_NOT_LOGGED_IN'];
 
                     return false;
             }
@@ -195,7 +195,7 @@ class C4GForumHelper extends \System
         if (($rights) && (array_search($right, deserialize($rights)) !== false)) {
             return true;
         }
-        $this->permissionError = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['NO_PERMISSION'];
+        $this->permissionError = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_PERMISSION'];
 
         return false;
     }
