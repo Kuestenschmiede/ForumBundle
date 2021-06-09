@@ -402,3 +402,8 @@ label.search-label {
 .user_data_statistics_item_value {
   display: inline-block
 }
+@media only screen and (max-width:600px) {
+  .c4gGuiTooltipComponent {
+    display: none!important
+  }
+}
