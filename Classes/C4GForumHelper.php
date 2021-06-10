@@ -36,7 +36,6 @@ class C4GForumHelper extends \System
     protected $Database = null;
     protected $Environment = null;
     protected $ForumName = null;
-    //TODO
     public $User = null;
     protected $ForumCache = [];
     protected $checkGuestRights = false;
@@ -62,9 +61,6 @@ class C4GForumHelper extends \System
             $this->Database = $database;
         }
         $this->User = $user;
-        if ($user == null) {
-//            $this->import('FrontendUser', 'User');
-        }
         $this->Environment = $environment;
         $this->frontendUrl = $frontendUrl;
         if ($forumName == '') {
