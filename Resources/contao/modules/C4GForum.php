@@ -3047,7 +3047,7 @@ JSPAGINATE;
                 $threadId,
                 'delThread',
                 $this,
-                false,
+                $this->putVars['site'] ?: false,
                 $this->c4g_forum_type,
                 $this->c4g_forum_sub_title
             );
@@ -3448,7 +3448,7 @@ JSPAGINATE;
                     $threadId,
                     'moveThread',
                     $this,
-                    false,
+                    $this->putVars['site'] ?: false,
                     $this->c4g_forum_type,
                     $this->c4g_forum_sub_title
                 );
@@ -3673,7 +3673,7 @@ JSPAGINATE;
                     $post ['threadid'],
                     'delete',
                     $this,
-                    false,
+                    $this->putVars['site'] ?: false,
                     $this->c4g_forum_type,
                     $this->c4g_forum_sub_title
                 );
@@ -3826,7 +3826,7 @@ JSPAGINATE;
                     $post['threadid'],
                     'edit',
                     $this,
-                    false,
+                    $this->putVars['site'] ?: false,
                     $this->c4g_forum_type,
                     $this->c4g_forum_sub_title
                 );
