@@ -1,0 +1,25 @@
+<div>
+    <div class="field">
+        <input id="newThread" type="checkbox" name="newThread" class="formdata">
+        <label for="newThread"><?php echo $this->label_new_thread;?></label>
+    </div>
+    <div class="field">
+        <input id="movedThread" type="checkbox" name="movedThread" class="formdata">
+        <label for="movedThread"><?php echo $this->label_moved_thread;?></label>
+    </div>
+    <div class="field">
+        <input id="deletedThread" type="checkbox" name="deletedThread" class="formdata">
+        <label for="deletedThread"><?php echo $this->label_deleted_thread;?></label>
+    </div>
+    <div class="field">
+        <input id="newPost" type="checkbox" name="newPost" class="formdata">
+        <label for="newPost"><?php echo $this->label_new_post;?></label>
+    </div>
+    <div class="field">
+        <input id="editedPost" type="checkbox" name="editedPost" class="formdata">
+        <label for="editedPost"><?php echo $this->label_edited_post;?></label>
+    </div>
+    <div class="field"><input id="deletedPost" type="checkbox" name="deletedPost" class="formdata">
+        <label for="deletedPost"><?php echo $this->label_deleted_post;?></label>
+    </div>
+</div>

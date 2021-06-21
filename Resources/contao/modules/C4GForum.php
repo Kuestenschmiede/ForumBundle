@@ -26,6 +26,7 @@ use con4gis\MapsBundle\Classes\ResourceLoader as MapsResourceLoader;
 use con4gis\CoreBundle\Classes\ResourceLoader;
 use Contao\Controller;
 use Contao\Database;
+use Contao\FrontendTemplate;
 use Contao\FrontendUser;
 use Contao\Input;
 use Contao\Module;
@@ -3149,20 +3150,16 @@ JSPAGINATE;
             $dialogData = sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type, 'SUBSCRIPTION_SUBFORUM_TEXT'), $this->helper->getForumNameFromDB($forumId, $this->c4g_forum_language_temp));
             $buttonTxt = C4GForumHelper::getTypeText($this->c4g_forum_type, 'SUBSCRIBE_SUBFORUM');
 
-            $dialogData .= '<div>';
-            $dialogData .= '<div class="field"><input id="newThread" type="checkbox" name="newThread" class="formdata"><label for="newThread">' .
-                C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEWTHREAD') . '</label></div>';
-            $dialogData .= '<div class="field"><input id="movedThread" type="checkbox" name="movedThread" class="formdata"><label for="movedThread ">' .
-                C4GForumHelper::getTypeText($this->c4g_forum_type, 'MOVEDTHREAD') . '</label></div>';
-            $dialogData .= '<div class="field"><input id="deletedThread" type="checkbox" name="deletedThread" class="formdata"><label for="deletedThread">' .
-                C4GForumHelper::getTypeText($this->c4g_forum_type, 'DELETEDTHREAD') . '</label></div>';
-            $dialogData .= '<div class="field"><input id="newPost" type="checkbox" name="newPost" class="formdata"><label for="newPost">' .
-                C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEWPOST') . '</label></div>';
-            $dialogData .= '<div class="field"><input id="editedPost" type="checkbox" name="editedPost" class="formdata"><label for="editedPost">' .
-                C4GForumHelper::getTypeText($this->c4g_forum_type, 'EDITEDPOST') . '</label></div>';
-            $dialogData .= '<div class="field"><input id="deletedPost" type="checkbox" name="deletedPost" class="formdata"><label for="deletedPost">' .
-                C4GForumHelper::getTypeText($this->c4g_forum_type, 'DELETEDPOST') . '</label></div>';
-            $dialogData .= '</div>';
+            $template = new FrontendTemplate('c4g_forum_subscription_dialog_forum');
+            $template->setData([
+                'label_new_thread' => C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEWTHREAD'),
+                'label_moved_thread' => C4GForumHelper::getTypeText($this->c4g_forum_type, 'MOVEDTHREAD'),
+                'label_deleted_thread' => C4GForumHelper::getTypeText($this->c4g_forum_type, 'DELETEDTHREAD'),
+                'label_new_post' => C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEWPOST'),
+                'label_edited_post' => C4GForumHelper::getTypeText($this->c4g_forum_type, 'EDITEDPOST'),
+                'label_deleted_post' => C4GForumHelper::getTypeText($this->c4g_forum_type, 'DELETEDPOST'),
+            ]);
+            $dialogData .= $template->parse();
 
             $title = C4GForumHelper::getTypeText($this->c4g_forum_type, 'SUBSCRIBE_SUBFORUM');
         }
@@ -3267,14 +3264,13 @@ JSPAGINATE;
         } else {
             $dialogData = sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type, 'SUBSCRIPTION_THREAD_TEXT'), $threadname, $thread ['forumname']);
 
-            $dialogData .= '<div>';
-            $dialogData .= '<div class="field"><input id="newPost" type="checkbox" name="newPost" class="formdata"><label for="newPost">' .
-                C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEWPOST') . '</label></div>';
-            $dialogData .= '<div class="field"><input id="editedPost" type="checkbox" name="editedPost" class="formdata"><label for="editedPost">' .
-                C4GForumHelper::getTypeText($this->c4g_forum_type, 'EDITEDPOST') . '</label></div>';
-            $dialogData .= '<div class="field"><input id="deletedPost" type="checkbox" name="deletedPost" class="formdata"><label for="deletedPost">' .
-                C4GForumHelper::getTypeText($this->c4g_forum_type, 'DELETEDPOST') . '</label></div>';
-            $dialogData .= '</div>';
+            $template = new FrontendTemplate('c4g_forum_subscription_dialog_thread');
+            $template->setData([
+                'label_new_post' => C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEWPOST'),
+                'label_edited_post' => C4GForumHelper::getTypeText($this->c4g_forum_type, 'EDITEDPOST'),
+                'label_deleted_post' => C4GForumHelper::getTypeText($this->c4g_forum_type, 'DELETEDPOST'),
+            ]);
+            $dialogData .= $template->parse();
 
             $buttonTxt = C4GForumHelper::getTypeText($this->c4g_forum_type, 'SUBSCRIBE_THREAD');
             $title = C4GForumHelper::getTypeText($this->c4g_forum_type, 'SUBSCRIBE_THREAD');
