@@ -349,16 +349,13 @@ use Contao\StringUtil;
         {
             \System::loadLanguageFile('tl_c4g_forum');
             $thread = $this->helper->getThreadAndForumNameAndMailTextFromDBUncached($threadId);
-            $forumId = $thread['forumid'];
             $addresses = [];
             foreach ($subscriptions as $subscription) {
                 $subscriber = $subscription->getMemberModel();
                 if ((!$addresses[$subscriber->email]) && ($subscriber->id != $this->User->id)) {
                     if ($subscriber->type == 1) {
-                        $sType = 'SUBFORUM';
                         $sPerm = 'subscribeforum';
                     } else {
-                        $sType = 'THREAD';
                         $sPerm = 'subscribethread';
                     }
 
