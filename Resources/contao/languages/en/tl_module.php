@@ -277,6 +277,10 @@
     $GLOBALS['TL_LANG']['tl_module']['thread_change_sub_caption'] = array('Change subscription button text', 'The text of the change subscription button. Leave empty to use the default text.');
     $GLOBALS['TL_LANG']['tl_module']['thread_delete_sub_caption'] = array('Unsubscribe button text', 'The text of the unsubscribe button. Leave empty to use the default text.');
     $GLOBALS['TL_LANG']['tl_module']['no_subs_text'] = array('Text for nonexistent subscriptions', 'This text is displayed to the user when they have no subscriptions.');
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options'] = [
+    'Available optional buttons',
+    'Defines which optional buttons are available in the editor.'
+];
 
     $GLOBALS['TL_LANG']['tl_module']['pm_center_forum_module_legend'] = 'Forum module';
     $GLOBALS['TL_LANG']['tl_module']['subforum_sub_legend'] = 'Forum settings';
@@ -378,6 +382,11 @@
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['threadtitle']      = "Threadtitle";
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['threadbody']       = "Threaddescription";
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['disabled']         = "disabled";
+
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options']['h2'] = "Headline H2";
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options']['h3'] = "Headline H3";
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options']['href'] = "Hyperlinks";
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options']['attach'] = "File attachments";
 
     $GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor']                        = array('WYSIWYG-Editor', '');
 

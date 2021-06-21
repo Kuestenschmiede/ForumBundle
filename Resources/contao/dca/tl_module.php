@@ -22,7 +22,8 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] =
     '{c4g_forum_lib_legend:hide},c4g_forum_jquery_lib,c4g_forum_jqtable_lib,c4g_forum_jqhistory_lib,c4g_forum_jqtooltip_lib,c4g_forum_jqscrollpane_lib;' .
     '{c4g_forum_sitemap_legend:hide},c4g_forum_sitemap;' .
     '{c4g_forum_notifications:hide},sub_new_thread,sub_deleted_thread,sub_moved_thread,sub_new_post,sub_deleted_post,sub_edited_post,mail_new_pm,new_pm_redirect;' .
-    '{expert_legend:hide},guests,cssID,space,c4g_forum_remove_lastperson,c4g_forum_remove_lastdate,c4g_forum_remove_createperson,c4g_forum_remove_createdate,c4g_forum_remove_count,c4g_forum_move_all,c4g_forum_param_forumbox,c4g_forum_param_forum';
+    '{c4g_editor_legend:hide},c4g_editor_options;'.
+    '{expert_legend:hide},guests,cssID,space,c4g_forum_remove_lastperson,c4g_forum_remove_lastdate,c4g_forum_remove_createperson,c4g_forum_remove_createdate,c4g_forum_remove_count,c4g_forum_move_all,c4g_forum_param_forumbox,c4g_forum_param_forum;';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_breadcrumb'] =
     '{title_legend},name,type;' .
@@ -987,6 +988,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['new_pm_redirect'] = array
     'inputType'               => 'pageTree',
     'eval'                    => array('fieldType' => 'radio'),
     'sql'                     => "int(10) unsigned NOT NULL default '0'"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_editor_options'] = array
+(
+    'default'                 => ['h2', 'h3', 'href'],
+    'exclude'                 => true,
+    'inputType'               => 'checkbox',
+    'options'                 => ['h2', 'h3', 'href', 'attach'],
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options'],
+    'eval'                    => array('multiple' => true,),
+    'sql'                     => "TEXT NOT NULL default ''"
 );
 
 

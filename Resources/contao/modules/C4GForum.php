@@ -112,8 +112,14 @@ class C4GForum extends \Module
         ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/icons.min.css');
         ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/c4g-vendor-trix.js');
         ResourceLoader::loadCssResource('bundles/con4gisprojects/dist/css/trix.min.css');
+        $editorOptions = StringUtil::deserialize($this->c4g_editor_options, true);
+        $get = [];
+        if (!empty($editorOptions)) {
+            foreach ($editorOptions as $editorOption) {
+                $get[] = "$editorOption=1";
+            }
+        }
         global $objPage;
-        $get = ['h2=1', 'h3=1', 'href=1', 'attach=1'];
         ResourceLoader::loadJavaScriptResource(
             'bundles/con4gisprojects/dist/js/trixconfig.php?'.
             'lang='.$objPage->language.'&'.implode('&', $get)

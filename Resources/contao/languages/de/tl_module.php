@@ -280,6 +280,10 @@ $GLOBALS['TL_LANG']['tl_module']['thread_headline'] = array('Überschrift', 'Die
 $GLOBALS['TL_LANG']['tl_module']['thread_change_sub_caption'] = array('Text des "Abonnement ändern"-Buttons', 'Der Text des "Abonnement ändern"-Buttons. Leer lassen, um den Standard-Text zu verwenden.');
 $GLOBALS['TL_LANG']['tl_module']['thread_delete_sub_caption'] = array('Text des "Deabonnieren"-Buttons', 'Der Text des "Deabonnieren"-Buttons. Leer lassen, um den Standard-Text zu verwenden.');
 $GLOBALS['TL_LANG']['tl_module']['no_subs_text'] = array('Text für nichtvorhandene Abonnements', 'Dieser Text wird dem Nutzer ausgegeben, wenn er keine Abonnements (mehr) hat.');
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options'] = [
+    'Verfügbare optionale Schaltflächen',
+    'Definiert, welche optionalen Schaltflächen im Editor verfügbar sind.'
+];
 
 /**
  * Legend
@@ -296,6 +300,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap_legend'] = 'Forum - XML-Site
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_legend']       = 'Forum - Sucheinstellungen';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_legend']   = 'Forum - Seiten und Nummerierung';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_page_legend'] = 'Seiteneinstellungen';
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_legend'] = 'Editoreinstellungen';
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_breadcrumb_legend'] = 'Navigationspfad';
 $GLOBALS['TL_LANG']['tl_module']['pm_center_forum_module_legend'] = 'Forenmodul';
@@ -372,6 +377,11 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['body_last_post']   
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['threadtitle']      = "Titel des Themas";
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['threadbody']       = "Beschreibung des Themas";
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['disabled']         = "deaktiviert";
+
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options']['h2'] = "Überschrift H2";
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options']['h3'] = "Überschrift H3";
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options']['href'] = "Hyperlinks";
+$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options']['attach'] = "Dateianhänge";
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_appearance_themeroller_css'] = array('jQuery UI ThemeRoller CSS Datei', 'Optional: wählen Sie eine, mit dem jQuery UI ThemeRoller erstellte CSS-Datei aus, um den Stil des Moduls entsprechend anzupassen.');
 $GLOBALS['TL_LANG']['tl_module']['fields']['pm_center_forum_module'] = array('Forenmodul', 'Wählen Sie hier das Forenmodul aus, das zu diesem Modul gehört.');
