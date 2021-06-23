@@ -2425,6 +2425,7 @@ JSPAGINATE;
 
         $post = array();
         $post['username'] = $this->User->username;
+        $post['authorid'] = $this->User->id;
         $post['creation'] = time();
         $post['subject'] = C4GUtils::secure_ugc($this->putVars['subject']);
         $post['text'] = C4GUtils::secure_ugc($this->putVars['post']);
@@ -2684,6 +2685,7 @@ JSPAGINATE;
 
         $post = array();
         $post['username'] = $this->User->username;
+        $post['authorid'] = $this->User->id;
         $post['creation'] = time();
         $post['subject'] = C4GUtils::secure_ugc($threadname);
         $post['tags'] = C4GUtils::secure_ugc($this->putVars['tags']);
