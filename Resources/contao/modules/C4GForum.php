@@ -2121,7 +2121,7 @@ JSPAGINATE;
             '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
             '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
             '<input id="editor" type="hidden" name="post" class="formdata">'.
-            '<trix-editor input="editor" class="ui-corner-all"></trix-editor>'.
+            '<trix-editor input="editor" class="ui-corner-all ui-widget ui-widget-content"></trix-editor>'.
             '</div>';
         $data .= $this->getPostlinkForForm('c4gForumNewThreadPostLink', $forumId, 'newthread', '', '');
         $data .= $this->getPostMapEntryForForm('c4gForumNewThreadMapData', $forumId, 'newthread', '', '', '', '', '', '', '', '');
@@ -2248,7 +2248,7 @@ JSPAGINATE;
             '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
             '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
             '<input id="editor" type="hidden" name="post" class="formdata">'.
-            '<trix-editor input="editor" class="ui-corner-all"></trix-editor>'.
+            '<trix-editor input="editor" class="ui-corner-all ui-widget ui-widget-content"></trix-editor>'.
             '</div>';
 
         $data .= '<input type="hidden" class=formdata ui-corner-all name="recipient" value="' . htmlspecialchars($thread['owner']) . '">
@@ -4332,7 +4332,7 @@ JSPAGINATE;
             '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
             '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
             '<input id="editor" type="hidden" name="post" class="formdata" value="'.$post['text'].'">'.
-            '<trix-editor input="editor" class="ui-corner-all"></trix-editor>'.
+            '<trix-editor input="editor" class="ui-corner-all ui-widget ui-widget-content"></trix-editor>'.
             '</div>';
 
         $data .= $this->getPostlinkForForm('c4gForumEditPostLink', $post['forumid'], $dialogId, $post['linkname'], $post['linkurl']);

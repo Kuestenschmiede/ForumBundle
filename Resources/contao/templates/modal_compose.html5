@@ -47,7 +47,7 @@
                     <span class="invisible">Mandatory field</span> <?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['message'];?><span class="mandatory">*</span>
                 </label>
                 <input id="editor" type="hidden" name="message" class="formdata">
-                <trix-editor input="editor" class="ui-corner-all"></trix-editor>
+                <trix-editor input="editor" class="ui-corner-all ui-widget ui-widget-content"></trix-editor>
             </div>
         </div>
     </form>
