@@ -100,6 +100,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PREVIEW']       = 'Vorschau';
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']        = 'Abbruch';
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']         = 'Schließen';
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBMIT']        = 'Übernehmen';
+$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RELOAD']        = 'Neu Laden';
 $GLOBALS['TL_LANG']['C4G_FORUM']['Questions']['SEND']          = 'Speichern';
 $GLOBALS['TL_LANG']['C4G_FORUM']['Questions']['PREVIEW']       = 'Vorschau';
 $GLOBALS['TL_LANG']['C4G_FORUM']['Questions']['CANCEL']        = 'Abbruch';

@@ -1776,6 +1776,11 @@ class C4GForum extends \Module
                 "action" => 'closedialog:thread' . $id,
                 "type" => 'get',
                 "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
+            ),
+            array(
+                "action" => 'forum:' . $thread['forumid'] . ';readthread:' . $id,
+                "type" => 'get',
+                "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RELOAD']
             )
         );
 
