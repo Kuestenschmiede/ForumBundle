@@ -22,7 +22,7 @@
     "issues": "https://github.com/Kuestenschmiede/ForumBundle/issues"
   },
   "require": {
-    "contao/core-bundle": "^4.9",
+    "contao/core-bundle": "^4.4",
     "con4gis/core": "^5.0",
     "con4gis/groups": "^2.7",
     "con4gis/projects": "^3.0"
