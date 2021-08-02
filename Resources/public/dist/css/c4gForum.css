@@ -407,3 +407,16 @@ label.search-label {
     display: none!important
   }
 }
+blockquote {
+  max-width: 550px;
+  width: 50%
+}
+blockquote:before {
+  content: "\201C";
+  display: block;
+  font-size: 6rem;
+  left: -2.5rem;
+  top: -2.5rem;
+  position: relative;
+  height: 0
+}
