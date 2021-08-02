@@ -32,7 +32,7 @@ class ForumController extends Controller
         $post = $request->request->get('post');
         if ($post) {
             $post = Input::xssClean($post);
-            $post = C4GUtils::cleanHtml($post);
+            $post = C4GUtils::cleanHtml($post, false, ['/<pre(.*?)<\/pre>/is']);
             $post = C4GUtils::secure_ugc($post);
             $request->request->set('post', $post);
         }
