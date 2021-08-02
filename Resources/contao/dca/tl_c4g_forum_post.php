@@ -146,7 +146,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => array('maxlength'=>255 ),
-            'sql'                     => "varchar(100) NOT NULL default ''"
+            'sql'                     => "varchar(255) NOT NULL default ''"
         ),
         'state' => array
         (
