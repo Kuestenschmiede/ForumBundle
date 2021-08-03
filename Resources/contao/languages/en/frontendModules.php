@@ -104,6 +104,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PREVIEW']                 = 'Pre
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']                  = 'Cancel';
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']                   = 'Close';
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBMIT']                  = 'Submit';
+$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RELOAD']                  = 'Reload';
 
 $GLOBALS['TL_LANG']['C4G_FORUM']['Questions']['SEND']                     = 'Save';
 $GLOBALS['TL_LANG']['C4G_FORUM']['Questions']['PREVIEW']                  = 'Preview';
