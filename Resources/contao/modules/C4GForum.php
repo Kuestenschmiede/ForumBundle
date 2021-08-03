@@ -2558,7 +2558,7 @@ JSPAGINATE;
 
         if ($this->c4g_forum_multilingual && (!$this->putVars['thread'])) {
             if ($this->c4g_forum_language_temp && $this->putVars['thread_' . $this->c4g_forum_language_temp]) {
-                $this->putVars['thread'] == $this->putVars['thread_' . $this->c4g_forum_language_temp];
+                $this->putVars['thread'] = $this->putVars['thread_' . $this->c4g_forum_language_temp];
             }
         }
         if (isset($this->putVars['recipient_member'])) {
