@@ -436,7 +436,7 @@ class C4GForumSubscription
                         $notification->setTokenValue('link', $this->helper->getUrlForThread($threadId, $thread['forumid'], $sUrl));
                         $notification->setTokenValue('unsubscribe_link', $this->generateUnsubscribeLinkSubforum($thread['forumid'], $subscriber->email, $sUrl));
                         $notification->setTokenValue('unsubscribe_all_link', $this->generateUnsubscribeLinkAll($subscriber->email, $sUrl));
-                        $notification->send($notificationIDs);
+                        $notification->send($notificationIDs, $language);
                     } catch (\Throwable $e) {
                         C4gLogModel::addLogEntry('forum', $e->getMessage() . "\n" . $e->getTraceAsString());
                     }
