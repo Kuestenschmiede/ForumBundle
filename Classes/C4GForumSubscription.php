@@ -345,8 +345,15 @@ class C4GForumSubscription
      * @param string $forumType
      * @param null $headline
      */
-    public function sendSubscriptionEMail($subscriptions, $threadId, $sendKind, $forumModule, $sUrl = false, $forumType = 'DISCUSSIONS', $headline = null)
-    {
+    public function sendSubscriptionEMail(
+        $subscriptions,
+        $threadId,
+        $sendKind,
+        $forumModule,
+        $sUrl = false,
+        $forumType = 'DISCUSSIONS',
+        $headline = null
+    ) {
         \System::loadLanguageFile('tl_c4g_forum');
         $thread = $this->helper->getThreadAndForumNameFromDB($threadId);
         $addresses = [];
