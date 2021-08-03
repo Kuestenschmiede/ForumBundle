@@ -58,7 +58,7 @@ class C4GForumSubscription
     /**
      * Construktor
      */
-    public function __construct($helper = null, $database, $environment = null, $user = null, $forumName = '', $frontendUrl = '', $forumType = 'FORUM')
+    public function __construct($helper, $database, $environment = null, $user = null, $forumName = '', $frontendUrl = '', $forumType = 'FORUM')
     {
         $this->helper = $helper;
         $this->Database = $database;
