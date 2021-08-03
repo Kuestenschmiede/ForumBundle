@@ -352,10 +352,12 @@ class C4GForumSubscription
         $forumModule,
         $sUrl = false,
         $forumType = 'DISCUSSIONS',
-        $headline = null
+        $headline = null,
+        $language = 'de'
     ) {
         \System::loadLanguageFile('tl_c4g_forum');
-        $thread = $this->helper->getThreadAndForumNameFromDB($threadId);
+        $thread = $this->helper->getThreadAndForumNameFromDB($threadId, $language);
+        $thread['threadname'] = $thread['threadname_translated'] ?: $thread['threadname'];
         $addresses = [];
         foreach ($subscriptions as $subscription) {
             $subscriber = $subscription->getMemberModel();

@@ -2395,7 +2395,8 @@ JSPAGINATE;
                     $this,
                     $sUrl,
                     $this->c4g_forum_type,
-                    $this->c4g_forum_sub_title
+                    $this->c4g_forum_sub_title,
+                    $this->c4g_forum_language_temp
                 );
             }
 
@@ -2628,7 +2629,8 @@ JSPAGINATE;
                     $this,
                     $sUrl,
                     $this->c4g_forum_type,
-                    $this->c4g_forum_sub_title
+                    $this->c4g_forum_sub_title,
+                    $this->c4g_forum_language_temp
                 );
             }
 
@@ -3063,7 +3065,8 @@ JSPAGINATE;
                 $this,
                 $this->putVars['site'] ?: false,
                 $this->c4g_forum_type,
-                $this->c4g_forum_sub_title
+                $this->c4g_forum_sub_title,
+                $this->c4g_forum_language_temp
             );
         }
         $result = $this->helper->deleteThreadFromDB($threadId);
@@ -3459,7 +3462,8 @@ JSPAGINATE;
                     $this,
                     $this->putVars['site'] ?: false,
                     $this->c4g_forum_type,
-                    $this->c4g_forum_sub_title
+                    $this->c4g_forum_sub_title,
+                    $this->c4g_forum_language_temp
                 );
             }
 
@@ -3684,7 +3688,8 @@ JSPAGINATE;
                     $this,
                     $this->putVars['site'] ?: false,
                     $this->c4g_forum_type,
-                    $this->c4g_forum_sub_title
+                    $this->c4g_forum_sub_title,
+                    $this->c4g_forum_language_temp
                 );
             }
 
@@ -3837,7 +3842,8 @@ JSPAGINATE;
                     $this,
                     $this->putVars['site'] ?: false,
                     $this->c4g_forum_type,
-                    $this->c4g_forum_sub_title
+                    $this->c4g_forum_sub_title,
+                    $this->c4g_forum_language_temp
                 );
             }
 
