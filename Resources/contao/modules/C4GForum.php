@@ -1780,7 +1780,8 @@ class C4GForum extends \Module
             array(
                 "action" => 'forum:' . $thread['forumid'] . ';readthread:' . $id,
                 "type" => 'get',
-                "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RELOAD']
+                "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RELOAD'],
+                "class" => 'c4g-reload-content'
             )
         );
 
