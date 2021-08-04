@@ -1737,7 +1737,7 @@ class C4GForumHelper extends \System
                 'b.optional_names AS optional_forumnames, a.pid AS forumid, c.value as threadname_translated '.
                 'FROM tl_c4g_forum_thread a ' .
                 'INNER JOIN tl_c4g_forum b ON b.id = a.pid ' .
-                'JOIN tl_c4g_forum_thread_translations c ON a.id = c.pid ' .
+                'LEFT JOIN tl_c4g_forum_thread_translations c ON a.id = c.pid ' .
                 'WHERE a.id = ? AND (c.id IS NULL OR (c.language = ? AND c.fieldname = ?))')
                 ->execute($threadId, $language, 'name')->fetchAssoc();
     }
