@@ -420,3 +420,6 @@ blockquote:before {
   position: relative;
   height: 0
 }
+.ui-dialog {
+  position: fixed!important
+}
