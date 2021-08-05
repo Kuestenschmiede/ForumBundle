@@ -1733,8 +1733,8 @@ class C4GForumHelper extends \System
     public function getThreadAndForumNameFromDB($threadId, $language = 'de')
     {
         return $this->Database->prepare(
-                'SELECT a.name AS threadname, b.name AS forumname, a.recipient, a.owner, '.
-                'b.optional_names AS optional_forumnames, a.pid AS forumid, c.value as threadname_translated '.
+                'SELECT a.name AS threadname, b.name AS forumname, a.recipient, a.owner, ' .
+                'b.optional_names AS optional_forumnames, a.pid AS forumid, c.value as threadname_translated ' .
                 'FROM tl_c4g_forum_thread a ' .
                 'INNER JOIN tl_c4g_forum b ON b.id = a.pid ' .
                 'LEFT JOIN tl_c4g_forum_thread_translations c ON a.id = c.pid ' .
