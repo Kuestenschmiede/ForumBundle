@@ -1497,7 +1497,6 @@ class C4GForum extends \Module
 
         $reactionTypes = [[
             'text' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'],
-//            'text_liked' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['liked'],
             'text_liked' => '<i class="fa fa-thumbs-up" aria-hidden="true"></i>',
             'stop' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'],
             'count' => count($reactions),
@@ -1758,7 +1757,6 @@ class C4GForum extends \Module
      */
     public function getThreadAsHtml($id)
     {
-//            $this->c4g_forum_pagination_active = false;
         $posts = $this->helper->getPostsOfThreadFromDB($id, ($this->c4g_forum_postsort != 'UP'));
         $thread = $this->helper->getThreadFromDB($id);
         $data = $this->generateThreadHeaderAsHtml($thread);
@@ -5273,7 +5271,6 @@ JSPAGINATE;
             if ($thread['threaddesc']) {
                 $tooltip = $thread['threaddesc'];
             } else {
-                //$tooltip = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADS_NODESC'];
                 $tooltip = $this->helper->getFirstPostLimitedTextOfThreadFromDB($thread['id'], 250);
                 $tooltip = preg_replace('/\[[^\[\]]*\]/i', '', $tooltip);
             }
@@ -5598,7 +5595,6 @@ JSPAGINATE;
             if ($thread['threaddesc']) {
                 $tooltip = $thread['threaddesc'];
             } else {
-                //$tooltip = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADS_NODESC'];
                 $tooltip = $this->helper->getFirstPostLimitedTextOfThreadFromDB($thread['id'], 250);
                 $tooltip = preg_replace('/\[[^\[\]]*\]/i', '', $tooltip);
             }
