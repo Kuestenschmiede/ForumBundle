@@ -5598,6 +5598,7 @@ JSPAGINATE;
                 $tooltip = $this->helper->getFirstPostLimitedTextOfThreadFromDB($thread['id'], 250);
                 $tooltip = preg_replace('/\[[^\[\]]*\]/i', '', $tooltip);
             }
+            $tooltip = strip_tags(html_entity_decode($tooltip));
             if (strlen($tooltip) >= 245) {
                 $tooltip = substr($tooltip, 0, strrpos($tooltip, ' '));
                 $tooltip .= ' [...]';
