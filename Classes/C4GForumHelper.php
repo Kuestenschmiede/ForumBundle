@@ -1862,11 +1862,11 @@ class C4GForumHelper extends \System
                     break;
                 }
                 $insertArray = [[
-                    id => $id,
-                    name => $data[$id]['name'],
-                    optional_names => $data[$id]['optional_names'],
-                    use_intropage => $data[$id]['use_intropage'],
-                    subforums => $data[$id]['subforums'], ]];
+                    'id' => $id,
+                    'name' => $data[$id]['name'],
+                    'optional_names' => $data[$id]['optional_names'],
+                    'use_intropage' => $data[$id]['use_intropage'],
+                    'subforums' => $data[$id]['subforums'], ]];
                 if ($insertArray !== $result[0]) {
                     array_insert($result, 0, $insertArray);
                 }
