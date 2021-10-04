@@ -1833,7 +1833,7 @@ class C4GForumHelper extends \System
      */
     public function getForumPath($forumId, $rootForumId)
     {
-        $forumId = (int) $forumId;
+        $forumId = intval($forumId);
         $forums = $this->Database->prepare(
             'SELECT a.id,a.pid,a.name,a.optional_names,a.use_intropage,count(b.id) AS subforums FROM tl_c4g_forum a ' .
             'LEFT JOIN tl_c4g_forum b ON (b.pid = a.id) AND (b.published = ?) ' .
@@ -1845,7 +1845,7 @@ class C4GForumHelper extends \System
             }
         } while ($row);
 
-        $id = $forumId;
+        $id = $forumId ?: 0;
         $result = [];
 
         $finished = false;
@@ -1861,6 +1861,7 @@ class C4GForumHelper extends \System
                 if (!isset($data[$id])) {
                     break;
                 }
+
                 $insertArray = [[
                     'id' => $id,
                     'name' => $data[$id]['name'],
