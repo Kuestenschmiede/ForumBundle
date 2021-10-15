@@ -167,7 +167,7 @@ $GLOBALS['TL_LANG']['tl_c4g_forum']['right_latestthreads']	= 'Neue Themen';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_alllanguages']	= 'Alle Sprachen editieren (Mehrsprachigkeit)';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_tickettomember']	= 'Tickets an einzelne Mitglieder oder Moderatoren schicken';
 $GLOBALS['TL_LANG']['tl_c4g_forum']['right_showsentthreads']= 'Abgeschickte Tickets weiter anzeigen';
-$GLOBALS['TL_LANG']['tl_c4g_forum']['right_closethread']    = 'Status ändern';
+$GLOBALS['TL_LANG']['tl_c4g_forum']['right_closethread']    = 'Thema schließen / Ticketstatus ändern';
 
 /**
  * Fulltext Indexing Configuration Texts
