@@ -16,6 +16,7 @@ use Contao\Controller;
 use Contao\Database;
 use Contao\DataContainer;
 use Contao\System;
+use Throwable;
 
 class BackendCallback
 {
@@ -52,7 +53,22 @@ class BackendCallback
             if (!is_array($dcaField) || $dcaField['inputType'] !== 'text') {
                 continue;
             }
-            if (C4GUtils::stringContainsAny($dcaField['sql'], ['blob', 'binary', 'text'])) {
+            try {
+                if (is_string($dcaField['sql'])) {
+                    if (C4GUtils::stringContainsAny($dcaField['sql'], ['blob', 'binary', 'text'])) {
+                        continue;
+                    }
+                } elseif (is_array($dcaField['sql']) && is_string($dcaField['sql']['type'])) {
+                    switch ($dcaField['sql']['type']) {
+                        case 'blob':
+                        case 'binary':
+                        case 'text':
+                            continue 2;
+                    }
+                } else {
+                    continue;
+                }
+            } catch (Throwable $throwable) {
                 continue;
             }
             if ($dcaField['eval']['datepicker'] === true) {
