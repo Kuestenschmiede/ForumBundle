@@ -1815,11 +1815,11 @@ class C4GForumHelper extends \System
     {
         $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($ticketId)->fetchAssoc();
         $title = '[' . C4GForumHelper::getTypeText($forumtype, 'THREAD') . ' #';
-        $title .= sprintf('%04d', $thread['id']) . '] ' . $thread['name'] . ' ';
+        $title .= sprintf('%04d', $thread['id']) . '] ' . $thread['name'];
         if ($time) {
-            $title .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($thread['tstamp']));
+            $title .= ' ' . date($GLOBALS['TL_CONFIG']['timeFormat'], intval($thread['tstamp']));
         }
-        if ($thread['state']) {
+        if ($thread['state'] && $forumtype === 'TICKET') {
             $state = C4GForumTicketStatus::getState($thread['state']);
             $title .= ': (<b>' . $state . '</b>)';
         }
