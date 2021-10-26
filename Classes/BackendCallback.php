@@ -53,6 +53,7 @@ class BackendCallback
             if (!is_array($dcaField) || $dcaField['inputType'] !== 'text') {
                 continue;
             }
+
             try {
                 if (is_string($dcaField['sql'])) {
                     if (C4GUtils::stringContainsAny($dcaField['sql'], ['blob', 'binary', 'text'])) {
