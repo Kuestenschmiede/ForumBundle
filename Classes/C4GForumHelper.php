@@ -1853,7 +1853,14 @@ class C4GForumHelper extends \System
         while (!$finished && $counter < 50) {
             $counter ++;
             if ($id == 0) {
-                $insertArray = [[id => $rootForumId, name => $this->ForumName,use_intropage => false,subforums => true]];
+                $insertArray = [
+                    [
+                        'id' => $rootForumId,
+                        'name' => $this->ForumName,
+                        'use_intropage' => false,
+                        'subforums' => true
+                    ]
+                ];
                 if ($insertArray !== $result[0]) {
                     array_insert($result, 0, $insertArray);
                 }
