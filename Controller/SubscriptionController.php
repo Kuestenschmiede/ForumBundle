@@ -13,6 +13,7 @@ namespace con4gis\ForumBundle\Controller;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
+use Contao\CoreBundle\Controller\AbstractController;
 use Contao\Database;
 use Contao\Frontend;
 use Contao\FrontendUser;
@@ -21,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class SubscriptionController extends Controller
+class SubscriptionController extends AbstractController
 {
     public function changeForumSubscriptionAction(Request $request) {
         try {

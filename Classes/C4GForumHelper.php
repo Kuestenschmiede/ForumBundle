@@ -1858,8 +1858,8 @@ class C4GForumHelper extends \System
                         'id' => $rootForumId,
                         'name' => $this->ForumName,
                         'use_intropage' => false,
-                        'subforums' => true
-                    ]
+                        'subforums' => true,
+                    ],
                 ];
                 if ($insertArray !== $result[0]) {
                     array_insert($result, 0, $insertArray);

@@ -16,6 +16,7 @@ use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\ForumBundle\Classes\C4GForumNotification;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
+use Contao\CoreBundle\Controller\AbstractController;
 use Contao\FrontendUser;
 use Contao\Input;
 use Contao\ModuleModel;
@@ -24,7 +25,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class ForumController extends Controller
+class ForumController extends AbstractController
 {
     public function ajaxAction(Request $request, $id, $req = '')
     {
