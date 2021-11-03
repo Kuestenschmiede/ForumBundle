@@ -169,8 +169,6 @@ class C4GForumHelper extends \System
             } else {
                 $userGroups = $this->User->groups;
             }
-            if ($right == 'readpost') {
-            }
 
             if (($adminGroups) && (sizeof(array_intersect($userGroups, StringUtil::deserialize($adminGroups))) > 0)) {
                 $rights = $adminRights;
@@ -192,7 +190,6 @@ class C4GForumHelper extends \System
             return true;
         }
         $this->permissionError = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_PERMISSION'];
-
         return false;
     }
 
