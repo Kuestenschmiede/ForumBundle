@@ -162,7 +162,7 @@ class C4GForumHelper extends \System
         $rights = $guestRights;
         if ((C4GUtils::isFrontendUserLoggedIn()) && (!$this->checkGuestRights)) {
             if (($userId != 0) && ($this->User->id != $userId)) {
-                $userGroups = deserialize($this->Database->prepare(
+                $userGroups = StringUtil::deserialize($this->Database->prepare(
                     'SELECT groups FROM tl_member  ' .
                     'WHERE id=?')
                     ->execute($userId)->groups, true);
@@ -172,9 +172,9 @@ class C4GForumHelper extends \System
             if ($right == 'readpost') {
             }
 
-            if (($adminGroups) && (sizeof(array_intersect($userGroups, deserialize($adminGroups))) > 0)) {
+            if (($adminGroups) && (sizeof(array_intersect($userGroups, StringUtil::deserialize($adminGroups))) > 0)) {
                 $rights = $adminRights;
-            } elseif (($memberGroups) && (sizeof(array_intersect($userGroups, deserialize($memberGroups))) > 0)) {
+            } elseif (($memberGroups) && (sizeof(array_intersect($userGroups, StringUtil::deserialize($memberGroups))) > 0)) {
                 $rights = $memberRights;
             }
         } else {
@@ -188,7 +188,7 @@ class C4GForumHelper extends \System
             }
         }
 
-        if (($rights) && (array_search($right, deserialize($rights)) !== false)) {
+        if (($rights) && (array_search($right, StringUtil::deserialize($rights)) !== false)) {
             return true;
         }
         $this->permissionError = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_PERMISSION'];
