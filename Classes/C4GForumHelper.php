@@ -1727,7 +1727,7 @@ class C4GForumHelper extends \System
     /**
      * @param int $threadId
      */
-    public function getThreadAndForumNameFromDB($threadId, $language = 'de')
+    public function getThreadAndForumNameFromDB($threadId)
     {
         return $this->Database->prepare(
                 'SELECT a.name AS threadname, b.name AS forumname, a.recipient, a.owner, ' .
@@ -1735,8 +1735,8 @@ class C4GForumHelper extends \System
                 'FROM tl_c4g_forum_thread a ' .
                 'INNER JOIN tl_c4g_forum b ON b.id = a.pid ' .
                 'LEFT JOIN tl_c4g_forum_thread_translations c ON a.id = c.pid ' .
-                'WHERE a.id = ? AND (c.id IS NULL OR (c.language = ? AND c.fieldname = ?))')
-                ->execute($threadId, $language, 'name')->fetchAssoc();
+                'WHERE a.id = ? AND (c.id IS NULL OR (c.fieldname = ?))')
+                ->execute($threadId, 'name')->fetchAssoc();
     }
 
     /**
