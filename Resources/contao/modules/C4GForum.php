@@ -4051,7 +4051,11 @@ JSPAGINATE;
                 $sReturn = $this->getTagsRecursivByParent($aTags['pid']);
             }
         }
-        $aReturn = explode(",", $sReturn);
+        try {
+            $aReturn = explode(",", $sReturn);
+        } catch (\Throwable $throwable) {
+            return [];
+        }
         if (empty($aReturn)) {
             $aReturn = array();
         }
