@@ -190,6 +190,7 @@ class C4GForumHelper extends \System
             return true;
         }
         $this->permissionError = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_PERMISSION'];
+
         return false;
     }
 
