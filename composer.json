@@ -22,10 +22,10 @@
     "issues": "https://github.com/Kuestenschmiede/ForumBundle/issues"
   },
   "require": {
-    "contao/core-bundle": "^4.4",
-    "con4gis/core": "^v5.0.16",
-    "con4gis/groups": "^2.7.3",
-    "con4gis/projects": "^v3.0.29"
+    "contao/core-bundle": "^4.9",
+    "con4gis/core": "^v5.1.0",
+    "con4gis/groups": "^2.8.0",
+    "con4gis/projects": "^v3.1.0"
   },
   "conflict": {
     "contao/core": "*",
@@ -33,16 +33,16 @@
   },
   "autoload": {
     "psr-4": {
-      "con4gis\\ForumBundle\\": ""
+      "con4gis\\ForumBundle\\": "src/"
     },
     "classmap": [
-      "Resources/contao/"
+      "src/Resources/contao/"
     ],
     "exclude-from-classmap": [
-      "Resources/contao/config/",
-      "Resources/contao/dca/",
-      "Resources/contao/languages/",
-      "Resources/contao/templates/"
+      "src/Resources/contao/config/",
+      "src/Resources/contao/dca/",
+      "src/Resources/contao/languages/",
+      "src/Resources/contao/templates/"
     ]
   },
   "config": {

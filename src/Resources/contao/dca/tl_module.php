@@ -77,7 +77,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_size'] = array
     'inputType' => 'imageSize',
     'options'   => $imageSizes,
     'eval'      => array('rgxp' => 'digit','mandatory'=> false,'includeBlankOption' => true),
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(100) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_scroll'] = array
@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_scroll'] = array
     'inputType' => 'imageSize',
     'options'   => $imageSizes,
     'eval'      => array('rgxp' => 'digit','mandatory'=> false,'includeBlankOption' => true),
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(100) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_startforum'] = array
@@ -153,7 +153,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage'] = array
     'default'   => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_default'],
     'inputType' => 'text',
     'eval'      => array('mandatory' => true, 'tl_class'=>'long'),
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(100) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage_selection'] = array
@@ -189,7 +189,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sub_title'] = array
     'exclude'   => true,
     'default'   => '',
     'inputType' => 'text',
-    'sql'       => "char(255) NOT NULL default ''"
+    'sql'       => "varchar(200) NOT NULL default ''"
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_user_statistics'] = array
 (
@@ -235,8 +235,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_format'] = array
     'exclude'   => true,
     'default'   => '[< ncn >]',
     'inputType' => 'text',
-    'eval'      => array('maxlength' => 255),
-    'sql'       => "varchar(255) NOT NULL default '[< ncn >]'"
+    'eval'      => array('maxlength' => 100),
+    'sql'       => "varchar(100) NOT NULL default '[< ncn >]'"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_navigation'] = array
@@ -255,8 +255,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxlength'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxlength'],
     'inputType' => 'text',
     'default'   => '30',
-    'eval'      => array('rgxp' => 'digit', 'nospace' => true,),
-    'sql'       => "varchar(255) NOT NULL default '30'"
+    'eval'      => array('rgxp' => 'digit', 'nospace' => true),
+    'sql'       => "tinyint(3) NOT NULL default '30'"
 );
 
 
@@ -375,7 +375,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_avatar_size'] = array
     'inputType' => 'imageSize',
     'options'   => $imageSizes,
     'eval'      => array('rgxp' => 'digit','includeBlankOption' => true),
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(100) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_online_status'] = array
@@ -395,7 +395,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_member_online_time'] = arra
     'default'   => '500',
     'inputType' => 'text',
     'eval'      => array('rgxp' => 'digit', 'maxlength' => 5),
-    'sql'       => "int(10) unsigned NOT NULL default '300'"
+    'sql'       => "int(10) unsigned NOT NULL default '500'"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_ranks'] = array
@@ -630,7 +630,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_dialogsize'] = array
     'inputType' => 'imageSize',
     'options'   => $imageSizes,
     'eval'      => array('rgxp' => 'digit','includeBlankOption' => true),
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(100) NOT NULL default ''"
 );
 
 
@@ -925,7 +925,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_thread'] = array
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
     'eval'                    => array('multiple' => true,),
-    'sql'                     => "varchar(255) NOT NULL default ''",
+    'sql'                     => "varchar(200) NOT NULL default ''",
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_deleted_thread'] = array
 (
@@ -934,7 +934,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_deleted_thread'] = array
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
     'eval'                    => array('multiple' => true,),
-    'sql'                     => "varchar(255) NOT NULL default ''",
+    'sql'                     => "varchar(200) NOT NULL default ''",
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_moved_thread'] = array
 (
@@ -943,7 +943,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_moved_thread'] = array
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
     'eval'                    => array('multiple' => true,),
-    'sql'                     => "varchar(255) NOT NULL default ''",
+    'sql'                     => "varchar(200) NOT NULL default ''",
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_post'] = array
 (
@@ -952,7 +952,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_post'] = array
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
     'eval'                    => array('multiple' => true,),
-    'sql'                     => "varchar(255) NOT NULL default ''",
+    'sql'                     => "varchar(200) NOT NULL default ''",
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_deleted_post'] = array
 (
@@ -961,7 +961,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_deleted_post'] = array
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
     'eval'                    => array('multiple' => true,),
-    'sql'                     => "varchar(255) NOT NULL default ''",
+    'sql'                     => "varchar(200) NOT NULL default ''",
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_edited_post'] = array
 (
@@ -970,7 +970,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_edited_post'] = array
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
     'eval'                    => array('multiple' => true,),
-    'sql'                     => "varchar(255) NOT NULL default ''",
+    'sql'                     => "varchar(200) NOT NULL default ''",
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['mail_new_pm'] = array
 (
@@ -979,7 +979,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mail_new_pm'] = array
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
     'eval'                    => array('multiple' => true,),
-    'sql'                     => "varchar(255) NOT NULL default ''",
+    'sql'                     => "varchar(200) NOT NULL default ''",
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['new_pm_redirect'] = array
 (
@@ -1019,49 +1019,49 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_forum_headline'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['sub_forum_headline'],
     'inputType' => 'text',
     'default'   => '',
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_forum_change_sub_caption'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['sub_forum_change_sub_caption'],
     'inputType' => 'text',
     'default'   => '',
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_forum_delete_sub_caption'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['sub_forum_delete_sub_caption'],
     'inputType' => 'text',
     'default'   => '',
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['thread_headline'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['thread_headline'],
     'inputType' => 'text',
     'default'   => '',
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['thread_change_sub_caption'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['thread_change_sub_caption'],
     'inputType' => 'text',
     'default'   => '',
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['thread_delete_sub_caption'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['thread_delete_sub_caption'],
     'inputType' => 'text',
     'default'   => '',
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['no_subs_text'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['no_subs_text'],
     'inputType' => 'text',
     'default'   => '',
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 /**

@@ -9,7 +9,7 @@ const cleanCSS = require('gulp-clean-css');
 const rename = require('gulp-rename');
 
 // only for OperatorBundle
-const publicPath = 'Resources/public/'
+const publicPath = 'src/Resources/public/'
 
 const paths = {
     src: {
