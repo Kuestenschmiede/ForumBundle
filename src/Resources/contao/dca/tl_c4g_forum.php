@@ -16,8 +16,6 @@ use Contao\Image;
  */
 $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 (
-
-	// Config
 	'config' => array
 	(
 	    'label'                       => $GLOBALS['TL_CONFIG']['websiteTitle'],
@@ -28,7 +26,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 											array('tl_c4g_forum', 'updateDCA')
 										 ),
 	    'onsubmit_callback'           => array(
-	        //array('\c4g\Core\C4GAutomator', 'purgeApiCache'),
             array('tl_c4g_forum', 'onSubmit')
         ),
 		'ondelete_callback'			  => array(
@@ -45,7 +42,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 
 	),
 
-	// List
 	'list' => array
 	(
 		'sorting' => array
@@ -149,7 +145,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 		)
 	),
 
-	// Palettes
 	'palettes' => array
 	(
 		'__selector__'                => array('define_groups','define_rights','enable_maps','map_type'),
@@ -181,7 +176,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 		'enable_maps'			  	  => 'map_profile,map_location_label,map_override_locstyles,map_label,map_tooltip,map_popup,map_link',
 	),
 
-	// Fields
 	'fields' => array
 	(
         'id' => array
@@ -674,9 +668,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 class tl_c4g_forum extends \Backend
 {
 
-	/**
-	 * Import BackendUser object
-	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -740,9 +731,7 @@ class tl_c4g_forum extends \Backend
         die();
     }
 
-	/**
-	 * Update the palette information that depend on other values
-	 */
+
 	public function updateDCA(DataContainer $dc)
 	{
 		if ($dc->Database != null) {
@@ -770,7 +759,6 @@ class tl_c4g_forum extends \Backend
 	    	}
 	    }
 
-	    // add Maps section if c4gMaps is installed
 	    if (C4GVersionProvider::isInstalled('con4gis/maps')) {
 	    	$c4gMapsFields = '{maps_legend:hide},enable_maps;';
 	    	$GLOBALS['TL_DCA']['tl_c4g_forum']['palettes']['default'] =
@@ -789,11 +777,10 @@ class tl_c4g_forum extends \Backend
 
 	}
 
-	/**
-	 * Return all Location Styles as array
-	 * @param object
-	 * @return array
-	 */
+    /**
+     * @param DataContainer $dc
+     * @return array
+     */
 	public function getAllLocStyles(DataContainer $dc)
 	{
 		$locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")
@@ -811,9 +798,6 @@ class tl_c4g_forum extends \Backend
         return '<a href="' . $this->addToUrl($href) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ';
     }
 
-	/**
-	 * Return the "toggle visibility" button
-	 */
 	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
 	{
 		if (strlen($this->Input->get('tid')))
@@ -839,11 +823,11 @@ class tl_c4g_forum extends \Backend
 	}
 
 
-	/**
-	 * Disable/enable an element
-	 * @param integer
-	 * @param boolean
-	 */
+    /**
+     * @param $intId
+     * @param $blnVisible
+     * @return void
+     */
 	public function toggleVisibility($intId, $blnVisible)
 	{
 		// Check permissions to publish
@@ -872,11 +856,10 @@ class tl_c4g_forum extends \Backend
 		$this->createNewVersion('tl_c4g_forum', $intId);
 	}
 
-	/**
-	 *
-	 * Get List of available rights
-	 * @param DataContainer $dc
-	 */
+    /**
+     * @param DataContainer $dc
+     * @return array
+     */
 	public function getGuestRightList(DataContainer $dc)
 	{
 		if ($dc->Database != null) {
@@ -889,11 +872,10 @@ class tl_c4g_forum extends \Backend
 		return $return;
 	}
 
-	/**
-	 *
-	 * Get List of available rights
-	 * @param DataContainer $dc
-	 */
+    /**
+     * @param DataContainer $dc
+     * @return array
+     */
 	public function getRightList(DataContainer $dc)
 	{
 		if ($dc->Database != null) {
@@ -932,10 +914,10 @@ class tl_c4g_forum extends \Backend
 		}
 	}
 
-	/**
-	 * Return the page pick wizard for the linkUrl
-	 * @param DataContainer $dc
-	 */
+    /**
+     * @param DataContainer $dc
+     * @return string
+     */
 	public function pickLinkUrl(DataContainer $dc)
 	{
 		if (version_compare(VERSION,'3','<')) {
@@ -947,11 +929,10 @@ class tl_c4g_forum extends \Backend
 		}
 	}
 
-	/**
-	 * Return all defined maps
-	 * @param object
-	 * @return array
-	 */
+    /**
+     * @param DataContainer $dc
+     * @return array
+     */
 	public function get_maps(DataContainer $dc)
 	{
 		$maps = $this->Database->prepare ( "SELECT * FROM tl_c4g_maps WHERE location_type='map' AND published=1" )->execute ();
@@ -1017,12 +998,9 @@ class tl_c4g_forum extends \Backend
 
         foreach($posts as $post)
         {
-
             //Status des Tickets auf gelesen ändern
-
             $set['text'] = preg_replace($find,$replace,$post['text']);
             $this->Database->prepare('UPDATE tl_c4g_forum_post %s WHERE id=?')->set($set)->execute($post['id']);
         }
     }
 }
-?>
