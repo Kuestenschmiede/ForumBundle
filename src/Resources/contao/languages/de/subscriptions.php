@@ -18,6 +18,13 @@ $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['THREAD_SUBS_CHANGE'] = 'Abonnement änder
 $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['THREAD_SUBS_DELETE'] = 'Deabonnieren';
 $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['NO_SUBS_TEXT'] = 'Sie haben keine Abonnements.';
 
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['NEW_TOPICS'] = 'über neue Themen informieren';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['MOVED_TOPICS'] = 'über verschobene Themen informieren';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['DELETED_TOPICS'] = 'über gelöschte Themen informieren';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['NEW_POSTS'] = 'über neue Beiträge informieren';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['EDITED_POSTS'] = 'über geänderte Beiträge informieren';
+$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['DELETED_POSTS'] = 'über gelöschte Beiträge informieren';
+
 /** Dialog */
 $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE'] = 'Erfolg';
 $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE'] = 'Das Abonnement wurde erfolgreich angepasst.';

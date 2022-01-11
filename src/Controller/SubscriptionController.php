@@ -31,6 +31,7 @@ class SubscriptionController extends AbstractController
     }
 
     public function changeForumSubscriptionAction(Request $request, string $language) {
+        \System::loadLanguageFile('subscriptions', $language);
         try {
             if (!C4GUtils::isFrontendUserLoggedIn()) {
                 throw new \Exception("Frontenduser is not logged in.");
@@ -42,7 +43,6 @@ class SubscriptionController extends AbstractController
             if ($model->id === null) {
                 throw new \Exception("C4gForumSubscriptionModel: Subscription with ID $forumId does not exist.");
             }
-            \System::loadLanguageFile('subscriptions');
             if ($deleteSub === true) {
                 $model->delete();
                 $response = new JsonResponse();
@@ -65,7 +65,6 @@ class SubscriptionController extends AbstractController
                 ));
             }
         } catch (\Throwable $e) {
-            \System::loadLanguageFile('subscriptions');
             $response = new JsonResponse();
             $response->setData(array(
                 'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_TITLE'],
@@ -75,7 +74,8 @@ class SubscriptionController extends AbstractController
         return $response;
     }
 
-    public function changeThreadSubscriptionAction(Request $request) {
+    public function changeThreadSubscriptionAction(Request $request, string $language) {
+        \System::loadLanguageFile('subscriptions', $language);
         try {
             if (!C4GUtils::isFrontendUserLoggedIn()) {
                 throw new \Exception("Frontenduser is not logged in.");
@@ -87,7 +87,6 @@ class SubscriptionController extends AbstractController
             if ($model->id === null) {
                 throw new \Exception("C4GThreadSubscriptionModel: Subscription with ID $threadId does not exist.");
             }
-            \System::loadLanguageFile('subscriptions');
             if ($deleteSub === true) {
                 $model->delete();
                 $response = new JsonResponse();
@@ -107,7 +106,6 @@ class SubscriptionController extends AbstractController
                 ));
             }
         } catch (\Throwable $e) {
-            \System::loadLanguageFile('subscriptions');
             $response = new JsonResponse();
             $response->setData(array(
                 'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_TITLE'],

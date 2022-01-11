@@ -13,41 +13,41 @@
             <span class="sub_name">
                 <?php echo $subforum->name; ?>
             </span>
-        <form action="/con4gis/forum/forumsub/" method="post">
+        <form action="/con4gis/forum/forumsub/<?php echo $this->language;?>" method="post">
             <div class="field">
                 <input id="newthread_<?php echo (int) $key; ?>" type="checkbox" name="thread[]" value="newthread"<?php if ($sub->newThread == '1') echo 'checked="checked"';?>>
                 <label for="newthread_<?php echo (int) $key; ?>">
-                    über neue Themen informieren
+                    <?php echo $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['NEW_TOPICS'];?>
                 </label>
             </div>
             <div class="field">
                 <input id="movedthread_<?php echo (int) $key; ?>" type="checkbox" name="thread[]" value="movedthread"<?php if ($sub->movedThread == '1') echo 'checked="checked"';?>>
                 <label for="movedthread_<?php echo (int) $key; ?>">
-                    über verschobene Themen informieren
+                    <?php echo $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['MOVED_TOPICS'];?>
                 </label>
             </div>
             <div class="field">
                 <input id="deletedthread_<?php echo (int) $key; ?>" type="checkbox" name="thread[]" value="deletedthread"<?php if ($sub->deletedThread == '1') echo 'checked="checked"';?>>
                 <label for="deletedthread_<?php echo (int) $key; ?>">
-                    über gelöschte Themen informieren
+                    <?php echo $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['DELETED_TOPICS'];?>
                 </label>
             </div>
             <div class="field">
                 <input id="newpost_<?php echo (int) $key; ?>" type="checkbox" name="post[]" value="newpost"<?php if ($sub->newPost == '1') echo 'checked="checked"';?>>
                 <label for="newpost_<?php echo (int) $key; ?>">
-                    über neue Beiträge informieren
+                    <?php echo $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['NEW_POSTS'];?>
                 </label>
             </div>
             <div class="field">
                 <input id="editedpost_<?php echo (int) $key; ?>" type="checkbox" name="post[]" value="editedpost"<?php if ($sub->editedPost == '1') echo 'checked="checked"';?>>
                 <label for="editedpost_<?php echo (int) $key; ?>">
-                    über geänderte Beiträge informieren
+                    <?php echo $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['EDITED_POSTS'];?>
                 </label>
             </div>
             <div class="field">
                 <input id="deletedpost_<?php echo (int) $key; ?>" type="checkbox" name="post[]" value="deletedpost"<?php if ($sub->deletedPost == '1') echo 'checked="checked"';?>>
                 <label for="deletedpost_<?php echo (int) $key; ?>">
-                    über gelöschte Beiträge informieren
+                    <?php echo $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['DELETED_POSTS'];?>
                 </label>
             </div>
             <button type="button" class="forum_submit_change_button ui-button"<?php
@@ -77,23 +77,23 @@
             <span class="sub_name">
                 <?php echo $thread->name; ?>
             </span>
-        <form action="/con4gis/forum/threadsub/" method="post">
+        <form action="/con4gis/forum/threadsub/<?php echo $this->language;?>" method="post">
             <div class="field">
                 <input id="post_newpost_<?php echo (int) $key; ?>" type="checkbox" name="post[]" value="newpost"<?php if ($sub->newPost == '1') echo 'checked="checked"';?>>
                 <label for="post_newpost_<?php echo (int) $key; ?>">
-                    über neue Beiträge informieren
+                    <?php echo $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['NEW_POSTS'];?>
                 </label>
             </div>
             <div class="field">
                 <input id="post_editedpost_<?php echo (int) $key; ?>" type="checkbox" name="post[]" value="editedpost"<?php if ($sub->editedPost == '1') echo 'checked="checked"';?>>
                 <label for="post_editedpost_<?php echo (int) $key; ?>">
-                    über geänderte Beiträge informieren
+                    <?php echo $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['EDITED_POSTS'];?>
                 </label>
             </div>
             <div class="field">
                 <input id="post_deletedpost_<?php echo (int) $key; ?>" type="checkbox" name="post[]" value="deletedpost"<?php if ($sub->deletedPost == '1') echo 'checked="checked"';?>>
                 <label for="post_deletedpost_<?php echo (int) $key; ?>">
-                    über gelöschte Beiträge informieren
+                    <?php echo $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['DELETED_POSTS'];?>
                 </label>
             </div>
             <button type="button" class="thread_submit_change_button ui-button" <?php

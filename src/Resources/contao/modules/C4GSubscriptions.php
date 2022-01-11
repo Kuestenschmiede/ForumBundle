@@ -66,6 +66,8 @@ class C4GSubscriptions extends \Module
 
         \System::loadLanguageFile('subscriptions');
         $template = $this->Template;
+        global $objPage;
+        $template->language = $objPage->language;
         $template->sub_forum_headline = $this->sub_forum_headline !== '' ? $this->sub_forum_headline : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_HEAD'];
         $template->sub_forum_change_sub_caption = $this->sub_forum_change_sub_caption !== '' ? $this->sub_forum_change_sub_caption : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_CHANGE'];
         $template->sub_forum_delete_sub_caption = $this->sub_forum_delete_sub_caption !== '' ? $this->sub_forum_delete_sub_caption : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_DELETE'];
