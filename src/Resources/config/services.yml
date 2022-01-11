@@ -3,6 +3,14 @@ services:
     autowire: true
     autoconfigure: true
 
+  con4gis\ForumBundle\Controller\ForumController:
+    public: true
+    class: con4gis\ForumBundle\Controller\ForumController
+
+  con4gis\ForumBundle\Controller\SubscriptionController:
+    public: true
+    class: con4gis\ForumBundle\Controller\SubscriptionController
+
   con4gis\ForumBundle\Controller\ProfilePageModuleController:
     tags:
       -
