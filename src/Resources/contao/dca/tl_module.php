@@ -140,7 +140,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_displayonly'] = arra
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage'] = array
 (
     'exclude'   => true,
-    'default'   => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_default'],
+    'default'   => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_default'],
     'inputType' => 'text',
     'eval'      => array('mandatory' => true, 'tl_class'=>'long'),
     'sql'       => "varchar(100) NOT NULL default ''"
@@ -474,13 +474,13 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_tooltip']         = array
     'default'   => 'body_first_post',
     'inputType' => 'select',
     'options'   => array(
-        'title_first_post' => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['title_first_post'],
-        'title_last_post'  => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['title_last_post'],
-        'body_first_post'  => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['body_first_post'],
-        'body_last_post'   => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['body_last_post'],
-        'threadtitle'      => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['threadtitle'],
-        'threadbody'       => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['threadbody'],
-        'disabled'         => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['disabled']
+        'title_first_post' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['title_first_post'],
+        'title_last_post'  => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['title_last_post'],
+        'body_first_post'  => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['body_first_post'],
+        'body_last_post'   => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['body_last_post'],
+        'threadtitle'      => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['threadtitle'],
+        'threadbody'       => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['threadbody'],
+        'disabled'         => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip_value']['disabled']
     ),
     'sql'       => "varchar(50) NOT NULL default 'body_first_post'"
 );
