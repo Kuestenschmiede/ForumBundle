@@ -60,7 +60,6 @@ $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_forum_multilingual']  = 'c4g
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_type'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_type'],
     'exclude'   => true,
     'inputType' => 'select',
     'options'   => array('DISCUSSIONS', 'QUESTIONS', 'TICKET'),
@@ -72,7 +71,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_type'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_size'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_size'],
     'exclude'   => true,
     'inputType' => 'imageSize',
     'options'   => $imageSizes,
@@ -82,7 +80,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_size'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_scroll'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_scroll'],
     'exclude'   => true,
     'inputType' => 'imageSize',
     'options'   => $imageSizes,
@@ -92,7 +89,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_scroll'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_startforum'] = array
 (
-    'label'      => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_startforum'],
     'exclude'    => true,
     'inputType'  => 'select',
     'foreignKey' => 'tl_c4g_forum.name',
@@ -103,7 +99,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_startforum'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_onlythreads'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_onlythreads'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -112,7 +107,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_onlythreads'] = arra
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_wholewords'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_wholewords'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -121,7 +115,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_wholewords'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_use_tags_in_search'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_use_tags_in_search'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -130,7 +123,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_use_tags_in_search'] = arra
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_forums'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_forums'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -139,7 +131,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_forums'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_displayonly'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_displayonly'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -148,7 +139,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_displayonly'] = arra
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage'],
     'exclude'   => true,
     'default'   => $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_default'],
     'inputType' => 'text',
@@ -158,7 +148,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage_selection'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'],
     'exclude'   => true,
     'default'   => '10',
     'inputType' => 'text',
@@ -168,7 +157,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage_selection']
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_active'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_active'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -177,7 +165,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_active'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_pn_button'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_pn_button'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -185,7 +172,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_pn_button'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sub_title'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_sub_title'],
     'exclude'   => true,
     'default'   => '',
     'inputType' => 'text',
@@ -221,7 +207,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_user_profile_page'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_perpage'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_perpage'],
     'exclude'   => true,
     'default'   => '10',
     'inputType' => 'text',
@@ -231,7 +216,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_perpage'] = arra
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_format'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_format'],
     'exclude'   => true,
     'default'   => '[< ncn >]',
     'inputType' => 'text',
@@ -241,7 +225,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_pagination_format'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_navigation'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_navigation'],
     'exclude'   => true,
     'inputType' => 'select',
     'options'   => array('BOXES', 'TREE'),
@@ -252,7 +235,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_navigation'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxlength'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxlength'],
     'inputType' => 'text',
     'default'   => '30',
     'eval'      => array('rgxp' => 'digit', 'nospace' => true),
@@ -262,7 +244,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxlength'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threadclick'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threadclick'],
     'exclude'   => true,
     'inputType' => 'select',
     'options'   => array('THREAD', 'FPOST', 'LPOST'),
@@ -273,7 +254,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threadclick'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_realname'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_realname'],
     'exclude'   => true,
     'inputType' => 'radio',
     'options'   => array('UU', 'FF', 'LL', 'FL', 'LF'),
@@ -284,7 +264,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_realname'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_postsort'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_postsort'],
     'exclude'   => true,
     'inputType' => 'radio',
     'options'   => array('UP', 'DN'),
@@ -295,7 +274,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_postsort'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_collapsible_posts'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_collapsible_posts'],
     'exclude'   => true,
     'inputType' => 'radio',
     'options'   => array('NC', 'CO', 'CC', 'CF', 'CL'),
@@ -306,7 +284,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_collapsible_posts'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_breadcrumb'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_breadcrumb'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -316,7 +293,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_breadcrumb'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_hide_intropages'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_hide_intropages'],
     'exclude'   => true,
     'default'   => '',
     'inputType' => 'checkbox',
@@ -324,7 +300,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_hide_intropages'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_rating_enabled'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_enabled'],
     'exclude'   => true,
     'default'   => '',
     'inputType' => 'checkbox',
@@ -334,7 +309,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_rating_enabled'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_rating_color'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_rating_color'],
     'exclude'   => true,
     'inputType' => 'text',
     'eval'      => array('maxlength'=>6, 'multiple'=>false, 'size'=>1, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'wizard'),
@@ -351,7 +325,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_reaction_enabled'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_post_count'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_post_count'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -360,7 +333,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_post_count'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_avatars'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_avatars'],
     'exclude'   => true,
     'default'   => false,
     'inputType' => 'checkbox',
@@ -370,7 +342,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_avatars'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_avatar_size'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_avatar_size'],
     'exclude'   => true,
     'inputType' => 'imageSize',
     'options'   => $imageSizes,
@@ -380,7 +351,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_avatar_size'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_online_status'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_online_status'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -390,7 +360,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_online_status'] = arra
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_member_online_time'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_member_online_time'],
     'exclude'   => true,
     'default'   => '500',
     'inputType' => 'text',
@@ -400,7 +369,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_member_online_time'] = arra
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_ranks'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_ranks'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -410,7 +378,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_ranks'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_member_ranks'] = array
 (
-    'label'			=> &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_member_ranks'],
     'exclude' 		=> true,
     'inputType'     => 'multiColumnWizard',
     'eval' 			=> array
@@ -448,7 +415,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_member_ranks'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_last_post_on_new'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_show_last_post_on_new'],
     'exclude'                 => true,
     'default'                 => '',
     'inputType'               => 'checkbox',
@@ -457,7 +423,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_last_post_on_new'] = a
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jumpTo'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_jumpTo'],
     'exclude'   => true,
     'inputType' => 'pageTree',
     'eval'      => array('fieldType' => 'radio'),
@@ -467,7 +432,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jumpTo'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_language'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_language'],
     'exclude'   => true,
     'default'   => '',
     'inputType' => 'text',
@@ -477,7 +441,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_language'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_multilingual'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_multilingual'],
     'exclude'   => true,
     'default'   => '',
     'inputType' => 'checkbox',
@@ -487,7 +450,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_multilingual'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_multilingual_languages'] = array
 (
-    'label'      => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_multilingual_language'],
     'exclude'    => true,
     'default'    => array('de','en','fi'),
     'inputType'  => 'select',
@@ -497,21 +459,17 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_multilingual_languages'] = 
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_editor'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor'],
     'exclude'   => true,
     'default'   => 'ck',
     'inputType' => 'radio',
     'options'   => array(
         'ck' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['ck'],
-        //'bb' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['bb'],
-        //'no' => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_editor_option']['no'],
     ),
     'sql'       => "char(2) NOT NULL default 'ck'"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_tooltip']         = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_tooltip'],
     'exclude'   => true,
     'default'   => 'body_first_post',
     'inputType' => 'select',
@@ -534,7 +492,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_tooltip']         = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_text'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_text'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -545,7 +502,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_text'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_subtext'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_subtext'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -554,7 +510,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_subtext'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_lastpost'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_lastpost'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -571,7 +526,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_lastthread'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_center'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_center'],
     'exclude'   => true,
     'default'   => false,
     'inputType' => 'checkbox',
@@ -584,7 +538,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_center'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqui'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqui'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -595,7 +548,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqui'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqui_lib'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqui_lib'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -604,7 +556,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqui_lib'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_uitheme_css_select'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_uitheme_css_select'],
     'exclude'                 => true,
     'default'                 => 'settings',
     'inputType'               => 'radio',
@@ -616,7 +567,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_uitheme_css_select'] = arra
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_uitheme_css_src'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_uitheme_css_src'],
     'exclude'   => true,
     'inputType' => 'fileTree',
     'eval'      => array('fieldType' => 'radio', 'files' => true, 'extensions' => 'css'),
@@ -625,7 +575,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_uitheme_css_src'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_dialogsize'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_dialogsize'],
     'exclude'   => true,
     'inputType' => 'imageSize',
     'options'   => $imageSizes,
@@ -637,7 +586,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_dialogsize'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_dialogs_embedded'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_dialogs_embedded'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -646,7 +594,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_dialogs_embedded'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_embdialogs_jqui'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_embdialogs_jqui'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -655,7 +602,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_embdialogs_jqui'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_breadcrumb_jqui_layout'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_breadcrumb_jqui_layout'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -664,7 +610,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_breadcrumb_jqui_layout'] = 
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_buttons_jqui_layout'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_buttons_jqui_layout'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -673,7 +618,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_buttons_jqui_layout'] = arr
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_table_jqui_layout'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_table_jqui_layout'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -682,7 +626,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_table_jqui_layout'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_posts_jqui'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_posts_jqui'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -691,7 +634,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_posts_jqui'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_jqui_layout'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_jqui_layout'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -706,7 +648,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxes_jqui_layout'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jquery_lib'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_jquery_lib'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -717,7 +658,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jquery_lib'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqtable_lib'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqtable_lib'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -727,7 +667,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqtable_lib'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqhistory_lib'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqhistory_lib'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -737,7 +676,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqhistory_lib'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqtooltip_lib'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqtooltip_lib'],
     'exclude'   => true,
     'default'   => true,
     'inputType' => 'checkbox',
@@ -747,7 +685,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqtooltip_lib'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqscrollpane_lib'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqscrollpane_lib'],
     'exclude'   => true,
     'default'   => false,
     'inputType' => 'checkbox',
@@ -757,7 +694,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_jqscrollpane_lib'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap'] = array
 (
-    'label'         => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap'],
     'exclude'       => true,
     'default'       => '',
     'inputType'     => 'checkbox',
@@ -768,7 +704,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_filename'] = array
 (
-    'label'         => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap_filename'],
     'exclude'       => true,
     'inputType'     => 'text',
     'eval'          => array('mandatory' => true, 'maxlength' => 30),
@@ -778,7 +713,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_filename'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_contents'] = array
 (
-    'label'         => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap_contents'],
     'exclude'       => true,
     'inputType'     => 'checkbox',
     'options'       => array('THREADS', 'FORUMS', 'INTROS'),
@@ -790,7 +724,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_contents'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_root'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap_root'],
     'exclude'   => true,
     'inputType' => 'pageTree',
     'eval'      => array('mandatory'=>true),
@@ -799,7 +732,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_root'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_appearance_themeroller_css'] = array
 (
-    'label'     => $GLOBALS['TL_LANG']['tl_module']['c4g_appearance_themeroller_css'],
     'exclude'   => true,
     'inputType' => 'fileTree',
     'eval'      => array('tl_class'=>'w50 wizard', 'fieldType'=>'radio', 'files'=>true, 'extensions'=>'css'),
@@ -811,7 +743,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_appearance_themeroller_css'] = ar
  */
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_breadcrumb_jumpTo'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_breadcrumb_jumpTo'],
     'exclude'   => true,
     'inputType' => 'pageTree',
     'eval'      => array('fieldType' => 'radio', 'mandatory' => true),
@@ -828,7 +759,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_updated'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_move_all'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_move_all'],
     'exclude'   => true,
     'default'   => false,
     'inputType' => 'checkbox',
@@ -838,7 +768,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_move_all'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_param_forumbox'] = array
 (
-    'label'         => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_param_forumbox'],
     'exclude'       => true,
     'default'       => 'forumbox',
     'inputType'     => 'text',
@@ -848,7 +777,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_param_forumbox'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_param_forum'] = array
 (
-    'label'         => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_param_forum'],
     'exclude'       => true,
     'default'       => 'forum',
     'inputType'     => 'text',
@@ -858,7 +786,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_param_forum'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_remove_lastperson'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_remove_lastperson'],
     'exclude'   => true,
     'default'   => false,
     'inputType' => 'checkbox',
@@ -868,7 +795,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_remove_lastperson'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_remove_lastdate'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_remove_lastdate'],
     'exclude'   => true,
     'default'   => false,
     'inputType' => 'checkbox',
@@ -878,7 +804,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_remove_lastdate'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_remove_createperson'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_remove_createperson'],
     'exclude'   => true,
     'default'   => false,
     'inputType' => 'checkbox',
@@ -888,7 +813,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_remove_createperson'] = arr
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_remove_createdate'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_remove_createdate'],
     'exclude'   => true,
     'default'   => false,
     'inputType' => 'checkbox',
@@ -898,7 +822,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_remove_createdate'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_remove_count'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_remove_count'],
     'exclude'   => true,
     'default'   => false,
     'inputType' => 'checkbox',
@@ -908,7 +831,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_remove_count'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['ticketredirectsite'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['ticketredirectsite'],
     'default'                 => '0',
     'exclude'                 => true,
     'inputType'               => 'pageTree',
@@ -920,7 +842,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['ticketredirectsite'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_thread'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_new_thread'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
@@ -929,7 +850,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_thread'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_deleted_thread'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_deleted_thread'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
@@ -938,7 +858,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_deleted_thread'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_moved_thread'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_moved_thread'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
@@ -947,7 +866,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_moved_thread'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_post'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_new_post'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
@@ -956,7 +874,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_post'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_deleted_post'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_deleted_post'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
@@ -965,7 +882,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_deleted_post'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_edited_post'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['sub_edited_post'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
@@ -974,7 +890,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['sub_edited_post'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['mail_new_pm'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['mail_new_pm'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_nc_notification.title',
@@ -983,7 +898,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mail_new_pm'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['new_pm_redirect'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['new_pm_redirect'],
     'exclude'                 => true,
     'inputType'               => 'pageTree',
     'eval'                    => array('fieldType' => 'radio'),
@@ -1006,7 +920,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_editor_options'] = array
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['pm_center_forum_module'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fields']['pm_center_forum_module'],
     'inputType'               => 'select',
     'foreignKey'              => 'tl_module.name',
     'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-',),
@@ -1016,49 +929,42 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['pm_center_forum_module'] = array
 /** Fields - Subscriptions */
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_forum_headline'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['sub_forum_headline'],
     'inputType' => 'text',
     'default'   => '',
     'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_forum_change_sub_caption'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['sub_forum_change_sub_caption'],
     'inputType' => 'text',
     'default'   => '',
     'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_forum_delete_sub_caption'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['sub_forum_delete_sub_caption'],
     'inputType' => 'text',
     'default'   => '',
     'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['thread_headline'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['thread_headline'],
     'inputType' => 'text',
     'default'   => '',
     'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['thread_change_sub_caption'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['thread_change_sub_caption'],
     'inputType' => 'text',
     'default'   => '',
     'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['thread_delete_sub_caption'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['thread_delete_sub_caption'],
     'inputType' => 'text',
     'default'   => '',
     'sql'       => "varchar(200) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['no_subs_text'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['no_subs_text'],
     'inputType' => 'text',
     'default'   => '',
     'sql'       => "varchar(200) NOT NULL default ''"
