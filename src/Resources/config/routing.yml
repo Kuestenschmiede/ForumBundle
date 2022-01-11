@@ -1,41 +1,31 @@
 forum_ajax:
     path: /con4gis/forumService/{id}/{req}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisForumBundle:Forum:ajax"
+    controller: con4gis\ForumBundle\Controller\ForumController::ajaxAction
     requirements:
-        id: \d+
-        req: .*
+        id: '\d+'
+        req: '.*'
 
 forum_history_ajax:
     path: /con4gis/forumService/{id}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisForumBundle:Forum:ajax"
+    controller: con4gis\ForumBundle\Controller\ForumController::ajaxAction
     requirements:
-        id: \d+
+        id: '\d+'
 
 forum_pn:
     path: /con4gis/forumPnService/{actionFragment}
-    defaults:
-        _scope: frontend
-        _controller: "con4gisForumBundle:Forum:personalMessage"
+    controller: con4gis\ForumBundle\Controller\ForumController::personalMessageAction
     requirements:
         actionFragment: .*
 
 thread_sub:
-    path: /con4gis/forum/threadsub/
-    defaults:
-        _scope: frontend
-        _controller: "con4gisForumBundle:Subscription:changeThreadSubscription"
-        methods: [POST]
+    path: /con4gis/forum/threadsub/{language}
+    controller: con4gis\ForumBundle\Controller\SubscriptionController::changeThreadSubscriptionAction
+    methods: [POST]
 
 forum_sub:
-    path: /con4gis/forum/forumsub/
-    defaults:
-        _scope: frontend
-        _controller: "con4gisForumBundle:Subscription:changeForumSubscription"
-        methods: [POST]
+    path: /con4gis/forum/forumsub/{language}
+    controller: con4gis\ForumBundle\Controller\SubscriptionController::changeForumSubscriptionAction
+    methods: [POST]
 
 controllers:
     resource: '../../Controller/'
