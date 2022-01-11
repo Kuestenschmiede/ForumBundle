@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 (
 	'config' => array
 	(
-	    'label'                       => $GLOBALS['TL_CONFIG']['websiteTitle'],
+	    'label'                       => &$GLOBALS['TL_CONFIG']['websiteTitle'],
 	    'dataContainer'               => 'Table',
 		'ctable'                      => array('tl_c4g_forum_thread'),
 		'enableVersioning'            => true,
