@@ -14,6 +14,7 @@ use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
 use Contao\CoreBundle\Controller\AbstractController;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Database;
 use Contao\Frontend;
 use Contao\FrontendUser;
@@ -24,7 +25,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SubscriptionController extends AbstractController
 {
-    public function changeForumSubscriptionAction(Request $request) {
+    public function __construct(ContaoFramework $framework)
+    {
+        $framework->initialize();
+    }
+
+    public function changeForumSubscriptionAction(Request $request, string $language) {
         try {
             if (!C4GUtils::isFrontendUserLoggedIn()) {
                 throw new \Exception("Frontenduser is not logged in.");
