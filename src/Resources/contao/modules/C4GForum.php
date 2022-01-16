@@ -5,7 +5,7 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 
@@ -404,7 +404,7 @@ class C4GForum extends \Module
                 array_insert($buttons, 0, array(
                     array(
                         "id" => 'viewmapforforum:' . $forumId,
-                        "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['VIEW_MAP_FOR_FORUM']
+                        "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['VIEW_MAP_FOR_FORUM']
                     )
                 ));
 
@@ -492,7 +492,7 @@ class C4GForum extends \Module
                 )
             ),
             array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_AUTHOR_SHORT'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_AUTHOR_SHORT'],
                 "sClass" => 'c4g_forum_tlist_last_author',
                 "aDataSort" => array(
                     9,
@@ -506,7 +506,7 @@ class C4GForum extends \Module
                 "c4gMinTableSize" => 700
             ),
             array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_POST_SHORT'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_POST_SHORT'],
                 "sClass" => 'c4g_forum_tlist_last_post',
                 "aDataSort" => array(
                     10,
@@ -530,7 +530,7 @@ class C4GForum extends \Module
                 "responsivePriority" => array(4)
             ),
             array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['AUTHOR'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['AUTHOR'],
                 "sClass" => 'c4g_forum_tlist_author',
                 "aDataSort" => array(
                     9,
@@ -544,7 +544,7 @@ class C4GForum extends \Module
                 "c4gMinTableSize" => 500
             ),
             array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CREATED_ON'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CREATED_ON'],
                 "sClass" => 'c4g_forum_tlist_created',
                 "sType" => 'de_datetime',
                 "aDataSort" => array(
@@ -617,7 +617,7 @@ class C4GForum extends \Module
 
             array_insert($data['aoColumnDefs'], 1, array(
                     array(
-                        'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATING'],
+                        'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATING'],
                         "sWidth" => '10%',
                         "aDataSort" => array(1),
                         "aTargets" => array(1),
@@ -1496,9 +1496,9 @@ class C4GForum extends \Module
         }
 
         $reactionTypes = [[
-            'text' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'],
+            'text' => &$GLOBALS['TL_LANG']['c4g_forum']['discussion']['like'],
             'text_liked' => '<i class="fa fa-thumbs-up" aria-hidden="true"></i>',
-            'stop' => $GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'],
+            'stop' => &$GLOBALS['TL_LANG']['c4g_forum']['discussion']['like_stop'],
             'count' => count($reactions),
             'id' => 0
         ]];
@@ -1671,7 +1671,7 @@ class C4GForum extends \Module
             array(
                 "action" => 'closedialog:post' . $id,
                 "type" => 'get',
-                "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
+                "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
             )
         );
 
@@ -1773,12 +1773,12 @@ class C4GForum extends \Module
             array(
                 "action" => 'closedialog:thread' . $id,
                 "type" => 'get',
-                "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
+                "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
             ),
             array(
                 "action" => 'forum:' . $thread['forumid'] . ';readthread:' . $id,
                 "type" => 'get',
-                "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RELOAD'],
+                "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RELOAD'],
                 "class" => 'c4g-reload-content'
             )
         );
@@ -2141,17 +2141,17 @@ JSPAGINATE;
                 array(
                     "action" => 'sendthread:' . $forumId,
                     "type" => 'send',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEND']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEND']
                 ),
                 array(
                     "action" => 'previewthread:' . $forumId,
                     "type" => 'send',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PREVIEW']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PREVIEW']
                 ),
                 array(
                     "action" => 'cancelthread:' . $forumId,
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
                 )
             ),
             "dialogoptions" => $this->addDefaultDialogOptions(array(
@@ -2280,17 +2280,17 @@ JSPAGINATE;
                 array(
                     "action" => 'sendpost:' . $threadId,
                     "type" => 'send',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEND']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEND']
                 ),
                 array(
                     "action" => 'previewpost:' . $threadId,
                     "type" => 'send',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PREVIEW']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PREVIEW']
                 ),
                 array(
                     "action" => 'cancelpost:' . $threadId . ':newpost',
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
                 )
             ),
             "dialogoptions" => $this->addDefaultDialogOptions(array(
@@ -2447,7 +2447,7 @@ JSPAGINATE;
                 array(
                     "action" => 'closedialog:previewpost',
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
                 )
             ),
         );
@@ -2709,7 +2709,7 @@ JSPAGINATE;
                 array(
                     "action" => 'closedialog:previewthread',
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
                 )
             ),
         );
@@ -2964,7 +2964,7 @@ JSPAGINATE;
                 array_insert($buttons, 0, array(
                     array(
                         "id" => 'viewmapforforum:' . $parentId,
-                        "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['VIEW_MAP_FOR_FORUM']
+                        "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['VIEW_MAP_FOR_FORUM']
                     )
                 ));
             }
@@ -3617,7 +3617,7 @@ JSPAGINATE;
             "dialogtype" => "html",
             "dialogdata" => $data,
             "dialogoptions" => $this->addDefaultDialogOptions(array(
-                "title" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ADD_MEMBER'],
+                "title" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ADD_MEMBER'],
                 "height" => 200,
                 "modal" => true
             )),
@@ -3627,12 +3627,12 @@ JSPAGINATE;
                 array(
                     "action" => 'addmember:' . $forumId,
                     "type" => 'send',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ADD_MEMBER']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ADD_MEMBER']
                 ),
                 array(
                     "action" => 'closedialog:addmember' . $forumId,
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
                 )
             ),
         );
@@ -3744,7 +3744,7 @@ JSPAGINATE;
                 array(
                     "action" => 'closedialog:delpost' . $postId,
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
                 )
             ),
         );
@@ -4375,14 +4375,14 @@ JSPAGINATE;
                 array(
                     "action" => $previewAction . ':' . $postId,
                     "type" => 'send',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PREVIEW']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PREVIEW']
                 ),
-                //array( "action" => 'closedialog:'.$dialogId, "type" => 'get', "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL'])
-                //array( "action" => 'cancelpost:'.$post['threadid'].':editpostdialog-'.$postId, "type" => 'get', "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL'])
+                //array( "action" => 'closedialog:'.$dialogId, "type" => 'get', "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL'])
+                //array( "action" => 'cancelpost:'.$post['threadid'].':editpostdialog-'.$postId, "type" => 'get', "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL'])
                 array(
                     "action" => 'cancelpost:' . $post['threadid'] . ':' . $dialogId,
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
                 )
             ),
         );
@@ -4465,7 +4465,7 @@ JSPAGINATE;
                 array(
                     "action" => 'closedialog:' . $dialogId . ':' . $threadId,
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
                 )
             ),
         );
@@ -4507,7 +4507,7 @@ JSPAGINATE;
             "dialogtype" => "html",
             "dialogdata" => $data,
             "dialogoptions" => $this->addDefaultDialogOptions(array(
-                "title" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['EDIT_POST_LINK'],
+                "title" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['EDIT_POST_LINK'],
                 "modal" => true,
                 "height" => 300
             )),
@@ -4516,17 +4516,17 @@ JSPAGINATE;
                 array(
                     "action" => 'submit',
                     "type" => 'submit',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBMIT']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBMIT']
                 ),
                 array(
                     "action" => 'clear',
                     "type" => 'submit',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['DELETE_LINK']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['DELETE_LINK']
                 ),
                 array(
                     "action" => 'closedialog:postlink' . $forumId,
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
                 )
             ),
         );
@@ -4690,7 +4690,7 @@ JSPAGINATE;
         $return['dialogbuttons'][] = array(
             "action" => 'submit',
             "type" => 'submit',
-            "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBMIT']
+            "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBMIT']
         );
         if (!$add) {
             $return['dialogbuttons'][] =
@@ -4707,7 +4707,7 @@ JSPAGINATE;
         $return['dialogbuttons'][] = array(
             "action" => 'closedialog:postmapentry' . $forumId,
             "type" => 'get',
-            "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
+            "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
         );
 
         return $return;
@@ -4761,7 +4761,7 @@ JSPAGINATE;
             "dialogdata" => $data,
             "mapdata" => $mapData,
             "dialogoptions" => $this->addDefaultDialogOptions(array(
-                "title" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['VIEW_MAP_FOR_POST'],
+                "title" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['VIEW_MAP_FOR_POST'],
                 "modal" => true
             )),
             "dialogid" => 'viewmapforpost' . $postId,
@@ -4770,7 +4770,7 @@ JSPAGINATE;
                 array(
                     "action" => 'closedialog:viewmapforpost' . $postId,
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
                 )
             ),
         );
@@ -4814,7 +4814,7 @@ JSPAGINATE;
             "dialogdata" => $data,
             "mapdata" => $mapData,
             "dialogoptions" => $this->addDefaultDialogOptions(array(
-                "title" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['VIEW_MAP_FOR_FORUM'],
+                "title" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['VIEW_MAP_FOR_FORUM'],
                 "modal" => true
             )),
             "dialogid" => 'viewmapforforum' . $forumId,
@@ -4823,7 +4823,7 @@ JSPAGINATE;
                 array(
                     "action" => 'closedialog:viewmapforforum' . $forumId,
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CLOSE']
                 )
             ),
         );
@@ -4960,12 +4960,12 @@ JSPAGINATE;
                     "action" => 'search:' . $forumId,
                     'class' => 'c4gGuiDefaultAction',
                     "type" => 'send',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH']
                 ),
                 array(
                     "action" => 'closedialog:' . $dialogId,
                     "type" => 'get',
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CANCEL']
                 )
             ),
         );
@@ -5049,7 +5049,7 @@ JSPAGINATE;
                 )
             ),
             array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHRESULTPAGE_DATATABLE_AREA'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHRESULTPAGE_DATATABLE_AREA'],
                 "sClass" => 'c4g_forum_searchres_area',
                 "sWidth" => '20%',
                 "aTargets" => array(2),
@@ -5057,7 +5057,7 @@ JSPAGINATE;
 
             ),
             array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_AUTHOR_SHORT'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_AUTHOR_SHORT'],
                 "sClass" => 'c4g_forum_searchres_last_author',
                 "aDataSort" => array(
                     10,
@@ -5071,7 +5071,7 @@ JSPAGINATE;
                 "c4gMinTableSize" => 700
             ),
             array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_POST_SHORT'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_POST_SHORT'],
                 "sClass" => 'c4g_forum_searchres_last_post',
                 "aDataSort" => array(
                     11,
@@ -5095,7 +5095,7 @@ JSPAGINATE;
                 "responsivePriority" => array(5)
             ),
             array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['AUTHOR'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['AUTHOR'],
                 "sClass" => 'c4g_forum_searchres_author',
                 "aDataSort" => array(
                     10,
@@ -5109,7 +5109,7 @@ JSPAGINATE;
                 "c4gMinTableSize" => 500
             ),
             array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CREATED_ON'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CREATED_ON'],
                 "sClass" => 'c4g_forum_searchres_created',
                 "aDataSort" => array(
                     11,
@@ -5156,7 +5156,7 @@ JSPAGINATE;
                 "responsivePriority" => array(11),
             ),
             array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHRESULTPAGE_DATATABLE_HITS'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHRESULTPAGE_DATATABLE_HITS'],
                 "sClass" => 'c4g_forum_searchres_hits',
                 "bVisible" => true,
                 "bSearchable" => false,
@@ -5189,7 +5189,7 @@ JSPAGINATE;
 
             array_insert($data['aoColumnDefs'], 1, array(
                     array(
-                        'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATING'],
+                        'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATING'],
                         "sWidth" => '10%',
                         "aDataSort" => array(1),
                         "aTargets" => array(1),
@@ -5369,7 +5369,7 @@ JSPAGINATE;
             "buttons" => array(
                 array(
                     "id" => 'searchDialog:' . $forumId,
-                    "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHRESULTPAGE_BUTTON_START_NEW_SEARCH']
+                    "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHRESULTPAGE_BUTTON_START_NEW_SEARCH']
                 )
             )
         );
@@ -5428,13 +5428,13 @@ JSPAGINATE;
             )
         );
         $data['aoColumnDefs'][] = array(
-            'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHRESULTPAGE_DATATABLE_AREA'],
+            'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCHRESULTPAGE_DATATABLE_AREA'],
             "sWidth" => '20%',
             "aTargets" => array(2),
             "responsivePriority" => array(2),
         );
         $data['aoColumnDefs'][] = array(
-            'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_AUTHOR_SHORT'],
+            'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_AUTHOR_SHORT'],
             "aDataSort" => array(
                 3,
                 5
@@ -5446,7 +5446,7 @@ JSPAGINATE;
             "c4gMinTableSize" => 700
         );
         $data['aoColumnDefs'][] = array(
-            'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_POST_SHORT'],
+            'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LAST_POST_SHORT'],
             "aDataSort" => array(5),
             "bSearchable" => false,
             "bVisible" => ($this->c4g_forum_remove_lastdate !== '1'),
@@ -5466,7 +5466,7 @@ JSPAGINATE;
             "responsivePriority" => array(5),
         );
         $data['aoColumnDefs'][] = array(
-            'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['AUTHOR'],
+            'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['AUTHOR'],
             "aDataSort" => array(
                 6,
                 8
@@ -5478,7 +5478,7 @@ JSPAGINATE;
             "c4gMinTableSize" => 500
         );
         $data['aoColumnDefs'][] = array(
-            'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CREATED_ON'],
+            'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['CREATED_ON'],
             "aDataSort" => array(8),
             "asSorting" => array(
                 'desc',
@@ -5517,7 +5517,7 @@ JSPAGINATE;
 
         if ($this->c4g_forum_rating_enabled) {
             $data['aoColumnDefs'][] = array(
-                'sTitle' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATING'],
+                'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATING'],
                 "sWidth" => '10%',
                 "aDataSort" => array(1),
                 "aTargets" => array(11),
@@ -5689,7 +5689,7 @@ JSPAGINATE;
             "state" => $action . ";threadlist:" . $forumId,
             "headline" => '<div class="ui-widget-header ui-corner-all c4g_forum_header_center">' . C4GForumHelper::getTypeText($this->c4g_forum_type, 'LATESTTHREADS_HEADLINE') . '</div>',
             "buttons" => array()
-            //array(array( id=>'threadlist:'.$forumId, text=>$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LATESTTHREADS']))
+            //array(array( id=>'threadlist:'.$forumId, text=> &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LATESTTHREADS']))
         );
 
         return $return;
@@ -5705,14 +5705,14 @@ JSPAGINATE;
     public function addDefaultButtons($buttons, $forumId)
     {
 
-        //$buttons[] = array( id=>'search', text=>$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH']);
+        //$buttons[] = array( id=>'search', text=> &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH']);
         //if ($this->c4g_forum_comf_navigation=='BOXES') {
         //	$buttons[] = array( id=>'recalculate', text=>'Neuberechnung (Debug)');
         //}
         if ($this->helper->checkPermissionForAction($forumId, 'search', null, $this->c4g_forum_param_forumbox, $this->c4g_forum_param_forum)) {
             $buttons[] = array(
                 "id" => 'searchDialog:' . $forumId,
-                "text" => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH']
+                "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH']
             );
         }
 

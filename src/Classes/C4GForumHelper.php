@@ -5,7 +5,7 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 
@@ -2794,6 +2794,7 @@ class C4GForumHelper extends \System
         $return = ['visible','threadlist','readpost','newpost','newthread','postlink','threaddesc','threadsort','editownpost','editpost', 'editownthread', 'editthread',
             'delownpost','delpost','delthread','movethread','subscribethread','subscribeforum','addmember','search','latestthreads','alllanguages','tickettomember','closethread', ];
 
+        //ToDo check admin
         return $this->executePermissionHook($return, 'admin');
     }
 

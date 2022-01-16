@@ -5,7 +5,7 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 namespace con4gis\ForumBundle\Controller;
@@ -48,7 +48,7 @@ class SubscriptionController extends AbstractController
                 $response = new JsonResponse();
                 $response->setData(array(
                     'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE_DELETE'],
-                    'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE_DELETE']
+                    'message' => &$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE_DELETE']
                 ));
             } else {
                 $model->newThread = $request->request->get('newthread') ?: '0';
@@ -61,14 +61,14 @@ class SubscriptionController extends AbstractController
                 $response = new JsonResponse();
                 $response->setData(array(
                     'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE'],
-                    'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE']
+                    'message' => &$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE']
                 ));
             }
         } catch (\Throwable $e) {
             $response = new JsonResponse();
             $response->setData(array(
                 'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_TITLE'],
-                'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_MESSAGE']
+                'message' => &$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_MESSAGE']
             ));
         }
         return $response;
@@ -92,7 +92,7 @@ class SubscriptionController extends AbstractController
                 $response = new JsonResponse();
                 $response->setData(array(
                     'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE_DELETE'],
-                    'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE_DELETE']
+                    'message' => &$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE_DELETE']
                 ));
             } else {
                 $model->newPost = $request->request->get('newpost') ?: '0';
@@ -102,14 +102,14 @@ class SubscriptionController extends AbstractController
                 $response = new JsonResponse();
                 $response->setData(array(
                     'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_TITLE'],
-                    'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE']
+                    'message' => &$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUCCESS_MESSAGE']
                 ));
             }
         } catch (\Throwable $e) {
             $response = new JsonResponse();
             $response->setData(array(
                 'title' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_TITLE'],
-                'message' => $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_MESSAGE']
+                'message' => &$GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['ERROR_MESSAGE']
             ));
         }
         return $response;

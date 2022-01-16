@@ -5,7 +5,7 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 namespace con4gis\ForumBundle\ContaoManager;
@@ -47,7 +47,7 @@ class Plugin implements RoutingPluginInterface, BundlePluginInterface
     {
         return [
             BundleConfig::create(con4gisForumBundle::class)
-                ->setLoadAfter([con4gisCoreBundle::class,con4gisGroupsBundle::class, con4gisMapsBundle::class])
+                ->setLoadAfter([con4gisCoreBundle::class, con4gisGroupsBundle::class, con4gisMapsBundle::class])
         ];
     }
 }
