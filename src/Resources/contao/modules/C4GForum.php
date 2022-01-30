@@ -710,9 +710,9 @@ class C4GForum extends \Module
              */
 //                if($this->c4g_forum_type =="TICKET"){
 //                    if($this->helper->checkPermission($id,'showsentthreads')){
-//                        $threadOwner = array_flip(unserialize($thread['owner']));
+//                        $threadOwner = array_flip(\Contao\StringUtil::deserialize($thread['owner']));
 //                    }
-//                    $threadRecipient = array_flip(unserialize($thread['recipient']));
+//                    $threadRecipient = array_flip(\Contao\StringUtil::deserialize($thread['recipient']));
 //                    if(!(array_key_exists($userId,$threadOwner) || array_key_exists($userId,$threadRecipient))){
 //                        continue;
 //                    }
@@ -2027,7 +2027,7 @@ JSPAGINATE;
 
         $inputThreadname = '';
         if ($this->c4g_forum_multilingual && $this->helper->checkPermission($forumId, 'alllanguages')) {
-            $languages = unserialize($this->c4g_forum_multilingual_languages);
+            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
             if ($languages) {
                 foreach ($languages as $language) {
                     $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type, 'THREAD', $language) . ':<br/>' .
@@ -2061,7 +2061,7 @@ JSPAGINATE;
                     $select = "SELECT id,username,groups FROM tl_member WHERE id != '$user->id'"
                 )->execute()->fetchAllAssoc();
                 foreach ($allMembers as $member) {
-                    $member['groups'] = unserialize($member['groups']);
+                    $member['groups'] = \Contao\StringUtil::deserialize($member['groups']);
                     $member['groups'] = array_flip($member['groups']);
                     foreach ($groups as $group) {
                         if (array_key_exists($group['id'], $member['groups']) && !$arrOptions[$member['id']]) {
@@ -2518,7 +2518,7 @@ JSPAGINATE;
         }
         if (!$this->putVars['thread']) {
             $found = false;
-            $languages = unserialize($this->c4g_forum_multilingual_languages);
+            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
             if ($this->c4g_forum_multilingual && $languages) {
                 foreach ($languages as $language) {
                     if ($this->putVars['thread_' . $language]) {
@@ -2568,7 +2568,7 @@ JSPAGINATE;
                 $select = "SELECT id, groups
             FROM tl_member")->execute()->fetchAllAssoc();
             foreach ($allMembers as $allMember) {
-                $allMember['groups'] = array_flip(unserialize($allMember['groups']));
+                $allMember['groups'] = array_flip(\Contao\StringUtil::deserialize($allMember['groups']));
                 if (array_key_exists($this->putVars['recipient_group'], $allMember['groups'])) {
                     $recipient[] = $allMember['id'];
                 }
@@ -2591,7 +2591,7 @@ JSPAGINATE;
             if ($this->c4g_forum_multilingual) {
                 $globalLanguage = true;
                 if ($this->helper->checkPermission($forumId, 'alllanguages')) {
-                    $languages = unserialize($this->c4g_forum_multilingual_languages);
+                    $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
                     if ($languages) {
                         foreach ($languages as $language) {
                             $putVar = $this->putVars['thread_' . $language];
@@ -2660,7 +2660,7 @@ JSPAGINATE;
         $threadname = $this->putVars['thread'];
         if (!$this->putVars['thread']) {
             $found = false;
-            $languages = unserialize($this->c4g_forum_multilingual_languages);
+            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
             if ($this->c4g_forum_multilingual && $languages) {
                 foreach ($languages as $language) {
                     if ($this->putVars['thread_' . $language]) {
@@ -3873,7 +3873,7 @@ JSPAGINATE;
         }
         if (!$this->putVars['thread']) {
             $found = false;
-            $languages = unserialize($this->c4g_forum_multilingual_languages);
+            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
             if ($this->c4g_forum_multilingual && $languages) {
                 foreach ($languages as $language) {
                     if ($this->putVars['thread_' . $language]) {
@@ -3920,7 +3920,7 @@ JSPAGINATE;
             if ($this->c4g_forum_multilingual) {
                 $globalLanguage = true;
                 if ($this->helper->checkPermission($thread['forumid'], 'alllanguages')) {
-                    $languages = unserialize($this->c4g_forum_multilingual_languages);
+                    $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
                     if ($languages) {
                         foreach ($languages as $language) {
                             $putVar = $this->putVars['thread_' . $language];
@@ -4418,7 +4418,7 @@ JSPAGINATE;
 
         $inputThreadname = '';
         if ($this->c4g_forum_multilingual && $this->helper->checkPermission($thread['forumid'], 'alllanguages')) {
-            $languages = unserialize($this->c4g_forum_multilingual_languages);
+            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
             if ($languages) {
                 foreach ($languages as $language) {
                     $initialValue = '';
@@ -5743,7 +5743,7 @@ JSPAGINATE;
         $data = array();
         foreach ($path as $value) {
             $pathname = $value['name'];
-            $names = unserialize($value['optional_names']);
+            $names = \Contao\StringUtil::deserialize($value['optional_names']);
             if ($names) {
                 foreach ($names as $name) {
                     if ($this->isMatchingLanguage($name['optional_language'])) {
@@ -6275,7 +6275,7 @@ JSPAGINATE;
 
         switch ($fieldname) {
             case 'name':
-                $names = unserialize($forum['optional_names']);
+                $names = \Contao\StringUtil::deserialize($forum['optional_names']);
                 if ($names) {
                     foreach ($names as $name) {
                         if ($this->isMatchingLanguage($name['optional_language'])) {
@@ -6285,7 +6285,7 @@ JSPAGINATE;
                 }
                 break;
             case 'headline':
-                $headlines = unserialize($forum['optional_headlines']);
+                $headlines = \Contao\StringUtil::deserialize($forum['optional_headlines']);
                 if ($headlines) {
                     foreach ($headlines as $headline) {
                         if ($this->isMatchingLanguage($headline['optional_headline_language'])) {
@@ -6295,7 +6295,7 @@ JSPAGINATE;
                 }
                 break;
             case 'description':
-                $descriptions = unserialize($forum['optional_descriptions']);
+                $descriptions = \Contao\StringUtil::deserialize($forum['optional_descriptions']);
                 if ($descriptions) {
                     foreach ($descriptions as $description) {
                         if ($this->isMatchingLanguage($description['optional_description_language'])) {

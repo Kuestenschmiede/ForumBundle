@@ -218,7 +218,7 @@ use Contao\Database;
                     }
 
                     $pathname = $value['name'];
-                    $names = unserialize($value['optional_names']);
+                    $names = \Contao\StringUtil::deserialize($value['optional_names']);
                     if ($names) {
                         foreach ($names as $name) {
                             if ($name['optional_language'] == $this->c4g_forum_language_temp) {

@@ -14,7 +14,6 @@ use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
-use Patchwork\Utf8;
 
 /**
  * Class C4GSubscriptionOverview
@@ -32,7 +31,7 @@ class C4GSubscriptions extends \Module
         if (TL_MODE == 'BE')
         {
             $objTemplate = new \BackendTemplate('be_wildcard');
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . strtoupper($GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;

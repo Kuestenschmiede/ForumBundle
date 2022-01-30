@@ -21,14 +21,6 @@ use Contao\MemberModel;
 use Contao\StringUtil;
 use Contao\System;
 
-/**
- * Class C4GForumHelper
- *
- * @copyright  Küstenschmiede GmbH Software & Design 2011 - 2018
- * @author     Jürgen Witte <http://www.kuestenschmiede.de>
- * @package    con4gis
- * @author     Jürgen Witte <http://www.kuestenschmiede.de>
- */
 class C4GForumHelper extends \System
 {
     public static $postIdToIgnoreInMap = 0;
@@ -1765,7 +1757,7 @@ class C4GForumHelper extends \System
                 ->execute($threadId);
 
         if ($language) {
-            $names = unserialize($result->optional_names);
+            $names = \Contao\StringUtil::deserialize($result->optional_names);
             if ($names) {
                 foreach ($names as $name) {
                     if ($name['optional_language'] == $language) {
@@ -1797,7 +1789,7 @@ class C4GForumHelper extends \System
         $result = $this->Database->prepare('SELECT name, optional_names FROM tl_c4g_forum WHERE id=?')->execute($forumId);
 
         if ($language) {
-            $names = unserialize($result->optional_names);
+            $names = \Contao\StringUtil::deserialize($result->optional_names);
             if ($names) {
                 foreach ($names as $name) {
                     if ($name['optional_language'] == $language) {
@@ -2448,7 +2440,7 @@ class C4GForumHelper extends \System
         $user = $this->Database->prepare(
             'SELECT id,groups FROM tl_member WHERE id =?')
             ->execute($frontendUser)->fetchAssoc();
-        $user['groups'] = unserialize($user['groups']);
+        $user['groups'] = \Contao\StringUtil::deserialize($user['groups']);
         $return = [];
         foreach ($user['groups'] as $key) {
             if (in_array($key, $adGroups['0'])) {
