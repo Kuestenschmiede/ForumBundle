@@ -4041,7 +4041,9 @@ JSPAGINATE;
     {
 
         $sReturn = "";
-        $aTagsResult = \Contao\Database::getInstance()->prepare("SELECT tags, pid FROM tl_c4g_forum WHERE id = ?")->execute($sForumId);
+        $aTagsResult = \Contao\Database::getInstance()->prepare(
+            "SELECT tags, pid FROM tl_c4g_forum WHERE id = ?"
+        )->execute($sForumId);
         $aTags = $aTagsResult->row();
 
         if (!empty($aTags['tags'])) {
@@ -4072,7 +4074,9 @@ JSPAGINATE;
     public function getTagsRecursivByChildren($sForumId)
     {
         $sReturn = "";
-        $aTagsResult = \Contao\Database::getInstance()->prepare("SELECT tags, pid FROM tl_c4g_forum WHERE pid = ?")->execute($sForumId);
+        $aTagsResult = \Contao\Database::getInstance()->prepare(
+            "SELECT tags, pid FROM tl_c4g_forum WHERE pid = ?"
+        )->execute($sForumId);
         $aTags = $aTagsResult->row();
         if (empty($aTags)) {
             return array();
