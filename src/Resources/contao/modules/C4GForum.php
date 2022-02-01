@@ -4019,7 +4019,7 @@ JSPAGINATE;
             foreach ($aTags as $sTag) {
 
                 $sHtml .= "<option";
-                if (in_array($sTag, $aPost['tags'])) {
+                if (is_array($aPost['tags']) && in_array($sTag, $aPost['tags'])) {
                     $sHtml .= ' selected="selected"';
                 }
                 $sHtml .= ">" . $sTag . "</option>";
