@@ -672,7 +672,7 @@ class C4GForum extends \Module
 
         if ($this->c4g_forum_threads_perpage) {
             $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection;
-            $data['aLengthMenu'] = json_decode($this->c4g_forum_threads_perpage, true);
+            $data['aLengthMenu'] = $this->c4g_forum_threads_perpage;
         }
 
         $data['responsive'] = true;
