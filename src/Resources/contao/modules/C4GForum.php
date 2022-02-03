@@ -2973,7 +2973,7 @@ JSPAGINATE;
         $return = array(
             "contenttype" => "html",
             "contentoptions" => array("scrollable" => false),
-            "contentdata" => $data,
+            "contentdata" => mb_convert_encoding($data, 'UTF-8', mb_detect_encoding($data)),
             "state" => $this->c4g_forum_param_forumbox . ':' . $parentId,
             "buttons" => $this->addDefaultButtons($buttons, $parentId),
             "breadcrumb" => $this->getBreadcrumb($parentId),
