@@ -257,7 +257,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBSCRIPTION_THREAD_ERROR']      
 $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBSCRIPTION_THREAD_SUCCESS']               = 'Frage erfolgreich abonniert.';
 $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBSCRIPTION_SUBFORUM_ONLY_THREADS']        = 'nur bei neuen Fragen benachrichtigen';
 $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBSCRIPTION_SUBFORUM_POSTS']              = 'mit Kommentaren';
-$GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBSCRIPTION_THREAD_MAIL_SUBJECT']          = "Ihre abonnierte Frage auf '%2$s' (%1$s)";
+$GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS']['SUBSCRIPTION_THREAD_MAIL_SUBJECT']          = 'Ihre abonnierte Frage auf \'%2$s\' (%1$s)';
 
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_THREAD_TEXT']                  = 'Ticket <b>%s</b> aus <b>%s</b> per E-Mail abonnieren?';
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_THREAD_SUBSCRIPTION_CANCEL']   = 'Ticket <b>%s</b> aus <b>%s</b> abbestellen?';
@@ -266,7 +266,7 @@ $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_THREAD_ERROR']         
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_THREAD_SUCCESS']               = 'Ticket erfolgreich abonniert.';
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_SUBFORUM_ONLY_THREADS']        = 'nur bei neuen Tickets benachrichtigen';
 $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_SUBFORUM_POSTS']              = 'mit Nachrichten';
-$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_THREAD_MAIL_SUBJECT']          = "Ihre abonniertes Ticket auf '%2$s' (%1$s)";
+$GLOBALS['TL_LANG']['C4G_FORUM']['TICKET']['SUBSCRIPTION_THREAD_MAIL_SUBJECT']          = 'Ihre abonniertes Ticket auf \'%2$s\' (%1$s)';
 
 
 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBSCRIPTION_MAIL_ACTION_POST_PRE']  = "einen";

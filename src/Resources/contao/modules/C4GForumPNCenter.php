@@ -50,8 +50,13 @@ class C4GForumPNCenter extends \Module
 
             // Do not change this order (see #6191)
             $this->Template->style = !empty($this->arrStyle) ? implode(' ', $this->arrStyle) : '';
-            $this->Template->class = trim('mod_' . $this->type . ' ' . $this->cssID[1]);
-            $this->Template->cssID = !empty($this->cssID[0]) ? ' id="' . $this->cssID[0] . '"' : '';
+            $this->cssID = (array) $this->cssID;
+            $cssId = [
+                0 => array_key_exists(0, $this->cssID) ? $this->cssID[0] : '',
+                1 => array_key_exists(1, $this->cssID) ? $this->cssID[1] : ''
+            ];
+            $this->Template->class = trim('mod_' . $this->type . ' ' . $cssId[0]);
+            $this->Template->cssID = !empty($this->cssID[0]) ? ' id="' . $cssId[1] . '"' : '';
 
             $this->Template->inColumn = $this->strColumn;
 
@@ -122,23 +127,27 @@ class C4GForumPNCenter extends \Module
         // set global js var to inidcate api endpoint
         $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/forumPnService';</script>";
 
-        if (!$_GET['c4g_forum_fmd']) {
+        if (!array_key_exists('c4g_forum_fmd', $_GET) || !$_GET['c4g_forum_fmd']) {
             // try to get parameters from referer, if they don't exist
             $session = $this->Session->getData();
 
-            list($urlpart, $qspart) = array_pad(explode('?', $session['referer']['current'], 2), 2, '');
-            parse_str($qspart, $qsvars);
-            if ($qsvars['c4g_forum_fmd']) {
-                $_GET['c4g_forum_fmd'] = $qsvars['c4g_forum_fmd'];
+            if (array_key_exists('current', $session['referer'])) {
+                list($urlpart, $qspart) = array_pad(explode('?', $session['referer']['current'], 2), 2, '');
+                parse_str($qspart, $qsvars);
+                if ($qsvars['c4g_forum_fmd']) {
+                    $_GET['c4g_forum_fmd'] = $qsvars['c4g_forum_fmd'];
+                }
+                if ((!$_GET['c4g_forum_forum']) && ($qsvars['c4g_forum_forum'])) {
+                    $_GET['c4g_forum_forum'] = $qsvars['c4g_forum_forum'];
+                }
             }
-            if ((!$_GET['c4g_forum_forum']) && ($qsvars['c4g_forum_forum'])) {
-                $_GET['c4g_forum_forum'] = $qsvars['c4g_forum_forum'];
-            }
-
         }
-        $this->forumModule = $this->Database->prepare("SELECT * FROM tl_module WHERE id=?")
-            ->limit(1)
-            ->execute($_GET['c4g_forum_fmd']);
+
+        if (array_key_exists('c4g_forum_fmd', $_GET)) {
+            $this->forumModule = $this->Database->prepare("SELECT * FROM tl_module WHERE id=?")
+                ->limit(1)
+                ->execute($_GET['c4g_forum_fmd']);
+        }
 
         // initialize used Javascript Libraries and CSS files
         C4GJQueryGUI::initializeLibraries(

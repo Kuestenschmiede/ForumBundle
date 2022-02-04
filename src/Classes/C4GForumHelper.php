@@ -3358,7 +3358,7 @@ class C4GForumHelper extends \System
     public static function getTypeText($forumType, $lngStrg, $language = '')
     {
         //initial fallback -> missing or wrong language case
-        $sTitle = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION'][$lngStrg];
+        $sTitle = &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION'][$lngStrg];
         if ($forumType == 'QUESTIONS' && $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS'][$lngStrg]) {
             $sTitle = $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS'][$lngStrg];
         } elseif ($forumType == 'TICKET' && $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET'][$lngStrg]) {

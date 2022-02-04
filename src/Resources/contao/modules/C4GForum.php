@@ -122,7 +122,7 @@ class C4GForum extends \Module
         global $objPage;
         ResourceLoader::loadJavaScriptResource(
             'bundles/con4gisprojects/dist/js/trixconfig.php?'.
-            'lang='.$objPage->language.'&'.implode('&', $get)
+            'lang='.($objPage !== null ? $objPage->language : 'de').'&'.implode('&', $get)
         );
     }
 
@@ -234,13 +234,15 @@ class C4GForum extends \Module
 
         // $data['ajaxData'] = "action=fmd&id=".$this->id."&language=".$GLOBALS['TL_LANGUAGE']."&page=".$objPage->id;
         $data['ajaxData'] = $this->id;
-        $data['currentLanguage'] = $data['currentLanguage'] ?: $GLOBALS['TL_LANGUAGE'];
+
+        $data['currentLanguage'] =
+            (array_key_exists('currentLanguage', $data) && $data['currentLanguage']) ?: $GLOBALS['TL_LANGUAGE'];
 
         $size = deserialize($this->c4g_forum_size, true);
         $data['width'] = ($size[0] != 0) ? $size[0] . $size[2] : 'auto';
         $data['height'] = ($size[1] != 0) ? $size[1] . $size[2] : 'auto';
 
-        if ($_GET['state']) {
+        if (array_key_exists('state', $_GET)) {
             $request = $_GET['state'];
         } else {
             $request = 'initnav';
@@ -249,13 +251,15 @@ class C4GForum extends \Module
 
         // save forum url for linkbuilding in ajaxrequests
         $aTmpData = $this->Session->getData();
-        if (stristr($aTmpData['referer']['current'], "/CoreBundle/src/Resources/contao/api/") === false) {
-            $aTmpData['current_forum_url'] = $aTmpData['referer']['current'];
-            $this->Session->setData($aTmpData);
-        } else {
-            $aTmpData['referer']['last'] = $aTmpData['current_forum_url'];
-            $aTmpData['referer']['current'] = $aTmpData['current_forum_url'];
-            $this->Session->setData($aTmpData);
+        if (array_key_exists('current', $aTmpData['referer'])) {
+            if (stristr($aTmpData['referer']['current'], "/CoreBundle/src/Resources/contao/api/") === false) {
+                $aTmpData['current_forum_url'] = $aTmpData['referer']['current'];
+                $this->Session->setData($aTmpData);
+            } else {
+                $aTmpData['referer']['last'] = $aTmpData['current_forum_url'];
+                $aTmpData['referer']['current'] = $aTmpData['current_forum_url'];
+                $this->Session->setData($aTmpData);
+            }
         }
 
 
@@ -281,14 +285,14 @@ class C4GForum extends \Module
         $binImageUuid = $this->c4g_forum_bbcodes_editor_imguploadpath;
         if ($binImageUuid) {
             $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid));
+            \Session::getInstance()->set("con4gisImageUploadPath", $imageUploadPath->path . '/');
         }
-        \Session::getInstance()->set("con4gisImageUploadPath", $imageUploadPath->path . '/');
 
         $binFileUuid = $this->c4g_forum_bbcodes_editor_fileuploadpath;
         if ($binFileUuid) {
             $fileUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binFileUuid));
+            \Session::getInstance()->set("con4gisFileUploadPath", $fileUploadPath->path . '/');
         }
-        \Session::getInstance()->set("con4gisFileUploadPath", $fileUploadPath->path . '/');
 
         \Session::getInstance()->set("c4g_forum_bbcodes_editor_uploadTypes", $this->c4g_forum_bbcodes_editor_uploadTypes);
         \Session::getInstance()->set("c4g_forum_bbcodes_editor_maxFileSize", $this->c4g_forum_bbcodes_editor_maxFileSize);
