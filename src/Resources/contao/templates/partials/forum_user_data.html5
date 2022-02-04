@@ -72,7 +72,7 @@
 
     <?php if($this->c4g_forum_show_pn_button): ?>
         <p class="user_data_pn">
-            <a href="#" onclick="C4gPn.sendMessageTo('<?php echo $this->iUserId;?>','','<?php echo $GLOBALS['TL_LANG']['tl_c4g_pn']['profile_compose_title']." ".$this->sUserName; ?>', this);return false;" data-target="<?php echo $this->c4g_forum_module;?>"><?php echo $this->pn_label;?></a>
+            <a href="#" onclick="C4gPn.sendMessageTo('<?php echo $this->iUserId;?>','','<?php echo $GLOBALS['TL_LANG']['tl_c4g_pn']['profile_compose_title']." ".$this->sUserName; ?>', this);return false;" data-target="<?php echo $this->c4g_forum_module;?>"><?php echo $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['profile_compose']?></a>
         </p>
     <?php endif; ?>
 
