@@ -178,12 +178,13 @@ class ForumController extends AbstractController
                     $result = $stmt->execute($forumModule)->fetchAssoc();
                     $this->container->get('contao.framework')->initialize();
                     $route = \Contao\Controller::replaceInsertTags('{{link_url::' . $result['new_pm_redirect'] . '}}');
+                    $user = FrontendUser::getInstance();
 
                     try {
                         $notification = new C4GForumNotification(C4GForumNotification::MAIL_NEW_PM);
                         $notification->setTokenValue('user_name', $aRecipient['username']);
                         $notification->setTokenValue('user_email', $aRecipient['email']);
-                        $notification->setTokenValue('responsible_username', $this->getUser()->username);
+                        $notification->setTokenValue('responsible_username', $user->username);
                         $notification->setTokenValue('link', $_SERVER['SERVER_NAME'] . '/' . $route);
                         $notification->setTokenValue('admin_email', $GLOBALS['TL_CONFIG']['adminEmail']);
                         $notification->setTokenValue('subject', $aData['subject']);
