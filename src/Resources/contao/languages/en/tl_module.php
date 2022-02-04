@@ -292,7 +292,6 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_general_legend'] = 'Forum - General'
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_user_legend']         = 'Forum - User settings';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sizes_legend']        = 'Forum - Sizes';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_legend'] = 'Forum - Editor';
-//$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pn_legend']      = 'Forum - Personal Messaging';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_boxes_legend']   = 'Forum - Box navigation settings';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_jqui_legend']    = 'Forum - Styling (jQuery UI)';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_maps_legend']    = 'Forum - Maps (con4gis-Maps)';
