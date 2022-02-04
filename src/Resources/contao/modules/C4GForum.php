@@ -251,7 +251,7 @@ class C4GForum extends \Module
 
         // save forum url for linkbuilding in ajaxrequests
         $aTmpData = $this->Session->getData();
-        if (array_key_exists('current', $aTmpData['referer'])) {
+        if (array_key_exists('referer', $aTmpData) && array_key_exists('current', $aTmpData['referer'])) {
             if (stristr($aTmpData['referer']['current'], "/CoreBundle/src/Resources/contao/api/") === false) {
                 $aTmpData['current_forum_url'] = $aTmpData['referer']['current'];
                 $this->Session->setData($aTmpData);
