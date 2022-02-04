@@ -1,6 +1,4 @@
-<?php if (!defined('TL_ROOT')) {
-    die('You cannot access this file directly!');
-}
+<?php
 
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
