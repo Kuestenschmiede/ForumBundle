@@ -131,7 +131,7 @@ class C4GForumPNCenter extends \Module
             // try to get parameters from referer, if they don't exist
             $session = $this->Session->getData();
 
-            if (array_key_exists('current', $session['referer'])) {
+            if (is_array($session['referer']) && array_key_exists('current', $session['referer'])) {
                 list($urlpart, $qspart) = array_pad(explode('?', $session['referer']['current'], 2), 2, '');
                 parse_str($qspart, $qsvars);
                 if ($qsvars['c4g_forum_fmd']) {
