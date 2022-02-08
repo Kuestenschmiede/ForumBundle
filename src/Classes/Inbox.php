@@ -8,27 +8,27 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-    namespace con4gis\ForumBundle\Classes;
+namespace con4gis\ForumBundle\Classes;
 
-    use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
-    use Contao\FrontendUser;
+use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
+use Contao\FrontendUser;
 
-    /**
-     * Class Inbox
-     * @package con4gis\ForumBundle\Classes
-     */
-    class Inbox
+/**
+ * Class Inbox
+ * @package con4gis\ForumBundle\Classes
+ */
+class Inbox
+{
+    protected static $sTemplate = 'modal_inbox';
+
+    public static function parse()
     {
-        protected static $sTemplate = 'modal_inbox';
+        $oUser = FrontendUser::getInstance();
+        $aPns = C4gForumPn::getByRecipient($oUser->id);
 
-        public static function parse()
-        {
-            $oUser = FrontendUser::getInstance();
-            $aPns = C4gForumPn::getByRecipient($oUser->id);
+        $oTemplate = new \FrontendTemplate(self::$sTemplate);
+        $oTemplate->pns = $aPns;
 
-            $oTemplate = new \FrontendTemplate(self::$sTemplate);
-            $oTemplate->pns = $aPns;
-
-            return $oTemplate->parse();
-        }
+        return $oTemplate->parse();
     }
+}
