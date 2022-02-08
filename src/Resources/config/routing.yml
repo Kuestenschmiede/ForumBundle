@@ -12,8 +12,9 @@ forum_history_ajax:
         id: '\d+'
 
 forum_pn:
-    path: /con4gis/forumPnService/{actionFragment}
+    path: /con4gis/forumPnService/{language}/{action}/{modifier}
     controller: con4gis\ForumBundle\Controller\ForumController::personalMessageAction
+    defaults: {modifier: ''}
     requirements:
         actionFragment: .*
 

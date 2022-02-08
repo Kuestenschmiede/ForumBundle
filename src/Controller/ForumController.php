@@ -98,7 +98,7 @@ class ForumController extends AbstractController
         return $response;
     }
 
-    public function personalMessageAction(Request $request, $actionFragment)
+    public function personalMessageAction(Request $request, string $language, string $action, string $modifier)
     {
         $response = new JsonResponse();
         $feUser = FrontendUser::getInstance();
@@ -107,14 +107,15 @@ class ForumController extends AbstractController
             $response->setStatusCode(400);
             return $response;
         }
-        $arrFragments = explode('/', $actionFragment);
-        System::loadLanguageFile("tl_c4g_forum_pn");
+        if ($language !== 'de' && $language !== 'en') {
+            $language = 'de';
+        }
+        System::loadLanguageFile("tl_c4g_forum_pn", $language);
         try {
-            // check which service is requested
-            switch($arrFragments[0]) {
+            switch($action) {
                 case "modal":
-                    if (!empty($arrFragments[1])) {
-                        $sType      = $arrFragments[1];
+                    if (!empty($modifier)) {
+                        $sType      = $modifier;
                         $aReturn    = array();
                         $sClassName = "con4gis\\ForumBundle\\Classes\\" . ucfirst($sType);
                         if (class_exists($sClassName)) {
@@ -123,13 +124,12 @@ class ForumController extends AbstractController
                             $aReturn['template'] = $sClassName::parse($aData);
                         }
                         $response->setData($aReturn);
-                        return $response;
                     } else {
                         $response->setStatusCode(400);
-                        return $response;
                     }
+                    return $response;
                 case "delete":
-                    $iId = $arrFragments[1];
+                    $iId = $modifier;
                     $oPn = C4gForumPn::getById($iId);
                     $res = $oPn->delete();
                     $response->setData(['success' => $res]);

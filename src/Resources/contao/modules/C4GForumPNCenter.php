@@ -124,8 +124,11 @@ class C4GForumPNCenter extends \Module
         $this->Template->c4g_pn_js = $sJsLang;
         $data = array();
 
+        global $objPage;
         // set global js var to inidcate api endpoint
-        $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/forumPnService';</script>";
+        $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/forumPnService/".
+            ($objPage->language ?: "de")
+            ."';</script>";
 
         if (!array_key_exists('c4g_forum_fmd', $_GET) || !$_GET['c4g_forum_fmd']) {
             // try to get parameters from referer, if they don't exist

@@ -228,7 +228,10 @@ class C4GForum extends \Module
         $data['id'] = $this->id;
         // set global js var to inidcate api endpoint
         $data['forumAjaxUrl'] = "con4gis/forumService";
-        $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/forumPnService';</script>";
+        global $objPage;
+        $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/forumPnService/".
+            ($objPage->language ?: "de")
+            ."';</script>";
         $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'con4gis/api/fileUpload/';</script>";
 
 
