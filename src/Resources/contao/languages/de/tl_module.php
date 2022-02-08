@@ -244,11 +244,6 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_min']      = array("Mindest-Pos
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_name']     = array("Rang-Name", "Die Bezeichnung des Rangs.");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_language'] = array("Sprache", "Die Sprache des Rangs.");
 
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_uploadTypes'] = array("Erlaubte Dateitypen", "Kommasepariert, ohne Punkt");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_maxFileSize'] = array("Maximale Dateigröße", "Angabe in Byte: 1 kB = 1024 Byte, 1 MB = 1048576 Byte");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imageWidth']  = array("Maximale Bildbreite", "Angabe in Pixel");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imageHeight'] = array("Maximale Bildhöhe", "Angabe in Pixel");
-
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage'] = array("Auswahlbox: Themen pro Seite", "Werte, Beschriftung: [[10, 25, 50, 100, -1], [10, 25, 50, 100, \"Alle\"]]");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'] = array("Wieviele Themen sollen initial angezeigt werden", "Default: 10");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_default'] = '[[10, 25, 50, 100, -1], [10, 25, 50, 100, "Alle"]]';

@@ -245,11 +245,6 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_min']      = array("Minimum pos
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_name']     = array("Rank name", "The name of the rank.");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_language'] = array("Language", "The language of the rank.");
 
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_uploadTypes'] = array("Allowed Filetypes", "comma separated, without dot ");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_maxFileSize'] = array("Max Filesize", "Declaration in Byte: 1 kB = 1024 Byte, 1 MB = 1048576 Byte");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imageWidth']  = array("Max image width", "Declaration in pixel");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_bbcodes_editor_imageHeight'] = array("Max image height", "Declaration in pixel");
-
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_onlythreads'] = array("Checkbox for search threads only (no posts)", "");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_wholewords']  = array("Checkbox for whole words search", "");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_use_tags_in_search'] = array("Select for tags defined in your forum", "");
