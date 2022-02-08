@@ -709,18 +709,6 @@ class C4GForum extends \Module
         $userId = $userData['id'];
 
         foreach ($threads as $thread) {
-            /**
-             * @Todo fix Owner/Recipient
-             */
-//                if($this->c4g_forum_type =="TICKET"){
-//                    if($this->helper->checkPermission($id,'showsentthreads')){
-//                        $threadOwner = array_flip(\Contao\StringUtil::deserialize($thread['owner']));
-//                    }
-//                    $threadRecipient = array_flip(\Contao\StringUtil::deserialize($thread['recipient']));
-//                    if(!(array_key_exists($userId,$threadOwner) || array_key_exists($userId,$threadRecipient))){
-//                        continue;
-//                    }
-//                }
             switch ($this->c4g_forum_threadclick) {
                 case 'LPOST':
                     $threadAction = 'readlastpost:' . $thread['id'];
