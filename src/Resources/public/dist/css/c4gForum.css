@@ -423,3 +423,6 @@ blockquote:before {
 .ui-dialog {
   position: fixed!important
 }
+.c4gForumNewThreadContent trix-editor {
+  min-height: 150px
+}
