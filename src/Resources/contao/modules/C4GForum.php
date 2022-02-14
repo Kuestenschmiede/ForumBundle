@@ -672,7 +672,7 @@ class C4GForum extends \Module
             )
         );
 
-        $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection;
+        $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection ?: 10;
 
         $data['aLengthMenu'] = [[10,25,50, 100, -1], [10,25,50,100, $GLOBALS['TL_LANG']['c4g_forum']['all']]];
 
@@ -5140,7 +5140,7 @@ class C4GForum extends \Module
         );
 
         if ($this->c4g_forum_threads_perpage) {
-            $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection;
+            $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection ?: 10;
             $data['aLengthMenu'] = $this->c4g_forum_threads_perpage;
         }
 
@@ -5465,7 +5465,7 @@ class C4GForum extends \Module
         );
 
         if ($this->c4g_forum_threads_perpage) {
-            $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection;
+            $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection ?: 10;
             $data['aLengthMenu'] = $this->c4g_forum_threads_perpage;
         }
 
