@@ -244,13 +244,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_min']      = array("Mindest-Pos
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_name']     = array("Rang-Name", "Die Bezeichnung des Rangs.");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_language'] = array("Sprache", "Die Sprache des Rangs.");
 
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage'] = array("Auswahlbox: Themen pro Seite", "Werte, Beschriftung: [[10, 25, 50, 100, -1], [10, 25, 50, 100, \"Alle\"]]");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'] = array("Wieviele Themen sollen initial angezeigt werden", "Default: 10");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_default'] = '[[10, 25, 50, 100, -1], [10, 25, 50, 100, "Alle"]]';
-
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_active'] = array("Pagination aktivieren", "");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_format'] = array("Paginator-Format", "Siehe <a onclick='window.open(this.href);return false;' href='http://www.xarg.org/2011/09/jquery-pagination-revised'>http://www.xarg.org/2011/09/jquery-pagination-revised</a>");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_perpage'] = array("Einträge pro Seite", "");
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_onlythreads'] = array("Checkbox: nur nach Threads suchen aktivieren", "Dadurch können Sie Beiträge bzw. Kommentare von der Suche ausschließen.");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_wholewords']  = array("Checkbox: nur ganze Wörter suchen aktivieren", "Dadurch können sie die Suche auf den genauen Wortlaut einschränken.");

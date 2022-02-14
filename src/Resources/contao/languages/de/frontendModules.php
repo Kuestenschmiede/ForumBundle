@@ -504,3 +504,5 @@ $GLOBALS['TL_LANG']['c4g_forum']['profile']['days_ago'] = 'vor %s Tagen';
 $GLOBALS['TL_LANG']['c4g_forum']['profile']['weeks_ago'] = 'vor %s Wochen';
 $GLOBALS['TL_LANG']['c4g_forum']['profile']['months_ago'] = 'vor %s Monaten';
 $GLOBALS['TL_LANG']['c4g_forum']['profile']['years_ago'] = 'vor %s Jahren';
+
+$GLOBALS['TL_LANG']['c4g_forum']['all'] = 'Alle';

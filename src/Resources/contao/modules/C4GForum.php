@@ -314,11 +314,6 @@ class C4GForum extends \Module
             $GLOBALS['TL_HEAD'][] = "<script>var ckRemovePlugins = '';</script>";
         }
 
-        if ($this->c4g_forum_pagination_active == "1") {
-            $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/vendor/js/jquery.pagination.min.js|async|static";
-            $GLOBALS['TL_JAVASCRIPT'][] = "bundles/con4gisforum/vendor/js/jquery.hashchange.min.js|async|static";
-        }
-
         if ($enableMaps) {
             MapsResourceLoader::loadResources();
             MapsResourceLoader::loadTheme();
@@ -677,10 +672,9 @@ class C4GForum extends \Module
             )
         );
 
-        if ($this->c4g_forum_threads_perpage) {
-            $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection;
-            $data['aLengthMenu'] = $this->c4g_forum_threads_perpage;
-        }
+        $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection;
+
+        $data['aLengthMenu'] = [[10,25,50, 100, -1], [10,25,50,100, $GLOBALS['TL_LANG']['c4g_forum']['all']]];
 
         $data['responsive'] = true;
         $data['bScrollCollapse'] = true;
@@ -1892,82 +1886,6 @@ class C4GForum extends \Module
                     )
                 )
             );
-        }
-
-        if ($this->c4g_forum_pagination_active == "1") {
-
-            // $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/con4gis_forum/html/js/jquery.pagination.min.js";
-            // $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/con4gis_forum/html/js/jquery.hashchange.min.js";
-
-            $iPerPage = (!empty($this->c4g_forum_pagination_perpage)) ? $this->c4g_forum_pagination_perpage : 10;
-            $sPaginatorFormat = (!empty($this->c4g_forum_pagination_format)) ? $this->c4g_forum_pagination_format : '[< ncn >]';
-
-            $sFirst = $GLOBALS['TL_LANG']['tl_c4g_forum']['pagination']['first'];
-            $sLast = $GLOBALS['TL_LANG']['tl_c4g_forum']['pagination']['last'];
-
-            $sPagination = <<<JSPAGINATE
-
-            <div class="c4g_pagination bottompagination"></div>
-            <script>
-                jQuery(document).ready(function(){
-                    var prev = {start: 0, stop: 0},
-                        cont = jQuery('.c4gForumPost');
-
-                    var Paging = jQuery(".c4g_pagination").paging(cont.length, {
-                        format: '{$sPaginatorFormat}',
-                        perpage: $iPerPage,
-                        lapping: 0,
-                        page: null, // we await hashchange() event
-                        onSelect: function (page) {
-
-                            var data = this.slice;
-
-                            cont.slice(prev[0], prev[1]).css('display', 'none');
-                            if (jQuery(cont.slice(prev[0], prev[1]).next()).hasClass('c4g_forum_post_head_edit_row')) {
-                                jQuery(cont.slice(prev[0], prev[1]).next()).css('display', 'none');
-                            }
-                            cont.slice(data[0], data[1]).fadeIn("slow");
-                            if (jQuery(cont.slice(data[0], data[1]).next()).hasClass('c4g_forum_post_head_edit_row')) {
-                                jQuery(cont.slice(data[0], data[1]).next()).fadeIn("slow");
-                            }
-                            prev = data;
-
-                            return true; // locate!
-                        },
-                        onFormat: function (type) {
-                            var sUrl = 'http://' + window.location.host + window.location.pathname + window.location.search;
-                            switch (type) {
-                            case 'block': // n and c
-                                var isActiveClass = (this.page == this.value)?"ui-state-highlight ":"";
-                                return '<a href="'+sUrl+'#'+this.value+'" class="'+isActiveClass+' ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">' + this.value + '</a>';
-                            case 'next': // >
-                                return '<a href="'+sUrl+'#'+this.value+'" class=" ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">&gt;</a>';
-                            case 'prev': // <
-                                return '<a href="'+sUrl+'#'+this.value+'" class=" ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">&lt;</a>';
-                            case 'first': // [
-                                return '<a href="'+sUrl+'#'+this.value+'" class=" ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">$sFirst</a>';
-                            case 'last': // ]
-                                return '<a href="'+sUrl+'#'+this.value+'" class=" ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">$sLast</a>';
-                            }
-                        }
-                    });
-                    Paging.setPage(1);
-                    jQuery(window).hashchange(function() {
-
-                        if (window.location.hash)
-                            Paging.setPage(window.location.hash.substr(1));
-                        else
-                            Paging.setPage(1); // we dropped the initial page selection and need to run it manually
-
-                        jQuery(".c4g_pagination").css('display', '');
-                    });
-
-                    jQuery(window).hashchange();
-
-                });
-            </script>
-JSPAGINATE;
-            $data .= html_entity_decode($sPagination);
         }
 
         if ($this->c4g_forum_multilingual) {

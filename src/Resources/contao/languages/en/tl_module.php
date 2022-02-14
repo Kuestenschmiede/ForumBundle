@@ -296,12 +296,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_legend']       = 'Forum - Sea
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_breadcrumb_legend'] = 'Breadcrumb';
 
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage'] = array("Selectbox: threads per Page", "values, translations: [[10, 25, 50, 100, -1], [10, 25, 50, 100, \"All\"]]");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'] = array("How many threads should be shown initial", "Default: 10");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_default'] = '[[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]';
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_active'] = array("Activate pagination", "");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_format'] = array("Paginator-Format", "See <a onclick='window.open(this.href);return false;' href='http://www.xarg.org/2011/09/jquery-pagination-revised'>http://www.xarg.org/2011/09/jquery-pagination-revised</a>");
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_perpage'] = array("Entries per page", "");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_legend'] = 'Forum - Pagination';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_page_legend'] = 'Page options';
 
