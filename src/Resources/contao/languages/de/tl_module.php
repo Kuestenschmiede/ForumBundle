@@ -244,7 +244,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_min']      = array("Mindest-Pos
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_name']     = array("Rang-Name", "Die Bezeichnung des Rangs.");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_language'] = array("Sprache", "Die Sprache des Rangs.");
 
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'] = array("Wieviele Themen sollen initial angezeigt werden", "Default: 10");
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'] = array("Initiale Anzahl Themen pro Seite", "Zeigt initial diese Anzahl Themen im Forenbereich an.");
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_onlythreads'] = array("Checkbox: nur nach Threads suchen aktivieren", "Dadurch können Sie Beiträge bzw. Kommentare von der Suche ausschließen.");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_wholewords']  = array("Checkbox: nur ganze Wörter suchen aktivieren", "Dadurch können sie die Suche auf den genauen Wortlaut einschränken.");

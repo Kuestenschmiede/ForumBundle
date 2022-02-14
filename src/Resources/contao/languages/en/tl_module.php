@@ -296,7 +296,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_search_legend']       = 'Forum - Sea
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_breadcrumb_legend'] = 'Breadcrumb';
 
-$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'] = array("How many threads should be shown initial", "Default: 10");
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_threads_perpage_selection'] = array("Initial number of topics per page", "Initially displays this number of topics in the forum.");
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_pagination_legend'] = 'Forum - Pagination';
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_page_legend'] = 'Page options';
 
