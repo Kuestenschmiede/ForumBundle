@@ -136,12 +136,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_displayonly'] = arra
     'sql'       => "char(1) NOT NULL default '1'"
 );
 
+System::loadLanguageFile('frontendModules');
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage_selection'] = array
 (
     'exclude'   => true,
     'default'   => '10',
-    'inputType' => 'text',
-    'eval'      => array('maxlength' => 3, 'mandatory' => true),
+    'inputType' => 'select',
+    'options'   => ['10', '25', '50', '100', '-1'],
+    'reference' => [
+        '10' => '10',
+        '25' => '25',
+        '50' => '50',
+        '100' => '100',
+        '-1' => $GLOBALS['TL_LANG']['c4g_forum']['all']
+    ],
     'sql'       => "tinyint(3) NOT NULL default '10'"
 );
 
