@@ -1943,9 +1943,11 @@ class C4GForum extends \Module
             $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
             if ($languages) {
                 foreach ($languages as $language) {
+                    System::loadLanguageFile('frontendModules', $language, true);
                     $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type, 'THREAD', $language) . ':<br/>' .
                         '<input name="thread_' . $language . '" type="text" class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
                 }
+                System::loadLanguageFile('frontendModules', null, true);
             }
         }
 

@@ -3357,8 +3357,17 @@ class C4GForumHelper extends \System
      */
     public static function getTypeText($forumType, $lngStrg, $language = '')
     {
-        //initial fallback -> missing or wrong language case
-        $sTitle = &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION'][$lngStrg];
+        if (
+            !is_array($GLOBALS['TL_LANG']) ||
+            !array_key_exists('C4G_FORUM', $GLOBALS['TL_LANG']) ||
+            !is_array($GLOBALS['TL_LANG']['C4G_FORUM']) ||
+            !array_key_exists('DISCUSSION', $GLOBALS['TL_LANG']['C4G_FORUM']) ||
+            !is_array($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']) ||
+            !array_key_exists($lngStrg, $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION'])
+        ) {
+            System::loadLanguageFile('frontendModules');
+        }
+        $sTitle = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION'][$lngStrg];
         if ($forumType == 'QUESTIONS' && $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS'][$lngStrg]) {
             $sTitle = $GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS'][$lngStrg];
         } elseif ($forumType == 'TICKET' && $GLOBALS['TL_LANG']['C4G_FORUM']['TICKET'][$lngStrg]) {
