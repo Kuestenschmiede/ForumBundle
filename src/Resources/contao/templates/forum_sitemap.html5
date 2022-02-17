@@ -1,0 +1,11 @@
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+    <?php
+        foreach ($this->pages as $page) {
+    ?>
+            <url>
+                <loc><?php echo $page;?></loc>
+            </url>
+    <?php
+        }
+    ?>
+</urlset>

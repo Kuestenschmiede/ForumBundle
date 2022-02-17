@@ -15,8 +15,12 @@ forum_pn:
     path: /con4gis/forumPnService/{language}/{action}/{modifier}
     controller: con4gis\ForumBundle\Controller\ForumController::personalMessageAction
     defaults: {modifier: ''}
+
+forum_sitemap:
+    path: /con4gis/forum/sitemap/{filename}
+    controller: con4gis\ForumBundle\Controller\SitemapController::returnSitemap
     requirements:
-        actionFragment: .*
+        filename: ^.+\.xml$
 
 thread_sub:
     path: /con4gis/forum/threadsub/{language}

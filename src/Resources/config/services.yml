@@ -11,6 +11,10 @@ services:
     public: true
     class: con4gis\ForumBundle\Controller\SubscriptionController
 
+  con4gis\ForumBundle\Controller\SitemapController:
+    public: true
+    class: con4gis\ForumBundle\Controller\SitemapController
+
   con4gis\ForumBundle\Controller\ProfilePageModuleController:
     tags:
       -
