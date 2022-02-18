@@ -210,7 +210,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxlength'] = array
     'inputType' => 'text',
     'default'   => '30',
     'eval'      => array('rgxp' => 'digit', 'nospace' => true),
-    'sql'       => "int unsigned NOT NULL default '30'"
+    'sql'       => "int(4) unsigned NOT NULL default '30'"
 );
 
 
