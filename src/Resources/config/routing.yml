@@ -19,6 +19,7 @@ forum_pn:
 forum_sitemap:
     path: /con4gis/forum/sitemap/{filename}
     controller: con4gis\ForumBundle\Controller\SitemapController::returnSitemap
+    methods: [GET]
     requirements:
         filename: ^.+\.xml$
 
