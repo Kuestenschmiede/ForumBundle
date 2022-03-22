@@ -2480,8 +2480,7 @@ class C4GForum extends \Module
             $recipient = serialize($this->putVars['recipient_member']);
         } else if (isset($this->putVars['recipient_group'])) {
             $allMembers = $this->Database->prepare(
-                $select = "SELECT id, groups
-            FROM tl_member")->execute()->fetchAllAssoc();
+                $select = "SELECT id, groups FROM tl_member")->execute()->fetchAllAssoc();
             foreach ($allMembers as $allMember) {
                 $allMember['groups'] = array_flip(\Contao\StringUtil::deserialize($allMember['groups']));
                 if (array_key_exists($this->putVars['recipient_group'], $allMember['groups'])) {
@@ -4003,7 +4002,7 @@ class C4GForum extends \Module
                 $sReturn = $this->getTagsRecursivByChildren($aTags['id']);
             }
         }
-        $aReturn = explode(",", $sReturn);
+        $aReturn = $sReturn ? explode(",", $sReturn) : [];
         if (empty($aReturn)) {
             $aReturn = array();
         }
