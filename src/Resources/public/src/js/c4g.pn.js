@@ -168,8 +168,7 @@
       data.target = frm.dataset.target;
       jQuery.ajax({
         method: "POST",
-        //url: "system/modules/con4gis_forum/api/index.php/send/",
-        url: pnApiBaseUrl + "/send/",
+        url: pnApiBaseUrl + "/send",
         data: data,
         success: function (response) {
           if (response.success !== true) {
