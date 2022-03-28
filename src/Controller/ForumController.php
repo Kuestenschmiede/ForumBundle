@@ -159,9 +159,12 @@ class ForumController extends AbstractController
                         $result = $stmt->execute($iRecipientId);
                         $aRecipient = $result->fetchAssoc();
                     }
+                    $message = htmlentities($_POST['message']);
+                    $message = str_replace(['&lt;div&gt;', '&lt;/div&gt;'], '', $message);
+                    $message = trim($message);
                     $aData = array(
                         "subject"      => \Input::post('subject'),
-                        "message"      => htmlentities($_POST['message']),
+                        "message"      => $message,
                         "sender_id"    => $feUser->id,
                         "recipient_id" => $iRecipientId,
                         "dt_created"   => time(),
