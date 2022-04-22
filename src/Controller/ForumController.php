@@ -191,7 +191,7 @@ class ForumController extends AbstractController
                         $notification->setTokenValue('link', $_SERVER['SERVER_NAME'] . '/' . $route);
                         $notification->setTokenValue('admin_email', $GLOBALS['TL_CONFIG']['adminEmail']);
                         $notification->setTokenValue('subject', $aData['subject']);
-                        $notification->setTokenValue('message', $aData['message']);
+                        $notification->setTokenValue('message', html_entity_decode($aData['message']));
                         $notification->send(\Contao\StringUtil::deserialize($result['mail_new_pm']));
                     } catch (\Throwable $e) {
                         //Todo log
