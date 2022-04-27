@@ -2122,13 +2122,13 @@ class C4GForumHelper extends \System
             $set['threads'] = $threads;
         }
         if ($last_thread_id !== false) {
-            $set['last_thread_id'] = $last_thread_id;
+            $set['last_thread_id'] = (int) $last_thread_id;
         }
         if ($posts !== false) {
             $set['posts'] = $posts;
         }
         if ($last_post_id !== false) {
-            $set['last_post_id'] = $last_post_id;
+            $set['last_post_id'] = (int) $last_post_id;
         }
         $objUpdateStmt = $this->Database->prepare('UPDATE tl_c4g_forum %s WHERE id=?')
                                         ->set($set)
