@@ -155,7 +155,7 @@ class C4GForumHelper extends \System
         if ((C4GUtils::isFrontendUserLoggedIn()) && (!$this->checkGuestRights)) {
             if (($userId != 0) && ($this->User->id != $userId)) {
                 $userGroups = StringUtil::deserialize($this->Database->prepare(
-                    'SELECT groups FROM tl_member  ' .
+                    'SELECT `groups` FROM tl_member  ' .
                     'WHERE id=?')
                     ->execute($userId)->groups, true);
             } else {
@@ -2438,7 +2438,7 @@ class C4GForumHelper extends \System
             'SELECT id,name FROM tl_member_group WHERE id IN (' . implode(',', $forumAdGroups) . ')')
                          ->execute()->fetchAllAssoc();
         $user = $this->Database->prepare(
-            'SELECT id,groups FROM tl_member WHERE id =?')
+            'SELECT id,`groups` FROM tl_member WHERE id =?')
             ->execute($frontendUser)->fetchAssoc();
         $user['groups'] = \Contao\StringUtil::deserialize($user['groups']);
         $return = [];
@@ -2488,7 +2488,7 @@ class C4GForumHelper extends \System
     public function addMemberGroupDB($memGroupId, $memberId)
     {
         $members = $this->Database->prepare(
-            'SELECT id,groups FROM tl_member WHERE id=?')
+            'SELECT id,`groups` FROM tl_member WHERE id=?')
                          ->execute($memberId)->fetchAssoc();
         if ($members['id'] == 0) {
             return false;

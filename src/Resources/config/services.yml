@@ -15,6 +15,14 @@ services:
     public: true
     class: con4gis\ForumBundle\Controller\SitemapController
 
+  con4gis\ForumBundle\Controller\ForumUploadController:
+    public: true
+    class: con4gis\ForumBundle\Controller\ForumUploadController
+
+  con4gis\ForumBundle\Controller\ForumFilesController:
+    public: true
+    class: con4gis\ForumBundle\Controller\ForumFilesController
+
   con4gis\ForumBundle\Controller\ProfilePageModuleController:
     tags:
       -

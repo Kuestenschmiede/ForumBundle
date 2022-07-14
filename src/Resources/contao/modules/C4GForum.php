@@ -99,6 +99,9 @@ class C4GForum extends \Module
 
     protected $c4g_forum_language_temp = '';
 
+    private array $get;
+    private ?PageModel $page;
+
     /**
      * C4GForum constructor.
      */
@@ -113,16 +116,19 @@ class C4GForum extends \Module
         ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/c4g-vendor-trix.js');
         ResourceLoader::loadCssResource('bundles/con4gisprojects/dist/css/trix.min.css');
         $editorOptions = StringUtil::deserialize($this->c4g_editor_options, true);
-        $get = [];
+        $this->get = [];
         if (!empty($editorOptions)) {
             foreach ($editorOptions as $editorOption) {
-                $get[] = "$editorOption=1";
+                $this->get[] = "$editorOption=1";
             }
         }
         global $objPage;
+        $this->page = $objPage;
         ResourceLoader::loadJavaScriptResource(
             'bundles/con4gisprojects/dist/js/trixconfig.php?'.
-            'lang='.($objPage !== null ? $objPage->language : 'de').'&'.implode('&', $get)
+            'lang='.($this->page->language !== null ? $this->page->language : 'de').'&'.implode('&', $this->get),
+            ResourceLoader::JAVASCRIPT,
+            'trix-config'
         );
     }
 
@@ -1973,7 +1979,7 @@ class C4GForum extends \Module
 
                 // only check members other than the current user
                 $allMembers = $this->Database->prepare(
-                    $select = "SELECT id,username,groups FROM tl_member WHERE id != '$user->id'"
+                    $select = "SELECT id,username,`groups` FROM tl_member WHERE id != '$user->id'"
                 )->execute()->fetchAllAssoc();
                 foreach ($allMembers as $member) {
                     $member['groups'] = \Contao\StringUtil::deserialize($member['groups']);
@@ -2088,7 +2094,13 @@ class C4GForum extends \Module
      */
     public function generateNewPostForm($threadId, $parentDialog)
     {
-
+        $this->get[] = "thread=$threadId";
+        ResourceLoader::loadJavaScriptResource(
+            'bundles/con4gisprojects/dist/js/trixconfig.php?'.
+            'lang='.($this->page->language !== null ? $this->page->language : 'de').'&'.implode('&', $this->get),
+            ResourceLoader::JAVASCRIPT,
+            'trix-config'
+        );
         $thread = $this->helper->getThreadAndForumNameFromDB($threadId);
 
         $sLastPost = "";
@@ -2480,7 +2492,7 @@ class C4GForum extends \Module
             $recipient = serialize($this->putVars['recipient_member']);
         } else if (isset($this->putVars['recipient_group'])) {
             $allMembers = $this->Database->prepare(
-                $select = "SELECT id, groups FROM tl_member")->execute()->fetchAllAssoc();
+                $select = "SELECT id, `groups` FROM tl_member")->execute()->fetchAllAssoc();
             foreach ($allMembers as $allMember) {
                 $allMember['groups'] = array_flip(\Contao\StringUtil::deserialize($allMember['groups']));
                 if (array_key_exists($this->putVars['recipient_group'], $allMember['groups'])) {
