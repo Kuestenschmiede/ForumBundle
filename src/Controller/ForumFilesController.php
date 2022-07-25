@@ -13,6 +13,7 @@ namespace con4gis\ForumBundle\Controller;
 
 use con4gis\ForumBundle\Classes\C4GForumHelper;
 use Contao\CoreBundle\Exception\PageNotFoundException;
+use Contao\CoreBundle\Exception\RedirectResponseException;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Database;
 use Contao\FrontendUser;
@@ -45,19 +46,16 @@ class ForumFilesController
         $statement = $database->prepare('SELECT * FROM tl_c4g_forum_upload WHERE id = ?');
         $uploadRow = $statement->execute($fileId)->fetchAssoc();
         if ($uploadRow !== false) {
-            $statement = $database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id = ?');
-            $threadRow = $statement->execute($uploadRow['threadId'])->fetchAssoc();
-            if ($threadRow !== false) {
-                $helper = new C4GForumHelper($database);
-                $user = FrontendUser::getInstance();
-                if ($helper->checkPermissionForAction($threadRow['pid'], 'readthread', $user->id, null, '')) {
-                    $statement = $database->prepare(
-                        'SELECT f.* FROM tl_files f JOIN tl_c4g_forum_upload u ON f.uuid = u.fileUuid WHERE u.id = ?'
-                    );
-                    $fileRow = $statement->execute($fileId)->fetchAssoc();
-                    if ($fileRow !== false) {
-                        return new BinaryFileResponse('../'.$fileRow['path']);
-                    }
+            $user = FrontendUser::getInstance();
+            $statement = $database->prepare(
+                'SELECT f.* FROM tl_files f JOIN tl_c4g_forum_upload u ON f.uuid = u.fileUuid WHERE u.id = ?'
+            );
+            $fileRow = $statement->execute($fileId)->fetchAssoc();
+            if ($fileRow !== false) {
+                if ($user->id > 0) {
+                    return new BinaryFileResponse('../'.$fileRow['path']);
+                } else {
+                    throw new RedirectResponseException('../../'.$fileRow['path']);
                 }
             }
         }

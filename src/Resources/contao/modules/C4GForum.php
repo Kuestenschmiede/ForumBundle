@@ -122,6 +122,8 @@ class C4GForum extends \Module
                 $this->get[] = "$editorOption=1";
             }
         }
+        $this->get[] = 'imageuploadpath='.urlencode('/c4g_forum/upload/image');
+        $this->get[] = 'fileuploadpath='.urlencode('/c4g_forum/upload/file');
         global $objPage;
         $this->page = $objPage;
         ResourceLoader::loadJavaScriptResource(
@@ -2094,13 +2096,7 @@ class C4GForum extends \Module
      */
     public function generateNewPostForm($threadId, $parentDialog)
     {
-        $this->get[] = "thread=$threadId";
-        ResourceLoader::loadJavaScriptResource(
-            'bundles/con4gisprojects/dist/js/trixconfig.php?'.
-            'lang='.($this->page->language !== null ? $this->page->language : 'de').'&'.implode('&', $this->get),
-            ResourceLoader::JAVASCRIPT,
-            'trix-config'
-        );
+
         $thread = $this->helper->getThreadAndForumNameFromDB($threadId);
 
         $sLastPost = "";

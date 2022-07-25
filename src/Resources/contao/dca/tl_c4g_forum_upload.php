@@ -26,9 +26,6 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_upload'] = [
         'importId' => [
             'sql' => "int unsigned NOT NULL default 0"
         ],
-        'threadId' => [
-            'sql' => "int unsigned NOT NULL default 0"
-        ],
         'fileUuid' => [
             'sql' => "binary(16) NULL"
         ]

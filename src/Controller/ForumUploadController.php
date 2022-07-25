@@ -29,21 +29,20 @@ class ForumUploadController
 
     /**
      * @Route(
-     *     "/c4g_forum/upload/image/{threadId}",
+     *     "/c4g_forum/upload/image",
      *     name="c4g_forum_upload_image",
      *     methods={"POST"},
      *     requirements={"threadId"="\d+"}
      * )
      * @param Request $request
-     * @param int $threadId
      * @return JsonResponse
      */
-    public function imageUploadAction(Request $request, int $threadId): JsonResponse
+    public function imageUploadAction(Request $request): JsonResponse
     {
         $response =  $this->uploadController->imageUploadAction($request);
         $data = json_decode($response->getContent(), true);
         if ($data['url']) {
-            $fileId = $this->insertFileReferenceByThreadIdAndUrl($threadId, $data['url']);
+            $fileId = $this->insertFileReferenceByUrl($data['url']);
             if ($fileId !== 0) {
                 $data['url'] = explode('files', $data['url'])[0] . 'c4g_forum/file/'.$fileId;
                 $response->setData($data);
@@ -54,26 +53,25 @@ class ForumUploadController
 
     /**
      * @Route(
-     *     "/c4g_forum/upload/file/{threadId}",
+     *     "/c4g_forum/upload/file",
      *     name="c4g_forum_upload_file",
      *     methods={"POST"},
      *     requirements={"threadId"="\d+"}
      * )
      * @param Request $request
-     * @param int $threadId
      * @return JsonResponse
      */
-    public function fileUploadAction(Request $request, int $threadId): JsonResponse
+    public function fileUploadAction(Request $request): JsonResponse
     {
         $response =  $this->uploadController->fileUploadAction($request);
         $data = json_decode($response->getContent(), true);
         if ($data['url']) {
-            $this->insertFileReferenceByThreadIdAndUrl($threadId, $data['url']);
+            $this->insertFileReferenceByUrl($data['url']);
         }
         return $response;
     }
 
-    private function insertFileReferenceByThreadIdAndUrl(int $threadId, string $url): int
+    private function insertFileReferenceByUrl(string $url): int
     {
         Dbafs::syncFiles();
         $relativeUrl = 'files'.explode('files', $url)[1];
@@ -83,9 +81,9 @@ class ForumUploadController
         if ($result !== false) {
             $database = Database::getInstance();
             $statement = $database->prepare(
-                'INSERT INTO tl_c4g_forum_upload (threadId, fileUUid) VALUES (?, ?)'
+                'INSERT INTO tl_c4g_forum_upload (fileUuid) VALUES (?)'
             );
-            $statement->execute($threadId, $result['uuid']);
+            $statement->execute($result['uuid']);
             $statement = $database->prepare('SELECT LAST_INSERT_ID() as id');
             $result = $statement->execute()->fetchAssoc();
             return (int) $result['id'];
