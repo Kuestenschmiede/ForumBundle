@@ -40,15 +40,7 @@ class ForumUploadController
     public function imageUploadAction(Request $request): JsonResponse
     {
         $response =  $this->uploadController->imageUploadAction($request);
-        $data = json_decode($response->getContent(), true);
-        if ($data['url']) {
-            $fileId = $this->insertFileReferenceByUrl($data['url']);
-            if ($fileId !== 0) {
-                $data['url'] = explode('files', $data['url'])[0] . 'c4g_forum/file/'.$fileId;
-                $response->setData($data);
-            }
-        }
-        return $response;
+        return $this->insertFileReferenceAndUpdateResponseUrl($response);
     }
 
     /**
@@ -64,9 +56,18 @@ class ForumUploadController
     public function fileUploadAction(Request $request): JsonResponse
     {
         $response =  $this->uploadController->fileUploadAction($request);
+        return $this->insertFileReferenceAndUpdateResponseUrl($response);
+    }
+
+    private function insertFileReferenceAndUpdateResponseUrl(JsonResponse $response): JsonResponse
+    {
         $data = json_decode($response->getContent(), true);
         if ($data['url']) {
-            $this->insertFileReferenceByUrl($data['url']);
+            $fileId = $this->insertFileReferenceByUrl($data['url']);
+            if ($fileId !== 0) {
+                $data['url'] = explode('files', $data['url'])[0] . 'c4g_forum/file/' . $fileId;
+                $response->setData($data);
+            }
         }
         return $response;
     }
