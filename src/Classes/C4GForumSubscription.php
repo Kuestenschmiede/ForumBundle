@@ -358,10 +358,14 @@ class C4GForumSubscription
         \System::loadLanguageFile('tl_c4g_forum');
         $thread = $this->helper->getThreadAndForumNameFromDB($threadId, $language);
         $thread['threadname'] = $thread['threadname_translated'] ?: $thread['threadname'];
-        $addresses = [];
         foreach ($subscriptions as $subscription) {
             $subscriber = $subscription->getMemberModel();
-            if ((!$addresses[$subscriber->email]) && ($subscriber->id != $this->User->id)) {
+            if (
+                $subscriber->id != $this->User->id &&
+                (string) $subscriber->email !== '' &&
+                (int) $subscriber->login === 1 &&
+                (int) $subscriber->disable !== 1
+            ) {
                 if ($subscriber->type == 1) {
                     $sPerm = 'subscribeforum';
                 } else {
