@@ -199,7 +199,7 @@ class C4GForumSubscription
      */
     public function getThreadSubscribersFromDB($threadId)
     {
-        $subscriptionModels = C4GForumSubscriptionModel::findBy('pid', $threadId);
+        $subscriptionModels = C4GThreadSubscriptionModel::findBy('pid', $threadId);
         $subs = [];
         foreach ($subscriptionModels as $model) {
             $subs[$model->member] = new Subscription(MemberModel::findByPk($model->member), [
