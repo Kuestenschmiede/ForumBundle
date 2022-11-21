@@ -17,6 +17,7 @@ use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumMember;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
+use Contao\Database;
 use Contao\MemberModel;
 use Contao\StringUtil;
 use Contao\System;
@@ -220,6 +221,17 @@ class C4GForumHelper extends \System
             $this->ForumCache[$forumId] = $forum;
         }
         //TODO hier fehlt manchmal forumid, weswegen aus der db nix zurückkommt
+
+        $database = Database::getInstance();
+        $statement = $database->prepare(
+            'SELECT published FROM tl_c4g_forum WHERE id = ?'
+        );
+        $row = $statement->execute($forumId)->fetchAssoc();
+        if ($row === false || (int) $row['published'] !== 1) {
+            $this->permissionError = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_PERMISSION'];
+            return false;
+        }
+
 
         $return = $this->checkPermissionWithData($right, $forum['member_groups'], $forum['admin_groups'],
             $forum['guest_rights'], $forum['member_rights'], $forum['admin_rights'], $userId);
