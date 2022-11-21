@@ -52,7 +52,6 @@ class C4GSubscriptions extends \Module
     {
         ResourceLoader::loadJavaScriptResource("/bundles/con4gisforum/dist/js/subscriptions.js", ResourceLoader::HEAD);
         ResourceLoader::loadCssResource("/bundles/con4gisforum/dist/css/subscriptions.min.css");
-        ResourceLoader::loadJavaScriptResource('assets/jquery/js/jquery.min.js|async|static', $location = ResourceLoader::JAVASCRIPT, $key = 'c4g_jquery');
         ResourceLoader::loadJavaScriptResource('bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.js|async|static',
             ResourceLoader::JAVASCRIPT,
             'c4g_jquery_ui'
