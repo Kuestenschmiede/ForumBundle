@@ -13,6 +13,7 @@ namespace con4gis\ForumBundle\Controller;
 
 
 use con4gis\CoreBundle\Classes\C4GUtils;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Classes\C4GForumNotification;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
 use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
@@ -194,7 +195,7 @@ class ForumController extends AbstractController
                         $notification->setTokenValue('message', html_entity_decode($aData['message']));
                         $notification->send(\Contao\StringUtil::deserialize($result['mail_new_pm']));
                     } catch (\Throwable $e) {
-                        //Todo log
+                        C4gLogModel::addLogEntry('forum', $e->getMessage());
                     }
                     $response->setData(['success' => true]);
                     return $response;
