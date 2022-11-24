@@ -120,7 +120,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.svg',
-				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
+				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null  . '\')) return false; Backend.getScrollOffset();"'
 			),
 			'thread' => array
             (

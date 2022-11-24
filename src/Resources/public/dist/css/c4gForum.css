@@ -5,7 +5,7 @@
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
 @font-face {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 100;
   font-style: normal
 }
@@ -293,7 +293,7 @@
 .rating_static > label:before {
   margin: 4px;
   font-size: 1.25em;
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   display: inline-block;
   content: "\f005"
 }
@@ -412,7 +412,7 @@ blockquote {
   width: 50%
 }
 blockquote:before {
-  content: "\201C";
+  content: "“";
   display: block;
   font-size: 6rem;
   left: -2.5rem;
