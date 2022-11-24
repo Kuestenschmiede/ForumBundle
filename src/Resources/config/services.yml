@@ -30,3 +30,12 @@ services:
         category: con4gis
         renderer: forward
         template: mod_c4g_forum_profile_page
+
+  con4gis\ForumBundle\Controller\PMModuleController:
+    tags:
+      -
+        name: contao.frontend_module
+        type: c4g_forum_pncenter
+        category: con4gis
+        renderer: forward
+        template: mod_c4g_forum_pncenter

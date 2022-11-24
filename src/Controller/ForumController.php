@@ -148,6 +148,10 @@ class ForumController extends AbstractController
                     $iRecipientId = \Input::post('recipient_id');
                     $sRecipient = \Input::post('recipient');
                     $forumModule = \Input::post('target');
+                    if (!$forumModule || $forumModule === 'null') {
+                        $session = $request->getSession();
+                        $forumModule = $session->get('pm-forum-module');
+                    }
                     if (empty($iRecipientId) && !empty($sRecipient)) {
                         $aRecipient = C4gForumPn::getMemberByUsername($sRecipient);
                         if(empty($aRecipient)){
