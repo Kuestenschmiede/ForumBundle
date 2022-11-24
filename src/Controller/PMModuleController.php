@@ -45,7 +45,7 @@ class PMModuleController extends AbstractFrontendModuleController
 
         $template->count_all = $iCountAll;
         $template->count_unread = $iCountUnread;
-        $sJsLang = $this->getClientLangVars();
+        $sJsLang = $this::getClientLangVars();
 
         $template->c4g_pn_js = $sJsLang;
         $data = [];
@@ -134,7 +134,7 @@ class PMModuleController extends AbstractFrontendModuleController
     /**
      * @return string
      */
-    private static function getClientLangVars() {
+    public static function getClientLangVars() {
         \System::loadLanguageFile("tl_c4g_forum_pn");
 
         return '<script>

@@ -11,8 +11,8 @@
 
 namespace con4gis\ForumBundle\Resources\contao\modules;
 
+use con4gis\ForumBundle\Controller\PMModuleController;
 use con4gis\ForumBundle\Resources\contao\models\C4GThreadModel;
-use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
 use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
@@ -1324,7 +1324,7 @@ class C4GForum extends \Module
         $oUserDataTemplate->c4g_forum_module = $this->id;
         $oUserDataTemplate->pn_label = $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['profile_compose'];
 
-        $sJsLang = C4GForumPNCenter::getClientLangVars();
+        $sJsLang = PMModuleController::getClientLangVars();
         $oUserDataTemplate->c4g_pn_js = $sJsLang;
 
         switch ($this->c4g_forum_show_realname) {
