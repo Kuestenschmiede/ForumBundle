@@ -14,7 +14,6 @@ namespace con4gis\ForumBundle\Controller;
 use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
 use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
-use Contao\CoreBundle\Exception\InsufficientAuthenticationException;
 use Contao\Database;
 use Contao\ModuleModel;
 use Contao\System;
