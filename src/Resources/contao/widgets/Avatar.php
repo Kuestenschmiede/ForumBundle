@@ -75,29 +75,27 @@ class Avatar extends Widget implements \uploadable
         }
 
         // Specify the target folder in the DCA (eval)
-        if (isset($this->arrConfiguration['uploadFolder']))
-        {
+        if (isset($this->arrConfiguration['uploadFolder'])) {
             $strUploadTo = $this->arrConfiguration['uploadFolder'];
 
             // Add user-based subfolder to target folder to prevent overwriting files with duplicate names.
-            if (TL_MODE === 'FE')
-            {
-                $this->import('frontenduser');
-                $strUploadTo = 'files/userimages/user_' . $this->frontenduser->id;
-            }
-            else
-            {
-                if (!$strUploadTo)
-                {
-                    return;
-                }
-            }
+        }
 
-            // Create the folder if it does not exist.
-            if (!is_dir($rootDir . '/' . $strUploadTo))
-            {
-                new Folder($strUploadTo);
-            }
+        if (TL_MODE === 'FE')
+        {
+            $this->import('frontenduser');
+            $strUploadTo = 'files/userimages/user_' . $this->frontenduser->id;
+        }
+
+        if (!$strUploadTo)
+        {
+           return;
+        }
+
+        // Create the folder if it does not exist.
+        if (!is_dir($rootDir . '/' . $strUploadTo))
+        {
+            new Folder($strUploadTo);
         }
 
         return $this->objUploader->uploadTo($strUploadTo);
