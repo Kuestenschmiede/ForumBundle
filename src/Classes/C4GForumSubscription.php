@@ -383,7 +383,7 @@ class C4GForumSubscription
                                     break 2;
                                 }
                                 $notification = new C4GForumNotification(C4GForumNotification::SUB_NEW_POST);
-                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_new_post);
+                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_new_post, true);
                                 $notification->setTokenValue('post_title', $this->MailCache['subject']);
 
                                 break;
@@ -392,7 +392,7 @@ class C4GForumSubscription
                                     break 2;
                                 }
                                 $notification = new C4GForumNotification(C4GForumNotification::SUB_EDITED_POST);
-                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_edited_post);
+                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_edited_post, true);
 
                                 break;
                             case 'delete':
@@ -400,7 +400,7 @@ class C4GForumSubscription
                                     break 2;
                                 }
                                 $notification = new C4GForumNotification(C4GForumNotification::SUB_DELETED_POST);
-                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_deleted_post);
+                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_deleted_post, true);
 
                                 break;
                             case 'delThread':
@@ -408,7 +408,7 @@ class C4GForumSubscription
                                     break 2;
                                 }
                                 $notification = new C4GForumNotification(C4GForumNotification::SUB_DELETED_THREAD);
-                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_deleted_thread);
+                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_deleted_thread, true);
 
                                 break;
                             case 'moveThread':
@@ -416,7 +416,7 @@ class C4GForumSubscription
                                     break 2;
                                 }
                                 $notification = new C4GForumNotification(C4GForumNotification::SUB_MOVED_THREAD);
-                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_moved_thread);
+                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_moved_thread, true);
 
                                 break;
                             case 'newThread':
@@ -424,7 +424,7 @@ class C4GForumSubscription
                                     break 2;
                                 }
                                 $notification = new C4GForumNotification(C4GForumNotification::SUB_NEW_THREAD);
-                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_new_thread);
+                                $notificationIDs = \Contao\StringUtil::deserialize($forumModule->sub_new_thread, true);
 
                                 break;
                             default:
