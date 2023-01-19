@@ -423,7 +423,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_multilingual'] = array
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_multilingual_languages'] = array
 (
     'exclude'    => true,
-    'default'    => array('de','en','fi'),
+    'default'    => array('de','en'),
     'inputType'  => 'select',
     'options'    => \System::getLanguages(),
     'eval'       => array('multiple' => true, 'chosen' => true, 'style' => 'width: 120px'),

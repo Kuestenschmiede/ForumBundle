@@ -1106,9 +1106,6 @@ class C4GForum extends \Module
      */
     public function generatePostAsHtml($post, $singlePost, $preview = false)
     {
-
-        \System::loadLanguageFile('tl_c4g_forum_pn');
-
         if (!empty($post['tags'])) {
             $post['tags'] = explode(", ", $post['tags']);
         }
@@ -1322,6 +1319,7 @@ class C4GForum extends \Module
 
         $oUserDataTemplate->c4g_forum_show_pn_button = ($this->User->id && ($this->User->id != $iAuthorId) && $this->c4g_forum_show_pn_button == '1' && !$preview);
         $oUserDataTemplate->c4g_forum_module = $this->id;
+        $this->setTempLanguage();
         $oUserDataTemplate->pn_label = $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['profile_compose'];
 
         $sJsLang = PMModuleController::getClientLangVars();
@@ -6171,10 +6169,12 @@ class C4GForum extends \Module
                     $this->c4g_forum_language_temp = $pageLang;
                 } else if ($objPage && $objPage->language) {
                     $this->c4g_forum_language_temp = $objPage->language;
-                } else if ($GLOBALS['TL_LANGUAGE']) {
-                    $this->c4g_forum_language_temp = $GLOBALS['TL_LANGUAGE'];
                 } else if ($_SESSION["TL_LANGUAGE"]) {
                     $this->c4g_forum_language_temp = $_SESSION['TL_LANGUAGE'];
+                } else if ($_SERVER['HTTP_ACCEPT_LANGUAGE']) {
+                    $this->c4g_forum_language_temp = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+                } else/* if ($GLOBALS['TL_LANGUAGE'])*/ {
+                    $this->c4g_forum_language_temp = 'de';//$GLOBALS['TL_LANGUAGE'];
                 }
             }
         } else {
@@ -6184,10 +6184,12 @@ class C4GForum extends \Module
         if ($this->c4g_forum_language_temp != '') {
             $this->loadLanguageFile('frontendModules', $this->c4g_forum_language_temp);
             $this->loadLanguageFile('stopwords', $this->c4g_forum_language_temp);
+            $this->loadLanguageFile('tl_c4g_forum_pn', $this->c4g_forum_language_temp, false);
         } else {
             //should not happen, but ...
             $this->loadLanguageFile('frontendModules', 'de');
             $this->loadLanguageFile('stopwords', 'de');
+            $this->loadLanguageFile('tl_c4g_forum_pn', 'de');
         }
     }
 

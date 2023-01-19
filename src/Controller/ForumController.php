@@ -111,7 +111,7 @@ class ForumController extends AbstractController
         if ($language !== 'de' && $language !== 'en') {
             $language = 'de';
         }
-        System::loadLanguageFile("tl_c4g_forum_pn", $language);
+        System::loadLanguageFile('tl_c4g_forum_pn', $language);
         try {
             switch($action) {
                 case "modal":
@@ -154,7 +154,11 @@ class ForumController extends AbstractController
                     }
                     if (empty($iRecipientId) && !empty($sRecipient)) {
                         $aRecipient = C4gForumPn::getMemberByUsername($sRecipient);
-                        if(empty($aRecipient)){
+                        if(empty($aRecipient)
+                         || (int) $iRecipientId->login === 1
+                         || (int) $iRecipientId->disable !== 1
+                         || (int) $sRecipient->login === 1
+                         || (int) $sRecipient->disable !== 1){
                             throw new \Exception($GLOBALS['TL_LANG']['tl_c4g_forum_pn']['member_not_found']);
                         }
                         $iRecipientId = $aRecipient['id'];
