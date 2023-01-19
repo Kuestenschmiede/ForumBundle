@@ -6173,8 +6173,10 @@ class C4GForum extends \Module
                     $this->c4g_forum_language_temp = $_SESSION['TL_LANGUAGE'];
                 } else if ($_SERVER['HTTP_ACCEPT_LANGUAGE']) {
                     $this->c4g_forum_language_temp = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-                } else/* if ($GLOBALS['TL_LANGUAGE'])*/ {
-                    $this->c4g_forum_language_temp = 'de';//$GLOBALS['TL_LANGUAGE'];
+                } else if ($GLOBALS['TL_LANGUAGE']) {
+                    $this->c4g_forum_language_temp = $GLOBALS['TL_LANGUAGE'];
+                } else {
+                    $this->c4g_forum_language_temp = 'de';
                 }
             }
         } else {
@@ -6184,7 +6186,7 @@ class C4GForum extends \Module
         if ($this->c4g_forum_language_temp != '') {
             $this->loadLanguageFile('frontendModules', $this->c4g_forum_language_temp);
             $this->loadLanguageFile('stopwords', $this->c4g_forum_language_temp);
-            $this->loadLanguageFile('tl_c4g_forum_pn', $this->c4g_forum_language_temp, false);
+            $this->loadLanguageFile('tl_c4g_forum_pn', $this->c4g_forum_language_temp);
         } else {
             //should not happen, but ...
             $this->loadLanguageFile('frontendModules', 'de');

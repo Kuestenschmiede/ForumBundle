@@ -24,9 +24,9 @@
   "require": {
     "php": "^7.4 || ^8.0",
     "contao/core-bundle": "^4.9",
-    "con4gis/core": "^6.0.18",
-    "con4gis/groups": "^2.8.4",
-    "con4gis/projects": "^4.0.32"
+    "con4gis/core": "^6.0.19",
+    "con4gis/groups": "^2.8.5",
+    "con4gis/projects": "^4.0.35"
   },
   "conflict": {
     "contao/core": "*",
