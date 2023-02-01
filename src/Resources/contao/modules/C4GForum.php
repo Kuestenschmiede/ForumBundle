@@ -1319,7 +1319,6 @@ class C4GForum extends \Module
 
         $oUserDataTemplate->c4g_forum_show_pn_button = ($this->User->id && ($this->User->id != $iAuthorId) && $this->c4g_forum_show_pn_button == '1' && !$preview);
         $oUserDataTemplate->c4g_forum_module = $this->id;
-        $this->setTempLanguage();
         $oUserDataTemplate->pn_label = $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['profile_compose'];
 
         $sJsLang = PMModuleController::getClientLangVars();
@@ -6186,12 +6185,10 @@ class C4GForum extends \Module
         if ($this->c4g_forum_language_temp != '') {
             $this->loadLanguageFile('frontendModules', $this->c4g_forum_language_temp);
             $this->loadLanguageFile('stopwords', $this->c4g_forum_language_temp);
-            $this->loadLanguageFile('tl_c4g_forum_pn', $this->c4g_forum_language_temp);
         } else {
             //should not happen, but ...
             $this->loadLanguageFile('frontendModules', 'de');
             $this->loadLanguageFile('stopwords', 'de');
-            $this->loadLanguageFile('tl_c4g_forum_pn', 'de');
         }
     }
 

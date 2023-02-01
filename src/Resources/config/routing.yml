@@ -1,16 +1,14 @@
 forum_ajax:
-    path: /con4gis/forumService/{language}/{id}/{req}
+    path: /con4gis/forumService/{id}/{req}
     controller: con4gis\ForumBundle\Controller\ForumController::ajaxAction
     requirements:
-        language: '[a-zA-Z]{2}'
         id: '\d+'
         req: '.*'
 
 forum_history_ajax:
-    path: /con4gis/forumService/{language}/{id}
+    path: /con4gis/forumService/{id}
     controller: con4gis\ForumBundle\Controller\ForumController::ajaxAction
     requirements:
-        language: '[a-zA-Z]{2}'
         id: '\d+'
 
 forum_pn:
