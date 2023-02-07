@@ -33,7 +33,12 @@ class PMModuleController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
-        $session = $this->requestStack->getSession();
+        if (!$this->requestStack || !method_exists($this->requestStack, 'getSession')) {
+            $session = System::getContainer()->get('session');
+        } else {
+            $session = $this->requestStack->getSession();
+        }
+
         $session->set('pm-forum-module', $model->pm_center_forum_module);
         $template->c4g_forum_module = $model->pm_center_forum_module;
 
