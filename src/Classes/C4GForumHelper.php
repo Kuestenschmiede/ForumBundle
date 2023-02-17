@@ -2130,16 +2130,16 @@ class C4GForumHelper extends \System
      */
     public function updateForumHelperData($forumId, $threads, $last_thread_id, $posts, $last_post_id)
     {
-        if ($threads !== false) {
+        if ($threads) {
             $set['threads'] = $threads;
         }
-        if ($last_thread_id !== false) {
+        if ($last_thread_id) {
             $set['last_thread_id'] = (int) $last_thread_id;
         }
-        if ($posts !== false) {
+        if ($posts) {
             $set['posts'] = $posts;
         }
-        if ($last_post_id !== false) {
+        if ($last_post_id) {
             $set['last_post_id'] = (int) $last_post_id;
         }
         $objUpdateStmt = $this->Database->prepare('UPDATE tl_c4g_forum %s WHERE id=?')
