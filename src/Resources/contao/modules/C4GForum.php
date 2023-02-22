@@ -2824,7 +2824,7 @@ class C4GForum extends \Module
                         'ORDER BY t.creation DESC LIMIT 1'
                     );
                     $result = $stmt->execute($forum['id'])->fetchAssoc();
-                    if (count($result) > 0) {
+                    if ($result && (count($result) > 0)) {
                         switch ($this->c4g_forum_show_realname) {
                             case 'FF';
                                 $author = $result['firstname'];
