@@ -2130,6 +2130,7 @@ class C4GForumHelper extends \System
      */
     public function updateForumHelperData($forumId, $threads, $last_thread_id, $posts, $last_post_id)
     {
+        $set = [];
         if ($threads) {
             $set['threads'] = $threads;
         }
@@ -2142,11 +2143,14 @@ class C4GForumHelper extends \System
         if ($last_post_id) {
             $set['last_post_id'] = (int) $last_post_id;
         }
-        $objUpdateStmt = $this->Database->prepare('UPDATE tl_c4g_forum %s WHERE id=?')
-                                        ->set($set)
-                                        ->execute($forumId);
-        if ($objUpdateStmt->affectedRows == 0) {
-            return false;
+
+        if (count($set)) {
+            $objUpdateStmt = $this->Database->prepare('UPDATE tl_c4g_forum %s WHERE id=?')
+                ->set($set)
+                ->execute($forumId);
+            if ($objUpdateStmt->affectedRows == 0) {
+                return false;
+            }
         }
 
         return true;
