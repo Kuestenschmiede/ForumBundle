@@ -5726,12 +5726,13 @@ class C4GForum extends \Module
     public function getForumLink($forum)
     {
 
-        return C4GUtils::addParametersToURL(
-            $this->replaceInsertTags($forum['linkurl']),
-            array(
-                'c4g_forum_fmd' => $this->id,
-                'c4g_forum_forum' => $forum['id']
-            ));
+        return $this->replaceInsertTags($forum['linkurl']);
+//        return C4GUtils::addParametersToURL(
+//            $this->replaceInsertTags($forum['linkurl']),
+//            array(
+//                'c4g_forum_fmd' => $this->id,
+//                'c4g_forum_forum' => $forum['id']
+//            ));
     }
 
 
