@@ -152,13 +152,9 @@ class ForumController extends AbstractController
                         $session = $request->getSession();
                         $forumModule = $session->get('pm-forum-module');
                     }
-                    if (empty($iRecipientId) && !empty($sRecipient)) {
+                    if (!empty($sRecipient)) {
                         $aRecipient = C4gForumPn::getMemberByUsername($sRecipient);
-                        if(empty($aRecipient)
-                         || (int) $iRecipientId->login === 1
-                         || (int) $iRecipientId->disable !== 1
-                         || (int) $sRecipient->login === 1
-                         || (int) $sRecipient->disable !== 1){
+                        if (empty($aRecipient)) {
                             throw new \Exception($GLOBALS['TL_LANG']['tl_c4g_forum_pn']['member_not_found']);
                         }
                         $iRecipientId = $aRecipient['id'];

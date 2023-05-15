@@ -457,7 +457,7 @@ namespace con4gis\ForumBundle\Resources\contao\models;
          */
         public static function getMemberByUsername($sUsername){
 
-            return \Database::getInstance()->prepare('SELECT id, firstname, lastname, email, username FROM tl_member WHERE username = ?;')->execute($sUsername)->fetchAssoc();
+            return \Database::getInstance()->prepare('SELECT id, firstname, lastname, email, username FROM tl_member WHERE username = ? AND NOT disable = ?;')->execute($sUsername,1)->fetchAssoc();
         }
 
 
