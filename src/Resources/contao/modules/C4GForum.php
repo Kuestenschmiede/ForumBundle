@@ -3340,7 +3340,6 @@ class C4GForum extends \Module
      */
     public function moveThread($threadId, $newForumId)
     {
-
         $forumId = $this->helper->getForumIdForThread($threadId);
         list($access, $message) = $this->checkPermission($forumId);
         if (!$access) {
@@ -5843,7 +5842,7 @@ class C4GForum extends \Module
                 $return = $this->moveThreadDialog($values[1]);
                 break;
             case 'movethread':
-                $return = $this->moveThread($values[1], $this->putVars[$this->c4g_forum_param_forum]);
+                $return = $this->moveThread($values[1], $this->putVars[$this->c4g_forum_param_forum] ?: implode(',',$this->putVars));
                 break;
             case 'editownthreaddialog':
             case 'editthreaddialog':
