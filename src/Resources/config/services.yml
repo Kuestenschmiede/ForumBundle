@@ -7,6 +7,10 @@ services:
     public: true
     class: con4gis\ForumBundle\Controller\ForumController
 
+  con4gis\ForumBundle\Controller\ReactionApiController:
+    public: true
+    class: con4gis\ForumBundle\Controller\ReactionApiController
+
   con4gis\ForumBundle\Controller\SubscriptionController:
     public: true
     class: con4gis\ForumBundle\Controller\SubscriptionController
