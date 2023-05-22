@@ -1309,9 +1309,11 @@ class C4GForum extends \Module
             $iUserPostCount = C4gForumPost::getMemberPostsCountById($iAuthorId);
         }
 
+        $sJsLang = PMModuleController::getClientLangVars();
+
         // Create a new frontend template for the user's data.
         $oUserDataTemplate = new \Contao\FrontendTemplate('forum_user_data');
-
+        $oUserDataTemplate->c4g_pn_js = $sJsLang;
         $oUserDataTemplate->sForumType = $this->c4g_forum_type;
 
         // Get different member properties and hand them over to the user data template.
@@ -1320,9 +1322,6 @@ class C4GForum extends \Module
         $oUserDataTemplate->c4g_forum_show_pn_button = ($this->User->id && ($this->User->id != $iAuthorId) && $this->c4g_forum_show_pn_button == '1' && !$preview);
         $oUserDataTemplate->c4g_forum_module = $this->id;
         $oUserDataTemplate->pn_label = $GLOBALS['TL_LANG']['tl_c4g_forum_pn']['profile_compose'];
-
-        $sJsLang = PMModuleController::getClientLangVars();
-        $oUserDataTemplate->c4g_pn_js = $sJsLang;
 
         switch ($this->c4g_forum_show_realname) {
             case 'UU';
