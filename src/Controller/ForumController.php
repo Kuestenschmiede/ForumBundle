@@ -151,18 +151,14 @@ class ForumController extends AbstractController
                     if (!$forumModule || $forumModule === 'null') {
                         $session = $request->getSession();
                         $forumModule = $session->get('pm-forum-module');
-                    }
-                    if (!empty($sRecipient)) {
-                        $aRecipient = C4gForumPn::getMemberByUsername($sRecipient);
+                    } elseif (!empty($iRecipientId)) {
+                        $db = \Database::getInstance();
+                        $stmt = $db->prepare("SELECT * FROM tl_member WHERE id = ? AND NOT disable = ?");
+                        $result = $stmt->execute($iRecipientId,1);
+                        $aRecipient = $result->fetchAssoc();
                         if (empty($aRecipient)) {
                             throw new \Exception($GLOBALS['TL_LANG']['tl_c4g_forum_pn']['member_not_found']);
                         }
-                        $iRecipientId = $aRecipient['id'];
-                    } elseif (!empty($iRecipientId)) {
-                        $db = \Database::getInstance();
-                        $stmt = $db->prepare("SELECT * FROM tl_member WHERE id = ?");
-                        $result = $stmt->execute($iRecipientId);
-                        $aRecipient = $result->fetchAssoc();
                     }
                     $message = htmlentities($_POST['message']);
                     $message = str_replace(['&lt;div&gt;', '&lt;/div&gt;'], '', $message);
