@@ -139,8 +139,14 @@ class PMModuleController extends AbstractFrontendModuleController
      * @return string
      */
     public static function getClientLangVars() {
-        \System::loadLanguageFile("tl_c4g_forum_pn");
+        $currentLang = \Input::get('language');
 
+        if (empty($currentLang)) {
+            $currentLang = $GLOBALS['TL_LANGUAGE'];
+        }
+
+        $GLOBALS['TL_LANGUAGE'] = $currentLang;
+        \System::loadLanguageFile('tl_c4g_forum_pn');
         return '<script>
             var C4GLANG = {
                 send_error: "'.$GLOBALS['TL_LANG']['tl_c4g_forum_pn']['send_error'].'",
