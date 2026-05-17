@@ -11,8 +11,8 @@
 namespace con4gis\ForumBundle\Controller;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
-use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
-use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
+use con4gis\ForumBundle\Models\C4GForumSubscriptionModel;
+use con4gis\ForumBundle\Models\C4GThreadSubscriptionModel;
 use Contao\CoreBundle\Controller\AbstractController;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Database;

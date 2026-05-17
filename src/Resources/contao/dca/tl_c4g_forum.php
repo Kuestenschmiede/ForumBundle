@@ -19,17 +19,17 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 	'config' => array
 	(
 	    'label'                       => &$GLOBALS['TL_CONFIG']['websiteTitle'],
-	    'dataContainer'               => 'Table',
+	    'dataContainer'               => \Contao\DC_Table::class,
 		'ctable'                      => array('tl_c4g_forum_thread'),
 		'enableVersioning'            => true,
 	    'onload_callback'			  => array(
-											array('tl_c4g_forum', 'updateDCA')
+											array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'updateDCA')
 										 ),
 	    'onsubmit_callback'           => array(
-            array('tl_c4g_forum', 'onSubmit')
+            array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'onSubmit')
         ),
 		'ondelete_callback'			  => array(
-											array('tl_c4g_forum', 'onDeleteForum')
+											array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'onDeleteForum')
 										 ),
         'sql'                         => array
         (
@@ -55,7 +55,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 		(
 			'fields'                  => array('name'),
 			'format'                  => '%s',
-            'label_callback'          => array('tl_c4g_forum','get_label')
+            'label_callback'          => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','get_label')
 		),
 		'global_operations' => array
 		(
@@ -76,7 +76,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			),
             'remove_bb' => array
             (
-                'button_callback'     => array('tl_c4g_forum','remove_bb')
+                'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','remove_bb')
             ),
             'back' => [
                 'href'                => 'key=back',
@@ -106,7 +106,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 				'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
 				'icon'                => 'copychilds.svg',
 				'attributes'          => 'onclick="Backend.getScrollOffset();"',
-				'button_callback'     => array('tl_c4g_forum', 'copyPageWithSubpages')
+				'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'copyPageWithSubpages')
 			),
 			'cut' => array
 			(
@@ -127,14 +127,14 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['thread'],
                 'href'                => 'do=c4g_forum_thread',
                 'icon'	 		      => 'tablewizard.svg',
-                'button_callback'     => array('tl_c4g_forum','forumThread')
+                'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','forumThread')
             ),
 			'toggle' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['toggle'],
 				'icon'                => 'visible.svg',
 				'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
-				'button_callback'     => array('tl_c4g_forum', 'toggleIcon')
+				'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'toggleIcon')
 			),
 			'show' => array
 			(
@@ -250,7 +250,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'label'                 => &$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_language'],
                         'exclude'               => true,
                         'inputType'             => 'select',
-                        'options'               => \System::getLanguages(),
+                        'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getLanguages'],
                         'eval'                  => array('chosen' => true, 'style'=>'width: 200px')
                     )
                 )
@@ -292,7 +292,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'label'                 => &$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_language'],
                         'exclude'               => true,
                         'inputType'             => 'select',
-                        'options'               => \System::getLanguages(),
+                        'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getLanguages'],
                         'eval'                  => array('chosen' => true, 'style'=>'width: 200px')
                     )
                 )
@@ -329,7 +329,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'label'                 => &$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_language'],
                         'exclude'               => true,
                         'inputType'             => 'select',
-                        'options'               => \System::getLanguages(),
+                        'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getLanguages'],
                         'eval'                  => array('chosen' => true, 'tl_class'=>'w50', 'style'=>'width: 200px')
                     )
                 )
@@ -459,7 +459,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['guest_rights'],
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
-		    'options_callback'        => array('tl_c4g_forum','getGuestRightList'),
+		    'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getGuestRightList'),
 			'eval'                    => array('mandatory'=>false, 'multiple'=>true),
             'sql'                     => "blob NULL"
 		),
@@ -469,7 +469,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['member_rights'],
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
-		    'options_callback'        => array('tl_c4g_forum','getRightList'),
+		    'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getRightList'),
 			'eval'                    => array('mandatory'=>false, 'multiple'=>true),
             'sql'                     => "blob NULL"
 		),
@@ -479,7 +479,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['admin_rights'],
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
-		    'options_callback'        => array('tl_c4g_forum','getRightList'),
+		    'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getRightList'),
 			'eval'                    => array('mandatory'=>false, 'multiple'=>true),
             'sql'                     => "blob NULL"
 		),
@@ -498,7 +498,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['map_profile'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => ['tl_c4g_forum', 'loadMapProfiles'],
+            'options_callback'        => ['con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'loadMapProfiles'],
             'eval'                    => ['tl_class'=>'long',
                                                'submitOnChange' => true, 'chosen' => true, 'alwaysSave' => true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
@@ -518,7 +518,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['map_override_locstyles'],
             'exclude'                 => true,
             'inputType'               => 'checkbox',
-            'options_callback'        => array('tl_c4g_forum','getAllLocStyles'),
+            'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getAllLocStyles'),
             'eval'                    => array('mandatory'=>false, 'multiple'=>true),
             'sql'                     => "blob NULL"
 		),
@@ -583,7 +583,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'search'                  => true,
 			'inputType'               => 'text',
 			'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'),
-			'wizard' 				  => array(array('tl_c4g_forum', 'pickLinkUrl')),
+			'wizard' 				  => array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'pickLinkUrl')),
             'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 
@@ -639,7 +639,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['tags'],
             'search'				  => true,
             'inputType'               => 'text',
-            'load_callback'           => array("tl_c4g_forum" => "decodeTags"),
+            'load_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'decodeTags')),
             'eval'                    => array(),
             'sql'                     => "blob NULL"
 		),
@@ -661,346 +661,3 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
         )
 	)
 );
-
-/**
- * Class tl_c4g_forum
- */
-class tl_c4g_forum extends \Backend
-{
-
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->import('BackendUser', 'User');
-		$this->loadLanguageFile('stopwords');
-
-	}
-	
-	public function loadMapProfiles() {
-	    if (C4GVersionProvider::isInstalled('con4gis/maps')) {
-	        $arrProfiles = \con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel::findAll();
-	        $arrResult = [];
-	        foreach ($arrProfiles as $profile) {
-	            $arrResult[$profile->id] = $profile->name;
-            }
-	        return $arrResult;
-        } else {
-	        return [];
-        }
-    }
-
-
-    public function setMailTextDefault($varValue, DataContainer $dc){
-        if(empty($varValue)){
-            return $GLOBALS['TL_LANG']['tl_c4g_forum']['default_subscription_text'];
-        }else{
-            return $varValue;
-        }
-    }
-
-	/**
-	 * Return the copy page with subpages button
-	 * @param array
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @return string
-	 */
-	public function copyPageWithSubpages($row, $href, $label, $title, $icon, $attributes, $table)
-	{
-
-		$objSubpages = $this->Database->prepare("SELECT id FROM tl_c4g_forum WHERE pid=?")
-									  ->limit(1)
-									  ->execute($row['id']);
-
-		if ($objSubpages->numRows > 0) {
-		  return '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
-		} else {
-		  return Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)).' ';
-		}
-	}
-
-
-    public function decodeTags($sValue, $oDca){
-        echo "<pre>";
-        var_dump($sValue);
-        die();
-    }
-
-
-	public function updateDCA(DataContainer $dc)
-	{
-		if ($dc->Database != null) {
-			$helper = new con4gis\ForumBundle\Classes\C4GForumHelper($dc->Database);
-			$GLOBALS['TL_DCA']['tl_c4g_forum']['fields']['guest_rights']['default'] =
-				$helper->getGuestDefaultRights();
-	    	$GLOBALS['TL_DCA']['tl_c4g_forum']['fields']['member_rights']['default'] =
-				$helper->getMemberDefaultRights();
-	    	$GLOBALS['TL_DCA']['tl_c4g_forum']['fields']['admin_rights']['default'] =
-				$helper->getAdminDefaultRights();
-		}
-
-
-	    if (!$dc->id) {
-	    	return;
-	    }
-		$objForum = $this->Database->prepare("SELECT use_intropage, map_override_locationstyle FROM tl_c4g_forum WHERE id=?")
-			->limit(1)
-			->execute($dc->id);
-	    if ($objForum->numRows > 0) {
-	    	if ($objForum->use_intropage) {
-	    		// used this way because subpalettes don't work well with TinyMCE fields!!
-	    		$GLOBALS['TL_DCA']['tl_c4g_forum']['palettes']['default'] =
-		  			$GLOBALS['TL_DCA']['tl_c4g_forum']['palettes']['with_intropage'];
-	    	}
-	    }
-
-	    if (C4GVersionProvider::isInstalled('con4gis/maps')) {
-	    	$c4gMapsFields = '{maps_legend:hide},enable_maps;';
-	    	$GLOBALS['TL_DCA']['tl_c4g_forum']['palettes']['default'] =
-	    		str_replace('{expert_legend',$c4gMapsFields.'{expert_legend',
-	    				$GLOBALS['TL_DCA']['tl_c4g_forum']['palettes']['default']);
-
-		    if ($objForum->numRows > 0) {
-			    if ($objForum->map_override_locationstyle) {
-			    	$GLOBALS['TL_DCA']['tl_c4g_forum']['subpalettes']['enable_maps'] =
-			    		str_replace('map_override_locationstyle,',
-			    			'map_override_locationstyle,map_override_locstyles,', $GLOBALS['TL_DCA']['tl_c4g_forum']['subpalettes']['enable_maps']);
-			    }
-			}
-
-	    }
-
-	}
-
-    /**
-     * @param DataContainer $dc
-     * @return array
-     */
-	public function getAllLocStyles(DataContainer $dc)
-	{
-		$locStyles = $this->Database->prepare("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name")
-			->execute();
-		while ($locStyles->next())
-		{
-			$return[$locStyles->id] = $locStyles->name;
-		}
-		return $return;
-	}
-    public function forumThread($row, $href, $label, $title, $icon)
-    {
-
-        $href .= "&amp;id=".$row['id'];
-        return '<a href="' . $this->addToUrl($href) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ';
-    }
-
-	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
-	{
-		if (strlen($this->Input->get('tid')))
-		{
-			$this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 1));
-			$this->redirect($this->getReferer());
-		}
-
-		// Check permissions AFTER checking the tid, so hacking attempts are logged
-		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_forum::published', 'alexf'))
-		{
-			return '';
-		}
-
-		$href .= '&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
-
-		if (!$row['published'])
-		{
-			$icon = 'invisible.svg';
-		}
-
-		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
-	}
-
-
-    /**
-     * @param $intId
-     * @param $blnVisible
-     * @return void
-     */
-	public function toggleVisibility($intId, $blnVisible)
-	{
-		// Check permissions to publish
-		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_c4g_forum::published', 'alexf'))
-		{
-			$this->log('Not enough permissions to publish/unpublish C4GMaps ID "'.$intId.'"', 'tl_c4g_forum toggleVisibility', TL_ERROR);
-			$this->redirect('contao/main.php?act=error');
-		}
-
-		$this->createInitialVersion('tl_c4g_forum', $intId);
-
-		// Trigger the save_callback
-		if (is_array($GLOBALS['TL_DCA']['tl_c4g_forum']['fields']['published']['save_callback']))
-		{
-			foreach ($GLOBALS['TL_DCA']['tl_c4g_forum']['fields']['published']['save_callback'] as $callback)
-			{
-				$this->import($callback[0]);
-				$blnVisible = $this->$callback[0]->$callback[1]($blnVisible, $this);
-			}
-		}
-
-		// Update the database
-		$this->Database->prepare("UPDATE tl_c4g_forum SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
-					   ->execute($intId);
-
-		$this->createNewVersion('tl_c4g_forum', $intId);
-	}
-
-    /**
-     * @param DataContainer $dc
-     * @return array
-     */
-	public function getGuestRightList(DataContainer $dc)
-	{
-		if ($dc->Database != null) {
-			$helper = new con4gis\ForumBundle\Classes\C4GForumHelper($dc->Database);
-			$rights = $helper->getGuestRightList();
-			foreach ($rights as $right) {
-				$return[$right] = $GLOBALS['TL_LANG']['tl_c4g_forum']['right_'.$right];
-			}
-		}
-		return $return;
-	}
-
-    /**
-     * @param DataContainer $dc
-     * @return array
-     */
-	public function getRightList(DataContainer $dc)
-	{
-		if ($dc->Database != null) {
-			$helper = new con4gis\ForumBundle\Classes\C4GForumHelper($dc->Database);
-			$rights = $helper->getRightList();
-			foreach ($rights as $right) {
-				$return[$right] = $GLOBALS['TL_LANG']['tl_c4g_forum']['right_'.$right];
-			}
-		}
-		return $return;
-	}
-
-
-	/**
-	 * @param DataContainer $dc
-	 */
-	public function onSubmit(DataContainer $dc)
-	{
-		if (($dc->activeRecord != null) && ($dc->Database != null)) {
-			$helper = new con4gis\ForumBundle\Classes\C4GForumHelper($dc->Database);
-			$helper->updateForumRightsAndGroupInheritance($dc->activeRecord->id,$dc->activeRecord->pid);
-			$helper->updateMapEnabledInheritance($dc->activeRecord->id,$dc->activeRecord->pid);
-		}
-
-	}
-
-	public static function onDeleteForum(DataContainer $dc)
-	{
-		if (($dc->activeRecord != null) && ($dc->Database != null))
-		{
-			if ($dc->activeRecord->id > 0)
-			{
-				$helper = new con4gis\ForumBundle\Classes\C4GForumHelper($dc->Database);
-				// TODO move old threads and posts to a paper bin
-			}
-		}
-	}
-
-    /**
-     * @param DataContainer $dc
-     * @return string
-     */
-	public function pickLinkUrl(DataContainer $dc)
-	{
-		if (version_compare(VERSION,'3','<')) {
-			$strField = 'ctrl_' . $dc->field . (($this->Input->get('act') == 'editAll') ? '_' . $dc->id : '');
-			return ' ' . Image::getHtml('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top; cursor:pointer;" onclick="Backend.pickPage(\'' . $strField . '\')"');
-		}
-		else {
-			return ' <a href="contao/page.php?do='.Input::get('do').'&amp;table='.$dc->table.'&amp;field='.$dc->field.'&amp;value='.str_replace(array('{{link_url::', '}}'), '', $dc->value).'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']).'" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\''.specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])).'\',\'url\':this.href,\'id\':\''.$dc->field.'\',\'tag\':\'ctrl_'.$dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '').'\',\'self\':this});return false">' . Image::getHtml('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
-		}
-	}
-
-    /**
-     * @param DataContainer $dc
-     * @return array
-     */
-	public function get_maps(DataContainer $dc)
-	{
-		$maps = $this->Database->prepare ( "SELECT * FROM tl_c4g_maps WHERE location_type='map' AND published=1" )->execute ();
-		if ($maps->numRows > 0) {
-			while ( $maps->next () ) {
-				$return [$maps->id] = $maps->name;
-			}
-		}
-		return $return;
-	}
-	public function get_label($arrRow)
-    {
-        $threads = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE pid=?')->execute($arrRow['id'])->fetchAllAssoc();
-        $unreadTickets = false;
-        foreach($threads as $thread){
-            if($thread['state'] == 1){
-                $unreadTickets = true;
-            }
-        }
-
-        $return = $arrRow['name'];
-
-        $settings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
-
-        if ($settings) {
-            $settings = $settings[0];
-        }
-        if ($settings && $settings['c4g_forum_type']) {
-            if($unreadTickets && $settings['c4g_forum_type'] == "TICKET") {
-                $return = $arrRow['name'] . $GLOBALS['TL_LANG']['tl_c4g_forum']['unreaded_tickets'];
-            }
-        }
-
-        return $return;
-    }
-    public function remove_bb()
-    {
-        $posts = $this->Database->prepare('SELECT id,text FROM tl_c4g_forum_post')->execute()->fetchAllAssoc();
-        // BBCode tags to replace
-        $find = array(
-            '~\[b\](.*?)\[/b\]~s',
-            '~\[i\](.*?)\[/i\]~s',
-            '~\[u\](.*?)\[/u\]~s',
-            '~\[quote\](.*?)\[/quote\]~s',
-            '~\[url=(.*?)\](.*?)\[/url\]~s',
-            '~\[url](.*?)\[/url\]~s',
-            '~\[size=(.*?)\](.*?)\[/size\]~s',
-            '~\[color=(.*?)\](.*?)\[/color\]~s',
-            '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s'
-        );
-        // HTML tags to replace BBCode
-        $replace = array(
-            '<b>$1</b>',
-            '<i>$1</i>',
-            '<span style="text-decoration:underline;">$1</span>',
-            '<pre>$1</'.'pre>',
-            '<a href="$1">$2</a>',
-            '<a href="$1">$1</a>',
-            '<span style="font-size:$1px;">$2</span>',
-            '<span style="color:$1;">$2</span>',
-            '<img src="$1" alt="" />'
-        );
-
-        foreach($posts as $post)
-        {
-            //Status des Tickets auf gelesen ändern
-            $set['text'] = preg_replace($find,$replace,$post['text']);
-            $this->Database->prepare('UPDATE tl_c4g_forum_post %s WHERE id=?')->set($set)->execute($post['id']);
-        }
-    }
-}

@@ -9,11 +9,11 @@
  * @link https://www.con4gis.org
  */
 
-namespace con4gis\ForumBundle\Resources\contao\models;
+namespace con4gis\ForumBundle\Models;
 
 /**
  * Class C4gForumSession
- * @package con4gis\ForumBundle\Resources\contao\models
+ * @package con4gis\ForumBundle\Models
  */
 class C4gForumSession extends \Model
 {

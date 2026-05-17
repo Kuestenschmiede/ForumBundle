@@ -12,9 +12,9 @@
 namespace con4gis\ForumBundle\Classes;
 
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
-use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
-use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
-use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
+use con4gis\ForumBundle\Models\C4gForumModel;
+use con4gis\ForumBundle\Models\C4GForumSubscriptionModel;
+use con4gis\ForumBundle\Models\C4GThreadSubscriptionModel;
 use Contao\MemberModel;
 use Contao\StringUtil;
 

@@ -205,17 +205,10 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_enable_maps'] = array(
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap_root'] = array("Targetpage for sitemaplinks","");
 
 
-if (version_compare(VERSION, '3', '<')) {
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap'] = array(
-        'Create an XML sitemap',
-        'Create a Google XML sitemap in the root directory.'
-    );
-} else {
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap'] = array(
-        'Create an XML sitemap',
-        'Create a Google XML sitemap in the directory "share/".'
-    );
-}
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap'] = array(
+    'Create an XML sitemap',
+    'Create a Google XML sitemap in the directory "share/".'
+);
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap_filename'] = array(
     'Sitemap file name',
     'Enter the name of the sitemap file without extension .xml.'

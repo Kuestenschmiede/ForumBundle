@@ -12,9 +12,11 @@
 /**
  * Frontend modules
  */
-$GLOBALS['FE_MOD']['con4gis']['c4g_forum'] = 'con4gis\ForumBundle\Resources\contao\modules\C4GForum';
-$GLOBALS['FE_MOD']['con4gis']['c4g_forum_breadcrumb'] = 'con4gis\ForumBundle\Resources\contao\modules\C4GForumBreadcrumb';
-$GLOBALS['FE_MOD']['con4gis']['c4g_forum_subscription'] = 'con4gis\ForumBundle\Resources\contao\modules\C4GSubscriptions';
+$GLOBALS['FE_MOD']['con4gis']['c4g_forum'] = 'con4gis\ForumBundle\Modules\C4GForum';
+$GLOBALS['FE_MOD']['con4gis']['c4g_forum_breadcrumb'] = 'con4gis\ForumBundle\Modules\C4GForumBreadcrumb';
+$GLOBALS['FE_MOD']['con4gis']['c4g_forum_subscription'] = 'con4gis\ForumBundle\Modules\C4GSubscriptions';
+$GLOBALS['FE_MOD']['con4gis']['c4g_forum_pncenter'] = 'con4gis\ForumBundle\Controller\PMModuleController';
+$GLOBALS['FE_MOD']['con4gis']['profile_page_module'] = 'con4gis\ForumBundle\Controller\ProfilePageModuleController';
 asort($GLOBALS['FE_MOD']['con4gis']);
 /**
  * Backend modules
@@ -43,12 +45,12 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
 /**
  * Add frontend form field for memberImage (Avatar)
  */
-$GLOBALS['TL_FFL']['avatar'] = 'con4gis\ForumBundle\Resources\contao\widgets\Avatar';
+$GLOBALS['TL_FFL']['avatar'] = 'con4gis\ForumBundle\Widgets\Avatar';
 
 /**
  * Add backend form field for memberImage (Avatar)
  */
-$GLOBALS['BE_FFL']['avatar'] = 'con4gis\ForumBundle\Resources\contao\widgets\Avatar';
+$GLOBALS['BE_FFL']['avatar'] = 'con4gis\ForumBundle\Widgets\Avatar';
 
 /**
  * Hooks
@@ -58,17 +60,17 @@ $GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('con4gis\ForumBundle\Classes\C4
 /**
  * CSS
  */
-if(TL_MODE == "BE") {
+if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
     $GLOBALS['TL_CSS']['c4g_forum_backend'] = 'bundles/con4gisforum/dist/css/c4gForumBackend.min.css';
 }
 
 /**
 * Models
 */
-$GLOBALS['TL_MODELS']['tl_c4g_forum']       = 'con4gis\ForumBundle\Resources\contao\models\C4gForumModel';
-$GLOBALS['TL_MODELS']['tl_c4g_forum_subforum_subscription']       = \con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel::class;
-$GLOBALS['TL_MODELS']['tl_c4g_forum_thread_subscription']       = \con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel::class;
-$GLOBALS['TL_MODELS']['tl_c4g_forum_thread']       = \con4gis\ForumBundle\Resources\contao\models\C4GThreadModel::class;
+$GLOBALS['TL_MODELS']['tl_c4g_forum']       = 'con4gis\ForumBundle\Models\C4gForumModel';
+$GLOBALS['TL_MODELS']['tl_c4g_forum_subforum_subscription']       = \con4gis\ForumBundle\Models\C4GForumSubscriptionModel::class;
+$GLOBALS['TL_MODELS']['tl_c4g_forum_thread_subscription']       = \con4gis\ForumBundle\Models\C4GThreadSubscriptionModel::class;
+$GLOBALS['TL_MODELS']['tl_c4g_forum_thread']       = \con4gis\ForumBundle\Models\C4GThreadModel::class;
 
 /**
  * Notification Center

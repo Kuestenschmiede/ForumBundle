@@ -14,15 +14,15 @@ namespace con4gis\ForumBundle\Classes;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
-use con4gis\ForumBundle\Resources\contao\models\C4gForumMember;
-use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
-use con4gis\ForumBundle\Resources\contao\modules\C4GForum;
+use con4gis\ForumBundle\Models\C4gForumMember;
+use con4gis\ForumBundle\Models\C4gForumModel;
+use con4gis\ForumBundle\Modules\C4GForum;
 use Contao\Database;
 use Contao\MemberModel;
 use Contao\StringUtil;
 use Contao\System;
 
-class C4GForumHelper extends \System
+class C4GForumHelper extends System
 {
     public static $postIdToIgnoreInMap = 0;
 
@@ -32,6 +32,7 @@ class C4GForumHelper extends \System
     public $User = null;
     protected $ForumCache = [];
     protected $checkGuestRights = false;
+    protected $show_realname = 'UU';
 
     /**
      * @var C4GForumSubscription
@@ -49,7 +50,7 @@ class C4GForumHelper extends \System
     {
         $this->subscription = new \con4gis\ForumBundle\Classes\C4GForumSubscription($this, $database, $environment, $user, $forumName, $frontendUrl, $forumType);
         if ($database == null) {
-            $this->import('Database');
+            $this->Database = System::getContainer()->get('database_connection');
         } else {
             $this->Database = $database;
         }

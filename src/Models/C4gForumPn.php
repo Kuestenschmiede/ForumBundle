@@ -9,7 +9,7 @@
  * @link https://www.con4gis.org
  */
 
-namespace con4gis\ForumBundle\Resources\contao\models;
+namespace con4gis\ForumBundle\Models;
 
     use Contao\Email;
     use Contao\MemberModel;
@@ -17,7 +17,7 @@ namespace con4gis\ForumBundle\Resources\contao\models;
 
     /**
      * Class C4gForumPn
-     * @package con4gis\ForumBundle\Resources\contao\models
+     * @package con4gis\ForumBundle\Models
      */
     class C4gForumPn{
 

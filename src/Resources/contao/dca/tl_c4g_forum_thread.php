@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 /*
  * This file is part of con4gis, the gis-kit for Contao CMS.
  * @package con4gis
@@ -18,9 +18,9 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
     // Config
     'config' => array
     (
-        'dataContainer' => 'Table',
+        'dataContainer' => \Contao\DC_Table::class,
         'ptable' => 'tl_c4g_forum',
-        'ctable' => 'tl_c4g_forum_post',
+        'ctable' => array('tl_c4g_forum_post'),
         //'notCreatable'  => true,
         'sql'           => array
         (
@@ -30,8 +30,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
                 'pid' => 'index'
             )
         ),
-        'onsubmit_callback' =>array(array('tl_c4g_forum_thread','saveDefault')),
-        'onload_callback'   =>array(array('tl_c4g_forum_thread', 'getDatasets'))
+        'onsubmit_callback' =>array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','saveDefaultThread')),
+        'onload_callback'   =>array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'getThreadDatasets'))
     ),
     'list' => array
     (
@@ -46,7 +46,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         'label' => array
         (
             'fields'                  => array('name'),
-            'label_callback'          => array('tl_c4g_forum_thread','get_label'),
+            'label_callback'          => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getThreadLabel'),
         ),
         'global_operations' => array
         (
@@ -90,7 +90,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['post'],
                 'href'                => 'do=c4g_forum_post&amp;table=tl_c4g_forum_post',
                 'icon'	 		      => 'tablewizard.svg',
-                'button_callback'     => array('tl_c4g_forum_thread','forumPost')
+                'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','forumPost')
             ),
             'show' => array
             (
@@ -157,7 +157,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['state'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_forum_thread','get_options'),
+            'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getThreadOptions'),
 //            'filter'                  => true,
             'search'                  => true,
             'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-'),
@@ -233,113 +233,3 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
         )
     ),
 );
-class tl_c4g_forum_thread extends \Backend
-{
-    public function forumPost($row, $href, $label, $title, $icon)
-    {
-        $href .= "&amp;id=".$row['id'];
-        return '<a href="' . $this->addToUrl($href) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ';
-    }
-    
-    public function saveDefault(DataContainer $dc)
-    {
-        if (!$dc->activeRecord)
-        {
-            return;
-        }
-
-        $author = $this->Database->prepare("SELECT default_author FROM tl_c4g_forum WHERE id=?")->execute($dc->activeRecord->pid)->fetchAssoc();
-
-        $arrSet['author'] = $author['default_author'];
-
-        if ($arrSet['author']) {
-            $arrSet['creation'] = time();
-            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSet)->execute($dc->id);
-        }
-    }
-    
-    public function get_label($arrRow)
-    {
-        $result ="";
-        $settings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
-
-        if ($settings) {
-            $settings = $settings[0];
-        }
-        if ($settings && $settings['c4g_forum_type']) {
-
-            if ($settings['c4g_forum_type'] == "DISCUSSIONS") {
-                $result .= $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['counter_caption_thread'];
-            } else if ($settings['c4g_forum_type'] == "TICKET") {
-                $result .= $GLOBALS['TL_LANG']['tl_c4g_forum_thread']['counter_caption_ticket'];
-            }
-        }
-
-        $result .=sprintf('%04d', $arrRow['id']).'] ';
-        $author = $this->Database->prepare('SELECT * FROM tl_member WHERE id=?')->execute($arrRow['author'])->fetchAssoc();
-        $result .= $arrRow['name'].': ';
-        $result .= date($GLOBALS['TL_CONFIG']['dateFormat'], intval($arrRow['tstamp'])).' ';
-        $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp'])).' ';
-        $result .= $author['username'];
-        $state = \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState($arrRow['state']);
-        if($state)
-        {
-            $result .=' : (<b>'.$state.'</b>)';
-        }
-
-        return $result;
-    }
-    
-    public function get_options(DataContainer $dc)
-    {
-        return array(
-            1 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(1),
-            2 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(2),
-            3 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(3),
-            4 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(4)
-            );
-    }
-    
-    public function getDatasets(DataContainer $dc)
-    {
-        $pid = \Contao\Input::get('id');
-        if($pid){
-            $childs = $this->getChilds($pid,$dc);
-            $root = $dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread WHERE pid=?")
-                ->execute($pid)
-                ->fetchEach('id');
-            $root = array_merge($root,$childs);
-            if (empty($root)) {
-                $root = array('0');
-            }
-        }
-        else{
-            $GLOBALS['TL_CSS'][] = "bundles/con4gisforum/dist/css/c4gForumBackendButton.min.css";
-            $root = $dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread")
-                ->execute()
-                ->fetchEach('id');
-
-        }
-        $GLOBALS['TL_DCA']['tl_c4g_forum_thread']['list']['sorting']['root'] = $root;
-
-    }
-    
-    public function getChilds($pid,$dc)
-    {
-        $childs = $dc->Database->prepare("SELECT id FROM tl_c4g_forum WHERE pid=?")
-            ->execute($pid)->fetchAllAssoc();
-
-        $return = array();
-
-        foreach($childs as $child)
-        {
-            $return = array_merge($return,$dc->Database->prepare("SELECT id FROM tl_c4g_forum_thread WHERE pid=?")
-                ->execute($child['id'])
-                ->fetchEach('id'));
-            $return = array_merge($return, self::getChilds($child['id'],$dc));
-        }
-        return $return;
-    }
-
-
-}

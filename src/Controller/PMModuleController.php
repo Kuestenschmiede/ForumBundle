@@ -11,13 +11,13 @@
 
 namespace con4gis\ForumBundle\Controller;
 
-use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
+use con4gis\ForumBundle\Models\C4gForumPn;
 use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Database;
 use Contao\ModuleModel;
 use Contao\System;
-use Contao\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +31,7 @@ class PMModuleController extends AbstractFrontendModuleController
         $this->requestStack = $requestStack;
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
         if (!$this->requestStack || !method_exists($this->requestStack, 'getSession')) {
             $session = System::getContainer()->get('session');

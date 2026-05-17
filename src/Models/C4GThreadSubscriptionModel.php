@@ -8,33 +8,31 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-
-namespace con4gis\ForumBundle\Resources\contao\models;
+namespace con4gis\ForumBundle\Models;
 
 
 use Contao\Database;
 
-class C4GForumSubscriptionModel extends \Contao\Model
+class C4GThreadSubscriptionModel extends \Contao\Model
 {
-    protected static $strTable = 'tl_c4g_forum_subforum_subscription';
+    protected static $strTable = 'tl_c4g_forum_thread_subscription';
 
     /**
-     * @param $forumId
+     * @param $threadId
      * @param $memberId
      * @return mixed
      */
-    public static function findByForumAndMember($forumId, $memberId)
+    public static function findByThreadAndMember($threadId, $memberId)
     {
         $arrColumns = [
             self::$strTable . '.pid=?',
             self::$strTable . '.member=?'
         ];
         $arrValues = [
-            $forumId,
+            $threadId,
             $memberId
         ];
 
         return static::findOneBy($arrColumns, $arrValues);
     }
-
 }

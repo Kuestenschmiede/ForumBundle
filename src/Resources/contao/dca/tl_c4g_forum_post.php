@@ -18,8 +18,9 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
     // Config
     'config' => array
     (
-        'dataContainer'               => 'Table',
+        'dataContainer'               => \Contao\DC_Table::class,
         'ptable'                      => 'tl_c4g_forum_thread',
+        'ctable'                      => array('tl_c4g_forum_upload'),
         'sql'                         => array
         (
             'keys' => array
@@ -28,11 +29,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
                 'pid' => 'index'
             )
         ),
-        'onsubmit_callback' =>array(array('tl_c4g_forum_post','saveDefault'))/*,
-        'onload_callback'   =>array(
-                                    array('tl_c4g_forum_post', 'loadPost')
-
-        ),*/
+        'onsubmit_callback' =>array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','saveDefaultPost'))
 
     ),
     'list' => array
@@ -49,7 +46,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
         (
             'fields'                  => array('subject','text'),
             'format'                  => '%s, %s',
-            'label_callback'          => array('tl_c4g_forum_post','loadLabel')
+            'label_callback'          => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','loadPostLabel')
         ),
         'global_operations' => array
         (
@@ -153,7 +150,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum_thread']['state'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_c4g_forum_post','get_options'),
+            'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getPostOptions'),
             'sql'                     => "int(10) default '0'"
         ),
 
@@ -241,53 +238,3 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
         )
     ),
 );
-class tl_c4g_forum_post extends \Backend{
-
-    public function saveDefault(DataContainer $dc)
-    {
-        if (!$dc->activeRecord)
-        {
-            return;
-        }
-        $thread = $this->Database->prepare("SELECT pid,last_post_id FROM tl_c4g_forum_thread WHERE id=?")->execute($dc->activeRecord->pid)->fetchAssoc();
-        $lastPost = $this->Database->prepare('SELECT post_number FROM tl_c4g_forum_post WHERE id=?')->execute($thread['last_post_id'])->fetchAssoc();
-        $numPosts = $this->Database->prepare("SELECT COUNT(id) FROM tl_c4g_forum_post WHERE pid = ?")->execute($dc->activeRecord->pid)->fetchAssoc()['COUNT(id)'];
-        $arrSet['forum_id'] = $thread['pid'];
-        $arrSet['author'] = $this->Database->prepare("SELECT default_author FROM tl_c4g_forum WHERE id=?")->execute($arrSet['forum_id'])->fetchAssoc()['default_author'];
-        $arrSet['post_number'] = $numPosts !== null ? $numPosts : 1;
-
-        $arrSetParent['last_post_id'] = $dc->activeRecord->id;
-        $arrSetParent['state'] = $dc->activeRecord->state;
-        $arrSetParent['edit_last_time'] = $dc->activeRecord->creation/* != '0' ? $dc->activeRecord->creation : time()*/;
-        $arrSetParent['posts'] = $arrSet['post_number'];
-
-        if($dc->activeRecord->subject == '') {
-            $arrSet['subject'] = $GLOBALS['TL_LANG']['tl_c4g_forum_post']['state_change'] . $dc->activeRecord->state;
-        }
-
-        if ($arrSet['author']) {
-            $this->Database->prepare("UPDATE tl_c4g_forum_post %s WHERE id=?")->set($arrSet)->execute($dc->activeRecord->id);
-            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($arrSetParent)->execute($dc->activeRecord->pid);
-        }
-    }
-
-    public function loadLabel ($arrRow)
-    {
-        //Status des Tickets auf gelesen ändern
-        $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($arrRow['pid'])->fetchAssoc();
-        if($thread['state'] == 1){
-            $set['state'] = 2;
-            $this->Database->prepare("UPDATE tl_c4g_forum_thread %s WHERE id=?")->set($set)->execute($arrRow['pid']);
-        }
-        return $arrRow['text'];
-    }
-    public function get_options(DataContainer $dc)
-    {
-        return array(
-            1 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(1),
-            2 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(2),
-            3 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(3),
-            4 => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(4)
-        );
-    }
-}

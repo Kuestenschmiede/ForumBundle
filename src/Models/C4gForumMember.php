@@ -8,11 +8,11 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-namespace con4gis\ForumBundle\Resources\contao\models;
+namespace con4gis\ForumBundle\Models;
 
 /**
  * Class C4gForumMember
- * @package con4gis\ForumBundle\Resources\contao\models;
+ * @package con4gis\ForumBundle\Models;
  */
 class C4gForumMember extends \Model
 {

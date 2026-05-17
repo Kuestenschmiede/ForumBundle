@@ -11,19 +11,31 @@
 
 namespace con4gis\ForumBundle\Classes;
 
+use Contao\Backend;
+use Contao\System;
+
 /**
  * Class C4GForumBackend
  * @package on4gis\ForumBundle\Resources\contao\ForumBundle
  */
-class C4GForumBackend extends \Backend
+class C4GForumBackend extends Backend
 {
+    /**
+     * @var C4GForumHelper
+     */
+    protected $helper = null;
+
+    /**
+     * @var \Contao\Database
+     */
+    protected $Database = null;
+
     /**
      * Load the helper class
      */
-    protected function __construct()
+    public function __construct()
     {
-        parent::__construct();
-        $this->import('Database');
+        $this->Database = System::getContainer()->get('database_connection');
         $this->helper = new C4GForumHelper($this->Database);
     }
 
@@ -34,24 +46,8 @@ class C4GForumBackend extends \Backend
     {
         $message = '';
 
-        if ($this->Input->post('FORM_SUBMIT') == 'tl_c4g_forum_build_index') {
+        if (System::getContainer()->get('request_stack')->getCurrentRequest()->request->get('FORM_SUBMIT') == 'tl_c4g_forum_build_index') {
             $this->helper->renewAllTheIndexesFromDB();
-
-            // TODO Errorhandling
-            // 			// Check for errors
-            // 			if ( ERROR )
-            // 			{
-            // 				$this->addErrorMessage($GLOBALS['TL_LANG']['tl_c4g_forum']['fail'][0].$GLOBALS['TL_LANG']['tl_c4g_forum']['fail'][1]);
-            // 				$message ='
-            //				<div class="tl_header" style="color:#900;">
-            //				'.$GLOBALS['TL_LANG']['tl_c4g_forum']['fail'][0].$GLOBALS['TL_LANG']['tl_c4g_forum']['fail'][1].'
-            //				</div>';
-            //				$this->reload();
-            // 			}
-            $message = '
-			<div class="tl_header" style="color:#090;">
-			' . $GLOBALS['TL_LANG']['tl_c4g_forum']['success'] . '
-			</div>';
         }
 
         //fetch info
@@ -72,21 +68,24 @@ class C4GForumBackend extends \Backend
             $noIndex = true;
         }
 
+        $environment = System::getContainer()->get('contao.routing.scope_matcher');
+        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+
         // create the form
         $form =
             //back-button
             '
 			<div id="tl_buttons">
-				<a href="' . ampersand(str_replace('&key=build_index', '', $this->Environment->request)) . '" class="header_back" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['backBT']) . '" accesskey="b">' . $GLOBALS['TL_LANG']['MSC']['backBT'] . '</a>
+				<a href="' . ampersand(str_replace('&key=build_index', '', $request->getUri())) . '" class="header_back" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['backBT']) . '" accesskey="b">' . $GLOBALS['TL_LANG']['MSC']['backBT'] . '</a>
 			</div>' .
             //headline
             '
 			<h2 class="sub_headline">' . $GLOBALS['TL_LANG']['tl_c4g_forum']['headline_index'][0] . '</h2>
-			' . $this->getMessages() . '
-			<form action="' . ampersand($this->Environment->request, true) . '" id="tl_c4g_forum_build_index" class="tl_form" method="post">
+			' . System::getMessages() . '
+			<form action="' . ampersand($request->getUri(), true) . '" id="tl_c4g_forum_build_index" class="tl_form" method="post">
 			<div class="tl_formbody_edit">
 				<input type="hidden" name="FORM_SUBMIT" value="tl_c4g_forum_build_index">
-				<input type="hidden" name="REQUEST_TOKEN" value="' . REQUEST_TOKEN . '">
+				<input type="hidden" name="REQUEST_TOKEN" value="' . System::getContainer()->get('contao.csrf.token_manager')->getToken(System::getContainer()->getParameter('contao.csrf_token_name'))->getValue() . '">
 			</div>
 			<center>
 			' . $message . '

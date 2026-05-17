@@ -9,7 +9,7 @@
  * @link https://www.con4gis.org
  */
 
-namespace con4gis\ForumBundle\Resources\contao\modules;
+namespace con4gis\ForumBundle\Modules;
 
 use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
 use con4gis\CoreBundle\Classes\C4GUtils;
@@ -19,7 +19,7 @@ use Contao\Database;
 
 /**
      * Class C4GForumBreadcrumb
-     * @package con4gis\ForumBundle\Resources\contao\modules
+     * @package con4gis\ForumBundle\Modules
      */
     class C4GForumBreadcrumb extends \Module
     {
@@ -47,14 +47,14 @@ use Contao\Database;
         public function generate()
         {
 
-            if (TL_MODE == 'BE') {
+            if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
                 $objTemplate = new \BackendTemplate('be_wildcard');
 
                 $objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'][0] . ' ###';
                 $objTemplate->title    = $this->headline;
                 $objTemplate->id       = $this->id;
                 $objTemplate->link     = $this->title;
-                $objTemplate->href     = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+                $objTemplate->href     = 'contao?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
 
                 return $objTemplate->parse();
             }
@@ -84,7 +84,7 @@ use Contao\Database;
 
                 if ($this->c4g_forum_language_temp == '') {
                     /** @var \PageModel $objPage */
-                    global $objPage;
+                    $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
 
                     //three other ways to get current language
                     $pageLang = \Controller::replaceInsertTags('{{page::language}}');

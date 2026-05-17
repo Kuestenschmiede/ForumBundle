@@ -11,7 +11,7 @@
 
 namespace con4gis\ForumBundle\Classes;
 
-    use con4gis\ForumBundle\Resources\contao\models\C4gForumPn;
+    use con4gis\ForumBundle\Models\C4gForumPn;
     use Contao\FrontendUser;
 
     /**

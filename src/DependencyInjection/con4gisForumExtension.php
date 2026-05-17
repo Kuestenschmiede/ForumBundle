@@ -23,7 +23,7 @@ class con4gisForumExtension extends Extension
      * @param ContainerBuilder $container
      * @throws \Exception
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader(
             $container,
@@ -32,7 +32,7 @@ class con4gisForumExtension extends Extension
         $loader->load('services.yml');
     }
     
-    public function getAlias()
+    public function getAlias(): string
     {
         return "con4gis_forum";
     }

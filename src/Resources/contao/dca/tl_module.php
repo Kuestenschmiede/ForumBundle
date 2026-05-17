@@ -8,11 +8,9 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-$imageSizes = \System::getContainer()->get('contao.image.image_sizes')->getAllOptions();
-
 $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] =
     '{title_legend},name,headline,type;' .
-    '{c4g_forum_general_legend},c4g_forum_type,c4g_forum_startforum,c4g_forum_navigation,c4g_forum_boxlength,c4g_forum_threadclick,c4g_forum_postsort,c4g_forum_collapsible_posts,c4g_forum_breadcrumb,c4g_forum_hide_intropages,c4g_forum_jumpTo,c4g_forum_language,c4g_forum_multilingual,c4g_forum_tooltip,c4g_forum_show_last_post_on_new,c4g_forum_threads_perpage_selection;' .
+    '{c4g_forum_general_legend},c4g_forum_type,c4g_forum_startforum,c4g_forum_navigation,c4g_forum_boxlength,c4g_forum_threadclick,c4g_forum_postsort,c4g_forum_collapsible_posts,c4g_forum_breadcrumb,c4g_forum_hide_intropages,c4g_forum_jumpTo,c4g_forum_language,c4g_forum_multilingual,c4g_forum_tooltip,c4g_forum_show_last_post_on_new,c4g_forum_threads_perpage_selection,ticketredirectsite;' .
     '{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_rating_enabled,c4g_forum_rating_color,c4g_forum_reaction_enabled,c4g_forum_show_post_count,c4g_forum_show_avatars,c4g_forum_show_online_status,c4g_forum_show_ranks,c4g_forum_show_pn_button,c4g_forum_sub_title,c4g_forum_user_statistics,c4g_forum_user_profile_page;'.
     '{c4g_forum_sizes_legend:hide},c4g_forum_size,c4g_forum_scroll;' .
     '{c4g_forum_search_legend:hide},c4g_forum_search_onlythreads, c4g_forum_search_wholewords, c4g_forum_use_tags_in_search, c4g_forum_search_forums, c4g_forum_search_displayonly;' .
@@ -72,7 +70,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_size'] = array
 (
     'exclude'   => true,
     'inputType' => 'imageSize',
-    'options'   => $imageSizes,
+    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getImageSizes'],
     'eval'      => array('rgxp' => 'digit','mandatory'=> false,'includeBlankOption' => true),
     'sql'       => "varchar(100) NOT NULL default ''"
 );
@@ -81,7 +79,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_scroll'] = array
 (
     'exclude'   => true,
     'inputType' => 'imageSize',
-    'options'   => $imageSizes,
+    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getImageSizes'],
     'eval'      => array('rgxp' => 'digit','mandatory'=> false,'includeBlankOption' => true),
     'sql'       => "varchar(100) NOT NULL default ''"
 );
@@ -136,7 +134,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_search_displayonly'] = arra
     'sql'       => "char(1) NOT NULL default '1'"
 );
 
-System::loadLanguageFile('frontendModules');
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage_selection'] = array
 (
     'exclude'   => true,
@@ -148,7 +145,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage_selection']
         '25' => '25',
         '50' => '50',
         '100' => '100',
-        '-1' => $GLOBALS['TL_LANG']['c4g_forum']['all']
+        '-1' => $GLOBALS['TL_LANG']['c4g_forum']['all'] ?? 'all'
     ],
     'sql'       => "tinyint(3) NOT NULL default '10'"
 );
@@ -316,7 +313,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_avatar_size'] = array
 (
     'exclude'   => true,
     'inputType' => 'imageSize',
-    'options'   => $imageSizes,
+    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getImageSizes'],
     'eval'      => array('rgxp' => 'digit','includeBlankOption' => true),
     'sql'       => "varchar(100) NOT NULL default ''"
 );
@@ -375,7 +372,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_member_ranks'] = array
                 'label'                 => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_language'],
                 'exclude'               => true,
                 'inputType'             => 'select',
-                'options'               => \System::getLanguages(),
+                'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getLanguages'],
                 'eval'                  => array('chosen' => true, 'style' => 'width: 120px')
 
             )
@@ -425,7 +422,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_multilingual_languages'] = 
     'exclude'    => true,
     'default'    => array('de','en'),
     'inputType'  => 'select',
-    'options'    => \System::getLanguages(),
+    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getLanguages'],
     'eval'       => array('multiple' => true, 'chosen' => true, 'style' => 'width: 120px'),
     'sql'        => "blob NULL"
 );
@@ -549,7 +546,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_dialogsize'] = array
 (
     'exclude'   => true,
     'inputType' => 'imageSize',
-    'options'   => $imageSizes,
+    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getImageSizes'],
     'eval'      => array('rgxp' => 'digit','includeBlankOption' => true),
     'sql'       => "varchar(100) NOT NULL default ''"
 );
@@ -670,7 +667,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap'] = array
     'default'       => '',
     'inputType'     => 'checkbox',
     'eval'          => array('submitOnChange' => true),
-    'save_callback' => array(array('tl_module_c4g_forum', 'update_sitemap')),
+    'save_callback' => array(array('con4gis\ForumBundle\Classes\Callbacks\ModuleCallback', 'updateSitemap')),
     'sql'           => "char(1) NOT NULL default ''"
 );
 
@@ -679,7 +676,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_filename'] = array
     'exclude'       => true,
     'inputType'     => 'text',
     'eval'          => array('mandatory' => true, 'maxlength' => 30),
-    'save_callback' => array(array('tl_module_c4g_forum', 'update_sitemap')),
+    'save_callback' => array(array('con4gis\ForumBundle\Classes\Callbacks\ModuleCallback', 'updateSitemap')),
     'sql'           => "varchar(30) NOT NULL default ''"
 );
 
@@ -690,7 +687,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_contents'] = array
     'options'       => array('THREADS', 'FORUMS', 'INTROS'),
     'reference'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_references'],
     'eval'          => array('multiple' => true),
-    'save_callback' => array(array('tl_module_c4g_forum', 'update_sitemap')),
+    'save_callback' => array(array('con4gis\ForumBundle\Classes\Callbacks\ModuleCallback', 'updateSitemap')),
     'sql'           => "blob NULL"
 );
 
@@ -809,7 +806,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['ticketredirectsite'] = array
     'foreignKey'              => 'tl_page.title',
     'eval'                    => array('mandatory'=>false, 'fieldType'=>'radio', 'tl_class'=>'clr'),
     'sql'                     => "int(10) unsigned NOT NULL default '0'",
-    'relation'                => array('type'=>'hasOne', 'load'=>'eager')
+    'relation'                => array('type'=>'hasOne', 'load'=>'lazy')
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_thread'] = array
@@ -941,25 +938,3 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['no_subs_text'] = array(
     'default'   => '',
     'sql'       => "varchar(200) NOT NULL default ''"
 );
-
-/**
- * Class tl_module_c4g_forum
- */
-class tl_module_c4g_forum extends \Backend
-{
-    public function update_sitemap($value, $dc)
-    {
-
-        if ($value != $dc->varValue) {
-            // force update of sitemap in the frontend by setting last sitemap timestamp to 0
-            $this->Database->prepare(
-                "UPDATE tl_module SET " .
-                "c4g_forum_sitemap_updated=0 " .
-                "WHERE id = " . $this->Input->get('id')
-            )->executeUncached();
-
-        }
-
-        return $value;
-    }
-}

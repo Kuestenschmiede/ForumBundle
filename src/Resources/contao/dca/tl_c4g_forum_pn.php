@@ -18,7 +18,7 @@
         // Config
         'config' => array
         (
-            'dataContainer'               => 'Table',
+            'dataContainer'               => \Contao\DC_Table::class,
             'enableVersioning'            => true,
 //            'onsubmit_callback'             => array(
 //                array('\c4g\Core\C4GAutomator', 'purgeApiCache')

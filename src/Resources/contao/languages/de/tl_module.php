@@ -195,17 +195,10 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_forum_enable_maps'] = array(
 );
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap_root'] = array("Zielseite für Sitemaplinks","");
-if (version_compare(VERSION, '3', '<')) {
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap'] = array(
-        'Eine XML-Sitemap erstellen',
-        'Eine Google XML-Sitemap im Wurzelverzeichnis erstellen.'
-    );
-} else {
-    $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap'] = array(
-        'Eine XML-Sitemap erstellen',
-        'Eine Google XML-Sitemap im Verzeichnis "share/" erstellen.'
-    );
-}
+$GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap'] = array(
+    'Eine XML-Sitemap erstellen',
+    'Eine Google XML-Sitemap im Verzeichnis "share/" erstellen.'
+);
 $GLOBALS['TL_LANG']['tl_module']['c4g_forum_sitemap_filename'] = array(
     'Sitemap-Dateiname',
     'Geben Sie den Namen der Sitemap-Datei ohne die Dateiendung .xml ein.'

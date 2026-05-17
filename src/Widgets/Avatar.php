@@ -8,7 +8,7 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-namespace con4gis\ForumBundle\Resources\contao\widgets;
+namespace con4gis\ForumBundle\Widgets;
 
 use con4gis\ForumBundle\Classes\C4GForumHelper;
 use con4gis\ForumBundle\Classes\C4gForumSingleFileUpload;
@@ -81,7 +81,7 @@ class Avatar extends Widget implements \uploadable
             // Add user-based subfolder to target folder to prevent overwriting files with duplicate names.
         }
 
-        if (TL_MODE === 'FE')
+        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals()))
         {
             $this->import('frontenduser');
             $strUploadTo = 'files/userimages/user_' . $this->frontenduser->id;
@@ -112,14 +112,14 @@ class Avatar extends Widget implements \uploadable
         $sReturn = '';
 
         // Get the member's ID based upon the usage-location of the Widget: BE -> current viewed member, FE -> current logged in frontenduser.
-        if (TL_MODE === 'FE')
+        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals()))
         {
             $this->import('frontenduser');
             $iMemberId = $this->frontenduser->id;
         }
         else
         {
-            if (TL_MODE === 'BE')
+            if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals()))
             {
                 $iMemberId = $this->currentRecord;
             }

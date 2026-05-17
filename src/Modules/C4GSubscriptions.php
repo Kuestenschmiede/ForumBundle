@@ -8,16 +8,16 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
-namespace con4gis\ForumBundle\Resources\contao\modules;
+namespace con4gis\ForumBundle\Modules;
 
 use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
-use con4gis\ForumBundle\Resources\contao\models\C4GForumSubscriptionModel;
-use con4gis\ForumBundle\Resources\contao\models\C4GThreadSubscriptionModel;
+use con4gis\ForumBundle\Models\C4GForumSubscriptionModel;
+use con4gis\ForumBundle\Models\C4GThreadSubscriptionModel;
 
 /**
  * Class C4GSubscriptionOverview
- * @package con4gis\ForumBundle\Resources\contao\modules
+ * @package con4gis\ForumBundle\Modules
  */
 class C4GSubscriptions extends \Module
 {
@@ -28,14 +28,13 @@ class C4GSubscriptions extends \Module
      */
     public function generate()
     {
-        if (TL_MODE == 'BE')
-        {
+        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
             $objTemplate = new \BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . strtoupper($GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+            $objTemplate->href = 'contao?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
 
             return $objTemplate->parse();
         }
@@ -64,7 +63,7 @@ class C4GSubscriptions extends \Module
 
         \System::loadLanguageFile('subscriptions');
         $template = $this->Template;
-        global $objPage;
+        $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
         $template->language = $objPage->language;
         $template->sub_forum_headline = $this->sub_forum_headline !== '' ? $this->sub_forum_headline : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_HEAD'];
         $template->sub_forum_change_sub_caption = $this->sub_forum_change_sub_caption !== '' ? $this->sub_forum_change_sub_caption : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_CHANGE'];

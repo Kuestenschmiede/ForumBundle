@@ -9,18 +9,18 @@
  * @link https://www.con4gis.org
  */
 
-namespace con4gis\ForumBundle\Resources\contao\modules;
+namespace con4gis\ForumBundle\Modules;
 
 use con4gis\ForumBundle\Controller\PMModuleController;
-use con4gis\ForumBundle\Resources\contao\models\C4GThreadModel;
+use con4gis\ForumBundle\Models\C4GThreadModel;
 use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\C4GVersionProvider;
 use con4gis\ForumBundle\Classes\C4GForumHelper;
 use con4gis\ForumBundle\Classes\C4GForumTicketStatus;
-use con4gis\ForumBundle\Resources\contao\models\C4gForumModel;
-use con4gis\ForumBundle\Resources\contao\models\C4gForumPost;
-use con4gis\ForumBundle\Resources\contao\models\C4gForumSession;
+use con4gis\ForumBundle\Models\C4gForumModel;
+use con4gis\ForumBundle\Models\C4gForumPost;
+use con4gis\ForumBundle\Models\C4gForumSession;
 use con4gis\MapsBundle\Classes\MapDataConfigurator;
 use con4gis\MapsBundle\Classes\ResourceLoader as MapsResourceLoader;
 use con4gis\CoreBundle\Classes\ResourceLoader;
@@ -56,7 +56,7 @@ function c4gForumErrorHandler($code, $text, $file, $line)
 
 /**
  * Class C4GForum
- * @package con4gis\ForumBundle\Resources\contao\modules
+ * @package con4gis\ForumBundle\Modules
  */
 class C4GForum extends \Module
 {
@@ -124,8 +124,12 @@ class C4GForum extends \Module
         }
         $this->get[] = 'imageuploadpath='.urlencode('/c4g_forum/upload/image');
         $this->get[] = 'fileuploadpath='.urlencode('/c4g_forum/upload/file');
-        global $objPage;
-        $this->page = $objPage;
+        $this->page = \Contao\System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())
+            ? \Contao\FrontendUser::getInstance()->page
+            : null;
+        if (!$this->page) {
+            $this->page = \Contao\PageModel::findAll()->current(); // Fallback or better use service
+        }
         ResourceLoader::loadJavaScriptResource(
             'bundles/con4gisprojects/dist/js/trixconfig.php?'.
             'lang='.($this->page->language !== null ? $this->page->language : 'de').'&'.implode('&', $this->get),
@@ -142,14 +146,14 @@ class C4GForum extends \Module
     public function generate()
     {
 
-        if (TL_MODE == 'BE') {
+        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
             $objTemplate = new \BackendTemplate('be_wildcard');
 
             $objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['FMD']['c4g_forum'][0] . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->title;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+            $objTemplate->href = 'contao?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
 
             return $objTemplate->parse();
         }
@@ -236,7 +240,7 @@ class C4GForum extends \Module
         $data['id'] = $this->id;
         // set global js var to inidcate api endpoint
         $data['forumAjaxUrl'] = "con4gis/forumService";
-        global $objPage;
+        $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
         $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/forumPnService/".
             ($objPage->language ?: "de")
             ."';</script>";
@@ -6160,7 +6164,7 @@ class C4GForum extends \Module
             //four other ways to get current language
             if ($this->c4g_forum_language_temp == '') {
                 /** @var \PageModel $objPage */
-                global $objPage;
+                $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
 
                 $pageLang = \Controller::replaceInsertTags('{{page::language}}');
                 if ($pageLang) {
@@ -6249,7 +6253,7 @@ class C4GForum extends \Module
         }
 
         // auf die benutzerdefinierte Fehlerbehandlung umstellen
-        $old_error_handler = \set_error_handler("con4gis\ForumBundle\Resources\contao\modules\c4gForumErrorHandler");
+        $old_error_handler = \set_error_handler("con4gis\ForumBundle\Modules\c4gForumErrorHandler");
         if ($request == null) {
 
             // Ajax Request: read get parameter "req"

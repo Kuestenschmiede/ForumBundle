@@ -12,16 +12,24 @@
 
 $GLOBALS['TL_DCA']['tl_c4g_forum_upload'] = [
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => \Contao\DC_Table::class,
+        'ptable' => 'tl_c4g_forum_post',
         'sql' => [
             'keys' => [
-                'id' => 'primary'
+                'id' => 'primary',
+                'pid' => 'index'
             ]
         ]
     ],
     'fields' => [
         'id' => [
             'sql' => "int unsigned NOT NULL auto_increment"
+        ],
+        'pid' => [
+            'sql' => "int(10) unsigned NOT NULL default '0'"
+        ],
+        'tstamp' => [
+            'sql' => "int(10) unsigned NOT NULL default '0'"
         ],
         'importId' => [
             'sql' => "int unsigned NOT NULL default 0"

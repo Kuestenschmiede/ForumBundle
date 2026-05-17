@@ -8,16 +8,10 @@
  * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
+namespace con4gis\ForumBundle\Models;
 
-namespace con4gis\ForumBundle\Resources\contao\models;
 
-use Contao\Model;
-
-/**
- * Class C4gForumModel
- * @package con4gis\ForumBundle\Resources\contao\models
- */
-class C4gForumModel extends Model {
-
-    protected static $strTable = "tl_c4g_forum";
+class C4GThreadModel extends \Contao\Model
+{
+    protected static $strTable = 'tl_c4g_forum_thread';
 }

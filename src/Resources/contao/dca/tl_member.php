@@ -26,8 +26,8 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['memberImage'] = array
     'label'                   => &$GLOBALS['TL_LANG']['tl_member']['memberImage'],
     'exclude'                 => true,
     'inputType'               => 'avatar',
-    'load_callback'           => array(array('tl_member_dca', 'setUploadFolder')),
-    'save_callback'           => array(array('tl_member_dca', 'handleMemberImage')),
+    'load_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\MemberCallback', 'setUploadFolder')),
+    'save_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\MemberCallback', 'handleMemberImage')),
     'eval'                    => array('filesOnly'=>true, 'multiple' => false, 'fieldType'=>'radio', 'feEditable'=>true, 'feViewable'=>true, 'feGroup'=>'forum', 'storeFile' => true, 'tl_class'=>'clr'),
     'sql'                     => "mediumtext NULL"
 );
@@ -86,70 +86,3 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['tstampLastAction'] = array
     'sql'                     => "int(10) NOT NULL default 0"
 );
 
-
-/**
- * Class tl_member_dca
- */
-class tl_member_dca extends \Contao\Backend
-{
-
-    /**
-     * Check if submitted memberImage is empty.
-     * If a memberImage is already stored in the database, return this memberImage value.
-     * Otherwise store an empty value.
-     *
-     * This save_callback prevents deleting memberImages when submitting the personal data form without specifying a memberImage when there is already a memberImage stored in the database.
-     * It also takes into account, when the admin saves the member profile in the backend and checks again for already present memberImage data in the database.
-     *
-     * @param $varValue
-     * @param $dc
-     * @return mixed
-     */
-    public function handleMemberImage($varValue, $dc)
-    {
-        // Get the member's ID based upon the usage-location of the Widget: BE -> current viewed member, FE -> current logged in frontenduser.
-        if (TL_MODE === 'FE')
-        {
-            $this->import('frontenduser');
-            $iMemberId = $this->frontenduser->id;
-        }
-        else
-        {
-            $iMemberId = $dc->id;
-        }
-
-        $sImagePathFromDatabase = \con4gis\ForumBundle\Resources\contao\models\C4gForumMember::getAvatarByMemberId($iMemberId);
-
-        $deseralized_value = deserialize($varValue);
-        if (empty($deseralized_value) && (!empty($sImagePathFromDatabase)))
-        {
-            if ($sImagePathFromDatabase)
-            {
-                $varValue = $sImagePathFromDatabase;
-            }
-        }
-
-        return $varValue;
-    }
-
-
-    /**
-     * @param $dc
-     * @return string
-     */
-    public function setUploadFolder($varValue, $dc)
-    {
-
-        $uploadFolder = "files/userimages";
-        $iMemberId = $dc->id;
-
-        if ($iMemberId > 0)
-        {
-            $uploadFolder = $uploadFolder . '/user_' . $iMemberId;
-        }
-
-        $GLOBALS['TL_DCA']['tl_member']['fields']['memberImage']['eval']['uploadFolder'] = $uploadFolder;
-    }
-
-
-}
