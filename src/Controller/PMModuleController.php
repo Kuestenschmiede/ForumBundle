@@ -80,7 +80,7 @@ class PMModuleController extends AbstractFrontendModuleController
         if (array_key_exists('c4g_forum_fmd', $_GET)) {
             $this->forumModule = $database->prepare("SELECT * FROM tl_module WHERE id=?")
                 ->limit(1)
-                ->execute($_GET['c4g_forum_fmd']);
+                ->execute(...[$_GET['c4g_forum_fmd']]);
         }
 
         C4GJQueryGUI::initializeLibraries(
@@ -139,14 +139,14 @@ class PMModuleController extends AbstractFrontendModuleController
      * @return string
      */
     public static function getClientLangVars() {
-        $currentLang = \Input::get('language');
+        $currentLang = \Contao\Input::get('language');
 
         if (empty($currentLang)) {
             $currentLang = $GLOBALS['TL_LANGUAGE'];
         }
 
         $GLOBALS['TL_LANGUAGE'] = $currentLang;
-        \System::loadLanguageFile('tl_c4g_forum_pn');
+        System::loadLanguageFile('tl_c4g_forum_pn');
         return '<script>
             var C4GLANG = {
                 send_error: "'.$GLOBALS['TL_LANG']['tl_c4g_forum_pn']['send_error'].'",

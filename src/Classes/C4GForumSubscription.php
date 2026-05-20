@@ -80,7 +80,7 @@ class C4GForumSubscription
      */
     public function getSubforumSubscriptionFromDB($forumId, $userId)
     {
-        return $this->Database->prepare('SELECT id AS subscriptionId ' . 'FROM tl_c4g_forum_subforum_subscription ' . 'WHERE pid = ? AND member = ?')->execute((int)$forumId, (int)$userId)->subscriptionId;
+        return $this->Database->prepare('SELECT id AS subscriptionId ' . 'FROM tl_c4g_forum_subforum_subscription ' . 'WHERE pid = ? AND member = ?')->execute(...[(int)$forumId, (int)$userId])->subscriptionId;
     }
 
     /**
@@ -91,7 +91,7 @@ class C4GForumSubscription
      */
     public function getCompleteSubforumSubscriptionFromDB($forumId, $userId)
     {
-        return $this->Database->prepare('SELECT id AS subscriptionId ' . 'FROM tl_c4g_forum_subforum_subscription ' . 'WHERE pid = ? AND member = ? AND thread_only=?')->execute((int)$forumId, (int)$userId, '')->subscriptionId;
+        return $this->Database->prepare('SELECT id AS subscriptionId ' . 'FROM tl_c4g_forum_subforum_subscription ' . 'WHERE pid = ? AND member = ? AND thread_only=?')->execute(...[(int)$forumId, (int)$userId, ''])->subscriptionId;
     }
 
     /**
@@ -102,7 +102,7 @@ class C4GForumSubscription
      */
     public function getThreadSubscriptionFromDB($threadId, $userId)
     {
-        return $this->Database->prepare('SELECT id AS subscriptionId ' . 'FROM tl_c4g_forum_thread_subscription ' . 'WHERE pid = ? AND member = ?')->execute((int)$threadId, (int)$userId)->subscriptionId;
+        return $this->Database->prepare('SELECT id AS subscriptionId ' . 'FROM tl_c4g_forum_thread_subscription ' . 'WHERE pid = ? AND member = ?')->execute(...[(int)$threadId, (int)$userId])->subscriptionId;
     }
 
     /**
@@ -150,7 +150,7 @@ class C4GForumSubscription
             if ($forum->auto_subscribe === '1') {
                 $forumData = $this->Database->prepare(
                     'SELECT member_groups, admin_groups FROM tl_c4g_forum WHERE id=?')
-                    ->execute((int)$forumId)->fetchAssoc();
+                    ->execute(...[(int)$forumId])->fetchAssoc();
 
                 $forumMemGroups = StringUtil::deserialize($forumData['member_groups'], true);
                 $forumAdGroups = StringUtil::deserialize($forumData['admin_groups'], true);
@@ -276,7 +276,7 @@ class C4GForumSubscription
      */
     public function deleteSubscriptionThread($subscriptionId)
     {
-        $objDeleteStmt = $this->Database->prepare('DELETE FROM tl_c4g_forum_thread_subscription WHERE id = ?')->execute((int)$subscriptionId);
+        $objDeleteStmt = $this->Database->prepare('DELETE FROM tl_c4g_forum_thread_subscription WHERE id = ?')->execute(...[(int)$subscriptionId]);
         if ($objDeleteStmt->affectedRows == 0) {
             return false;
         }
@@ -291,7 +291,7 @@ class C4GForumSubscription
      */
     public function deleteSubscriptionSubforum($subscriptionId)
     {
-        $objDeleteStmt = $this->Database->prepare('DELETE FROM tl_c4g_forum_subforum_subscription WHERE id = ?')->execute((int)$subscriptionId);
+        $objDeleteStmt = $this->Database->prepare('DELETE FROM tl_c4g_forum_subforum_subscription WHERE id = ?')->execute(...[(int)$subscriptionId]);
         if ($objDeleteStmt->affectedRows == 0) {
             return false;
         }
@@ -308,10 +308,10 @@ class C4GForumSubscription
     {
         $rows = 0;
 
-        $objDeleteStmt = $this->Database->prepare('DELETE FROM tl_c4g_forum_subforum_subscription WHERE member = ?')->execute((int)$memberId);
+        $objDeleteStmt = $this->Database->prepare('DELETE FROM tl_c4g_forum_subforum_subscription WHERE member = ?')->execute(...[(int)$memberId]);
         $rows += $objDeleteStmt->affectedRows;
 
-        $objDeleteStmt = $this->Database->prepare('DELETE FROM tl_c4g_forum_thread_subscription WHERE member = ?')->execute((int)$memberId);
+        $objDeleteStmt = $this->Database->prepare('DELETE FROM tl_c4g_forum_thread_subscription WHERE member = ?')->execute(...[(int)$memberId]);
         $rows += $objDeleteStmt->affectedRows;
 
         if ($rows == 0) {
@@ -328,7 +328,7 @@ class C4GForumSubscription
      */
     public function deleteSubscriptionForThread($threadId)
     {
-        $objDeleteStmt = $this->Database->prepare('DELETE FROM tl_c4g_forum_thread_subscription WHERE pid = ?')->execute((int)$threadId);
+        $objDeleteStmt = $this->Database->prepare('DELETE FROM tl_c4g_forum_thread_subscription WHERE pid = ?')->execute(...[(int)$threadId]);
         if ($objDeleteStmt->affectedRows == 0) {
             return false;
         }
@@ -371,7 +371,7 @@ class C4GForumSubscription
         $language = 'de'
     ) {
         $threadId = (int)$threadId;
-        \System::loadLanguageFile('tl_c4g_forum');
+        \Contao\System::loadLanguageFile('tl_c4g_forum');
         $thread = $this->helper->getThreadAndForumNameFromDB($threadId, $language);
         $thread['threadname'] = $thread['threadname_translated'] ?: $thread['threadname'];
         foreach ($subscriptions as $subscription) {
@@ -601,7 +601,7 @@ class C4GForumSubscription
     {
         $values = explode(';', $this->decryptLinkData($value), 2);
         $thread = $this->helper->getThreadFromDB($values[0]);
-        $member = $this->Database->prepare('SELECT id,username FROM tl_member ' . 'WHERE email=?')->execute($values[1]);
+        $member = $this->Database->prepare('SELECT id,username FROM tl_member ' . 'WHERE email=?')->execute(...[$values[1]]);
         if ($member->id) {
             $subscriptionId = $this->getThreadSubscriptionFromDB($values[0], $member->id);
             if ($subscriptionId) {
@@ -626,7 +626,7 @@ class C4GForumSubscription
     public function unsubscribeLinkSubforum($value)
     {
         $values = explode(';', $this->decryptLinkData($value), 2);
-        $member = $this->Database->prepare('SELECT id,username FROM tl_member ' . 'WHERE email=?')->execute($values[1]);
+        $member = $this->Database->prepare('SELECT id,username FROM tl_member ' . 'WHERE email=?')->execute(...[$values[1]]);
         if ($member->id) {
             $subscriptionId = $this->getSubforumSubscriptionFromDB($values[0], $member->id);
             if ($subscriptionId) {
@@ -651,7 +651,7 @@ class C4GForumSubscription
     public function unsubscribeLinkAll($value)
     {
         $email = $this->decryptLinkData($value);
-        $member = $this->Database->prepare('SELECT id,username FROM tl_member ' . 'WHERE email=?')->execute($email);
+        $member = $this->Database->prepare('SELECT id,username FROM tl_member ' . 'WHERE email=?')->execute(...[$email]);
         if ($member->id) {
             if ($this->deleteAllSubscriptions($member->id)) {
                 return sprintf(C4GForumHelper::getTypeText($this->c4g_forum_type, 'UNSUBSCRIBE_ALL_LINK_SUCCESS'), $member->username);

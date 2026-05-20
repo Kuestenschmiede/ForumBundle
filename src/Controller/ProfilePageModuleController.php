@@ -57,7 +57,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
         $statement = $database->prepare(
             'SELECT * FROM tl_member WHERE login = 1 AND LOWER(username) = ? LIMIT 1'
         );
-        $member = $statement->execute($alias)->fetchAssoc();
+        $member = $statement->execute(...[$alias])->fetchAssoc();
         if ($member === false || count($member) === 0) {
             throw new PageNotFoundException();
         }
@@ -79,11 +79,11 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
         $statement = $database->prepare(
             'SELECT COUNT(0) as posts FROM tl_c4g_forum_post WHERE author = ?'
         );
-        $member['postCount'] = $statement->execute($member['id'])->fetchAssoc()['posts'];
+        $member['postCount'] = $statement->execute(...[$member['id']])->fetchAssoc()['posts'];
         $statement = $database->prepare(
             'SELECT COUNT(0) as threads FROM tl_c4g_forum_thread WHERE author = ?'
         );
-        $member['threadCount'] = $statement->execute($member['id'])->fetchAssoc()['threads'];
+        $member['threadCount'] = $statement->execute(...[$member['id']])->fetchAssoc()['threads'];
         $member['avatarUrl'] = StringUtil::deserialize($member['memberImage'], true)[0];
 
         switch ($model->c4g_forum_show_realname) {
@@ -138,7 +138,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
             'JOIN tl_c4g_forum_thread t ON p.pid = t.id JOIN tl_c4g_forum f ON t.pid = f.id '.
             'WHERE p.author = ? ORDER BY p.tstamp DESC LIMIT 10'
         );
-        $posts = $statement->execute($member['id'])->fetchAllAssoc();
+        $posts = $statement->execute(...[$member['id']])->fetchAllAssoc();
         if ((int) $model->c4g_forum_module_page > 0) {
             $pageModel = PageModel::findByPk((int) $model->c4g_forum_module_page);
         } else {

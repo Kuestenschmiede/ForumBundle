@@ -119,7 +119,7 @@ class ForumController extends AbstractController
                         $aReturn    = array();
                         $sClassName = "con4gis\\ForumBundle\\Classes\\" . ucfirst($sType);
                         if (class_exists($sClassName)) {
-                            $aData = \Input::get('data');
+                            $aData = Input::get('data');
 
                             $aReturn['template'] = $sClassName::parse($aData);
                         }
@@ -135,8 +135,8 @@ class ForumController extends AbstractController
                     $response->setData(['success' => $res]);
                     return $response;
                 case "mark":
-                    $iStatus = intval(\Input::post('status'));
-                    $iId = intval(\Input::post('id'));
+                    $iStatus = intval(Input::post('status'));
+                    $iId = intval(Input::post('id'));
 
                     $oPn = C4gForumPn::getById($iId);
                     $oPn->setStatus($iStatus);
@@ -144,9 +144,9 @@ class ForumController extends AbstractController
                     $response->setData(['success' => true]);
                     return $response;
                 case "send":
-                    $iRecipientId = \Input::post('recipient_id');
-                    $sRecipient = \Input::post('recipient');
-                    $forumModule = \Input::post('target');
+                    $iRecipientId = Input::post('recipient_id');
+                    $sRecipient = Input::post('recipient');
+                    $forumModule = Input::post('target');
                     if (!$forumModule || $forumModule === 'null') {
                         $session = $request->getSession();
                         $forumModule = $session->get('pm-forum-module');
@@ -173,7 +173,7 @@ class ForumController extends AbstractController
                     $message = str_replace(['&lt;div&gt;', '&lt;/div&gt;'], '', $message);
                     $message = trim($message);
                     $aData = array(
-                        "subject"      => \Input::post('subject'),
+                        "subject"      => Input::post('subject'),
                         "message"      => $message,
                         "sender_id"    => $feUser->id,
                         "recipient_id" => $iRecipientId,
@@ -188,7 +188,7 @@ class ForumController extends AbstractController
 
                     $db = Database::getInstance();
                     $stmt = $db->prepare("SELECT new_pm_redirect, mail_new_pm FROM tl_module WHERE id = ?");
-                    $result = $stmt->execute($forumModule)->fetchAssoc();
+                    $result = $stmt->execute(...[$forumModule])->fetchAssoc();
                     $this->container->get('contao.framework')->initialize();
                     $route = \Contao\System::getContainer()->get('contao.insert_tag.parser')->replace('{{link_url::' . $result['new_pm_redirect'] . '}}');
                     $user = FrontendUser::getInstance();

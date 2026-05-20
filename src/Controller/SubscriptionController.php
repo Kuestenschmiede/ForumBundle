@@ -18,7 +18,7 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Database;
 use Contao\Frontend;
 use Contao\FrontendUser;
-use Contao\ModuleModel;
+use Contao\System;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ class SubscriptionController extends AbstractController
     }
 
     public function changeForumSubscriptionAction(Request $request, string $language) {
-        \System::loadLanguageFile('subscriptions', $language);
+        System::loadLanguageFile('subscriptions', $language);
         try {
             if (!C4GUtils::isFrontendUserLoggedIn()) {
                 throw new \Exception("Frontenduser is not logged in.");
@@ -75,7 +75,7 @@ class SubscriptionController extends AbstractController
     }
 
     public function changeThreadSubscriptionAction(Request $request, string $language) {
-        \System::loadLanguageFile('subscriptions', $language);
+        System::loadLanguageFile('subscriptions', $language);
         try {
             if (!C4GUtils::isFrontendUserLoggedIn()) {
                 throw new \Exception("Frontenduser is not logged in.");

@@ -279,7 +279,7 @@ namespace con4gis\ForumBundle\Models;
          * @return \Database\Result
          */
         private static function getByField($field, $value){
-            return Database::getInstance()->prepare('SELECT * FROM '.self::$sTable." WHERE ".$field." = ? ORDER BY dt_created DESC;")->execute([$value]);
+            return Database::getInstance()->prepare('SELECT * FROM '.self::$sTable." WHERE ".$field." = ? ORDER BY dt_created DESC;")->execute(...[$value]);
         }
 
 
@@ -364,7 +364,7 @@ namespace con4gis\ForumBundle\Models;
          */
         public static function getField($id, $field)
         {
-            return Database::getInstance()->prepare('SELECT ' . $field . ' FROM ' . self::$sTable . " WHERE id= ?;")->execute([$id])->fetchAssoc();
+            return Database::getInstance()->prepare('SELECT ' . $field . ' FROM ' . self::$sTable . " WHERE id= ?;")->execute(...[$id])->fetchAssoc();
         }
 
 
@@ -381,7 +381,7 @@ namespace con4gis\ForumBundle\Models;
                 $operator = "!=";
             }
 
-            $aResult = Database::getInstance()->prepare('SELECT COUNT(id) as cnt FROM ' . self::$sTable . " WHERE recipient_id = ? AND ".$field." ".$operator." ?;")->execute([$user_id, $value])->fetchAssoc();
+            $aResult = Database::getInstance()->prepare('SELECT COUNT(id) as cnt FROM ' . self::$sTable . " WHERE recipient_id = ? AND ".$field." ".$operator." ?;")->execute(...[$user_id, $value])->fetchAssoc();
             if(!isset($aResult['cnt'])){
                 $aResult['cnt'] = 0;
             }
@@ -432,10 +432,10 @@ namespace con4gis\ForumBundle\Models;
             if($this->validate()) {
                 if ($update === false) {
                     $sSql = "INSERT INTO " . self::$sTable . " (recipient_id, sender_id, subject, message, status, dt_created) VALUES (?,?,?,?,?,?);";
-                    \Database::getInstance()->prepare($sSql)->execute([$this->getRecipientId(), $this->getSenderId(), $this->getSubject(), $this->getMessage(), $this->getStatus(), $this->getDtCreated()]);
+                    \Database::getInstance()->prepare($sSql)->execute(...[$this->getRecipientId(), $this->getSenderId(), $this->getSubject(), $this->getMessage(), $this->getStatus(), $this->getDtCreated()]);
                 } else {
                     $sSql = "UPDATE " . self::$sTable . " SET recipient_id = ?, sender_id = ?, subject = ?, message = ?, status = ?, dt_created = ? WHERE id = ?;";
-                    \Database::getInstance()->prepare($sSql)->execute([$this->getRecipientId(), $this->getSenderId(), $this->getSubject(), $this->getMessage(), $this->getStatus(), $this->getDtCreated(), $this->getId()]);
+                    \Database::getInstance()->prepare($sSql)->execute(...[$this->getRecipientId(), $this->getSenderId(), $this->getSubject(), $this->getMessage(), $this->getStatus(), $this->getDtCreated(), $this->getId()]);
                 }
             }else{
                 throw new \Exception("validation_error");
@@ -448,7 +448,7 @@ namespace con4gis\ForumBundle\Models;
          * @return array|false
          */
         private static function getMemberById($id){
-            return \Database::getInstance()->prepare('SELECT id, firstname, lastname, email, username FROM tl_member WHERE id= ?;')->execute([$id])->fetchAssoc();
+            return \Database::getInstance()->prepare('SELECT id, firstname, lastname, email, username FROM tl_member WHERE id= ?;')->execute(...[$id])->fetchAssoc();
         }
 
 
@@ -458,7 +458,7 @@ namespace con4gis\ForumBundle\Models;
          */
         public static function getMemberByUsername($sUsername){
 
-            return \Database::getInstance()->prepare('SELECT id, firstname, lastname, email, username FROM tl_member WHERE username = ? AND NOT disable = ?;')->execute([$sUsername,1])->fetchAssoc();
+            return \Database::getInstance()->prepare('SELECT id, firstname, lastname, email, username FROM tl_member WHERE username = ? AND NOT disable = ?;')->execute(...[$sUsername, 1])->fetchAssoc();
         }
 
 
@@ -469,7 +469,7 @@ namespace con4gis\ForumBundle\Models;
 
             //Todo Remove this function and all its calls
 
-            \System::loadLanguageFile('tl_c4g_forum_pn');
+            \Contao\System::loadLanguageFile('tl_c4g_forum_pn');
 
             $aRecipient = self::getMemberById($this->getRecipientId());
             $aSender = self::getMemberById($this->getSenderId());
@@ -503,7 +503,7 @@ namespace con4gis\ForumBundle\Models;
          */
         public function delete(){
             try {
-                \Database::getInstance()->prepare('DELETE FROM ' . self::$sTable . " WHERE id = ? LIMIT 1;")->execute([$this->getId()]);
+                \Database::getInstance()->prepare('DELETE FROM ' . self::$sTable . " WHERE id = ? LIMIT 1;")->execute(...[$this->getId()]);
                 return true;
             } catch (\Exception $e) {
                 return false;

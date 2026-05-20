@@ -37,7 +37,7 @@ class C4gForumPost extends Model
     {
         $t = static::$sTable;
         $oDatabase = \Contao\Database::getInstance();
-        $oResult = $oDatabase->prepare("SELECT id FROM $t WHERE author=?")->execute([$iMemberId]);
+        $oResult = $oDatabase->prepare("SELECT id FROM $t WHERE author=?")->execute(...[$iMemberId]);
 
         return $oResult->numRows;
     }

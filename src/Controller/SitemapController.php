@@ -32,7 +32,7 @@ class SitemapController extends AbstractController
         $statement = $database->prepare(
             'SELECT * FROM tl_module WHERE type = ? AND c4g_forum_sitemap = 1 AND c4g_forum_sitemap_filename = ?'
         );
-        $module = $statement->execute('c4g_forum', str_replace('.xml', '', $filename))->fetchAssoc();
+        $module = $statement->execute(...['c4g_forum', str_replace('.xml', '', $filename)])->fetchAssoc();
         if (!empty($module)) {
             $idfield = 'pid';
 

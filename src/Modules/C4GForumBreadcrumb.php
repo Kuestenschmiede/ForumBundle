@@ -125,7 +125,7 @@ use Contao\System;
             }
             $this->forumModule = $this->Database->prepare("SELECT * FROM tl_module WHERE id=?")
                 ->limit(1)
-                ->execute($_GET['c4g_forum_fmd']);
+                ->execute(...[$_GET['c4g_forum_fmd']]);
 
             if ($this->forumModule->numRows) {
 
@@ -204,7 +204,7 @@ use Contao\System;
             // redirect to defined page
             $objPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
                 ->limit(1)
-                ->execute([$this->c4g_forum_breadcrumb_jumpTo]);
+                ->execute(...[$this->c4g_forum_breadcrumb_jumpTo]);
 
             if ($objPage->numRows) {
                 $url = $this->generateFrontendUrl($objPage->fetchAssoc());

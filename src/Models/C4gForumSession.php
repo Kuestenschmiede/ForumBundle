@@ -15,7 +15,7 @@ namespace con4gis\ForumBundle\Models;
  * Class C4gForumSession
  * @package con4gis\ForumBundle\Models
  */
-class C4gForumSession extends \Model
+class C4gForumSession extends \Contao\Model
 {
 
     /**
@@ -39,7 +39,7 @@ class C4gForumSession extends \Model
         $oDatabase = \Contao\Database::getInstance();
         $oTimeStamp = $oDatabase->prepare(
             "SELECT tstampLastAction FROM $t WHERE id = ? AND tstampLastAction > ?"
-        )->execute([$iMemberId, $iTimeThreshold]);
+        )->execute(...[$iMemberId, $iTimeThreshold]);
 
         if ($oTimeStamp->numRows > 0) {
             return true;

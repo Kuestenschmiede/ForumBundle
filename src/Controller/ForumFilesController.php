@@ -44,13 +44,13 @@ class ForumFilesController
     {
         $database = Database::getInstance();
         $statement = $database->prepare('SELECT * FROM tl_c4g_forum_upload WHERE id = ?');
-        $uploadRow = $statement->execute($fileId)->fetchAssoc();
+        $uploadRow = $statement->execute(...[$fileId])->fetchAssoc();
         if ($uploadRow !== false) {
             $user = FrontendUser::getInstance();
             $statement = $database->prepare(
                 'SELECT f.* FROM tl_files f JOIN tl_c4g_forum_upload u ON f.uuid = u.fileUuid WHERE u.id = ?'
             );
-            $fileRow = $statement->execute($fileId)->fetchAssoc();
+            $fileRow = $statement->execute(...[$fileId])->fetchAssoc();
             if ($fileRow !== false) {
                 if ($user->id > 0) {
                     return new BinaryFileResponse('../'.$fileRow['path']);

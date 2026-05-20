@@ -78,13 +78,13 @@ class ForumUploadController
         $relativeUrl = 'files'.explode('files', $url)[1];
         $database = Database::getInstance();
         $statement = $database->prepare('SELECT uuid FROM tl_files WHERE path = ?');
-        $result = $statement->execute($relativeUrl)->fetchAssoc();
+        $result = $statement->execute(...[$relativeUrl])->fetchAssoc();
         if ($result !== false) {
             $database = Database::getInstance();
             $statement = $database->prepare(
                 'INSERT INTO tl_c4g_forum_upload (fileUuid) VALUES (?)'
             );
-            $statement->execute($result['uuid']);
+            $statement->execute(...[$result['uuid']]);
             $statement = $database->prepare('SELECT LAST_INSERT_ID() as id');
             $result = $statement->execute()->fetchAssoc();
             return (int) $result['id'];

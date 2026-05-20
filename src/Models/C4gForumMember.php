@@ -38,7 +38,7 @@ class C4gForumMember extends Model
     {
         $t = static::$sTable;
         $oDatabase = Database::getInstance();
-        $aMemberImage = $oDatabase->prepare("SELECT memberImage FROM $t WHERE id=?")->execute([$iMemberId])->fetchAssoc();
+        $aMemberImage = $oDatabase->prepare("SELECT memberImage FROM $t WHERE id=?")->execute(...[$iMemberId])->fetchAssoc();
         $sMemberImagePath = $aMemberImage['memberImage'];
 
         return $sMemberImagePath;
