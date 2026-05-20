@@ -15,13 +15,17 @@ use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\ForumBundle\Classes\C4GForumHelper;
 use Contao\Database;
+use Contao\Input;
+use Contao\Module;
+use Contao\PageModel;
+use Contao\System;
 
 
 /**
      * Class C4GForumBreadcrumb
      * @package con4gis\ForumBundle\Modules
      */
-    class C4GForumBreadcrumb extends \Module
+    class C4GForumBreadcrumb extends Module
     {
 
         /**
@@ -47,8 +51,8 @@ use Contao\Database;
         public function generate()
         {
 
-            if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
-                $objTemplate = new \BackendTemplate('be_wildcard');
+            if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
+                $objTemplate = new \Contao\BackendTemplate('be_wildcard');
 
                 $objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'][0] . ' ###';
                 $objTemplate->title    = $this->headline;
@@ -68,10 +72,13 @@ use Contao\Database;
          */
         protected function compile()
         {
+            $this->Database = Database::getInstance();
+            $this->Session = System::getContainer()->get('request_stack')->getSession();
+
             if (trim($this->c4g_forum_language) == '') {
 
                 //language get param or request_uri for language switcher sites
-                $getLang  = \Input::get('language');
+                $getLang  = Input::get('language');
                 if ($getLang) {
                     $this->c4g_forum_language_temp = $getLang;
                 } else if ($_SERVER["REQUEST_URI"]) {
@@ -83,11 +90,11 @@ use Contao\Database;
                 }
 
                 if ($this->c4g_forum_language_temp == '') {
-                    /** @var \PageModel $objPage */
-                    $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
+                    /** @var PageModel $objPage */
+                    $objPage = System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
 
                     //three other ways to get current language
-                    $pageLang = \Controller::replaceInsertTags('{{page::language}}');
+                    $pageLang = System::getContainer()->get('contao.insert_tag.parser')->replace('{{page::language}}');
                     if ($pageLang) {
                         $this->c4g_forum_language_temp = $pageLang;
                     } else if ($objPage && $objPage->language) {
@@ -103,15 +110,15 @@ use Contao\Database;
             $data = array();
             $this->loadLanguageFile('frontendModules', $this->c4g_forum_language_temp);
 
-            if (!$_GET['c4g_forum_fmd']) {
+            if (!($_GET['c4g_forum_fmd'] ?? null)) {
                 // try to get parameters from referer, if they don't exist
-                $session = $this->Session->getData();
-                list($urlpart, $qspart) = array_pad(explode('?', $session['referer']['current'], 2), 2, '');
+                $session = $this->Session->all();
+                list($urlpart, $qspart) = array_pad(explode('?', $session['referer']['current'] ?? '', 2), 2, '');
                 parse_str($qspart, $qsvars);
-                if ($qsvars['c4g_forum_fmd']) {
+                if ($qsvars['c4g_forum_fmd'] ?? null) {
                     $_GET['c4g_forum_fmd'] = $qsvars['c4g_forum_fmd'];
                 }
-                if ((!$_GET['c4g_forum_forum']) && ($qsvars['c4g_forum_forum'])) {
+                if (!($_GET['c4g_forum_forum'] ?? null) && ($qsvars['c4g_forum_forum'] ?? null)) {
                     $_GET['c4g_forum_forum'] = $qsvars['c4g_forum_forum'];
                 }
 
@@ -190,14 +197,14 @@ use Contao\Database;
         {
 
             $url      = false;
-            $headline = deserialize($this->forumModule->headline);
+            $headline = StringUtil::deserialize($this->forumModule->headline, true);
             $helper   = new C4GForumHelper($this->Database, null, null, $headline['value']);
             $path     = $helper->getForumPath($forumId, $this->forumModule->c4g_forum_startforum);
 
             // redirect to defined page
             $objPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
                 ->limit(1)
-                ->execute($this->c4g_forum_breadcrumb_jumpTo);
+                ->execute([$this->c4g_forum_breadcrumb_jumpTo]);
 
             if ($objPage->numRows) {
                 $url = $this->generateFrontendUrl($objPage->fetchAssoc());
@@ -218,7 +225,7 @@ use Contao\Database;
                     }
 
                     $pathname = $value['name'];
-                    $names = \Contao\StringUtil::deserialize($value['optional_names']);
+                    $names = \Contao\StringUtil::deserialize($value['optional_names'], true);
                     if ($names) {
                         foreach ($names as $name) {
                             if ($name['optional_language'] == $this->c4g_forum_language_temp) {

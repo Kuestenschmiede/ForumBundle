@@ -12,6 +12,7 @@
 namespace con4gis\ForumBundle\Classes;
 
 use Contao\Backend;
+use Contao\StringUtil;
 use Contao\System;
 
 /**
@@ -76,13 +77,13 @@ class C4GForumBackend extends Backend
             //back-button
             '
 			<div id="tl_buttons">
-				<a href="' . ampersand(str_replace('&key=build_index', '', $request->getUri())) . '" class="header_back" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['backBT']) . '" accesskey="b">' . $GLOBALS['TL_LANG']['MSC']['backBT'] . '</a>
+				<a href="' . StringUtil::ampersand(str_replace('&key=build_index', '', $request->getUri())) . '" class="header_back" title="' . \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['backBT']) . '" accesskey="b">' . $GLOBALS['TL_LANG']['MSC']['backBT'] . '</a>
 			</div>' .
             //headline
             '
 			<h2 class="sub_headline">' . $GLOBALS['TL_LANG']['tl_c4g_forum']['headline_index'][0] . '</h2>
 			' . System::getMessages() . '
-			<form action="' . ampersand($request->getUri(), true) . '" id="tl_c4g_forum_build_index" class="tl_form" method="post">
+			<form action="' . StringUtil::ampersand($request->getUri(), true) . '" id="tl_c4g_forum_build_index" class="tl_form" method="post">
 			<div class="tl_formbody_edit">
 				<input type="hidden" name="FORM_SUBMIT" value="tl_c4g_forum_build_index">
 				<input type="hidden" name="REQUEST_TOKEN" value="' . System::getContainer()->get('contao.csrf.token_manager')->getToken(System::getContainer()->getParameter('contao.csrf_token_name'))->getValue() . '">
@@ -152,7 +153,7 @@ class C4GForumBackend extends Backend
             '
 			<div class="tl_formbody_submit">
 				<div align="center" class="tl_submit_container">
-					<input type="submit" name="index" id="index" class="tl_submit" accesskey="i" value="' . specialchars($GLOBALS['TL_LANG']['tl_c4g_forum']['index'][0]) . '">
+					<input type="submit" name="index" id="index" class="tl_submit" accesskey="i" value="' . \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['tl_c4g_forum']['index'][0]) . '">
 				</div>
 			</div>
 			</form>';

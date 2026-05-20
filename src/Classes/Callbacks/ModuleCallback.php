@@ -8,12 +8,12 @@ class ModuleCallback
 {
     public function getImageSizes()
     {
-        return System::getContainer()->get('contao.image.image_sizes')->getAllOptions();
+        return System::getContainer()->get('contao.image.sizes')->getOptionsForUser(System::getContainer()->get('security.helper')->getUser());
     }
 
     public function getLanguages()
     {
-        return System::getLanguages();
+        return System::getContainer()->get('contao.intl.locales')->getEnabledLocales();
     }
 
     public function updateSitemap($value, $dc)

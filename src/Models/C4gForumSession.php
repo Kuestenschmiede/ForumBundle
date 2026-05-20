@@ -36,10 +36,10 @@ class C4gForumSession extends \Model
         $t = static::$sTable;
         $iTimeThreshold = time() - $iThreshold;
 
-        $oDatabase = \Database::getInstance();
+        $oDatabase = \Contao\Database::getInstance();
         $oTimeStamp = $oDatabase->prepare(
             "SELECT tstampLastAction FROM $t WHERE id = ? AND tstampLastAction > ?"
-        )->execute($iMemberId, $iTimeThreshold);
+        )->execute([$iMemberId, $iTimeThreshold]);
 
         if ($oTimeStamp->numRows > 0) {
             return true;

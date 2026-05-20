@@ -10,11 +10,14 @@
  */
 namespace con4gis\ForumBundle\Models;
 
+use Contao\Database;
+use Contao\Model;
+
 /**
  * Class C4gForumMember
  * @package con4gis\ForumBundle\Models;
  */
-class C4gForumMember extends \Model
+class C4gForumMember extends Model
 {
 
     /**
@@ -34,8 +37,8 @@ class C4gForumMember extends \Model
     public static function getAvatarByMemberId($iMemberId)
     {
         $t = static::$sTable;
-        $oDatabase = \Database::getInstance();
-        $aMemberImage = $oDatabase->prepare("SELECT memberImage FROM $t WHERE id=?")->execute($iMemberId)->fetchAssoc();
+        $oDatabase = Database::getInstance();
+        $aMemberImage = $oDatabase->prepare("SELECT memberImage FROM $t WHERE id=?")->execute([$iMemberId])->fetchAssoc();
         $sMemberImagePath = $aMemberImage['memberImage'];
 
         return $sMemberImagePath;

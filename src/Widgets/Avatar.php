@@ -16,7 +16,7 @@ use Contao\Folder;
 use Contao\System;
 use Contao\Widget;
 
-class Avatar extends Widget implements \uploadable
+class Avatar extends Widget
 {
     /**
      * Submit user input

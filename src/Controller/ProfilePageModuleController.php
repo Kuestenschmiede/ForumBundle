@@ -84,7 +84,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
             'SELECT COUNT(0) as threads FROM tl_c4g_forum_thread WHERE author = ?'
         );
         $member['threadCount'] = $statement->execute($member['id'])->fetchAssoc()['threads'];
-        $member['avatarUrl'] = StringUtil::deserialize($member['memberImage'])[0];
+        $member['avatarUrl'] = StringUtil::deserialize($member['memberImage'], true)[0];
 
         switch ($model->c4g_forum_show_realname) {
             case 'UU';
@@ -122,7 +122,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
         if ($stats !== []) {
             $userStatistics = [];
             System::loadLanguageFile('tl_member');
-            Controller::loadDataContainer('tl_member');
+            (new \Contao\DcaLoader('tl_member'))->load();
             foreach ($stats as $stat) {
                 $translation = $GLOBALS['TL_DCA']['tl_member']['fields'][$stat]['label'][0] ?:
                     $GLOBALS['TL_LANG']['tl_member'][$stat][0] ?: '';

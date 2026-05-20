@@ -36,8 +36,8 @@ class C4gForumPost extends Model
     public static function getMemberPostsCountById($iMemberId)
     {
         $t = static::$sTable;
-        $oDatabase = \Database::getInstance();
-        $oResult = $oDatabase->prepare("SELECT id FROM $t WHERE author=?")->execute($iMemberId);
+        $oDatabase = \Contao\Database::getInstance();
+        $oResult = $oDatabase->prepare("SELECT id FROM $t WHERE author=?")->execute([$iMemberId]);
 
         return $oResult->numRows;
     }

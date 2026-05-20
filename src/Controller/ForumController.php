@@ -17,6 +17,7 @@ use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\ForumBundle\Classes\C4GForumNotification;
 use con4gis\ForumBundle\Models\C4gForumPn;
 use con4gis\ForumBundle\Modules\C4GForum;
+use Contao\Database;
 use Contao\CoreBundle\Controller\AbstractController;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\FrontendUser;
@@ -44,7 +45,6 @@ class ForumController extends AbstractController
             $request->request->set('post', $post);
         }
         $feUser = FrontendUser::getInstance();
-        $feUser->authenticate();
         if (!isset( $id ) || !is_numeric( $id )) {
             $response->setStatusCode(400);
         }
@@ -76,7 +76,7 @@ class ForumController extends AbstractController
                 $response->setData('Forbidden');
                 $response->setStatusCode(403);
             }
-            $groups = deserialize($objModule->groups);
+            $groups = StringUtil::deserialize($objModule->groups, true);
             if (!is_array($groups) || count($groups) < 1 || count(array_intersect($groups, $feUser->groups)) < 1)
             {
                 $response->setData('Forbidden');
@@ -103,7 +103,6 @@ class ForumController extends AbstractController
     {
         $response = new JsonResponse();
         $feUser = FrontendUser::getInstance();
-        $feUser->authenticate();
         if (!C4GUtils::isFrontendUserLoggedIn()) {
             $response->setStatusCode(400);
             return $response;
@@ -153,18 +152,18 @@ class ForumController extends AbstractController
                         $forumModule = $session->get('pm-forum-module');
                     }
                     if (!empty($sRecipient)) {
-                        $db = \Database::getInstance();
+                        $db = Database::getInstance();
                         $stmt = $db->prepare("SELECT * FROM tl_member WHERE username = ? AND NOT disable = ?");
-                        $result = $stmt->execute($sRecipient, 1);
+                        $result = $stmt->execute([$sRecipient, 1]);
                         $aRecipient = $result->fetchAssoc();
                         if (empty($aRecipient)) {
                             throw new \Exception($GLOBALS['TL_LANG']['tl_c4g_forum_pn']['member_not_found']);
                         }
                         $iRecipientId = $aRecipient['id'];
                     } elseif (!empty($iRecipientId)) {
-                        $db = \Database::getInstance();
+                        $db = Database::getInstance();
                         $stmt = $db->prepare("SELECT * FROM tl_member WHERE id = ? AND NOT disable = ?");
-                        $result = $stmt->execute($iRecipientId, 1);
+                        $result = $stmt->execute([$iRecipientId, 1]);
                         $aRecipient = $result->fetchAssoc();
                         if (empty($aRecipient)) {
                             throw new \Exception($GLOBALS['TL_LANG']['tl_c4g_forum_pn']['member_not_found']);
@@ -187,11 +186,11 @@ class ForumController extends AbstractController
                     /** Notification Center */
                     /** Get forum module settings  */
 
-                    $db = \Database::getInstance();
+                    $db = Database::getInstance();
                     $stmt = $db->prepare("SELECT new_pm_redirect, mail_new_pm FROM tl_module WHERE id = ?");
                     $result = $stmt->execute($forumModule)->fetchAssoc();
                     $this->container->get('contao.framework')->initialize();
-                    $route = \Contao\Controller::replaceInsertTags('{{link_url::' . $result['new_pm_redirect'] . '}}');
+                    $route = \Contao\System::getContainer()->get('contao.insert_tag.parser')->replace('{{link_url::' . $result['new_pm_redirect'] . '}}');
                     $user = FrontendUser::getInstance();
 
                     try {

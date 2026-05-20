@@ -28,7 +28,8 @@ class PageUrlService
             Input::setGet('item', Input::get('auto_item'));
         }
         $this->alias = Input::get('item') ? urlencode(Input::get('item')) : '';
-        $this->pageUrl = Environment::get('base') . Environment::get('request');
+        $request = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+        $this->pageUrl = ($request ? $request->getSchemeAndHttpHost() . $request->getBasePath() . $request->getRequestUri() : '');
         if ($this->alias !== '') {
             $this->basePageUrl = str_replace('/' . $this->alias, '', $this->pageUrl);
         } else {

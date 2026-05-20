@@ -23,7 +23,7 @@ class BackendCallback
     public function getUserStatisticOptions(DataContainer $dc): array
     {
         System::loadLanguageFile('tl_member');
-        Controller::loadDataContainer('tl_member');
+        (new \Contao\DcaLoader('tl_member'))->load();
         $database = Database::getInstance();
         $fields = $database->listFields('tl_member');
         $options = [];
@@ -49,17 +49,17 @@ class BackendCallback
                     continue 2;
             }
 
-            $dcaField = $GLOBALS['TL_DCA']['tl_member']['fields'][$field['name']];
-            if (!is_array($dcaField) || $dcaField['inputType'] !== 'text') {
+            $dcaField = $GLOBALS['TL_DCA']['tl_member']['fields'][$field['name']] ?? null;
+            if (!is_array($dcaField) || ($dcaField['inputType'] ?? '') !== 'text') {
                 continue;
             }
 
             try {
-                if (is_string($dcaField['sql'])) {
+                if (is_string($dcaField['sql'] ?? null)) {
                     if (C4GUtils::stringContainsAny($dcaField['sql'], ['blob', 'binary', 'text'])) {
                         continue;
                     }
-                } elseif (is_array($dcaField['sql']) && is_string($dcaField['sql']['type'])) {
+                } elseif (is_array($dcaField['sql'] ?? null) && is_string($dcaField['sql']['type'] ?? null)) {
                     switch ($dcaField['sql']['type']) {
                         case 'blob':
                         case 'binary':
@@ -72,15 +72,15 @@ class BackendCallback
             } catch (Throwable $throwable) {
                 continue;
             }
-            if ($dcaField['eval']['datepicker'] === true) {
+            if (($dcaField['eval']['datepicker'] ?? false) === true) {
                 continue;
             }
-            if ($dcaField['eval']['allowHtml'] === true || $dcaField['eval']['preserveTags'] === true) {
+            if (($dcaField['eval']['allowHtml'] ?? false) === true || ($dcaField['eval']['preserveTags'] ?? false) === true) {
                 continue;
             }
 
-            $translation = $GLOBALS['TL_DCA']['tl_module']['fields'][$field['name']]['label'][0] ?:
-                $GLOBALS['TL_LANG']['tl_member'][$field['name']][0] ?: '';
+            $translation = ($GLOBALS['TL_DCA']['tl_module']['fields'][$field['name']]['label'][0] ?? null) ?:
+                ($GLOBALS['TL_LANG']['tl_member'][$field['name']][0] ?? null) ?: '';
             if (is_string($translation) && $translation !== '') {
                 $options[$field['name']] = $translation;
             }

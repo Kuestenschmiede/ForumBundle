@@ -54,16 +54,16 @@ class ReactionApiController extends AbstractController
         $stmt = $database->prepare(
             'SELECT * FROM tl_c4g_forum_post_reaction WHERE postId = ? AND memberId = ? AND reactionId = ?'
         );
-        if ($stmt->execute($postId, $user->id, $reactionId)->numRows < 1) {
+        if ($stmt->execute([$postId, $user->id, $reactionId])->numRows < 1) {
             $stmt = $database->prepare(
                 'INSERT INTO tl_c4g_forum_post_reaction(postId, memberId, reactionId) VALUES (?, ?, ?)'
             );
-            $stmt->execute($postId, $user->id, $reactionId);
+            $stmt->execute([$postId, $user->id, $reactionId]);
         } else {
             $stmt = $database->prepare(
                 'DELETE FROM tl_c4g_forum_post_reaction WHERE postId = ? AND memberId = ? AND reactionId = ?'
             );
-            $stmt->execute($postId, $user->id, $reactionId);
+            $stmt->execute([$postId, $user->id, $reactionId]);
         }
 
         return new JsonResponse([], Response::HTTP_OK);

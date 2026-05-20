@@ -1,5 +1,4 @@
 <?php
-
 echo '<div class="'.$this->class.' block"'.$this->cssID;
 if ($this->style):
   echo 'style="'.$this->style.'"';
@@ -10,12 +9,49 @@ echo '>';
 
 <script>
 
-(function() {
-if (typeof(jQuery)=='undefined') {
-  window.setTimeout( "document.getElementById('<?php echo $this->c4gdata['div']; ?>').innerHTML = '<h1>jQuery missing</h1>'", 500);
+(function($) {
+if (typeof($)=='undefined') {
+  window.setTimeout( function() {
+      if (typeof(window.jQuery)=='undefined' || typeof(window.$)=='undefined' || typeof(c4g) == 'undefined' || typeof(c4g.projects) == 'undefined' || typeof(c4g.projects.c4gGui) == 'undefined') {
+          var el = document.getElementById('<?php echo $this->c4gdata['div']; ?>');
+          if (el && el.innerHTML === '') {
+              el.innerHTML = '<h1>jQuery or con4gis GUI missing</h1>';
+          }
+      }
+  }, 1000);
   return;
 } else {
-	jQuery(document).ready(function() {
+    if (typeof($.fn.chosen) == 'undefined') {
+        $.getScript('bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.jquery.min.js');
+    }
+	$(document).ready(function() {
+        console.log("con4gis forum c4gdata:", <?php echo json_encode($this->c4gdata); ?>);
+        if (typeof(c4g) == 'undefined' || typeof(c4g.projects) == 'undefined' || typeof(c4g.projects.c4gGui) == 'undefined') {
+            var el = document.getElementById('<?php echo $this->c4gdata['div']; ?>');
+            if (el && el.innerHTML === '') {
+                el.innerHTML = '<h1>con4gis GUI not loaded</h1>';
+            }
+            return;
+        }
+        
+        var initData = <?php echo ($this->c4gdata['initData'] ?? 'null'); ?>;
+        if (typeof initData === 'string' && (initData.indexOf('[') === 0 || initData.indexOf('{') === 0)) {
+            try {
+                var parsedData = JSON.parse(initData);
+                if (parsedData !== null) {
+                    initData = parsedData;
+                }
+            } catch(e) {
+                console.error("con4gis forum error parsing initData:", e);
+            }
+        }
+        if (!initData || (Array.isArray(initData) && initData.length === 0) || (typeof initData === 'object' && Object.keys(initData).length === 0) || (typeof initData === 'object' && Object.keys(initData).length === 1 && initData.hasOwnProperty('phpErrors'))) {
+            var el = document.getElementById('<?php echo $this->c4gdata['div']; ?>');
+            if (el && el.innerHTML === '') {
+                 el.innerHTML = '<h1>No forum data available - check permissions</h1>';
+            }
+        }
+
 		<?php
 
                 echo "c4g.projects = c4g.projects || {};";
@@ -23,17 +59,17 @@ if (typeof(jQuery)=='undefined') {
 				"id: ".$this->c4gdata['id'].", ".
 				"height: '" . $this->c4gdata['height'] ."', ".
 				"width: '" . $this->c4gdata['width'] ."', ".
-				"ajaxUrl: '" . $this->c4gdata['forumAjaxUrl'] . "', ".
-				"ajaxData: '" . $this->c4gdata['ajaxData'] ."', ".
-				"initData: " . $this->c4gdata['initData'] .", ".
-				"jquiBreadcrumb: '" . $this->c4gdata['jquiBreadcrumb'] ."', ".
-				"jquiButtons: '" . $this->c4gdata['jquiButtons'] ."', ".
-				"breadcrumbDelim: '" . $this->c4gdata['breadcrumbDelim'] . "', ".
-				"embedDialogs: '" . $this->c4gdata['embedDialogs'] ."', ".
-				"jquiEmbeddedDialogs: '" . $this->c4gdata['jquiEmbeddedDialogs'] ."', ".
-				"contaoPath: '" . \Contao\Environment::get('base')."', ".
+				"ajaxUrl: '" . ($this->c4gdata['forumAjaxUrl'] ?? '') . "', ".
+				"ajaxData: '" . ($this->c4gdata['ajaxData'] ?? '') ."', ".
+				"initData: " . ($this->c4gdata['initData'] ?? 'null') .", ".
+				"jquiBreadcrumb: '" . ($this->c4gdata['jquiBreadcrumb'] ?? '') ."', ".
+				"jquiButtons: '" . ($this->c4gdata['jquiButtons'] ?? '') ."', ".
+				"breadcrumbDelim: '" . ($this->c4gdata['breadcrumbDelim'] ?? '') . "', ".
+				"embedDialogs: '" . ($this->c4gdata['embedDialogs'] ?? '') ."', ".
+				"jquiEmbeddedDialogs: '" . ($this->c4gdata['jquiEmbeddedDialogs'] ?? '') ."', ".
+    "contaoPath: '" . (\Contao\System::getContainer()->get('request_stack')->getCurrentRequest() ? \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->getBasePath() : '') ."', ".
 				"contaoLanguage: '" . $this->c4gdata['currentLanguage'] . "'," .
-                "mainDiv: jQuery('div#". $this->c4gdata['div']."' ),";
+                "mainDiv: $('div#". $this->c4gdata['div']."' ),";
 		if ($this->c4gdata['navPanel']) {
 			echo "navPanel: true";
 		}
@@ -47,7 +83,7 @@ if (typeof(jQuery)=='undefined') {
 
 	});
 }
-})();
+})(window.jQuery || window.$);
 </script>
 <div id="<?php echo $this->c4gdata['div']; ?>"></div>
 <br />

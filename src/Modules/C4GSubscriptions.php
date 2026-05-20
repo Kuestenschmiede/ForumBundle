@@ -14,12 +14,14 @@ use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gSettingsModel;
 use con4gis\ForumBundle\Models\C4GForumSubscriptionModel;
 use con4gis\ForumBundle\Models\C4GThreadSubscriptionModel;
+use Contao\Module;
+use Contao\System;
 
 /**
  * Class C4GSubscriptionOverview
  * @package con4gis\ForumBundle\Modules
  */
-class C4GSubscriptions extends \Module
+class C4GSubscriptions extends Module
 {
     protected $strTemplate = 'mod_c4g_forum_subscriptions';
 
@@ -28,8 +30,8 @@ class C4GSubscriptions extends \Module
      */
     public function generate()
     {
-        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
-            $objTemplate = new \BackendTemplate('be_wildcard');
+        if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
+            $objTemplate = new \Contao\BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . strtoupper($GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
@@ -39,9 +41,10 @@ class C4GSubscriptions extends \Module
             return $objTemplate->parse();
         }
 
-        if (!$_POST && $this->redirectBack && ($strReferer = $this->getReferer()) != \Environment::get('request'))
+        $request = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+        if ($request && !$_POST && $this->redirectBack && ($strReferer = $this->getReferer()) != ($request ? $request->getRequestUri() : ''))
         {
-            $_SESSION['LAST_PAGE_VISITED'] = $strReferer;
+            $request->getSession()->set('LAST_PAGE_VISITED', $strReferer);
         }
 
         return parent::generate();
@@ -61,9 +64,9 @@ class C4GSubscriptions extends \Module
             ResourceLoader::loadJqueryUiTheme(C4gSettingsModel::findSettings()->c4g_uitheme_css_select);
         }
 
-        \System::loadLanguageFile('subscriptions');
+        \Contao\System::loadLanguageFile('subscriptions');
         $template = $this->Template;
-        $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
+        $objPage = System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
         $template->language = $objPage->language;
         $template->sub_forum_headline = $this->sub_forum_headline !== '' ? $this->sub_forum_headline : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_HEAD'];
         $template->sub_forum_change_sub_caption = $this->sub_forum_change_sub_caption !== '' ? $this->sub_forum_change_sub_caption : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_CHANGE'];

@@ -44,7 +44,7 @@ class ForumCallback
         $id = $db->fetchOne("SELECT id FROM tl_c4g_forum WHERE pid=?", [$row['id']]);
 
         if ($id) {
-            return '<a href="' . Backend::addToUrl($href . '&amp;id=' . $row['id']) . '" title="' . specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
+            return '<a href="' . Backend::addToUrl($href . '&amp;id=' . $row['id']) . '" title="' . \Contao\StringUtil::specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
         } else {
             return Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)) . ' ';
         }
@@ -102,7 +102,10 @@ class ForumCallback
 
     public function get_label($row, $label, DataContainer $dc, $args)
     {
-        return $args[0];
+        if (is_array($args) && isset($args[0])) {
+            return $args[0];
+        }
+        return $label;
     }
 
     public function remove_bb($row, $href, $label, $title, $icon, $attributes)
@@ -118,7 +121,7 @@ class ForumCallback
     public function forumThread($row, $href, $label, $title, $icon)
     {
         $href .= "&amp;id=" . $row['id'];
-        return '<a href="' . Backend::addToUrl($href) . '" title="' . specialchars($title) . '">' . Image::getHtml($icon, $label) . '</a> ';
+        return '<a href="' . Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '">' . Image::getHtml($icon, $label) . '</a> ';
     }
 
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
@@ -140,7 +143,7 @@ class ForumCallback
             $icon = 'invisible.svg';
         }
 
-        return '<a href="' . Backend::addToUrl($href) . '" title="' . specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
+        return '<a href="' . Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
     }
 
     public function toggleVisibility($intId, $blnVisible)
@@ -159,8 +162,7 @@ class ForumCallback
 
     public function getGuestRightList(DataContainer $dc)
     {
-        $db = System::getContainer()->get('database_connection');
-        $helper = new \con4gis\ForumBundle\Classes\C4GForumHelper($db);
+        $helper = new \con4gis\ForumBundle\Classes\C4GForumHelper();
         $rights = $helper->getGuestRightList();
         $return = [];
         foreach ($rights as $right) {
@@ -171,8 +173,7 @@ class ForumCallback
 
     public function getRightList(DataContainer $dc)
     {
-        $db = System::getContainer()->get('database_connection');
-        $helper = new \con4gis\ForumBundle\Classes\C4GForumHelper($db);
+        $helper = new \con4gis\ForumBundle\Classes\C4GForumHelper();
         $rights = $helper->getRightList();
         $return = [];
         foreach ($rights as $right) {
@@ -184,16 +185,15 @@ class ForumCallback
     public function onSubmit(DataContainer $dc)
     {
         if ($dc->activeRecord) {
-            $db = System::getContainer()->get('database_connection');
-            $helper = new \con4gis\ForumBundle\Classes\C4GForumHelper($db);
-            $helper->updateForumRightsAndGroupInheritance($dc->activeRecord->id, $dc->activeRecord->pid);
-            $helper->updateMapEnabledInheritance($dc->activeRecord->id, $dc->activeRecord->pid);
+            $helper = new \con4gis\ForumBundle\Classes\C4GForumHelper();
+            $helper->updateForumRightsAndGroupInheritance((int)$dc->activeRecord->id, (int)$dc->activeRecord->pid);
+            $helper->updateMapEnabledInheritance((int)$dc->activeRecord->id, (int)$dc->activeRecord->pid);
         }
     }
 
     public function pickLinkUrl(DataContainer $dc)
     {
-        return ' <a href="contao/page.php?do=' . Input::get('do') . '&amp;table=' . $dc->table . '&amp;field=' . $dc->field . '&amp;value=' . str_replace(array('{{link_url::', '}}'), '', $dc->value) . '" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']) . '" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'' . specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])) . '\',\'url\':this.href,\'id\':\'' . $dc->field . '\',\'tag\':\'ctrl_' . $dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '') . '\',\'self\':this});return false">' . Image::getHtml('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
+        return ' <a href="contao/page.php?do=' . Input::get('do') . '&amp;table=' . $dc->table . '&amp;field=' . $dc->field . '&amp;value=' . str_replace(array('{{link_url::', '}}'), '', $dc->value) . '" title="' . \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']) . '" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'' . \Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])) . '\',\'url\':this.href,\'id\':\'' . $dc->field . '\',\'tag\':\'ctrl_' . $dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '') . '\',\'self\':this});return false">' . Image::getHtml('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
     }
 
     public function get_maps(DataContainer $dc)
@@ -260,7 +260,7 @@ class ForumCallback
     public function forumPost($row, $href, $label, $title, $icon)
     {
         $href .= "&amp;id=" . $row['id'];
-        return '<a href="' . Backend::addToUrl($href) . '" title="' . specialchars($title) . '">' . Image::getHtml($icon, $label) . '</a> ';
+        return '<a href="' . Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '">' . Image::getHtml($icon, $label) . '</a> ';
     }
 
     public function saveDefaultThread(DataContainer $dc)

@@ -37,28 +37,41 @@ use Contao\System;
 $GLOBALS['c4gForumErrors'] = array();
 $GLOBALS['c4gForumSearchParamCache'] = array();
 
+if (!function_exists('array_insert')) {
+    /**
+     * @param array $array
+     * @param int   $position
+     * @param array $insert
+     */
+    function array_insert(&$array, $position, $insert)
+    {
+        array_splice($array, $position, 0, $insert);
+    }
+}
+
 /**
  * to catch warnings etc. and put them into the ajax response separately
  */
-function c4gForumErrorHandler($code, $text, $file, $line)
-{
-
-    if ($code != E_NOTICE) {
-        if ($code & error_reporting()) {
-            $error['code'] = $code;
-            $error['text'] = $text;
-            $error['file'] = $file;
-            $error['line'] = $line;
-            $GLOBALS['c4gForumErrors'][] = $error;
+    function c4gForumErrorHandler($code, $text, $file, $line)
+    {
+        if ($code != E_NOTICE && $code != E_STRICT && $code != E_DEPRECATED && $code != E_USER_DEPRECATED) {
+            if ($code & error_reporting()) {
+                $error['code'] = $code;
+                $error['text'] = $text;
+                $error['file'] = $file;
+                $error['line'] = $line;
+                $GLOBALS['c4gForumErrors'][] = $error;
+                \Contao\System::getContainer()->get('monolog.logger.contao')->error('Forum Error: ' . $text . ' in ' . $file . ' on line ' . $line);
+            }
         }
+        return true;
     }
-}
 
 /**
  * Class C4GForum
  * @package con4gis\ForumBundle\Modules
  */
-class C4GForum extends \Module
+class C4GForum extends Module
 {
 
     /**
@@ -108,14 +121,17 @@ class C4GForum extends \Module
     public function __construct($objModule, $strColumn = 'main')
     {
         parent::__construct($objModule, $strColumn);
-        $this->helper = new C4GForumHelper($this->Database, null, FrontendUser::getInstance(), "", "", "UU", $this->c4g_forum_type);
-        $this->User = FrontendUser::getInstance();
+        $this->Database = \Contao\Database::getInstance();
+        $this->Session = \Contao\System::getContainer()->get('request_stack')->getSession();
+        $this->User = \Contao\FrontendUser::getInstance();
 
-        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/historyPush.js|async|static');
-        ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/icons.min.css');
-        ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/c4g-vendor-trix.js');
-        ResourceLoader::loadCssResource('bundles/con4gisprojects/dist/css/trix.min.css');
-        $editorOptions = StringUtil::deserialize($this->c4g_editor_options, true);
+        $this->helper = new C4GForumHelper($this->Database, null, $this->User, $this->c4g_forum_sub_title, "", "", "UU", $this->c4g_forum_type);
+
+        \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/historyPush.js');
+        \con4gis\CoreBundle\Classes\ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/icons.min.css');
+        \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResource('bundles/con4gisprojects/dist/js/c4g-vendor-trix.js');
+        \con4gis\CoreBundle\Classes\ResourceLoader::loadCssResource('bundles/con4gisprojects/dist/css/trix.min.css');
+        $editorOptions = \Contao\StringUtil::deserialize($this->c4g_editor_options, true);
         $this->get = [];
         if (!empty($editorOptions)) {
             foreach ($editorOptions as $editorOption) {
@@ -130,10 +146,10 @@ class C4GForum extends \Module
         if (!$this->page) {
             $this->page = \Contao\PageModel::findAll()->current(); // Fallback or better use service
         }
-        ResourceLoader::loadJavaScriptResource(
+        \con4gis\CoreBundle\Classes\ResourceLoader::loadJavaScriptResource(
             'bundles/con4gisprojects/dist/js/trixconfig.php?'.
             'lang='.($this->page->language !== null ? $this->page->language : 'de').'&'.implode('&', $this->get),
-            ResourceLoader::JAVASCRIPT,
+            \con4gis\CoreBundle\Classes\ResourceLoader::JAVASCRIPT,
             'trix-config'
         );
     }
@@ -145,11 +161,11 @@ class C4GForum extends \Module
      */
     public function generate()
     {
+        $request = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+        if ($request && \Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
+            $objTemplate = new \Contao\BackendTemplate('be_wildcard');
 
-        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
-            $objTemplate = new \BackendTemplate('be_wildcard');
-
-            $objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['FMD']['c4g_forum'][0] . ' ###';
+            $objTemplate->wildcard = '### ' . ($GLOBALS['TL_LANG']['FMD']['c4g_forum'][0] ?? 'con4gis Forum') . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->title;
@@ -157,7 +173,8 @@ class C4GForum extends \Module
 
             return $objTemplate->parse();
         }
-        if (array_key_exists('_escaped_fragment_', $_GET)) {
+
+        if ($request && $request->query->has('_escaped_fragment_')) {
             $this->strTemplate = 'mod_c4g_forum_plainhtml';
             $this->plainhtml = true;
         }
@@ -169,12 +186,17 @@ class C4GForum extends \Module
     /**
      * Generate module
      */
-    protected function compile()
+    public function compile()
     {
         $this->setTempLanguage();
 
         if (C4GUtils::isFrontendUserLoggedIn()) {
-            \System::import('FrontendUser', 'User');
+            $this->User = \Contao\FrontendUser::getInstance();
+        } else {
+            // Ensure User property is at least an empty object or null, not uninitialized
+            if (!isset($this->User)) {
+                $this->User = null;
+            }
         }
 
         $this->initMembers();
@@ -203,22 +225,23 @@ class C4GForum extends \Module
 
         //Override JQuery UI Default Theme CSS if defined
         if ($this->c4g_forum_uitheme_css_src) {
-            $objFile = \FilesModel::findByUuid($this->c4g_forum_uitheme_css_src);
-            if (!empty($objFile)) {
+            $objFile = \Contao\FilesModel::findByUuid($this->c4g_forum_uitheme_css_src);
+            if (!empty($objFile) && !empty($objFile->path)) {
                 $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
             }
         } else if (!empty($this->c4g_forum_uitheme_css_select) && ($this->c4g_forum_uitheme_css_select != 'settings')) {
             $theme = $this->c4g_forum_uitheme_css_select;
             $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
         } else {
-            $settings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
+            $settings = \Contao\Database::getInstance()->prepare("SELECT * FROM tl_c4g_settings LIMIT 1")->execute()->fetchAssoc();
 
-            if ($settings) {
-                $settings = $settings[0];
-            }
             if ($settings && $settings['c4g_appearance_themeroller_css']) {
-                $objFile = \FilesModel::findByUuid($this->settings['c4g_appearance_themeroller_css']);
-                $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
+                $objFile = \Contao\FilesModel::findByUuid($settings['c4g_appearance_themeroller_css']);
+                if ($objFile && $objFile->path) {
+                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
+                } else {
+                    $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
+                }
             } else if ($settings && $settings['c4g_uitheme_css_select']) {
                 $theme = $settings['c4g_uitheme_css_select'];
                 $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
@@ -226,7 +249,6 @@ class C4GForum extends \Module
                 $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/base/jquery-ui.css';
             }
         }
-
 
         /**
          * change rating star color
@@ -241,10 +263,6 @@ class C4GForum extends \Module
         // set global js var to inidcate api endpoint
         $data['forumAjaxUrl'] = "con4gis/forumService";
         $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
-        $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/forumPnService/".
-            ($objPage->language ?: "de")
-            ."';</script>";
-        $GLOBALS['TL_HEAD'][] = "<script>var uploadApiUrl = 'con4gis/api/fileUpload/';</script>";
 
 
         // $data['ajaxData'] = "action=fmd&id=".$this->id."&language=".$GLOBALS['TL_LANGUAGE']."&page=".$objPage->id;
@@ -253,27 +271,71 @@ class C4GForum extends \Module
         $data['currentLanguage'] =
             (array_key_exists('currentLanguage', $data) && $data['currentLanguage']) ?: $GLOBALS['TL_LANGUAGE'];
 
-        $size = deserialize($this->c4g_forum_size, true);
+        $size = StringUtil::deserialize($this->c4g_forum_size, true);
         $data['width'] = ($size[0] != 0) ? $size[0] . $size[2] : 'auto';
         $data['height'] = ($size[1] != 0) ? $size[1] . $size[2] : 'auto';
 
         if (array_key_exists('state', $_GET)) {
-            $request = $_GET['state'];
+            $requestParam = $_GET['state'];
         } else {
-            $request = 'initnav';
+            $requestParam = 'initnav';
         }
-        $data['initData'] = $this->generateAjax($request);
+
+        $initData = $this->generateAjax($requestParam);
+
+        if (($requestParam === 'initnav')) {
+            $decoded = is_string($initData) ? json_decode($initData, true) : $initData;
+            if (empty($decoded) || (is_array($decoded) && (empty($decoded['contentdata']) || strpos($decoded['contentdata'], 'No forum data available') !== false))) {
+                $oldStart = $this->c4g_forum_startforum;
+                $this->c4g_forum_startforum = 0;
+                $oldNav = $this->c4g_forum_navigation;
+                $this->c4g_forum_navigation = 'BOXES';
+                $initData = $this->generateAjax('initnav');
+                $decoded = is_string($initData) ? json_decode($initData, true) : $initData;
+
+                if (empty($decoded) || (is_array($decoded) && (empty($decoded['contentdata']) || strpos($decoded['contentdata'], 'No forum data available') !== false))) {
+                    $rootForums = $this->helper->getForumsFromDB(0, false, false, 'id', true);
+                    if (!empty($rootForums)) {
+                        $initData = $this->getForumInBoxes(0, false);
+                    }
+                }
+                $this->c4g_forum_startforum = $oldStart;
+                $this->c4g_forum_navigation = $oldNav;
+            }
+        }
+
+        $data['initData'] = json_encode($initData, JSON_PARTIAL_OUTPUT_ON_ERROR);
+        if (is_string($initData) && (strpos($initData, '{') === 0 || strpos($initData, '[') === 0)) {
+             $data['initData'] = $initData;
+        }
+
+        if (!empty($GLOBALS['c4gForumErrors'])) {
+            $initDataObj = $initData;
+            if (!is_array($initDataObj)) {
+                $initDataObj = ['contentdata' => $initData];
+            }
+            if (is_array($initDataObj)) {
+                $initDataObj['phpErrors'] = $GLOBALS['c4gForumErrors'];
+                $data['initData'] = json_encode($initDataObj, JSON_PARTIAL_OUTPUT_ON_ERROR);
+            }
+        }
 
         // save forum url for linkbuilding in ajaxrequests
-        $aTmpData = $this->Session->getData();
-        if (array_key_exists('referer', $aTmpData) && array_key_exists('current', $aTmpData['referer'])) {
-            if (stristr($aTmpData['referer']['current'], "/CoreBundle/src/Resources/contao/api/") === false) {
-                $aTmpData['current_forum_url'] = $aTmpData['referer']['current'];
-                $this->Session->setData($aTmpData);
-            } else {
-                $aTmpData['referer']['last'] = $aTmpData['current_forum_url'];
-                $aTmpData['referer']['current'] = $aTmpData['current_forum_url'];
-                $this->Session->setData($aTmpData);
+        if ($this->Session !== null) {
+            $session = $this->Session->all();
+            if (array_key_exists('referer', $session) && array_key_exists('current', $session['referer'])) {
+                if (stristr($session['referer']['current'], "/CoreBundle/src/Resources/contao/api/") === false) {
+                    $session['current_forum_url'] = $session['referer']['current'];
+                    foreach ($session as $key => $val) {
+                        $this->Session->set($key, $val);
+                    }
+                } else {
+                    $session['referer']['last'] = $session['current_forum_url'] ?? '';
+                    $session['referer']['current'] = $session['current_forum_url'] ?? '';
+                    foreach ($session as $key => $val) {
+                        $this->Session->set($key, $val);
+                    }
+                }
             }
         }
 
@@ -299,26 +361,30 @@ class C4GForum extends \Module
 
         $binImageUuid = $this->c4g_forum_bbcodes_editor_imguploadpath;
         if ($binImageUuid) {
-            $imageUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid));
-            \Session::getInstance()->set("con4gisImageUploadPath", $imageUploadPath->path . '/');
+            $imageUploadPath = \Contao\FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binImageUuid));
+            if ($imageUploadPath && $imageUploadPath->path) {
+                $this->Session->set("con4gisImageUploadPath", $imageUploadPath->path . '/');
+            }
         }
 
         $binFileUuid = $this->c4g_forum_bbcodes_editor_fileuploadpath;
         if ($binFileUuid) {
-            $fileUploadPath = \FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binFileUuid));
-            \Session::getInstance()->set("con4gisFileUploadPath", $fileUploadPath->path . '/');
+            $fileUploadPath = \Contao\FilesModel::findByUuid(\Contao\StringUtil::binToUuid($binFileUuid));
+            if ($fileUploadPath && $fileUploadPath->path) {
+                $this->Session->set("con4gisFileUploadPath", $fileUploadPath->path . '/');
+            }
         }
 
-        \Session::getInstance()->set("c4g_forum_bbcodes_editor_uploadTypes", $this->c4g_forum_bbcodes_editor_uploadTypes);
-        \Session::getInstance()->set("c4g_forum_bbcodes_editor_maxFileSize", $this->c4g_forum_bbcodes_editor_maxFileSize);
-        \Session::getInstance()->set("c4g_forum_bbcodes_editor_imageWidth", $this->c4g_forum_bbcodes_editor_imageWidth);
-        \Session::getInstance()->set("c4g_forum_bbcodes_editor_imageHeight", $this->c4g_forum_bbcodes_editor_imageHeight);
+        $this->Session->set("c4g_forum_bbcodes_editor_uploadTypes", $this->c4g_forum_bbcodes_editor_uploadTypes);
+        $this->Session->set("c4g_forum_bbcodes_editor_maxFileSize", $this->c4g_forum_bbcodes_editor_maxFileSize);
+        $this->Session->set("c4g_forum_bbcodes_editor_imageWidth", $this->c4g_forum_bbcodes_editor_imageWidth);
+        $this->Session->set("c4g_forum_bbcodes_editor_imageHeight", $this->c4g_forum_bbcodes_editor_imageHeight);
 
         $aToolbarButtons = explode(",", $this->c4g_forum_bbcodes_editor_toolbaritems);
 
 
         $GLOBALS['TL_CSS'][] = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.css';
-        $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.jquery.min.js|async|static';
+        //$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.jquery.min.js';
 
         if ($this->c4g_forum_bbcodes != "1") {
             $GLOBALS['TL_HEAD'][] = "<script>var ckRemovePlugins = 'bbcode';</script>";
@@ -327,11 +393,11 @@ class C4GForum extends \Module
         }
 
         if ($enableMaps) {
-            MapsResourceLoader::loadResources();
-            MapsResourceLoader::loadTheme();
+            \con4gis\MapsBundle\Classes\ResourceLoader::loadResources();
+            \con4gis\MapsBundle\Classes\ResourceLoader::loadTheme();
             static::$useMaps = $enableMaps;
             // load core resources for maps
-            MapsResourceLoader::loadResourcesForModule('maps');
+            \con4gis\MapsBundle\Classes\ResourceLoader::loadResourcesForModule('maps');
         }
 
         $data['breadcrumbDelim'] = $this->c4g_forum_breadcrumb_jqui_layout ? '' : '>';
@@ -348,6 +414,10 @@ class C4GForum extends \Module
             }
         }
 
+        if ($this->plainhtml) {
+             return;
+        }
+
         $this->Template->c4gdata = $data;
     }
 
@@ -358,6 +428,9 @@ class C4GForum extends \Module
      */
     public function checkPermission($forumId)
     {
+        if ($forumId == 0) {
+            return array(true, '');
+        }
 
         return array(
             $this->helper->checkPermissionForAction($forumId, $this->action, null, $this->c4g_forum_param_forumbox, $this->c4g_forum_param_forum),
@@ -390,7 +463,7 @@ class C4GForum extends \Module
 
         $options['show'] = 'fold';
         $options['hide'] = 'fold';
-        $size = deserialize($this->c4g_forum_dialogsize, true);
+        $size = StringUtil::deserialize($this->c4g_forum_dialogsize, true);
         if ($size[0] != 0) {
             if (!isset($options['width'])) {
                 $options['width'] = $size[0];
@@ -415,7 +488,7 @@ class C4GForum extends \Module
         if ($this->map_enabled($forumId) && $this->helper->checkPermission($forumId, 'mapview')) {
             $forum = $this->helper->getForumFromDB($forumId);
             if ($forum['enable_maps'] || $forum['enable_maps_inherited']) {
-                array_insert($buttons, 0, array(
+                array_splice($buttons, 0, 0, array(
                     array(
                         "id" => 'viewmapforforum:' . $forumId,
                         "text" => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['VIEW_MAP_FOR_FORUM']
@@ -432,7 +505,7 @@ class C4GForum extends \Module
             } else {
                 $text = C4GForumHelper::getTypeText($this->c4g_forum_type, 'SUBSCRIBE_SUBFORUM');
             }
-            array_insert($buttons, 0, array(
+            array_splice($buttons, 0, 0, array(
                 array(
                     "id" => 'subscribesubforumdialog:' . $forumId,
                     "text" => $text
@@ -441,7 +514,7 @@ class C4GForum extends \Module
         }
 
         if ($this->helper->checkPermission($forumId, 'addmember')) {
-            array_insert($buttons, 0, array(
+            array_splice($buttons, 0, 0, array(
                 array(
                     "id" => 'addmemberdialog:' . $forumId,
                     "text" => C4GForumHelper::getTypeText($this->c4g_forum_type, 'ADD_MEMBER')
@@ -449,7 +522,7 @@ class C4GForum extends \Module
             ));
         }
         if ($this->helper->checkPermission($forumId, 'newthread')) {
-            array_insert($buttons, 0, array(
+            array_splice($buttons, 0, 0, array(
                 array(
                     "id" => 'newthread:' . $forumId,
                     "text" => C4GForumHelper::getTypeText($this->c4g_forum_type, 'NEW_THREAD')
@@ -629,7 +702,7 @@ class C4GForum extends \Module
                 }
             }
 
-            array_insert($data['aoColumnDefs'], 1, array(
+            array_splice($data['aoColumnDefs'], 1, 0, array(
                     array(
                         'sTitle' => &$GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATING'],
                         "sWidth" => '10%',
@@ -656,14 +729,14 @@ class C4GForum extends \Module
             $data['bJQueryUI'] = true;
         }
 
-        $scroll = deserialize($this->c4g_forum_scroll, true);
+        $scroll = StringUtil::deserialize($this->c4g_forum_scroll, true);
         if ($scroll[0] != 0) {
             $data['sScrollX'] = $scroll[0] . $scroll[2];
         }
         if ($scroll[1] != 0) {
             $data['sScrollY'] = $scroll[1] . $scroll[2];
         } else {
-            $size = deserialize($this->c4g_forum_size, true);
+            $size = StringUtil::deserialize($this->c4g_forum_size, true);
             if (($size[1] >= 200) && ($size[2] == 'px')) {
                 // if height is set, but not scrollY, then try to set scrollY to a useful value
                 // note: the perfect value depends on the used jQuery UI theme
@@ -672,26 +745,13 @@ class C4GForum extends \Module
 
         }
 
-        $sorting = 3;
-        if ($this->c4g_forum_rating_enabled) {
-            $sorting = 4;
+        $objModule = \Contao\ModuleModel::findByPk($this->id);
+        if ($objModule && $objModule->c4g_forum_threads_perpage_selection && !is_bool($objModule->c4g_forum_threads_perpage_selection)) {
+            $data['iDisplayLength'] = (int) $objModule->c4g_forum_threads_perpage_selection;
+        } else {
+            $data['iDisplayLength'] = 25;
         }
-
-        $data['aaSorting'] = array(
-            array(
-                $sorting,
-                'desc'
-            )
-        );
-
-        $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection ?: 10;
-
-        $data['aLengthMenu'] = [[10,25,50, 100, -1], [10,25,50,100, $GLOBALS['TL_LANG']['c4g_forum']['all']]];
-
-        $data['responsive'] = true;
-        $data['bScrollCollapse'] = true;
-        $data['bStateSave'] = false;
-        $data['sPaginationType'] = 'full_numbers';
+        $data['aLengthMenu'] = [[10, 25, 50, 100, -1], [10, 25, 50, 100, $GLOBALS['TL_LANG']['c4g_forum']['all'] ?? 'Alle']];
         $data['oLanguage'] = array(
             "oPaginate" => array(
                 "sFirst" => '<<',
@@ -713,9 +773,12 @@ class C4GForum extends \Module
 
         $threads = $this->helper->getThreadsFromDB($id);
         $forum = $this->helper->getForumFromDB($id);
-        $user = FrontendUser::getInstance();
+        if ($forum === null) {
+            return [];
+        }
+        $user = \Contao\FrontendUser::getInstance();
         $userData = $user->getData();
-        $userId = $userData['id'];
+        $userId = $userData['id'] ?? 0;
 
         foreach ($threads as $thread) {
             switch ($this->c4g_forum_threadclick) {
@@ -846,7 +909,7 @@ class C4GForum extends \Module
                                 </fieldset><span class="score">&#216 ' . $rating . '&nbsp;&nbsp;(' . $aRating['overall'] . ' ' . (($aRating['overall'] > 1) ? $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_MULTIPLE'] : $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['RATINGS_SINGLE']) . ')</spa>
                             </div>';
                     }
-                    array_insert($aaData, 1, $sRating);
+                    array_splice($aaData, 1, 0, [$sRating]);
                 }
 
                 $data['aaData'][] = $aaData;
@@ -882,13 +945,13 @@ class C4GForum extends \Module
             $return['plainhtml'] = $plainHtmlData;
         }
         if ($forum['pretext']) {
-            $return['precontent'] = $this->replaceInsertTags($forum['pretext']);
+            $return['precontent'] = $this->repInsertTags($forum['pretext']);
             if ($this->plainhtml) {
                 $return['metaDescription'] = $this->prepareMetaDescription($return['precontent']);
             }
         }
         if ($forum['posttext']) {
-            $return['postcontent'] = $this->replaceInsertTags($forum['posttext']);
+            $return['postcontent'] = $this->repInsertTags($forum['posttext']);
         }
 
         if ($forumTree) {
@@ -1022,7 +1085,7 @@ class C4GForum extends \Module
         $posts = $this->helper->getPostsOfThreadFromDB($aThread['id']);
 
         $sSql = "SELECT AVG(rating) as average, COUNT(rating) as count FROM tl_c4g_forum_post WHERE pid = ? AND rating > 0";
-        $oRes = \Database::getInstance()->prepare($sSql)->execute($aThread['id']);
+        $oRes = Database::getInstance()->prepare($sSql)->execute([$aThread['id']]);
         $aResult = $oRes->fetchAssoc();
         if (!empty($aResult) && $aResult['average'] > 0) {
             $rating = round($aResult['average'] * 2) / 2;
@@ -1052,7 +1115,7 @@ class C4GForum extends \Module
                 $data = '<div class="c4gForumThreadHeader c4gGuiAccordion ui-widget ui-widget-header ui-corner-all">';
                 $data .= '<h3><a href="#">' . $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADDESC'] . '</a></h3>';
                 $data .= '<div class="c4gForumThreadHeaderDesc">' .
-                    $thread['threaddesc'];
+                    $this->repInsertTags($thread['threaddesc']);
 
                 if ($this->c4g_forum_rating_enabled) {
 
@@ -1087,7 +1150,7 @@ class C4GForum extends \Module
                 $data = '<div class="c4gForumThreadHeader c4gForumThreadHeaderNoJqui">';
                 $data .= '<h2>' . $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADDESC'] . '</h2>';
                 $data .= '<div class="c4gForumThreadHeaderDesc">' .
-                    $thread['threaddesc'];
+                    $this->repInsertTags($thread['threaddesc']);
 
                 $data .= '</div>';
                 $data .= '</div><hr>';
@@ -1365,7 +1428,7 @@ class C4GForum extends \Module
         if ($stats !== []) {
             $userStatistics = [];
             System::loadLanguageFile('tl_member');
-            Controller::loadDataContainer('tl_member');
+            (new \Contao\DcaLoader('tl_member'))->load();
             foreach ($stats as $stat) {
                 $translation = $GLOBALS['TL_DCA']['tl_member']['fields'][$stat]['label'][0] ?:
                     $GLOBALS['TL_LANG']['tl_member'][$stat][0] ?: '';
@@ -1377,7 +1440,7 @@ class C4GForum extends \Module
         }
 
         if ($this->c4g_forum_show_avatars) {
-            $sImage = C4GForumHelper::getAvatarByMemberId($iAuthorId, deserialize($this->c4g_forum_avatar_size));
+            $sImage = C4GForumHelper::getAvatarByMemberId($iAuthorId, StringUtil::deserialize($this->c4g_forum_avatar_size, true));
             $oUserDataTemplate->sAvatarImage = $sImage;
         }
 
@@ -1405,7 +1468,7 @@ class C4GForum extends \Module
         }
 
         if ($this->c4g_forum_show_ranks) {
-            $aUserRanks = deserialize($this->c4g_forum_member_ranks, true);
+            $aUserRanks = StringUtil::deserialize($this->c4g_forum_member_ranks, true);
             $sUserRank = '';
             foreach ($aUserRanks as $aUserRank) {
                 if ($iUserPostCount >= $aUserRank['rank_min'] && ($this->c4g_forum_language_temp === $aUserRank['rank_language'] || $this->c4g_forum_language_temp === explode('_', $aUserRank['rank_language'])[0])) {
@@ -1481,13 +1544,13 @@ class C4GForum extends \Module
         $stmt = $database->prepare(
             'SELECT * FROM tl_c4g_forum_post_reaction WHERE postId = ? AND reactionId = ?'
         );
-        $reactions = $stmt->execute($postId, 0)->fetchAllAssoc();
+        $reactions = $stmt->execute([(int)$postId, 0])->fetchAllAssoc();
 
         if ($memberId !== 0) {
             $stmt = $database->prepare(
                 'SELECT * FROM tl_c4g_forum_post_reaction WHERE postId = ? AND reactionId = ? AND memberId = ?'
             );
-            $hasMemberReacted = $stmt->execute($postId, 0, $memberId)->numRows > 0;
+            $hasMemberReacted = $stmt->execute([(int)$postId, 0, (int)$memberId])->numRows > 0;
         } else {
             $hasMemberReacted = false;
         }
@@ -1821,8 +1884,9 @@ class C4GForum extends \Module
                     $userId = FrontendUser::getInstance()->id;
                     if ($forumModel->maxPostsPerThread) {
                         $database = Database::getInstance();
-                        $count = $database->prepare("SELECT COUNT(*) as count FROM tl_c4g_forum_post where pid = ? and author = ?")
-                            ->execute($id, $userId)->fetchAssoc()['count'];
+                        $res = $database->prepare("SELECT COUNT(*) as count FROM tl_c4g_forum_post where pid = ? and author = ?")
+                            ->execute([(int)$id, (int)$userId])->fetchAssoc();
+                        $count = $res['count'] ?? 0;
                         if ($forumModel->maxPostsPerThread <= $count) {
                             $allowed = false;
                         }
@@ -1948,7 +2012,7 @@ class C4GForum extends \Module
 
         $inputThreadname = '';
         if ($this->c4g_forum_multilingual && $this->helper->checkPermission($forumId, 'alllanguages')) {
-            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
+            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages, true);
             if ($languages) {
                 foreach ($languages as $language) {
                     System::loadLanguageFile('frontendModules', $language, true);
@@ -1981,10 +2045,10 @@ class C4GForum extends \Module
 
                 // only check members other than the current user
                 $allMembers = $this->Database->prepare(
-                    $select = "SELECT id,username,`groups` FROM tl_member WHERE id != '$user->id'"
-                )->execute()->fetchAllAssoc();
+                    "SELECT id,username,`groups` FROM tl_member WHERE id != ?"
+                )->execute((int)$user->id)->fetchAllAssoc();
                 foreach ($allMembers as $member) {
-                    $member['groups'] = \Contao\StringUtil::deserialize($member['groups']);
+                    $member['groups'] = \Contao\StringUtil::deserialize($member['groups'], true);
                     $member['groups'] = array_flip($member['groups']);
                     foreach ($groups as $group) {
                         if (array_key_exists($group['id'], $member['groups']) && !$arrOptions[$member['id']]) {
@@ -2004,7 +2068,7 @@ class C4GForum extends \Module
                 foreach ($groups as $group) {
                     $selects = $this->Database->prepare("SELECT id,name
             FROM tl_member_group
-            WHERE id=?")->execute($group['id'])->fetchAllAssoc();
+            WHERE id=?")->execute([$group['id']])->fetchAllAssoc();
                     foreach ($selects as $select) {
                         $options .= '<option value="' . $select['id'] . '">' . $select['name'] . '</option>';
                         $counterRecipient = $counterRecipient + 1;
@@ -2029,9 +2093,10 @@ class C4GForum extends \Module
             "tags" => array()
         );
 
-        $sServerName = \Environment::get("serverName");
-        $sHttps = \Environment::get("https");
-        $path = \Environment::get("path");
+        $request = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+        $sServerName = ($request ? $request->getHost() : '');
+        $sHttps = ($request ? $request->isSecure() : false);
+        $path = ($request ? $request->getBasePath() : '');
         $sProtocol = !empty($sHttps) ? 'https://' : 'http://';
         $sSite = $sProtocol . $sServerName . $path;
         if (substr($sSite, -1, 1) != "/") {
@@ -2039,7 +2104,7 @@ class C4GForum extends \Module
         }
 
 
-        $sCurrentSite = strtok(\Environment::get('httpReferer'), '?');
+        $sCurrentSite = strtok(($request ? $request->headers->get('referer') : ''), '?');
         $sCurrentSiteHashed = md5($sCurrentSite . \Config::get('encryptionKey'));
 
         $data .= $this->getTagForm('c4gForumNewThreadPostTags', $aPost, 'newthread');
@@ -2122,14 +2187,15 @@ class C4GForum extends \Module
             "tags" => array()
         );
 
-        $sServerName = \Environment::get("serverName");
-        $sHttps = \Environment::get("https");
-        $path = \Environment::get("path");
+        $request = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+        $sServerName = ($request ? $request->getHost() : '');
+        $sHttps = ($request ? $request->isSecure() : false);
+        $path = ($request ? $request->getBasePath() : '');
         $sProtocol = !empty($sHttps) ? 'https://' : 'http://';
         $sSite = $sProtocol . $sServerName . $path;
-        $sCurrentSite = strtok(\Environment::get('httpReferer'), '?');
+        $sCurrentSite = strtok(($request ? $request->headers->get('referer') : ''), '?');
         if (empty($sCurrentSite)) {
-            $sCurrentSite = strtok($sSite . $_SERVER['REQUEST_URI'], '?');
+            $sCurrentSite = strtok($sSite . ($request ? $request->getRequestUri() : ''), '?');
         }
 
         $sCurrentSiteHashed = md5($sCurrentSite . \Config::get('encryptionKey'));
@@ -2265,8 +2331,9 @@ class C4GForum extends \Module
             do {
                 if ($forumModel->maxPostsPerThread) {
                     $database = Database::getInstance();
-                    $count = $database->prepare("SELECT COUNT(*) as count FROM tl_c4g_forum_post where pid = ? and author = ?")
-                        ->execute($threadId, $userId)->fetchAssoc()['count'];
+                    $res = $database->prepare("SELECT COUNT(*) as count FROM tl_c4g_forum_post where pid = ? and author = ?")
+                        ->execute([(int)$threadId, (int)$userId])->fetchAssoc();
+                    $count = $res['count'] ?? 0;
                     if ($forumModel->maxPostsPerThread <= $count) {
                         return ['usermessage' => $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['ALREADY_AT_MAX_POSTS']];
                     }
@@ -2302,8 +2369,8 @@ class C4GForum extends \Module
                 $return ['performaction'] = "readpost:" . $result['post_id'];
             }
 
-            $threadSubscribers = $this->helper->subscription->getThreadSubscribersFromDB($threadId);
-            $forumSubscribers = $this->helper->subscription->getForumSubscribersFromDB($forumId);
+            $threadSubscribers = $this->helper->subscription->getThreadSubscribersFromDB((int)$threadId);
+            $forumSubscribers = $this->helper->subscription->getForumSubscribersFromDB((int)$forumId);
             if ($threadSubscribers || $forumSubscribers) {
                 $this->helper->subscription->MailCache ['subject'] = $this->putVars['subject'];
                 $this->helper->subscription->MailCache ['post'] = $this->putVars['post'];
@@ -2428,7 +2495,7 @@ class C4GForum extends \Module
         $sUrl = $this->putVars['site'];
         $sHashedUrl = $this->putVars['hsite'];
         $sUrlCheckValue = md5($sUrl . \Config::get('encryptionKey'));
-        $user = FrontendUser::getInstance();
+        $user = \Contao\FrontendUser::getInstance();
 
         if ($sUrlCheckValue !== $sHashedUrl) {
             $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type, 'ERROR_SAVE_POST');
@@ -2441,7 +2508,7 @@ class C4GForum extends \Module
         }
         if (!$this->putVars['thread']) {
             $found = false;
-            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
+            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages, true);
             if ($this->c4g_forum_multilingual && $languages) {
                 foreach ($languages as $language) {
                     if ($this->putVars['thread_' . $language]) {
@@ -2487,10 +2554,11 @@ class C4GForum extends \Module
         if (isset($this->putVars['recipient_member'])) {
             $recipient = serialize($this->putVars['recipient_member']);
         } else if (isset($this->putVars['recipient_group'])) {
+            $recipient = [];
             $allMembers = $this->Database->prepare(
-                $select = "SELECT id, `groups` FROM tl_member")->execute()->fetchAllAssoc();
+                "SELECT id, `groups` FROM tl_member")->execute()->fetchAllAssoc();
             foreach ($allMembers as $allMember) {
-                $allMember['groups'] = array_flip(\Contao\StringUtil::deserialize($allMember['groups']));
+                $allMember['groups'] = array_flip(\Contao\StringUtil::deserialize($allMember['groups'], true));
                 if (array_key_exists($this->putVars['recipient_group'], $allMember['groups'])) {
                     $recipient[] = $allMember['id'];
                 }
@@ -2498,13 +2566,13 @@ class C4GForum extends \Module
             $recipient = serialize($recipient);
         }
         if ($this->putVars['id']) {
-            $result = $this->helper->insertThreadIntoDB($forumId, $this->putVars['thread'], $this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
+            $result = $this->helper->insertThreadIntoDB((int)$forumId, $this->putVars['thread'], (int)$this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
                 $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
-                $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient, serialize($user->getData()['id']), $this->putVars['id']);
+                $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient, (int)$user->id, (int)$this->putVars['id']);
         } else {
-            $result = $this->helper->insertThreadIntoDB($forumId, $this->putVars['thread'], $this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
+            $result = $this->helper->insertThreadIntoDB((int)$forumId, $this->putVars['thread'], (int)$this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
                 $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
-                $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient, serialize($user->getData()['id']));
+                $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient, (int)$user->id);
         }
 
         if (!$result) {
@@ -2537,7 +2605,7 @@ class C4GForum extends \Module
             $return ['performaction'] = "readthread:" . $result['thread_id'];
             $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type, 'SUCCESS_SAVE_THREAD');
 
-            $forumSubscribers = $this->helper->subscription->getForumSubscribersFromDB($forumId);
+            $forumSubscribers = $this->helper->subscription->getForumSubscribersFromDB((int)$forumId);
             if ($forumSubscribers) {
                 $this->helper->subscription->MailCache ['subject'] = $this->putVars['subject'];
                 $this->helper->subscription->MailCache ['post'] = $this->putVars['post'];
@@ -2582,7 +2650,7 @@ class C4GForum extends \Module
         $threadname = $this->putVars['thread'];
         if (!$this->putVars['thread']) {
             $found = false;
-            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
+            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages, true);
             if ($this->c4g_forum_multilingual && $languages) {
                 foreach ($languages as $language) {
                     if ($this->putVars['thread_' . $language]) {
@@ -2705,17 +2773,22 @@ class C4GForum extends \Module
      */
     public function getForumInBoxes($parentId, $bDisableCheck = false)
     {
-
         $forums = $this->helper->getForumsFromDB($parentId);
-        if (count($forums) == 0 && $bDisableCheck === false) {
+        if (empty($forums) && $bDisableCheck === false) {
+            $msg = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_ACTIVE_FORUMS'] ?? 'No forum data available - check permissions';
             return array(
                 "breadcrumb" => $this->getBreadcrumb($parentId),
                 "contenttype" => "html",
                 "contentoptions" => array("scrollable" => false),
-                "contentdata" => sprintf("JO" . $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_ACTIVE_FORUMS'], $parentId)
+                "contentdata" => sprintf($msg, $parentId)
             );
+        }
 
-        } elseif (count($forums) == 0 && $bDisableCheck === true) {
+        if (count($forums) == 0 && $bDisableCheck === true) {
+            return array();
+        }
+
+        if (empty($forums)) {
             return array();
         }
 
@@ -2750,8 +2823,16 @@ class C4GForum extends \Module
                 $divClass .= " ui-widget";
             }
 
-            $objFile = \FilesModel::findByUuid($forum['box_imagesrc']);
-            $forum['box_imagesrc'] = $objFile->path;
+            if (!empty($forum['box_imagesrc'])) {
+                $objFile = \Contao\FilesModel::findByUuid($forum['box_imagesrc']);
+                if ($objFile && $objFile->path) {
+                    $forum['box_imagesrc'] = $objFile->path;
+                } else {
+                    $forum['box_imagesrc'] = '';
+                }
+            } else {
+                $forum['box_imagesrc'] = '';
+            }
 
             if ($forum['box_imagesrc']) { // check if bin is empty!!!!
                 $divClass .= " c4gForumBoxWithImage";
@@ -2826,7 +2907,7 @@ class C4GForum extends \Module
                         'WHERE t.pid = ? ' .
                         'ORDER BY t.creation DESC LIMIT 1'
                     );
-                    $result = $stmt->execute($forum['id'])->fetchAssoc();
+                    $result = $stmt->execute([(int)$forum['id']])->fetchAssoc();
                     if ($result && (count($result) > 0)) {
                         switch ($this->c4g_forum_show_realname) {
                             case 'FF';
@@ -2902,11 +2983,11 @@ class C4GForum extends \Module
         );
 
         $parentForum = $this->helper->getForumFromDB($parentId);
-        if ($parentForum['pretext']) {
-            $return['precontent'] = $this->replaceInsertTags($parentForum['pretext']);
+        if ($parentForum && isset($parentForum['pretext']) && $parentForum['pretext']) {
+            $return['precontent'] = $this->repInsertTags($parentForum['pretext']);
         }
-        if ($parentForum['posttext']) {
-            $return['postcontent'] = $this->replaceInsertTags($parentForum['posttext']);
+        if ($parentForum && isset($parentForum['posttext']) && $parentForum['posttext']) {
+            $return['postcontent'] = $this->repInsertTags($parentForum['posttext']);
         }
         $return['headline'] = $this->getHeadline($this->getForumLanguageConfig($parentForum, 'headline'));
 
@@ -2927,10 +3008,13 @@ class C4GForum extends \Module
             return $this->getPermissionDenied($message);
         }
         $forums = $this->helper->getForumsFromDB($forumId, false, false, 'id');
+        if (empty($forums)) {
+            return array();
+        }
         $forum = $forums[0];
         $data = '<div class="c4gForumIntropage">';
-        $data .= $this->replaceInsertTags($forum['intropage']);
-        if ($forum['intropage_forumbtn'] != '') {
+        $data .= $this->repInsertTags($forum['intropage'] ?? '');
+        if (!empty($forum['intropage_forumbtn'])) {
             if ($forum['subforums'] > 0) {
                 $action = $this->c4g_forum_param_forumbox . ':' . $forumId;
             } else {
@@ -2940,7 +3024,7 @@ class C4GForum extends \Module
             if ($forum['intropage_forumbtn_jqui']) {
                 $class .= ' c4gGuiButton';
             }
-            $data .= '<a href="#" data-action="' . $action . '" class="' . $class . '">' . specialchars($forum['intropage_forumbtn']) . '</a>';
+            $data .= '<a href="#" data-action="' . $action . '" class="' . $class . '">' . StringUtil::specialchars($forum['intropage_forumbtn']) . '</a>';
         }
         $data .= '</div>';
         $return = array(
@@ -2984,7 +3068,7 @@ class C4GForum extends \Module
                 $threadId,
                 'delThread',
                 $this,
-                $this->putVars['site'] ?: false,
+                $this->putVars['site'] ?? false,
                 $this->c4g_forum_type,
                 $this->c4g_forum_sub_title,
                 $this->c4g_forum_language_temp
@@ -2992,20 +3076,23 @@ class C4GForum extends \Module
         }
         $result = $this->helper->deleteThreadFromDB($threadId);
         if (!$result) {
-            $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type, 'DEL_THREAD_ERROR');
+            $return['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type, 'DEL_THREAD_ERROR');
         } else {
             $return = $this->getForumInTable($forumId, true);
-            $return ['dialogclose'] = array(
+            $return['dialogclose'] = array(
                 "delthread" . $threadId,
                 "thread" . $threadId
             );
-            $return ['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type, 'DEL_THREAD_SUCCESS');
-            if ($cronexec) {
+            $return['usermessage'] = C4GForumHelper::getTypeText($this->c4g_forum_type, 'DEL_THREAD_SUCCESS');
+            if (isset($cronexec)) {
                 $return['cronexec'][] = $cronexec;
             }
 
             $sitemapJob = $this->helper->generateSitemapCronjob($this, $forumId);
             if ($sitemapJob) {
+                if (!isset($return['cronexec'])) {
+                    $return['cronexec'] = array();
+                }
                 $return['cronexec'][] = $sitemapJob;
             }
 
@@ -3519,7 +3606,7 @@ class C4GForum extends \Module
 
         $data = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['MEMBER_GROUP'] . ':<br/>';
         $data .= '<select name="membergroup" class="formdata ui-corner-all">';
-        $user = FrontendUser::getInstance();
+        $user = \Contao\FrontendUser::getInstance();
         $groups = $this->helper->getMemberGroupsForForum($forumId, $user->getData()['id']);
         foreach ($groups as $group) {
             $data .= '<option value="' . $group['id'] . '">' . $group['name'] . '</option>';
@@ -3794,7 +3881,7 @@ class C4GForum extends \Module
         }
         if (!$this->putVars['thread']) {
             $found = false;
-            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
+            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages, true);
             if ($this->c4g_forum_multilingual && $languages) {
                 foreach ($languages as $language) {
                     if ($this->putVars['thread_' . $language]) {
@@ -3964,14 +4051,14 @@ class C4GForum extends \Module
         $sReturn = "";
         $aTagsResult = \Contao\Database::getInstance()->prepare(
             "SELECT tags, pid FROM tl_c4g_forum WHERE id = ?"
-        )->execute($sForumId);
+        )->execute([(int)$sForumId]);
         $aTags = $aTagsResult->row();
 
         if (!empty($aTags['tags'])) {
             $sReturn = $aTags['tags'];
         } else {
             if ($aTags['pid'] != '0') {
-                $sReturn = $this->getTagsRecursivByParent($aTags['pid']);
+                $sReturn = $this->getTagsRecursivByParent((int)$aTags['pid']);
             }
         }
         try {
@@ -3997,7 +4084,7 @@ class C4GForum extends \Module
         $sReturn = "";
         $aTagsResult = \Contao\Database::getInstance()->prepare(
             "SELECT tags, pid FROM tl_c4g_forum WHERE pid = ?"
-        )->execute($sForumId);
+        )->execute([(int)$sForumId]);
         $aTags = $aTagsResult->row();
         if (empty($aTags)) {
             return array();
@@ -4224,9 +4311,10 @@ class C4GForum extends \Module
             return $this->getPermissionDenied($this->helper->permissionError);
         }
 
-        $sServerName = \Environment::get("serverName");
-        $sHttps = \Environment::get("https");
-        $path = \Environment::get("path");
+        $request = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+        $sServerName = ($request ? $request->getHost() : '');
+        $sHttps = ($request ? $request->isSecure() : false);
+        $path = ($request ? $request->getBasePath() : '');
         $sProtocol = !empty($sHttps) ? 'https://' : 'http://';
         $sSite = $sProtocol . $sServerName . $path;
         if (substr($sSite, -1, 1) != "/") {
@@ -4263,7 +4351,8 @@ class C4GForum extends \Module
         ';
         }
 
-        $sCurrentSite = strtok(\Environment::get('httpReferer'), '?');
+        $request = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+        $sCurrentSite = strtok(($request ? $request->headers->get('referer') : ''), '?');
         $sCurrentSiteHashed = md5($sCurrentSite . \Config::get('encryptionKey'));
 
         $data .= '<div class="c4gForumEditPostContent">' .
@@ -4343,7 +4432,7 @@ class C4GForum extends \Module
 
         $inputThreadname = '';
         if ($this->c4g_forum_multilingual && $this->helper->checkPermission($thread['forumid'], 'alllanguages')) {
-            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages);
+            $languages = \Contao\StringUtil::deserialize($this->c4g_forum_multilingual_languages, true);
             if ($languages) {
                 foreach ($languages as $language) {
                     $initialValue = '';
@@ -5140,17 +5229,13 @@ class C4GForum extends \Module
             $data['bJQueryUI'] = true;
         }
 
-        $data['aaSorting'] = array(
-            array(
-                12,
-                'desc'
-            )
-        );
-
-        if ($this->c4g_forum_threads_perpage) {
-            $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection ?: 10;
-            $data['aLengthMenu'] = $this->c4g_forum_threads_perpage;
+        $objModule = \Contao\ModuleModel::findByPk($this->id);
+        if ($objModule && $objModule->c4g_forum_threads_perpage_selection && !is_bool($objModule->c4g_forum_threads_perpage_selection)) {
+            $data['iDisplayLength'] = (int) $objModule->c4g_forum_threads_perpage_selection;
+        } else {
+            $data['iDisplayLength'] = 25;
         }
+        $data['aLengthMenu'] = [[10, 25, 50, 100, -1], [10, 25, 50, 100, $GLOBALS['TL_LANG']['c4g_forum']['all'] ?? 'Alle']];
 
         $data['responsive'] = true;
         $data['bScrollCollapse'] = true;
@@ -5317,9 +5402,17 @@ class C4GForum extends \Module
         }
 
 
-        //search
         $threads = $this->helper->getThreadsFromDBWithSubforums($forumId);
 
+        if (empty($threads)) {
+            $msg = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['NO_ACTIVE_FORUMS'] ?? 'No forum data available - check permissions';
+            return array(
+                "breadcrumb" => $this->getBreadcrumb($forumId),
+                "contenttype" => "html",
+                "contentoptions" => array("scrollable" => false),
+                "contentdata" => sprintf($msg, $forumId)
+            );
+        }
 
         /** *************************************************************************************************************************************\
          * |* building datatable
@@ -5472,10 +5565,13 @@ class C4GForum extends \Module
             )
         );
 
-        if ($this->c4g_forum_threads_perpage) {
-            $data['iDisplayLength'] = $this->c4g_forum_threads_perpage_selection ?: 10;
-            $data['aLengthMenu'] = $this->c4g_forum_threads_perpage;
+        $objModule = \Contao\ModuleModel::findByPk($this->id);
+        if ($objModule && $objModule->c4g_forum_threads_perpage_selection && !is_bool($objModule->c4g_forum_threads_perpage_selection)) {
+            $data['iDisplayLength'] = (int) $objModule->c4g_forum_threads_perpage_selection;
+        } else {
+            $data['iDisplayLength'] = 25;
         }
+        $data['aLengthMenu'] = [[10, 25, 50, 100, -1], [10, 25, 50, 100, $GLOBALS['TL_LANG']['c4g_forum']['all'] ?? 'Alle']];
 
         $data['responsive'] = true;
         $data['bScrollCollapse'] = true;
@@ -5666,34 +5762,36 @@ class C4GForum extends \Module
         $path = $this->helper->getForumPath($forumId, $this->c4g_forum_startforum);
 
         $data = array();
-        foreach ($path as $value) {
-            $pathname = $value['name'];
-            $names = \Contao\StringUtil::deserialize($value['optional_names']);
-            if ($names) {
-                foreach ($names as $name) {
-                    if ($this->isMatchingLanguage($name['optional_language'])) {
-                        $pathname = $name['optional_name'];
-                        break;
+        if (is_array($path)) {
+            foreach ($path as $value) {
+                $pathname = $value['name'];
+                $names = \Contao\StringUtil::deserialize($value['optional_names'] ?? '', true);
+                if (is_array($names)) {
+                    foreach ($names as $name) {
+                        if ($this->isMatchingLanguage($name['optional_language'])) {
+                            $pathname = $name['optional_name'];
+                            break;
+                        }
                     }
                 }
-            }
-            $pathname = $this->repInsertTags($pathname);
-            if (($value['use_intropage']) && (!$this->c4g_forum_hide_intropages)) {
-                $data[] = array(
-                    "id" => 'forumintro:' . $value['id'],
-                    "text" => $pathname
-                );
-            } else {
-                if ($value['subforums'] == 0) {
+                $pathname = $this->repInsertTags($pathname);
+                if (($value['use_intropage']) && (!$this->c4g_forum_hide_intropages)) {
                     $data[] = array(
-                        "id" => $this->c4g_forum_param_forum . ':' . $value['id'],
+                        "id" => 'forumintro:' . $value['id'],
                         "text" => $pathname
                     );
                 } else {
-                    $data[] = array(
-                        "id" => $this->c4g_forum_param_forumbox . ':' . $value['id'],
-                        "text" => $pathname
-                    );
+                    if ($value['subforums'] == 0) {
+                        $data[] = array(
+                            "id" => $this->c4g_forum_param_forum . ':' . $value['id'],
+                            "text" => $pathname
+                        );
+                    } else {
+                        $data[] = array(
+                            "id" => $this->c4g_forum_param_forumbox . ':' . $value['id'],
+                            "text" => $pathname
+                        );
+                    }
                 }
             }
         }
@@ -5710,7 +5808,7 @@ class C4GForum extends \Module
     public function getHeadline($headline)
     {
 
-        $headline = deserialize($headline);
+        $headline = StringUtil::deserialize($headline, true);
         if (($headline) && ($headline['value'] != '')) {
             $unit = $headline['unit'];
 
@@ -5729,9 +5827,9 @@ class C4GForum extends \Module
     public function getForumLink($forum)
     {
 
-        return $this->replaceInsertTags($forum['linkurl']);
+        return $this->repInsertTags($forum['linkurl']);
 //        return C4GUtils::addParametersToURL(
-//            $this->replaceInsertTags($forum['linkurl']),
+//            $this->repInsertTags($forum['linkurl']),
 //            array(
 //                'c4g_forum_fmd' => $this->id,
 //                'c4g_forum_forum' => $forum['id']
@@ -5747,17 +5845,17 @@ class C4GForum extends \Module
     public function showException($e)
     {
 
-        $message = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PHP_ERROR'];
-        if ($GLOBALS['TL_CONFIG']['displayErrors']) {
+        $message = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['PHP_ERROR'] ?? 'An error occurred';
+        if ($GLOBALS['TL_CONFIG']['displayErrors'] ?? false) {
             $message .= ' Message: ' . $e->getMessage();
         }
         $return ['usermessage'] = $message;
         try {
-            if ($GLOBALS['TL_CONFIG']['logErrors']) {
+            if ($GLOBALS['TL_CONFIG']['logErrors'] ?? false) {
                 log_message($e->getMessage() . ' File: ' . $e->getFile() . ' Line ' . $e->getLine() . ' (Code: ' . $e->getCode() . ')');
                 $this->log('C4G-Forum PHP-Error: ' . $e->getMessage(), $e->getFile() . ' Line ' . $e->getLine() . ' (Code: ' . $e->getCode() . ')', TL_ERROR);
             }
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
         }
 
         return $return;
@@ -5777,42 +5875,43 @@ class C4GForum extends \Module
 
         $values = explode(':', $action, 5);
         $this->action = $values[0];
+        $id = $values[1] ?? 0;
         switch ($values[0]) {
             case 'forumtree':
                 $return = $this->generateForumTree();
                 break;
             case $this->c4g_forum_param_forumbox:
-                $return = $this->getForumInBoxes($values[1], true);
-                if (count($return) <= 0) {
-                    $return = $this->getForumInTable($values[1], $values[2]);
+                $return = $this->getForumInBoxes($id, true);
+                if (empty($return)) {
+                    $return = $this->getForumInTable($id, $values[2] ?? '');
                 }
                 break;
             case 'forumintro':
-                $return = $this->getForumintro($values[1]);
+                $return = $this->getForumintro($id);
                 break;
             case $this->c4g_forum_param_forum:
-                $return = $this->getForumInTable($values[1], $values[2]);
+                $return = $this->getForumInTable($id, $values[2] ?? '');
                 break;
             case 'readthread':
-                $return = $this->getThreadAsHtml($values[1]);
+                $return = $this->getThreadAsHtml($id);
                 break;
             case 'readpost':
-                $return = $this->getPostAsHtml($values[1]);
+                $return = $this->getPostAsHtml($id);
                 break;
             case 'readlastpost':
-                $return = $this->getLastPostOfThreadAsHtml($values[1]);
+                $return = $this->getLastPostOfThreadAsHtml($id);
                 break;
             case 'readpostnumber':
-                $return = $this->getPostNumberOfThreadAsHtml($values[1], $values[2]);
+                $return = $this->getPostNumberOfThreadAsHtml($id, $values[2] ?? 1);
                 break;
             case 'newpost':
-                $return = $this->generateNewPostForm($values[1], $values[2]);
+                $return = $this->generateNewPostForm($id, $values[2] ?? '');
                 break;
             case 'newthread':
-                $return = $this->generateNewThreadForm($values[1]);
+                $return = $this->generateNewThreadForm($id);
                 break;
             case 'sendpost':
-                $return = $this->sendPost($values[1]);
+                $return = $this->sendPost($id);
                 break;
 
             case 'previewpost':
@@ -5822,102 +5921,102 @@ class C4GForum extends \Module
                 $return = $this->cancelPost($values[1], $values[2]);
                 break;
             case 'sendthread':
-                $return = $this->sendThread($values[1]);
+                $return = $this->sendThread($values[1] ?? 0);
                 break;
             case 'previewthread':
-                $return = $this->previewThread($values[1]);
+                $return = $this->previewThread($values[1] ?? 0);
                 break;
             case 'cancelthread':
-                $return = $this->cancelThread($values[1]);
+                $return = $this->cancelThread($values[1] ?? 0);
                 break;
             case 'closedialog':
-                $return = $this->closeDialog($values[1], $values[2]);
+                $return = $this->closeDialog($values[1] ?? 0, $values[2] ?? 0);
                 break;
             case 'usedialog':
-                $return = $this->useDialog($values[1]);
+                $return = $this->useDialog($values[1] ?? 0);
                 break;
             case 'delthreaddialog':
-                $return = $this->delThreadDialog($values[1]);
+                $return = $this->delThreadDialog($values[1] ?? 0);
                 break;
             case 'delthread':
-                $return = $this->delThread($values[1]);
+                $return = $this->delThread($values[1] ?? 0);
                 break;
             case 'movethreaddialog':
-                $return = $this->moveThreadDialog($values[1]);
+                $return = $this->moveThreadDialog($values[1] ?? 0);
                 break;
             case 'movethread':
-                $return = $this->moveThread($values[1], $this->putVars[$this->c4g_forum_param_forum] ?: implode(',',$this->putVars));
+                $return = $this->moveThread($values[1] ?? 0, $this->putVars[$this->c4g_forum_param_forum] ?: implode(',', C4GForumHelper::deserializeIds($this->putVars)));
                 break;
             case 'editownthreaddialog':
             case 'editthreaddialog':
-                $return = $this->editThreadDialog($values[1]);
+                $return = $this->editThreadDialog($values[1] ?? 0);
                 break;
             case 'editthread':
-                $return = $this->editThread($values[1]);
+                $return = $this->editThread($values[1] ?? 0);
                 break;
             case 'delownpostdialog':
             case 'delpostdialog':
-                $return = $this->delPostDialog($values[1]);
+                $return = $this->delPostDialog($values[1] ?? 0);
                 break;
             case 'delpost':
-                $return = $this->delPost($values[1]);
+                $return = $this->delPost($values[1] ?? 0);
                 break;
             case 'editownpostdialog':
             case 'editpostdialog':
-                $return = $this->editPostDialog($values[1]);
+                $return = $this->editPostDialog($values[1] ?? 0);
                 break;
             case 'previeweditpost':
             case 'previeweditownpost':
-                $return = $this->previewEditPost($values[1]);
+                $return = $this->previewEditPost($values[1] ?? 0);
                 break;
             case 'editpost':
-                $return = $this->editPost($values[1]);
+                $return = $this->editPost($values[1] ?? 0);
                 break;
             case 'postlink':
-                $return = $this->postLink($values[1], $values[2]);
+                $return = $this->postLink($values[1] ?? 0, $values[2] ?? '');
                 break;
             case 'postmapentry':
-                $return = $this->postMapEntry($values[1], $values[2], $values[3], $values[4]);
+                $return = $this->postMapEntry($values[1] ?? 0, $values[2] ?? '', $values[3] ?? '', $values[4] ?? '');
                 break;
             case 'addmemberdialog':
-                $return = $this->addMemberDialog($values[1]);
+                $return = $this->addMemberDialog($values[1] ?? 0);
                 break;
             case 'addmember':
-                $return = $this->addMember($values[1]);
+                $return = $this->addMember($values[1] ?? 0);
                 break;
             case 'recalculate':
                 $this->helper->recalculateHelperData();
                 $return = $this->getForumInBoxes($this->c4g_forum_startforum);
                 break;
             case 'subscribethreaddialog':
-                $return = $this->subscribeThreadDialog($values[1]);
+                $return = $this->subscribeThreadDialog($values[1] ?? 0);
                 break;
             case 'subscribethread':
-                $return = $this->subscribeThread($values[1], $values[2], $this->putVars);
+                $return = $this->subscribeThread($values[1] ?? 0, $values[2] ?? '', $this->putVars);
                 break;
             case 'subscribesubforumdialog':
-                $return = $this->subscribeSubforumDialog($values[1]);
+                $return = $this->subscribeSubforumDialog($values[1] ?? 0);
                 break;
             case 'subscribesubforum':
-                $return = $this->subscribeSubforum($values[1], $values[2], $this->putVars);
+                $return = $this->subscribeSubforum($values[1] ?? 0, $values[2] ?? '', $this->putVars);
                 break;
             case 'unsubscribethread':
-                $return = $this->unsubscribeLinkThread($values[1]);
+                $return = $this->unsubscribeLinkThread($values[1] ?? 0);
                 break;
             case 'unsubscribesubforum':
-                $return = $this->unsubscribeLinkSubforum($values[1]);
+                $return = $this->unsubscribeLinkSubforum($values[1] ?? 0);
                 break;
             case 'unsubscribeall':
-                $return = $this->unsubscribeLinkAll($values[1]);
+                $return = $this->unsubscribeLinkAll($values[1] ?? 0);
                 break;
             case 'viewmapforpost':
-                $return = $this->viewMapForPost($values[1]);
+                $return = $this->viewMapForPost($values[1] ?? 0);
                 break;
             case 'viewmapforforum':
-                $return = $this->viewMapForForum($values[1]);
+                $return = $this->viewMapForForum($values[1] ?? 0);
                 break;
             case 'cron':
-                $this->helper->performCron($values[1]);
+                $this->helper->performCron($values[1] ?? '');
                 break;
             case 'searchDialog':
                 $return = $this->searchDialog($values[1]);
@@ -6031,11 +6130,11 @@ class C4GForum extends \Module
     public function ticket($forumId, $concerning, $groupId, $subject)
     {
         $this->action = 'newthread';
-        $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId, $groupId)->fetchAssoc();
+        $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute([$forumId, $groupId])->fetchAssoc();
         if (!$subforum) {
             $subforum = $this->helper->createNewSubforum($forumId, $groupId);
         }
-        $ticketforums = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=?")->execute($subforum['id'])->fetchAllAssoc();
+        $ticketforums = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=?")->execute([$subforum['id']])->fetchAllAssoc();
         foreach ($ticketforums as $ticketforum) {
             if ($ticketforum['concerning'] == $concerning) {
                 $return = $this->getForumInTable($ticketforum['id']);
@@ -6050,38 +6149,38 @@ class C4GForum extends \Module
 
     public function autoTicket($forumId, $groupId, $subject, $text, $concerning)
     {
-        $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute($forumId, $groupId)->fetchAssoc();
+        $subforum = $this->Database->prepare("SELECT * FROM tl_c4g_forum WHERE pid=? AND member_id=?")->execute([$forumId, $groupId])->fetchAssoc();
         if (!$subforum) {
             $subforum = $this->helper->createNewSubforum($forumId, $groupId);
         }
         $author = $subforum['default_author'];
         $owner = serialize(array($subforum['default_author']));
         $threads = $this->helper->getThreadsFromDB($subforum['id']);
-        $group = $this->Database->prepare('SELECT cg_member FROM tl_member_group WHERE id=?')->execute($groupId)->fetchAssoc();
+        $group = $this->Database->prepare('SELECT cg_member FROM tl_member_group WHERE id=?')->execute([$groupId])->fetchAssoc();
         $recipient = $group['cg_member'];
         foreach ($threads as $thread) {
             if ($thread['concerning'] == $concerning && $thread['state'] != 3) {
-                $return = $this->helper->insertPostIntoDB($thread['id'], $author, $subject, $text, null, null, null, null, null, null, null, null, null, null, null, $recipient, $owner);
+                $return = $this->helper->insertPostIntoDB((int)$thread['id'], (int)$author, $subject, $text, null, null, null, null, null, null, null, null, null, null, null, $recipient, $owner);
             }
         }
         if (!$return) {
-            $return = $this->helper->insertThreadIntoDB($subforum['id'], $subject, $author, null, '999', $text, null, null, null, null, null, null, null, null, null, null, $recipient, $owner, $concerning);
+            $return = $this->helper->insertThreadIntoDB((int)$subforum['id'], $subject, (int)$author, null, '999', $text, null, null, null, null, null, null, null, null, null, null, $recipient, $owner, $concerning);
         }
         return $return;
     }
 
     public function closethread($threadId)
     {
-        $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute($threadId)->fetchAssoc();
+        $thread = $this->Database->prepare('SELECT * FROM tl_c4g_forum_thread WHERE id=?')->execute([$threadId])->fetchAssoc();
         $newposts = $thread['posts'] + 1;
-        $this->Database->prepare('UPDATE tl_c4g_forum_thread SET state = 3, posts =' . $newposts . ' WHERE id=?')->execute($threadId);
+        $this->Database->prepare('UPDATE tl_c4g_forum_thread SET state = 3, posts = ? WHERE id=?')->execute([$newposts, $threadId]);
         $set = array(
-            'text' => C4GForumTicketStatus::getState(3),
-            'subject' => C4GForumTicketStatus::getState(3),
+            'text' => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(3),
+            'subject' => \con4gis\ForumBundle\Classes\C4GForumTicketStatus::getState(3),
             'state' => 3,
             'creation' => time(),
             'pid' => $threadId,
-            'author' => $this->User->id,
+            'author' => (int)$this->User->id,
             'post_number' => $newposts
         );
         $this->Database->prepare('INSERT INTO tl_c4g_forum_post %s')->set($set)->execute();
@@ -6102,7 +6201,7 @@ class C4GForum extends \Module
             // redirect to defined page
             $objPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
                 ->limit(1)
-                ->execute($this->c4g_forum_jumpTo);
+                ->execute([$this->c4g_forum_jumpTo]);
 
             if ($objPage->numRows) {
                 $return['jump_to_url'] = $this->generateFrontendUrl($objPage->fetchAssoc());
@@ -6129,7 +6228,8 @@ class C4GForum extends \Module
         $sFrontendUrl = false;
         if (!empty($id)) {
             $oPage = \Contao\PageModel::findPublishedById($id);
-            $sFrontendUrl = $this->Environment->url . TL_PATH . '/';
+            $request = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+            $sFrontendUrl = ($request ? $request->getSchemeAndHttpHost() . $request->getBasePath() : '') . '/';
             $sFrontendUrl .= $this->getFrontendUrl($oPage->row());
         }
 
@@ -6146,36 +6246,36 @@ class C4GForum extends \Module
         if (trim($this->c4g_forum_language) == '') {
             $this->c4g_forum_language_temp = '';
 
-            //language get param or request_uri for language switcher sites
-            $getLang = \Input::get('language');
-            if ($getLang) {
-                $this->c4g_forum_language_temp = $getLang;
-            } else if ($_SERVER["REQUEST_URI"]) {
-                //$uri = str_replace('.html','',substr($_SERVER['REQUEST_URI'],1));
-                $uri = $_SERVER['REQUEST_URI'];
-                $uri = explode('/', $uri);
-                if ($uri && $uri[0] && strlen($uri[0]) == 2) {
-                    $this->c4g_forum_language_temp = $uri[0];
-                } else if ($uri && $uri[1] && strlen($uri[1]) == 2) {
-                    $this->c4g_forum_language_temp = $uri[1];
+                //language get param or request_uri for language switcher sites
+                $getLang = Input::get('language');
+                if ($getLang) {
+                    $this->c4g_forum_language_temp = $getLang;
+                } else if (isset($_SERVER["REQUEST_URI"]) && $_SERVER["REQUEST_URI"]) {
+                    //$uri = str_replace('.html','',substr($_SERVER['REQUEST_URI'],1));
+                    $uri = $_SERVER['REQUEST_URI'];
+                    $uri = explode('/', $uri);
+                    if ($uri && $uri[0] && strlen($uri[0]) == 2) {
+                        $this->c4g_forum_language_temp = $uri[0];
+                    } else if ($uri && $uri[1] && strlen($uri[1]) == 2) {
+                        $this->c4g_forum_language_temp = $uri[1];
+                    }
                 }
-            }
 
-            //four other ways to get current language
+                //four other ways to get current language
             if ($this->c4g_forum_language_temp == '') {
-                /** @var \PageModel $objPage */
-                $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
+                $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+                $objPage = $request ? $request->attributes->get('pageModel') : null;
 
-                $pageLang = \Controller::replaceInsertTags('{{page::language}}');
+                $pageLang = System::getContainer()->get('contao.insert_tag.parser')->replace('{{page::language}}');
                 if ($pageLang) {
                     $this->c4g_forum_language_temp = $pageLang;
                 } else if ($objPage && $objPage->language) {
                     $this->c4g_forum_language_temp = $objPage->language;
-                } else if ($_SESSION["TL_LANGUAGE"]) {
-                    $this->c4g_forum_language_temp = $_SESSION['TL_LANGUAGE'];
-                } else if ($_SERVER['HTTP_ACCEPT_LANGUAGE']) {
+                } else if ($this->Session && $this->Session->has("TL_LANGUAGE")) {
+                    $this->c4g_forum_language_temp = $this->Session->get('TL_LANGUAGE');
+                } else if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE']) {
                     $this->c4g_forum_language_temp = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-                } else if ($GLOBALS['TL_LANGUAGE']) {
+                } else if (isset($GLOBALS['TL_LANGUAGE']) && $GLOBALS['TL_LANGUAGE']) {
                     $this->c4g_forum_language_temp = $GLOBALS['TL_LANGUAGE'];
                 } else {
                     $this->c4g_forum_language_temp = 'de';
@@ -6205,7 +6305,7 @@ class C4GForum extends \Module
 
         switch ($fieldname) {
             case 'name':
-                $names = \Contao\StringUtil::deserialize($forum['optional_names']);
+                $names = \Contao\StringUtil::deserialize($forum['optional_names'] ?? '', true);
                 if ($names) {
                     foreach ($names as $name) {
                         if ($this->isMatchingLanguage($name['optional_language'])) {
@@ -6215,7 +6315,7 @@ class C4GForum extends \Module
                 }
                 break;
             case 'headline':
-                $headlines = \Contao\StringUtil::deserialize($forum['optional_headlines']);
+                $headlines = \Contao\StringUtil::deserialize($forum['optional_headlines'] ?? '', true);
                 if ($headlines) {
                     foreach ($headlines as $headline) {
                         if ($this->isMatchingLanguage($headline['optional_headline_language'])) {
@@ -6225,7 +6325,7 @@ class C4GForum extends \Module
                 }
                 break;
             case 'description':
-                $descriptions = \Contao\StringUtil::deserialize($forum['optional_descriptions']);
+                $descriptions = \Contao\StringUtil::deserialize($forum['optional_descriptions'] ?? '', true);
                 if ($descriptions) {
                     foreach ($descriptions as $description) {
                         if ($this->isMatchingLanguage($description['optional_description_language'])) {
@@ -6236,7 +6336,7 @@ class C4GForum extends \Module
                 break;
         }
 
-        return $forum[$fieldname];
+        return $forum[$fieldname] ?? '';
     }
 
 
@@ -6245,11 +6345,14 @@ class C4GForum extends \Module
      */
     public function generateAjax($request = null, $user = null)
     {
-        $this->User = $user;
-        if (($user !== null) && ($user->id)) {
-            $db = Database::getInstance();
+        $this->Database = \Contao\Database::getInstance();
+        $this->Session = \Contao\System::getContainer()->get('request_stack')->getSession();
+
+        $this->User = $user ?: \Contao\FrontendUser::getInstance();
+        if (($this->User !== null) && ($this->User->id)) {
+            $db = \Contao\Database::getInstance();
             $stmt = $db->prepare("UPDATE tl_member SET tstampLastAction = ? WHERE id = ?");
-            $stmt->execute(time(), $user->id);
+            $stmt->execute([time(), (int)$this->User->id]);
         }
 
         // auf die benutzerdefinierte Fehlerbehandlung umstellen
@@ -6257,36 +6360,39 @@ class C4GForum extends \Module
         if ($request == null) {
 
             // Ajax Request: read get parameter "req"
-            $request = $_GET['req'];
+            $objRequest = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+            $request = $objRequest ? $objRequest->query->get('req') : null;
 
-            if ($request != 'undefined') {
+            if ($request && $request != 'undefined') {
                 // replace "state" parameter in Session-Referer to force correct
                 // handling after login with "redirect back" set
-                $session = $this->Session->getData();
+                $session = $this->Session->all();
                 $session['referer']['last'] = $session['referer']['current'];
                 $session['referer']['current'] = C4GUtils::addParametersToURL(
                     $session['referer']['last'],
                     array('state' => $request));
-                $this->Session->setData($session);
+                foreach ($session as $key => $val) {
+                    $this->Session->set($key, $val);
+                }
             }
         }
 
         $this->setTempLanguage();
 
         try {
-
             $this->initMembers();
-            $session = $this->Session->getData();
-            $frontendUrl = $this->Environment->url . TL_PATH . '/' . $session['current_forum_url'];
+            $session = $this->Session->all();
+            $objRequest = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+            $frontendUrl = ($objRequest ? $objRequest->getSchemeAndHttpHost() . $objRequest->getBasePath() : '') . '/' . ($session['current_forum_url'] ?? '');
 
-            $this->helper = new C4GForumHelper($this->Database, $this->Environment, $this->User, $this->c4g_forum_sub_title,
+            $this->helper = new C4GForumHelper($this->Database, null, $this->User, $this->c4g_forum_sub_title,
                 $frontendUrl, $this->c4g_forum_show_realname, $this->c4g_forum_type);
 
-            if (($_SERVER['REQUEST_METHOD']) == 'PUT') {
+            if (($_SERVER['REQUEST_METHOD'] ?? '') == 'PUT') {
                 parse_str(file_get_contents("php://input"), $this->putVars);
                 foreach ($this->putVars as $key => $value) {
-                    $tmpVal = Input::xssClean($value, true);
-                    $tmpVal = C4GUtils::cleanHtml(
+                    $tmpVal = \Contao\Input::xssClean($value, true);
+                    $tmpVal = \con4gis\CoreBundle\Classes\Helper\C4GUtils::cleanHtml(
                         $tmpVal,
                         false,
                         ['/<iframe(.*?)<\/iframe>/is', '/<pre(.*?)<\/pre>/is']
@@ -6297,41 +6403,50 @@ class C4GForum extends \Module
 
             // if there was an initial get parameter "state" then use it for jumping directly
             // to the refering function
-            if (($request == 'initnav') && $_GET['initreq']) {
-                $_GET['historyreq'] = $_GET['initreq'];
+            $objRequest = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+            $query = $objRequest ? $objRequest->query : null;
+            if ($request === 'initnav' && $query && ($query->get('initreq') !== null)) {
+                $query->set('historyreq', $query->get('initreq'));
             }
 
             // History navigation
-            if ($_GET['historyreq']) {
-                $actions = explode(';', $_GET['historyreq']);
+            if ($query && ($query->get('historyreq') !== null)) {
+                $actions = explode(';', $query->get('historyreq') ?? '');
                 $result = array();
                 foreach ($actions as $action) {
-                    $r = $this->performHistoryAction($action);
-                    array_insert($result, 0, $r);
+                    if ($action) {
+                        $r = $this->performHistoryAction($action);
+                        if (is_array($r)) {
+                            array_insert($result, 0, $r);
+                        }
+                    }
                 }
 
             } else {
                 switch ($request) {
                     case 'initnav' :
-                        switch ($this->c4g_forum_navigation) {
-                            case 'TREE':
-                                $result = $this->performAction('forumtree');
-                                break;
+                        try {
+                            switch ($this->c4g_forum_navigation) {
+                                case 'TREE':
+                                    $result = $this->performAction('forumtree');
+                                    break;
 
-                            case 'BOXES':
-                                $forum = $this->helper->getForumFromDB($this->c4g_forum_startforum);
-                                if (($forum['use_intropage']) && (!$this->c4g_forum_hide_intropages)) {
-                                    $this->action = 'forumintro';
-                                    $result = $this->performAction('forumintro:' . $this->c4g_forum_startforum);
-                                } else {
-                                    $this->action = $this->c4g_forum_param_forum;
-                                    $result = $this->performAction($this->c4g_forum_param_forumbox . ':' . $this->c4g_forum_startforum);
-                                }
-                                break;
-
-                            default:
-                                break;
-
+                                case 'BOXES':
+                                    $forum = $this->helper->getForumFromDB($this->c4g_forum_startforum);
+                                    if ($forum && !empty($forum['use_intropage']) && (!$this->c4g_forum_hide_intropages)) {
+                                        $this->action = 'forumintro';
+                                        $result = $this->performAction('forumintro:' . $this->c4g_forum_startforum);
+                                    } else {
+                                        $this->action = $this->c4g_forum_param_forum;
+                                        $result = $this->performAction($this->c4g_forum_param_forumbox . ':' . $this->c4g_forum_startforum);
+                                    }
+                                    break;
+    
+                                default:
+                                    break;
+                            }
+                        } catch (\Throwable $e) {
+                            $result = [];
                         }
                         break;
                     default:
@@ -6346,24 +6461,25 @@ class C4GForum extends \Module
                         break;
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             $result = $this->showException($e);
         }
         \set_error_handler($old_error_handler);
-        if (count($GLOBALS['c4gForumErrors']) > 0) {
+        if (count($GLOBALS['c4gForumErrors'] ?? []) > 0) {
             $result['phpErrors'] = $GLOBALS['c4gForumErrors'];
         }
-        if (($this->c4g_forum_sitemap_updated == 0) && ($this->c4g_forum_sitemap)) {
+        if (($this->c4g_forum_sitemap_updated ?? 0) == 0 && ($this->c4g_forum_sitemap ?? false)) {
             $sitemapJob = $this->helper->generateSitemapCronjob($this, 0);
             if ($sitemapJob) {
                 $result['cronexec'][] = $sitemapJob;
             }
         }
-//            return $result;
+
         if ($this->plainhtml) {
             return $result;
         } else {
-            return json_encode($result);
+            $json = json_encode($result);
+            return $json;
         }
     }
 
@@ -6373,8 +6489,8 @@ class C4GForum extends \Module
      */
     public function repInsertTags($str)
     {
-
-        return parent::replaceInsertTags($str);
+        $str = str_replace('[nbsp]', '&nbsp;', $str);
+        return System::getContainer()->get('contao.insert_tag.parser')->replace($str);
     }
 
 
