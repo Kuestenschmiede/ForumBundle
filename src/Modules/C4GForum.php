@@ -205,6 +205,17 @@ class C4GForum extends Module
             $useGoogleMaps = C4GForumHelper::isGoogleMapsUsed($this->Database);
             $enableMaps = true;
         }
+
+        if (array_key_exists('state', $_GET)) {
+            $requestParam = $_GET['state'];
+        } else {
+            $requestParam = 'initnav';
+        }
+
+        $initnavRequested = ($requestParam === 'initnav');
+
+        $initData = $this->generateAjax($requestParam);
+
         // initialize used Javascript Libraries and CSS files
         C4GJQueryGUI::initializeLibraries(
             true,                                               // add c4gJQuery GUI Core LIB
@@ -273,15 +284,7 @@ class C4GForum extends Module
         $data['width'] = ($size[0] != 0) ? $size[0] . $size[2] : 'auto';
         $data['height'] = ($size[1] != 0) ? $size[1] . $size[2] : 'auto';
 
-        if (array_key_exists('state', $_GET)) {
-            $requestParam = $_GET['state'];
-        } else {
-            $requestParam = 'initnav';
-        }
-
-        $initData = $this->generateAjax($requestParam);
-
-        if (($requestParam === 'initnav')) {
+        if ($initnavRequested) {
             $decoded = is_string($initData) ? json_decode($initData, true) : $initData;
             if (empty($decoded) || (is_array($decoded) && (empty($decoded['contentdata']) || strpos($decoded['contentdata'], 'No forum data available') !== false))) {
                 $oldStart = $this->c4g_forum_startforum;
