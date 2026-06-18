@@ -43,61 +43,87 @@
 
 .c4gForumBox {
   box-sizing: border-box;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  width: 170px;
-  height: 170px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  width: 220px;
+  height: 220px;
   float: left;
   cursor: pointer;
   position: relative;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.c4gForumBox:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0,0,0,0.15);
 }
 
 .c4gForumBoxWithoutImage.c4gForumBoxNoJqui {
-  border: 1px solid black;
+  border: none;
 }
 
 .c4gForumBoxWithImage {
-  padding: 1px;
+  padding: 0;
 }
 
 .c4gForumBoxText {
   position: absolute;
-  margin-top: 20px;
-  margin-left: -50%;
-  left: 50%;
+  top: 20px;
+  left: 0;
   width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
   text-align: center;
   z-index: 2;
+  font-weight: bold;
+  font-size: 1.1em;
 }
 
 .c4gForumBoxSubtext {
   position: absolute;
-  margin-top: 50px;
-  margin-left: -50%;
-  left: 50%;
+  top: 50px;
+  left: 0;
   width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
   text-align: center;
-  font-size: 80%;
+  font-size: 85%;
   z-index: 2;
+  color: #666;
 }
 
 .c4gForumBox img {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
-  opacity: 0.5;
+  opacity: 0.3;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+}
 
+.c4gForumBox:hover img {
+  opacity: 0.5;
 }
 
 .c4gForumBoxLastPost {
-  float: bottom;
   text-align: center;
-  font-size: 70%;
+  font-size: 80%;
   position: absolute;
-  bottom: 0px;
-  margin: 10px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
   z-index: 2;
+  background: rgba(255,255,255,0.8);
+  border-top: 1px solid #eee;
 }
 
 
@@ -152,7 +178,12 @@
 }
 
 .c4gForumPostHeader.ui-widget, .c4gForumPostText.ui-widget {
-  padding: 10px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 10px;
 }
 
 .c4gForumPostBody .signature_wrapper {
@@ -176,15 +207,19 @@
 /* User information in forum post */
 .c4g_forum_post_user_data {
   float: left;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  padding: 15px;
   width: 18%;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #eee;
 }
 
 .c4g_forum_post_user_data .user_name {
   display: block;
-  font-size: 1.2em;
-  margin-bottom: 10px;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
 }
 
 .c4g_forum_post_user_data .user_image {
@@ -250,11 +285,15 @@
 }
 
 .c4g_forum_header_center {
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   text-align: center;
-  font-size: 1.25em;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  font-size: 1.5em;
+  padding: 10px;
+  background: #f0f4f8;
+  border-radius: 8px;
+  color: #2c3e50;
+  font-weight: bold;
 }
 
 .c4gGuiDialogContentNoJqui, .c4gGuiDialogButtonsNoJqui {
@@ -291,11 +330,21 @@
 }
 
 .c4g_pagination a {
-  min-width: 16px;
-  height: 16px;
-  padding: 5px;
+  min-width: 20px;
+  height: 20px;
+  padding: 8px 12px;
   text-decoration: none;
-  margin-right: 2px;
+  margin-right: 5px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #333;
+  transition: all 0.2s;
+}
+
+.c4g_pagination a:hover {
+  background: #eee;
+  border-color: #bbb;
 }
 
 #pagination a,
