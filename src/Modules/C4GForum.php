@@ -286,6 +286,51 @@ class C4GForum extends Module
 
         if ($initnavRequested) {
             $decoded = is_string($initData) ? json_decode($initData, true) : $initData;
+            if (isset($decoded['dialogdata']) && !empty($decoded['contentdata'])) {
+                $decoded['contentdata'] = $decoded['dialogdata'];
+                $decoded['contenttype'] = $decoded['dialogtype'] ?? 'html';
+                if (!empty($decoded['dialogoptions'])) {
+                    $decoded['contentoptions'] = $decoded['dialogoptions'];
+                }
+                if (!empty($decoded['dialogstate'])) {
+                    $decoded['state'] = $decoded['dialogstate'];
+                }
+                if (!empty($decoded['dialogbreadcrumb'])) {
+                    $decoded['breadcrumb'] = $decoded['dialogbreadcrumb'];
+                }
+                if (!empty($decoded['dialogheadline'])) {
+                    $decoded['headline'] = $this->getHeadline($decoded['dialogheadline']);
+                } elseif (!empty($decoded['dialogoptions']['title'])) {
+                    $decoded['headline'] = $this->getHeadline($decoded['dialogoptions']['title']);
+                }
+                if (isset($decoded['dialogbuttons'])) {
+                    $decoded['buttons'] = $decoded['dialogbuttons'];
+                    // Move buttons to postcontent so they appear below the thread in main content
+                    $buttonHtml = '<div class="c4gGuiButtons">';
+                    foreach ($decoded['buttons'] as $button) {
+                        $class = ($button['class'] ?? '') . ' c4gGuiButton c4g__btn c4g__btn-primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only';
+                        $buttonHtml .= '<a href="#" class="' . $class . '" data-action="' . $button['action'] . '" role="button"><span class="ui-button-text">' . $button['text'] . '</span></a> ';
+                    }
+                    $buttonHtml .= '</div>';
+                    $sPostContent = ($decoded['postcontent'] ?? '') . $buttonHtml;
+                    unset($decoded['buttons']);
+                }
+                unset($decoded['dialogdata']);
+                unset($decoded['dialogtype']);
+                unset($decoded['dialogid']);
+                unset($decoded['dialogbuttons']);
+                unset($decoded['dialogbreadcrumb']);
+                unset($decoded['dialogheadline']);
+                unset($decoded['dialogoptions']);
+                unset($decoded['precontent']);
+                unset($decoded['postcontent']);
+                unset($decoded['treedata']);
+                unset($decoded['plainhtml']);
+                if (isset($sPostContent)) {
+                    $decoded['postcontent'] = $sPostContent;
+                }
+                $initData = json_encode($decoded);
+            }
             if (empty($decoded) || (is_array($decoded) && (empty($decoded['contentdata']) || strpos($decoded['contentdata'], 'No forum data available') !== false))) {
                 $oldStart = $this->c4g_forum_startforum;
                 $this->c4g_forum_startforum = 0;
@@ -1449,6 +1494,7 @@ class C4GForum extends Module
             $oUserDataTemplate->sAvatarImage = $sImage;
         }
 
+        $aMemberLinks = [];
         // Get all fields from the tl_member DCA that are marked with the memberLink eval key.
         if ($oMember) {
             foreach ($GLOBALS['TL_DCA']['tl_member']['fields'] as $sKey => $aField) {
@@ -1486,7 +1532,7 @@ class C4GForum extends Module
         }
 
         $sUserData = $oUserDataTemplate->parse();
-        $sSignature = $oMember->memberSignature;
+        $sSignature = ($oMember !== null) ? $oMember->memberSignature : '';
         $sSignatureArea = '';
         if (!empty($sSignature)) {
             $sSignatureArea = '<div class="signature_wrapper"><hr>' . $sSignature . '</div>';
@@ -1994,6 +2040,8 @@ class C4GForum extends Module
             "dialogdata" => $data,
             "dialogid" => 'thread' . $id,
             "dialogbuttons" => $dialogbuttons,
+            "dialogbreadcrumb" => $this->getBreadcrumb($thread['forumid']),
+            "dialogheadline" => $this->getHeadline($title),
             "dialogoptions" => $this->addDefaultDialogOptions(array(
                 "title" => $title
             ))
@@ -5823,13 +5871,15 @@ class C4GForum extends Module
      */
     public function getHeadline($headline)
     {
-
-        $headline = StringUtil::deserialize($headline, true);
-        if (($headline) && ($headline['value'] != '')) {
-            $unit = $headline['unit'];
-
-            return '<' . $unit . '>' . $headline['value'] . '</' . $unit . '>';
+        if (is_string($headline) && str_starts_with($headline, 'a:')) {
+            $headline = StringUtil::deserialize($headline, true);
+        }
+        if (is_array($headline) && isset($headline['value']) && ($headline['value'] != '')) {
+            return '<div class="c4gGuiDialogTitle c4gGuiDialogTitleJqui">' . $headline['value'] . '</div>';
         } else {
+            if (is_string($headline) && $headline !== '') {
+                return '<div class="c4gGuiDialogTitle c4gGuiDialogTitleJqui">' . $headline . '</div>';
+            }
             return '';
         }
     }
@@ -6469,7 +6519,83 @@ class C4GForum extends Module
                         foreach ($actions as $action) {
                             $r = $this->performAction($action);
                             if (is_array($r)) {
-                                $result = array_merge($result, $r);
+                                foreach ($r as $key => $value) {
+                                    if ($key === 'state') {
+                                        if (empty($result[$key])) {
+                                            $result[$key] = $value;
+                                        } else {
+                                            $result[$key] .= ';' . $value;
+                                        }
+                                        continue;
+                                    }
+                                    if ($key === 'breadcrumb' || $key === 'headline') {
+                                        if (empty($result[$key]) || ($key === 'breadcrumb' && is_array($value) && count($value) >= count($result[$key] ?? []))) {
+                                            $result[$key] = ($key === 'headline') ? $this->getHeadline($value) : $value;
+                                        }
+                                        continue;
+                                    }
+                                    if ($key === 'dialogdata' && !empty($result['contentdata'])) {
+                                        $result['contentdata'] = $value;
+                                        $result['contenttype'] = $r['dialogtype'] ?? 'html';
+                                        if (!empty($r['dialogoptions'])) {
+                                            $result['contentoptions'] = $r['dialogoptions'];
+                                        }
+                                        if (!empty($r['dialogstate'])) {
+                                            $result['state'] = $r['dialogstate'];
+                                        } elseif (!empty($r['state'])) {
+                                            $result['state'] = $r['state'];
+                                        }
+                                        if (!empty($r['dialogbreadcrumb'])) {
+                                            $result['breadcrumb'] = $r['dialogbreadcrumb'];
+                                        } elseif (!empty($r['breadcrumb'])) {
+                                            $result['breadcrumb'] = $r['breadcrumb'];
+                                        }
+                                        if (!empty($r['dialogheadline'])) {
+                                            $result['headline'] = $this->getHeadline($r['dialogheadline']);
+                                        } elseif (!empty($r['dialogoptions']['title'])) {
+                                            $result['headline'] = $this->getHeadline($r['dialogoptions']['title']);
+                                        } elseif (!empty($r['headline'])) {
+                                            $result['headline'] = $this->getHeadline($r['headline']);
+                                        }
+                                        if (isset($r['dialogbuttons'])) {
+                                            $result['buttons'] = $r['dialogbuttons'];
+                                            // Move buttons to postcontent so they appear below the thread in main content
+                                            $buttonHtml = '<div class="c4gGuiButtons">';
+                                            foreach ($result['buttons'] as $button) {
+                                                $class = ($button['class'] ?? '') . ' c4gGuiButton c4g__btn c4g__btn-primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only';
+                                                $buttonHtml .= '<a href="#" class="' . $class . '" data-action="' . $button['action'] . '" role="button"><span class="ui-button-text">' . $button['text'] . '</span></a> ';
+                                            }
+                                            $buttonHtml .= '</div>';
+                                            $sPostContent = ($result['postcontent'] ?? '') . $buttonHtml;
+                                            unset($result['buttons']);
+                                        }
+                                        unset($result['dialogdata']);
+                                        unset($result['dialogtype']);
+                                        unset($result['dialogid']);
+                                        unset($result['dialogbuttons']);
+                                        unset($result['dialogbreadcrumb']);
+                                        unset($result['dialogheadline']);
+                                        unset($result['dialogoptions']);
+                                        unset($result['precontent']);
+                                        unset($result['postcontent']);
+                                        unset($result['treedata']);
+                                        unset($result['plainhtml']);
+                                        if (isset($sPostContent)) {
+                                            $result['postcontent'] = $sPostContent;
+                                        }
+                                        if (isset($r['dialogbuttons'])) {
+                                            // already handled
+                                        } elseif (isset($r['buttons'])) {
+                                            $result['buttons'] = $r['buttons'];
+                                        }
+                                        continue;
+                                    }
+                                    if (is_array($value) && isset($result[$key]) && is_array($result[$key])) {
+                                        $result[$key] = array_merge($result[$key], $value);
+                                    } else {
+                                        $result[$key] = $value;
+                                    }
+                                }
                             }
                         }
                         break;

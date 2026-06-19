@@ -604,6 +604,8 @@ class C4GForumHelper extends System
         return $return;
     }
 
+    private static $forumIdsCache = [];
+
     /**
      * @param $id
      * @param bool $children
@@ -613,6 +615,12 @@ class C4GForumHelper extends System
     public function getForumsIdsFromDB($id, $children = false, $idField = 'pid')
     {
         $idArray = array_map('intval', self::deserializeIds($id));
+        sort($idArray);
+        $cacheKey = implode(',', $idArray) . ($children ? '_c' : '') . '_' . $idField;
+        if (isset(self::$forumIdsCache[$cacheKey])) {
+            return self::$forumIdsCache[$cacheKey];
+        }
+
         $idSetMarkers = implode(',', array_fill(0, count($idArray), '?'));
 
         if ($idSetMarkers === '') {
@@ -642,6 +650,7 @@ class C4GForumHelper extends System
             }
         }
 
+        self::$forumIdsCache[$cacheKey] = $return;
         return $return;
     }
 
