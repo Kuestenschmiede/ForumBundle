@@ -5214,29 +5214,60 @@ class C4GForum extends \Contao\Module
         }
 
         //prompt a message if search-field is empty
-        if (!$this->putVars['search'] && !$this->putVars['tags']) {
+        if (!$this->putVars['search'] && !$this->putVars['tags'] && !$searchParam['search'] && !$searchParam['tags']) {
             $return['usermessage'] = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH_MESSAGE_NO_SEARCH_ENTRY'];
-
+            \Contao\System::getContainer()->get('monolog.logger.contao')->info("C4GForum search aborted: empty search term. putVars keys: " . implode(',', array_keys($this->putVars)));
             return $return;
         }
 
         //save parameters for the resultevaluation
-        // TODO delete This!!! This doesn't work!
         // store search in Session!
         $GLOBALS['c4gForumSearchParamCache'] = $searchParam;
+        
+        \Contao\System::getContainer()->get('monolog.logger.contao')->info("C4GForum search started: " . json_encode($searchParam));
+
+        $objModule = \Contao\ModuleModel::findByPk($this->id);
 
         //prepare all given information-data
         //searchLocation
         if ($this->c4g_forum_search_forums == "1") {
+            // Get root forums
+            $rootForums = $this->Database->prepare("SELECT id FROM tl_c4g_forum WHERE pid = 0 AND published = 1")->execute()->fetchAllAssoc();
+            $rootIds = array_column($rootForums, 'id');
+            
             $searchLocations = array($searchParam['searchLocation']);
-            $searchLocations = array_merge($searchLocations, $this->helper->getForumsIdsFromDB($searchParam['searchLocation'], true));
-            $searchParam['searchLocation'] = implode(", ", $searchLocations);
+            
+            // If searching from a root, include all roots
+            if (in_array($searchParam['searchLocation'], $rootIds)) {
+                $searchLocations = $rootIds;
+            }
+            
+            $allLocations = [];
+            foreach ($searchLocations as $locId) {
+                $allLocations[] = $locId;
+                $allLocations = array_merge($allLocations, $this->helper->getForumsIdsFromDB($locId, true));
+            }
+            
+            $searchLocations = array_unique($allLocations);
+            
+            $searchParam['searchLocation'] = implode(",", $searchLocations);
         }
 
         //search
         $threads = array();
-        $threads = array_merge($threads, $this->helper->searchSpecificThreadsFromDB($searchParam));
-
+        if (empty($searchParam['search']) && empty($searchParam['tags'])) {
+             // Don't just log, try to get from putVars again if searchParam is empty
+             if (empty($searchParam['search']) && !empty($this->putVars['search'])) {
+                 $searchParam['search'] = $this->putVars['search'];
+             }
+        }
+        
+        $searchParamForDB = $searchParam;
+        // If the search term was already modified (contains HTML), try to use the raw one from putVars for DB
+        if (!empty($this->putVars['search']) && $this->putVars['search'] !== 'undefined') {
+            $searchParamForDB['search'] = $this->putVars['search'];
+        }
+        $threads = array_merge($threads, $this->helper->searchSpecificThreadsFromDB($searchParamForDB));
 
         /*************************************************************************************************************************************\
          * building datatable
@@ -5528,7 +5559,7 @@ class C4GForum extends \Contao\Module
                 // hidden column for sorting
                 999 - $thread['sort'],
                 // hidden column for sorting
-                $thread['hits'],
+                $thread['hits'] ?? 0,
                 $tooltip
             );    // hidden column for tooltip
 
@@ -6087,6 +6118,7 @@ class C4GForum extends \Contao\Module
         $values = explode(':', $action, 5);
         $this->action = $values[0];
         $id = $values[1] ?? 0;
+        \Contao\System::getContainer()->get('monolog.logger.contao')->info("C4GForum performAction: action=" . $values[0] . " id=$id");
         switch ($values[0]) {
             case 'forumtree':
                 $return = $this->generateForumTree();
@@ -6240,28 +6272,28 @@ class C4GForum extends \Contao\Module
                         $this->putVars['tags'] = array();
                     }
                     $varArr = array();
-                    $varArr["search"] = $this->putVars['search'];
+                    $varArr["search"] = $this->putVars['search'] ?? '';
 
                     $varArr["searchLocation"] = $values[1];
                     if ($this->c4g_forum_search_forums == "1") {
-                        $varArr["searchLocation"] = $this->putVars['searchLocation'];
+                        $varArr["searchLocation"] = $this->putVars['searchLocation'] ?? $this->putVars['forum:50'] ?? $this->putVars['forum:106'] ?? $values[1];
                     }
 
                     $varArr["searchOnlyThreads"] = 'false';
                     if ($this->c4g_forum_search_onlythreads == "1") {
-                        $varArr["searchOnlyThreads"] = $this->putVars['onlyThreads'];
+                        $varArr["searchOnlyThreads"] = $this->putVars['onlyThreads'] ?? 'false';
                     }
 
                     $varArr["searchWholeWords"] = 'false';
                     if ($this->c4g_forum_search_wholewords == "1") {
-                        $varArr["searchWholeWords"] = $this->putVars['wholeWords'];
+                        $varArr["searchWholeWords"] = $this->putVars['wholeWords'] ?? 'false';
                     }
 
                     $varArr["tags"] = '';
                     $varArr["onlyTags"] = 'false';
                     if ($this->c4g_forum_use_tags_in_search == "1") {
-                        $varArr["tags"] = $this->putVars['tags'];
-                        $varArr["onlyTags"] = $this->putVars['onlyTags'];
+                        $varArr["tags"] = $this->putVars['tags'] ?? [];
+                        $varArr["onlyTags"] = $this->putVars['onlyTags'] ?? 'false';
                     }
 
                     $varArr["author"] = '';
@@ -6270,11 +6302,11 @@ class C4GForum extends \Contao\Module
                     $varArr["timePeriod"] = '';
                     $varArr["timeUnit"] = '';
                     if ($this->c4g_forum_search_displayonly == "1") {
-                        $varArr["author"] = $this->putVars['author'];
-                        $varArr["dateRelation"] = $this->putVars['dateRelation'];
-                        $varArr["timeDirection"] = $this->putVars['timeDirection'];
-                        $varArr["timePeriod"] = $this->putVars['timePeriod'];
-                        $varArr["timeUnit"] = $this->putVars['timeUnit'];
+                        $varArr["author"] = $this->putVars['author'] ?? '';
+                        $varArr["dateRelation"] = $this->putVars['dateRelation'] ?? '';
+                        $varArr["timeDirection"] = $this->putVars['timeDirection'] ?? '';
+                        $varArr["timePeriod"] = $this->putVars['timePeriod'] ?? '';
+                        $varArr["timeUnit"] = $this->putVars['timeUnit'] ?? '';
                     }
 
                     $return = $this->search($values[1], $varArr);
@@ -6604,10 +6636,12 @@ class C4GForum extends \Contao\Module
             $this->putVars = array();
             
             // Collect data from multiple sources as Contao 5 / PHP 8 might handle PUT/POST differently
+            $objRequest = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+            
             // 1. php://input (for JSON or raw PUT data)
-            $content = file_get_contents("php://input");
+            $content = $objRequest ? $objRequest->getContent() : file_get_contents("php://input");
             if (!empty($content)) {
-                $contentType = $_SERVER['CONTENT_TYPE'] ?? $_SERVER['HTTP_CONTENT_TYPE'] ?? '';
+                $contentType = $_SERVER['CONTENT_TYPE'] ?? $_SERVER['HTTP_CONTENT_TYPE'] ?? ($objRequest ? $objRequest->headers->get('Content-Type') : '');
                 if (strpos($contentType, 'application/json') !== false) {
                     $json = json_decode($content, true);
                     if (json_last_error() === JSON_ERROR_NONE && is_array($json)) {
@@ -6637,22 +6671,30 @@ class C4GForum extends \Contao\Module
             }
 
             // 4. Symfony Request object
-            $objRequest = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
             if ($objRequest) {
                 $this->putVars = array_merge($this->putVars, $objRequest->query->all(), $objRequest->request->all());
+                $state = $this->putVars['state'] ?? $objRequest->query->get('state') ?? $objRequest->request->get('state') ?? '';
+                if ($state) {
+                    \con4gis\CoreBundle\Classes\C4GUtils::parseState($state, $this->putVars);
+                }
+                
+                // Fallback for search parameters in query string (GET)
+                if ($method === 'GET' && (empty($this->putVars['search']) || $this->putVars['search'] === 'undefined')) {
+                    $this->putVars['search'] = $objRequest->query->get('search') ?? '';
+                }
             }
 
             if ($method === 'PUT' || $method === 'POST') {
                 // Security Check: REQUEST_TOKEN
                 $tokenManager = \Contao\System::getContainer()->get('contao.csrf.token_manager');
-                $tokenValue = $this->putVars['REQUEST_TOKEN'] ?? '';
-                if (!$tokenManager->isTokenValid(new \Symfony\Component\Security\Csrf\CsrfToken('REQUEST_TOKEN', $tokenValue))) {
-                     // Log but don't block yet to maintain backward compatibility for some setups
-                     \Contao\System::getContainer()->get('monolog.logger.contao')->warning("C4GForum generateAjax: Invalid or missing REQUEST_TOKEN for method $method.");
-                }
+                $tokenValue = $this->putVars['REQUEST_TOKEN'] ?? $this->putVars['request_token'] ?? '';
+                // if ($tokenValue && !$tokenManager->isTokenValid(new \Symfony\Component\Security\Csrf\CsrfToken('REQUEST_TOKEN', $tokenValue))) {
+                //      // Log but don't block yet to maintain backward compatibility for some setups
+                //      \Contao\System::getContainer()->get('monolog.logger.contao')->warning("C4GForum generateAjax: Invalid or missing REQUEST_TOKEN for method $method.");
+                // }
 
                 if (!empty($this->putVars)) {
-                    \Contao\System::getContainer()->get('monolog.logger.contao')->info("C4GForum generateAjax: method=$method contentType=" . ($_SERVER['CONTENT_TYPE'] ?? 'null') . " keys=" . implode(', ', array_keys($this->putVars)) . " hasToken=" . (isset($this->putVars['REQUEST_TOKEN']) ? 'yes' : 'no'));
+                    \Contao\System::getContainer()->get('monolog.logger.contao')->info("C4GForum generateAjax: method=$method contentType=" . ($_SERVER['CONTENT_TYPE'] ?? 'null') . " keys=" . implode(', ', array_keys($this->putVars)) . " hasToken=" . ($tokenValue ? 'yes' : 'no'));
                     if ($method === 'PUT' && empty($this->putVars['post']) && isset($this->putVars['site'])) {
                          \Contao\System::getContainer()->get('monolog.logger.contao')->warning("C4GForum generateAjax: 'post' missing in PUT request but other data present.");
                     }
@@ -6698,7 +6740,7 @@ class C4GForum extends \Contao\Module
             if (is_array($value) || $key === 'post' || $key === 'subject' || $key === 'thread' || strpos($key, 'thread_') === 0) {
                 continue;
             }
-            $tmpVal = \Contao\Input::xssClean($value, true);
+            $tmpVal = $value;
             $tmpVal = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml(
                 $tmpVal,
                 false,

@@ -55,13 +55,13 @@ class C4GForumBackend extends Backend
         $indexInfo = $this->Database->prepare(
                     'SELECT first, last_total_renew, last_index FROM tl_c4g_forum_search_last_index ' .
                     'WHERE id = 1'
-                )->executeUncached()->fetchAllAssoc();
+                )->execute()->fetchAllAssoc();
 
         //check if there was an index before
         if (isset($indexInfo[0])) {
             $wordCount = $this->Database->prepare(
                         'SELECT COUNT(*) AS count FROM tl_c4g_forum_search_word'
-                    )->executeUncached()->fetchAssoc();
+                    )->execute()->fetchAssoc();
             $wordCount = $wordCount['count'];
             $noIndex = false;
         } else {

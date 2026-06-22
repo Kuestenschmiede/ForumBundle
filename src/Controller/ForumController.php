@@ -36,6 +36,7 @@ class ForumController extends AbstractController
 
     public function ajaxAction(Request $request, $id, $req = '')
     {
+        \Contao\System::getContainer()->get('monolog.logger.contao')->info("ForumController ajaxAction: id=$id req=$req");
         $response = new JsonResponse();
         $post = $request->request->get('post');
         if ($post) {

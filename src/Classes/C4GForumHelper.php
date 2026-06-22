@@ -847,13 +847,13 @@ class C4GForumHelper extends System
         $wasFirst = false;
         $infoId = $this->Database->prepare(
                 'SELECT id FROM tl_c4g_forum_search_last_index '
-        )->executeUncached();
+        )->execute();
         $infoId = $infoId->fetchAllAssoc();
         if ($infoId[0]['id'] != 1) {
             $this->Database->prepare(
                     'INSERT INTO tl_c4g_forum_search_last_index ' .
                     '(id) VALUES ( 1 )'
-            )->executeUncached();
+            )->execute();
             $wasFirst = true;
         }
 
@@ -866,12 +866,14 @@ class C4GForumHelper extends System
         $types = [
                 ['type' => 'threadhl', 'table' => 'tl_c4g_forum_thread'],
                 ['type' => 'threaddesc', 'table' => 'tl_c4g_forum_thread'],
+                ['type' => 'threadtag', 'table' => 'tl_c4g_forum_thread'],
                 ['type' => 'post', 'table' => 'tl_c4g_forum_post'],
+                ['type' => 'tag', 'table' => 'tl_c4g_forum_post'],
         ];
         foreach ($types as $type) {
             $idSet = $this->Database->prepare(
                     'SELECT DISTINCT id FROM ' . $type['table']
-            )->executeUncached();
+            )->execute();
             $idSet = $idSet->fetchAllAssoc();
             foreach ($idSet as $id) {
                 $this->createIndex($type['type'], $id['id']);
@@ -914,7 +916,7 @@ class C4GForumHelper extends System
         $posts = $this->Database->prepare(
                 'SELECT id FROM tl_c4g_forum_post ' .
                 'WHERE pid = ? '
-                )->executeUncached(...[$id]);
+                )->execute(...[$id]);
         $posts = $posts->fetchAllAssoc();
 
         $postIdSet = [];
@@ -1240,13 +1242,13 @@ class C4GForumHelper extends System
             $wordIds = $this->Database->prepare(
                     'SELECT sw_id AS id FROM tl_c4g_forum_search_word ' .
                     'WHERE sw_word = ?'
-            )->executeUncached(...[$word])->fetchAllAssoc();
+            )->execute(...[$word])->fetchAllAssoc();
         } else {
             $word = '%' . $word . '%';
             $wordIds = $this->Database->prepare(
                     'SELECT sw_id AS id FROM tl_c4g_forum_search_word ' .
                     'WHERE sw_word LIKE ( ? ) '
-            )->executeUncached(...[$word])->fetchAllAssoc();
+            )->execute(...[$word])->fetchAllAssoc();
         }
 
         foreach ($wordIds as $wordId) {
@@ -1267,7 +1269,7 @@ class C4GForumHelper extends System
         $wordId = $this->Database->prepare(
                 'SELECT sw_id AS id FROM tl_c4g_forum_search_word ' .
                 'WHERE sw_word = ? '
-        )->executeUncached(...[$word])->id;
+        )->execute(...[$word])->id;
 
         //check if statement was successfull
         if ($wordId == null) {
@@ -1310,6 +1312,7 @@ class C4GForumHelper extends System
         // add tags to searchwords if present
         if (isset($searchParam['tags'])) {
             $searchParam['tags'] = self::deserializeIds($searchParam['tags']);
+            $searchParam['tags'] = array_filter($searchParam['tags']); // NEW: remove empty values like 0
             if (!empty($searchParam['tags'])) {
                 $bFilterByTags = true;
                 $GLOBALS['c4gForumSearchParamCache']['search'] .= '<div>' . ($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['TAGS'] ?? ($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['TAGS'] ?? 'Tags')) . ':<b> ' . implode(', ', $searchParam['tags']) . '</b></div>';
@@ -1365,11 +1368,13 @@ class C4GForumHelper extends System
         $typeSetParams[] = 'threaddesc';
 
         if ($bTagsOnly) {
-            $typeSet = ['?'];
-            $typeSetParams = ['tag'];
+            $typeSet = ['?', '?'];
+            $typeSetParams = ['tag', 'threadtag'];
         } else {
             $typeSet[] = '?';
             $typeSetParams[] = 'tag';
+            $typeSet[] = '?';
+            $typeSetParams[] = 'threadtag';
         }
 
         $typeSetMarkers = implode(', ', $typeSet) ?: "'0'";
@@ -1446,9 +1451,13 @@ class C4GForumHelper extends System
                         $postSet[] = $indexResult['id'];
                         $countSave[$indexResult['id']] = $indexResult['count'];
                         unset($indexResults[$key]);
+                    } elseif ($indexResult['type'] == 'tag') {
+                        $postSet[] = $indexResult['id'];
+                        $countSave[$indexResult['id']] = $indexResult['count'];
+                        unset($indexResults[$key]);
                     } else {
                         if ($bFilterByTags) {
-                            if ($indexResult['type'] == 'tag') {
+                            if ($indexResult['type'] == 'tag' || $indexResult['type'] == 'threadtag') {
                                 $postSet[] = $indexResult['id'];
                                 $countSave[$indexResult['id']] = $indexResult['count'];
                                 unset($indexResults[$key]);
@@ -1468,13 +1477,18 @@ class C4GForumHelper extends System
                     }
                     $postResultsRaw = $this->Database->prepare(
                             'SELECT pid, id FROM tl_c4g_forum_post ' .
-                            'WHERE id IN(' . $postSetMarkers . ') ' . $sqlAuthor
-                            )->execute(...array_merge($postSetArray, $authorParam));
+                            'WHERE id IN(' . $postSetMarkers . ') ' . $sqlAuthor .
+                            ' UNION ' .
+                            'SELECT id AS pid, id FROM tl_c4g_forum_thread ' .
+                            'WHERE id IN(' . $postSetMarkers . ')'
+                            )->execute(...array_merge($postSetArray, $authorParam, $postSetArray));
                     $postResults = $postResultsRaw->fetchAllAssoc();
+
+                    \Contao\System::getContainer()->get('monolog.logger.contao')->info("C4GForum search results hit resolution: " . count($postResults) . " results for postSet " . implode(',', $postSetArray));
 
                     foreach ($postResults as &$postResult) {
                         $postResult['count'] = $countSave[$postResult['id']];
-                        $postResult['id'] = $postResult['pid'];
+                        $postResult['id'] = $postResult['pid'] ?: $postResult['id'];
                         unset($postResult['pid']);
                     }
 
@@ -1573,8 +1587,11 @@ class C4GForumHelper extends System
                 break;
         }
 
-        $locationsArray = self::deserializeIds($searchParam['searchLocation'] ?? '');
+        $locationsArray = array_filter(array_map('trim', explode(',', $searchParam['searchLocation'] ?? '')));
         $locationsMarkers = implode(',', array_fill(0, count($locationsArray), '?'));
+        if (empty($locationsMarkers)) {
+            $locationsMarkers = '0';
+        }
 
         $idSetArray = self::deserializeIds($idSet);
         $idSetMarkers = implode(',', array_fill(0, count($idSetArray), '?'));
@@ -1600,7 +1617,7 @@ class C4GForumHelper extends System
                 $result['username'] = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['DELETED_USER'] ?? 'Deleted User';
             }
 
-            if ($bFilterByTags) {
+            if ($bFilterByTags && !empty($searchParam['tags'])) {
                 $resultTags = explode(',', $result['tags'] ?? '');
                 $resultTags = array_map('trim', $resultTags);
                 $aIntersect = array_intersect($resultTags, $searchParam['tags']);
@@ -1614,9 +1631,13 @@ class C4GForumHelper extends System
                 $result['hits'] = $hits[$result['id']] ?? 0;
             }
             // check permission of user to see the found thread
-            if (!$this->checkPermission($result['forumid'], 'threadlist') ||
-                !$this->checkPermission($result['forumid'], 'search')) {
+            if (!$this->checkPermission($result['forumid'], 'threadlist')) {
                 unset($results[$key]);
+                continue;
+            }
+            if (!$this->checkPermission($result['forumid'], 'search')) {
+                unset($results[$key]);
+                continue;
             }
         }
 
@@ -3502,7 +3523,7 @@ class C4GForumHelper extends System
                         'UPDATE tl_module SET ' .
                         'c4g_forum_sitemap_updated=? ' .
                         'WHERE id = ?'
-                )->executeUncached(...[time(), $module->id]);
+                )->execute(...[time(), $module->id]);
                 $data['command'] = 'create_sitemap';
                 $data['filename'] = $module->c4g_forum_sitemap_filename;
                 $data['contents'] = \Contao\StringUtil::deserialize($module->c4g_forum_sitemap_contents, true);
