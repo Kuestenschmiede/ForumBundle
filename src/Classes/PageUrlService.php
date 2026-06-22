@@ -24,10 +24,10 @@ class PageUrlService
 
     public function __construct()
     {
-        if (!isset($_GET['item']) && Config::get('useAutoItem') && isset($_GET['auto_item'])) {
-            Input::setGet('item', Input::get('auto_item'));
+        if (!isset($_GET['item']) && \Contao\Config::get('useAutoItem') && isset($_GET['auto_item'])) {
+            \Contao\Input::setGet('item', \Contao\Input::get('auto_item'));
         }
-        $this->alias = Input::get('item') ? urlencode(Input::get('item')) : '';
+        $this->alias = \Contao\Input::get('item') ? urlencode(\Contao\Input::get('item')) : '';
         $request = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
         $this->pageUrl = ($request ? $request->getSchemeAndHttpHost() . $request->getBasePath() . $request->getRequestUri() : '');
         if ($this->alias !== '') {
@@ -69,7 +69,7 @@ class PageUrlService
     {
         if ($this->alias !== '') {
             return str_replace('/' . $this->alias, '/' . $alias, $this->pageUrl);
-        } elseif (C4GUtils::endsWith($this->pageUrl, '.html')) {
+        } elseif (\con4gis\CoreBundle\Classes\C4GUtils::endsWith($this->pageUrl, '.html')) {
             return str_replace('.html', "/$alias.html", $this->pageUrl);
         }
 

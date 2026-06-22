@@ -23,7 +23,7 @@ class Inbox
 
     public static function parse()
     {
-        $oUser = FrontendUser::getInstance();
+        $oUser = \Contao\FrontendUser::getInstance();
         $aPns = C4gForumPn::getByRecipient($oUser->id);
 
         $oTemplate = new \FrontendTemplate(self::$sTemplate);

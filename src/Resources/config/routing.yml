@@ -35,4 +35,4 @@ forum_sub:
 
 controllers:
     resource: '../../Controller/'
-    type:     annotation
+    type: attribute

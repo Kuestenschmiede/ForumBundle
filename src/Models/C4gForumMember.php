@@ -37,7 +37,7 @@ class C4gForumMember extends Model
     public static function getAvatarByMemberId($iMemberId)
     {
         $t = static::$sTable;
-        $oDatabase = Database::getInstance();
+        $oDatabase = \Contao\Database::getInstance();
         $aMemberImage = $oDatabase->prepare("SELECT memberImage FROM $t WHERE id=?")->execute(...[$iMemberId])->fetchAssoc();
         $sMemberImagePath = $aMemberImage['memberImage'];
 

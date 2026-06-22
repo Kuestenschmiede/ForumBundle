@@ -30,7 +30,7 @@ class C4GSubscriptions extends Module
      */
     public function generate()
     {
-        if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
+        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
             $objTemplate = new \Contao\BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . strtoupper($GLOBALS['TL_LANG']['FMD']['c4g_forum_subscription'][0]) . ' ###';
             $objTemplate->title = $this->headline;
@@ -66,7 +66,7 @@ class C4GSubscriptions extends Module
 
         \Contao\System::loadLanguageFile('subscriptions');
         $template = $this->Template;
-        $objPage = System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
+        $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
         $template->language = $objPage->language;
         $template->sub_forum_headline = $this->sub_forum_headline !== '' ? $this->sub_forum_headline : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_HEAD'];
         $template->sub_forum_change_sub_caption = $this->sub_forum_change_sub_caption !== '' ? $this->sub_forum_change_sub_caption : $GLOBALS['TL_LANG']['C4G_FORUM_SUBS']['SUBFORUM_SUBS_CHANGE'];

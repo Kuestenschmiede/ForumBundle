@@ -40,11 +40,11 @@ class ForumCallback
 
     public function copyPageWithSubpages($row, $href, $label, $title, $icon, $attributes, $table)
     {
-        $db = System::getContainer()->get('database_connection');
+        $db = \Contao\System::getContainer()->get('database_connection');
         $id = $db->fetchOne("SELECT id FROM tl_c4g_forum WHERE pid=?", [$row['id']]);
 
         if ($id) {
-            return '<a href="' . Backend::addToUrl($href . '&amp;id=' . $row['id']) . '" title="' . \Contao\StringUtil::specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
+            return '<a href="' . \Contao\Backend::addToUrl($href . '&amp;id=' . $row['id']) . '" title="' . \Contao\StringUtil::specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
         } else {
             return Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)) . ' ';
         }
@@ -52,7 +52,7 @@ class ForumCallback
 
     public function updateDCA(DataContainer $dc)
     {
-        $db = System::getContainer()->get('database_connection');
+        $db = \Contao\System::getContainer()->get('database_connection');
         $helper = new \con4gis\ForumBundle\Classes\C4GForumHelper($db);
         $GLOBALS['TL_DCA']['tl_c4g_forum']['fields']['guest_rights']['default'] =
             $helper->getGuestDefaultRights();
@@ -91,7 +91,7 @@ class ForumCallback
 
     public function getAllLocStyles(DataContainer $dc)
     {
-        $db = System::getContainer()->get('database_connection');
+        $db = \Contao\System::getContainer()->get('database_connection');
         $locStyles = $db->fetchAllAssociative("SELECT id,name FROM tl_c4g_map_locstyles ORDER BY name");
         $return = [];
         foreach ($locStyles as $style) {
@@ -121,15 +121,15 @@ class ForumCallback
     public function forumThread($row, $href, $label, $title, $icon)
     {
         $href .= "&amp;id=" . $row['id'];
-        return '<a href="' . Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '">' . Image::getHtml($icon, $label) . '</a> ';
+        return '<a href="' . \Contao\Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '">' . Image::getHtml($icon, $label) . '</a> ';
     }
 
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-        $tid = Input::get('tid');
+        $tid = \Contao\Input::get('tid');
         if (strlen($tid)) {
-            $this->toggleVisibility($tid, (Input::get('state') == 1));
-            Backend::redirect(Backend::getReferer());
+            $this->toggleVisibility($tid, (\Contao\Input::get('state') == 1));
+            \Contao\Backend::redirect(\Contao\Backend::getReferer());
         }
 
         $user = BackendUser::getInstance();
@@ -143,20 +143,20 @@ class ForumCallback
             $icon = 'invisible.svg';
         }
 
-        return '<a href="' . Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
+        return '<a href="' . \Contao\Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
     }
 
     public function toggleVisibility($intId, $blnVisible)
     {
         $user = BackendUser::getInstance();
         if (!$user->isAdmin && !$user->hasAccess('tl_c4g_forum::published', 'alexf')) {
-            System::getContainer()->get('monolog.logger.contao')->error('Not enough permissions to publish/unpublish C4GMaps ID "' . $intId . '"', ['contao' => new \Contao\CoreBundle\Monolog\ContaoContext(__METHOD__, 'tl_c4g_forum toggleVisibility')]);
-            Backend::redirect('contao/main.php?act=error');
+            \Contao\System::getContainer()->get('monolog.logger.contao')->error('Not enough permissions to publish/unpublish C4GMaps ID "' . $intId . '"', ['contao' => new \Contao\CoreBundle\Monolog\ContaoContext(__METHOD__, 'tl_c4g_forum toggleVisibility')]);
+            \Contao\Backend::redirect('contao/main.php?act=error');
         }
 
         // Versions are tricky in Contao 5 without Backend class, but we can try using the Model or the legacy way if Backend is available.
         // For now, let's stick to the database update.
-        $db = System::getContainer()->get('database_connection');
+        $db = \Contao\System::getContainer()->get('database_connection');
         $db->executeStatement("UPDATE tl_c4g_forum SET tstamp=?, published=? WHERE id=?", [time(), ($blnVisible ? 1 : ''), $intId]);
     }
 
@@ -193,12 +193,12 @@ class ForumCallback
 
     public function pickLinkUrl(DataContainer $dc)
     {
-        return ' <a href="contao/page.php?do=' . Input::get('do') . '&amp;table=' . $dc->table . '&amp;field=' . $dc->field . '&amp;value=' . str_replace(array('{{link_url::', '}}'), '', $dc->value) . '" title="' . \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']) . '" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'' . \Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])) . '\',\'url\':this.href,\'id\':\'' . $dc->field . '\',\'tag\':\'ctrl_' . $dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '') . '\',\'self\':this});return false">' . Image::getHtml('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
+        return ' <a href="contao/page.php?do=' . \Contao\Input::get('do') . '&amp;table=' . $dc->table . '&amp;field=' . $dc->field . '&amp;value=' . str_replace(array('{{link_url::', '}}'), '', $dc->value) . '" title="' . \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']) . '" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'' . \Contao\StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])) . '\',\'url\':this.href,\'id\':\'' . $dc->field . '\',\'tag\':\'ctrl_' . $dc->field . ((\Contao\Input::get('act') == 'editAll') ? '_' . $dc->id : '') . '\',\'self\':this});return false">' . Image::getHtml('pickpage.svg', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
     }
 
     public function get_maps(DataContainer $dc)
     {
-        $db = System::getContainer()->get('database_connection');
+        $db = \Contao\System::getContainer()->get('database_connection');
         $maps = $db->fetchAllAssociative("SELECT * FROM tl_c4g_maps WHERE location_type='map' AND published=1");
         $return = [];
         foreach ($maps as $map) {
@@ -211,7 +211,7 @@ class ForumCallback
     {
         if ($dc->activeRecord) {
             if ($dc->activeRecord->id > 0) {
-                // $db = System::getContainer()->get('database_connection');
+                // $db = \Contao\System::getContainer()->get('database_connection');
                 // $helper = new \con4gis\ForumBundle\Classes\C4GForumHelper($db);
                 // TODO move old threads and posts to a paper bin
             }
@@ -222,7 +222,7 @@ class ForumCallback
         if (!$dc->activeRecord) {
             return;
         }
-        $db = System::getContainer()->get('database_connection');
+        $db = \Contao\System::getContainer()->get('database_connection');
         $thread = $db->fetchAssociative("SELECT pid,last_post_id FROM tl_c4g_forum_thread WHERE id=?", [$dc->activeRecord->pid]);
         $numPosts = $db->fetchOne("SELECT COUNT(id) FROM tl_c4g_forum_post WHERE pid = ?", [$dc->activeRecord->pid]);
 
@@ -249,7 +249,7 @@ class ForumCallback
 
     public function loadPostLabel($arrRow)
     {
-        $db = System::getContainer()->get('database_connection');
+        $db = \Contao\System::getContainer()->get('database_connection');
         $thread = $db->fetchAssociative('SELECT * FROM tl_c4g_forum_thread WHERE id=?', [$arrRow['pid']]);
         if ($thread && $thread['state'] == 1) {
             $db->update('tl_c4g_forum_thread', ['state' => 2], ['id' => $arrRow['pid']]);
@@ -260,7 +260,7 @@ class ForumCallback
     public function forumPost($row, $href, $label, $title, $icon)
     {
         $href .= "&amp;id=" . $row['id'];
-        return '<a href="' . Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '">' . Image::getHtml($icon, $label) . '</a> ';
+        return '<a href="' . \Contao\Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '">' . Image::getHtml($icon, $label) . '</a> ';
     }
 
     public function saveDefaultThread(DataContainer $dc)
@@ -269,7 +269,7 @@ class ForumCallback
             return;
         }
 
-        $db = System::getContainer()->get('database_connection');
+        $db = \Contao\System::getContainer()->get('database_connection');
         $author = $db->fetchOne("SELECT default_author FROM tl_c4g_forum WHERE id=?", [$dc->activeRecord->pid]);
 
         if ($author) {
@@ -280,7 +280,7 @@ class ForumCallback
     public function getThreadLabel($arrRow)
     {
         $result = "";
-        $db = System::getContainer()->get('database_connection');
+        $db = \Contao\System::getContainer()->get('database_connection');
         $settings = $db->fetchAssociative("SELECT * FROM tl_c4g_settings LIMIT 1");
 
         if ($settings && $settings['c4g_forum_type']) {
@@ -322,8 +322,8 @@ class ForumCallback
 
     public function getThreadDatasets(DataContainer $dc)
     {
-        $pid = Input::get('id');
-        $db = System::getContainer()->get('database_connection');
+        $pid = \Contao\Input::get('id');
+        $db = \Contao\System::getContainer()->get('database_connection');
         if ($pid) {
             $childs = $this->getForumChilds($pid);
             $root = $db->fetchFirstColumn("SELECT id FROM tl_c4g_forum_thread WHERE pid=?", [$pid]);
@@ -340,7 +340,7 @@ class ForumCallback
 
     public function getForumChilds($pid)
     {
-        $db = System::getContainer()->get('database_connection');
+        $db = \Contao\System::getContainer()->get('database_connection');
         $childs = $db->fetchAllAssociative("SELECT id FROM tl_c4g_forum WHERE pid=?", [$pid]);
 
         $return = array();

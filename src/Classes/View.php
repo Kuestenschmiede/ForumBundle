@@ -24,7 +24,7 @@ namespace con4gis\ForumBundle\Classes;
         public static function parse()
         {
             $aData = \Contao\Input::get('data');
-            $oUser = FrontendUser::getInstance();
+            $oUser = \Contao\FrontendUser::getInstance();
             $oPn = C4gForumPn::getById($aData['id']);
 
             $oTemplate = new \FrontendTemplate(self::$sTemplate);

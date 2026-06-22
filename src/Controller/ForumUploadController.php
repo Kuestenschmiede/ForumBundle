@@ -76,11 +76,11 @@ class ForumUploadController
     {
         Dbafs::syncFiles();
         $relativeUrl = 'files'.explode('files', $url)[1];
-        $database = Database::getInstance();
+        $database = \Contao\Database::getInstance();
         $statement = $database->prepare('SELECT uuid FROM tl_files WHERE path = ?');
         $result = $statement->execute(...[$relativeUrl])->fetchAssoc();
         if ($result !== false) {
-            $database = Database::getInstance();
+            $database = \Contao\Database::getInstance();
             $statement = $database->prepare(
                 'INSERT INTO tl_c4g_forum_upload (fileUuid) VALUES (?)'
             );

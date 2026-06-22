@@ -34,7 +34,7 @@ class PMModuleController extends AbstractFrontendModuleController
     protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
         if (!$this->requestStack || !method_exists($this->requestStack, 'getSession')) {
-            $session = System::getContainer()->get('session');
+            $session = \Contao\System::getContainer()->get('session');
         } else {
             $session = $this->requestStack->getSession();
         }
@@ -42,8 +42,8 @@ class PMModuleController extends AbstractFrontendModuleController
         $session->set('pm-forum-module', $model->pm_center_forum_module);
         $template->c4g_forum_module = $model->pm_center_forum_module;
 
-        System::loadLanguageFile("tl_c4g_forum_pn");
-        $aUser = \FrontendUser::getInstance()->getData();
+        \Contao\System::loadLanguageFile("tl_c4g_forum_pn");
+        $aUser = \Contao\FrontendUser::getInstance()->getData();
         $iCountAll = C4gForumPn::countBy($aUser['id'],"status" , true);
         $iCountUnread = C4gForumPn::countBy($aUser['id'],"status" , 0);
 
@@ -76,7 +76,7 @@ class PMModuleController extends AbstractFrontendModuleController
             }
         }
 
-        $database = Database::getInstance();
+        $database = \Contao\Database::getInstance();
         if (array_key_exists('c4g_forum_fmd', $_GET)) {
             $this->forumModule = $database->prepare("SELECT * FROM tl_module WHERE id=?")
                 ->limit(1)
@@ -114,7 +114,7 @@ class PMModuleController extends AbstractFrontendModuleController
             $theme = $this->forumModule->c4g_forum_uitheme_css_select;
             $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
         } else {
-            $settings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
+            $settings = \Contao\Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
 
             if ($settings) {
                 $settings = $settings[0];
@@ -146,7 +146,7 @@ class PMModuleController extends AbstractFrontendModuleController
         }
 
         $GLOBALS['TL_LANGUAGE'] = $currentLang;
-        System::loadLanguageFile('tl_c4g_forum_pn');
+        \Contao\System::loadLanguageFile('tl_c4g_forum_pn');
         return '<script>
             var C4GLANG = {
                 send_error: "'.$GLOBALS['TL_LANG']['tl_c4g_forum_pn']['send_error'].'",

@@ -80,7 +80,7 @@ class C4GForumHelper extends System
     public function __construct($database = null, $environment = null, $user = null, $forumName = '', $frontendUrl = '', $show_realname = 'UU', $forumType = 'FORUM')
     {
         $this->subscription = new \con4gis\ForumBundle\Classes\C4GForumSubscription($this, $database, $environment, $user, $forumName, $frontendUrl, $forumType);
-            $this->Database = \Contao\Database::getInstance();
+        $this->Database = \Contao\Database::getInstance();
         $this->User = $user;
         $this->Environment = $environment;
         $this->frontendUrl = $frontendUrl;
@@ -193,10 +193,10 @@ class C4GForumHelper extends System
     public function checkPermissionWithData($right, $memberGroups, $adminGroups, $guestRights, $memberRights, $adminRights, $userId = 0)
     {
         $hasPermission = false;
-        $rights = StringUtil::deserialize($guestRights, true);
-        if ((C4GUtils::isFrontendUserLoggedIn()) && (!$this->checkGuestRights)) {
+        $rights = \Contao\StringUtil::deserialize($guestRights, true);
+        if ((\con4gis\CoreBundle\Classes\C4GUtils::isFrontendUserLoggedIn()) && (!$this->checkGuestRights)) {
             if (($userId != 0) && (($this->User->id ?? null) != $userId)) {
-                $userGroups = StringUtil::deserialize($this->Database->prepare(
+                $userGroups = \Contao\StringUtil::deserialize($this->Database->prepare(
                     'SELECT `groups` FROM tl_member  ' .
                     'WHERE id=?')
                     ->execute(...[(int)$userId])->fetchAssoc()['groups'] ?? null, true);
@@ -205,14 +205,14 @@ class C4GForumHelper extends System
             }
 
             if (empty($userGroups)) {
-                $rights = StringUtil::deserialize($guestRights, true);
-            } elseif (($adminGroups) && (count(array_intersect($userGroups, StringUtil::deserialize($adminGroups, true))) > 0)) {
-                $rights = StringUtil::deserialize($adminRights, true);
-            } elseif (($memberGroups) && (count(array_intersect($userGroups, StringUtil::deserialize($memberGroups, true))) > 0)) {
-                $rights = StringUtil::deserialize($memberRights, true);
+                $rights = \Contao\StringUtil::deserialize($guestRights, true);
+            } elseif (($adminGroups) && (count(array_intersect($userGroups, \Contao\StringUtil::deserialize($adminGroups, true))) > 0)) {
+                $rights = \Contao\StringUtil::deserialize($adminRights, true);
+            } elseif (($memberGroups) && (count(array_intersect($userGroups, \Contao\StringUtil::deserialize($memberGroups, true))) > 0)) {
+                $rights = \Contao\StringUtil::deserialize($memberRights, true);
             } else {
                 // logged in, but not in any allowed group -> fallback to guest rights
-                $rights = StringUtil::deserialize($guestRights, true);
+                $rights = \Contao\StringUtil::deserialize($guestRights, true);
             }
         } else {
             // not logged in: newpost and newthread not possible at all
@@ -235,7 +235,7 @@ class C4GForumHelper extends System
             !is_array($GLOBALS['TL_LANG']['C4G_FORUM']) ||
             (!array_key_exists('DISCUSSION', $GLOBALS['TL_LANG']['C4G_FORUM']) && !array_key_exists('DISCUSSIONS', $GLOBALS['TL_LANG']['C4G_FORUM']))
         ) {
-            System::loadLanguageFile('frontendModules');
+            \Contao\System::loadLanguageFile('frontendModules');
         }
 
         if (is_array($rights) && (array_search($right, $rights) !== false)) {
@@ -286,7 +286,7 @@ class C4GForumHelper extends System
             $this->ForumCache[$forumId] = $forum;
         }
 
-        $database = Database::getInstance();
+        $database = \Contao\Database::getInstance();
         $statement = $database->prepare(
             'SELECT published FROM tl_c4g_forum WHERE id = ?'
         );
@@ -416,7 +416,7 @@ class C4GForumHelper extends System
         $aSize[0] = ($aSize[0] > 0) ? $aSize[0] : 100;
         $aSize[1] = ($aSize[1] > 0) ? $aSize[1] : 100;
 
-        $aImage = StringUtil::deserialize(C4gForumMember::getAvatarByMemberId($iMemberId), true);
+        $aImage = \Contao\StringUtil::deserialize(C4gForumMember::getAvatarByMemberId($iMemberId), true);
         $sImage = $aImage[0] ?? null;
         if (!$sImage) {
             return null;
@@ -727,7 +727,7 @@ class C4GForumHelper extends System
             !is_array($GLOBALS['TL_LANG']['C4G_FORUM']) ||
             (!array_key_exists('DISCUSSION', $GLOBALS['TL_LANG']['C4G_FORUM']) && !array_key_exists('DISCUSSIONS', $GLOBALS['TL_LANG']['C4G_FORUM']))
         ) {
-            System::loadLanguageFile('frontendModules');
+            \Contao\System::loadLanguageFile('frontendModules');
         }
         $aThreads = $threads->fetchAllAssoc();
         foreach ($aThreads as $key => $aThread) {
@@ -802,7 +802,7 @@ class C4GForumHelper extends System
             !is_array($GLOBALS['TL_LANG']['C4G_FORUM']) ||
             (!array_key_exists('DISCUSSION', $GLOBALS['TL_LANG']['C4G_FORUM']) && !array_key_exists('DISCUSSIONS', $GLOBALS['TL_LANG']['C4G_FORUM']))
         ) {
-            System::loadLanguageFile('frontendModules');
+            \Contao\System::loadLanguageFile('frontendModules');
         }
         $aThreads = $threads->fetchAllAssoc();
         foreach ($aThreads as $key => $aThread) {
@@ -1141,11 +1141,11 @@ class C4GForumHelper extends System
         if (!empty($dataSet)) {
             //compress data
             if ($type == 'tag' || $type == 'threadtag') {
-                $dataSet = C4GUtils::compressDataSetForSearch($dataSet, false, true, true, true);
+                $dataSet = \con4gis\CoreBundle\Classes\C4GUtils::compressDataSetForSearch($dataSet, false, true, true, true);
                 $dataSet = explode(',', $dataSet);
                 $dataSet = array_map('trim', $dataSet);
             } else {
-                $dataSet = C4GUtils::compressDataSetForSearch($dataSet);
+                $dataSet = \con4gis\CoreBundle\Classes\C4GUtils::compressDataSetForSearch($dataSet);
                 $dataSet = explode(' ', $dataSet);
             }
         }
@@ -1161,7 +1161,7 @@ class C4GForumHelper extends System
             )->execute(...[$id, $srcCol])->data;
 
             if (!empty($dataTranslSet)) {
-                $dataTranslSet = C4GUtils::compressDataSetForSearch($dataTranslSet);
+                $dataTranslSet = \con4gis\CoreBundle\Classes\C4GUtils::compressDataSetForSearch($dataTranslSet);
                 $dataTranslSet = explode(' ', $dataTranslSet);
 
                 if (empty($dataSet)) {
@@ -1295,10 +1295,10 @@ class C4GForumHelper extends System
 
         $GLOBALS['c4gForumSearchParamCache']['search'] = '<div>' . ($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SEARCH_TERM'] ?? ($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS']['SEARCH_TERM'] ?? 'Search term')) . ': <b>' . $searchParam['search'] . '</b></div>';
         //prepare searchstring
-        $search = C4GUtils::compressDataSetForSearch($searchParam['search']);
+        $search = \con4gis\CoreBundle\Classes\C4GUtils::compressDataSetForSearch($searchParam['search']);
         if ($search == '') {
             // no search terms left? try to prepare without stripping stopwords...
-            $search = C4GUtils::compressDataSetForSearch($searchParam['search'], false, true, true, true);
+            $search = \con4gis\CoreBundle\Classes\C4GUtils::compressDataSetForSearch($searchParam['search'], false, true, true, true);
         }
 
         //explode searchstring
@@ -1682,7 +1682,7 @@ class C4GForumHelper extends System
             !is_array($GLOBALS['TL_LANG']['C4G_FORUM']) ||
             (!array_key_exists('DISCUSSION', $GLOBALS['TL_LANG']['C4G_FORUM']) && !array_key_exists('DISCUSSIONS', $GLOBALS['TL_LANG']['C4G_FORUM']))
         ) {
-            System::loadLanguageFile('frontendModules');
+            \Contao\System::loadLanguageFile('frontendModules');
         }
         $aThread = $thread->fetchAssoc();
         if (empty($aThread['username'])) {
@@ -1742,7 +1742,7 @@ class C4GForumHelper extends System
             !is_array($GLOBALS['TL_LANG']['C4G_FORUM']) ||
             (!array_key_exists('DISCUSSION', $GLOBALS['TL_LANG']['C4G_FORUM']) && !array_key_exists('DISCUSSIONS', $GLOBALS['TL_LANG']['C4G_FORUM']))
         ) {
-            System::loadLanguageFile('frontendModules');
+            \Contao\System::loadLanguageFile('frontendModules');
         }
         $aThread = $thread->fetchAssoc();
         if (empty($aThread['username'])) {
@@ -1814,7 +1814,7 @@ class C4GForumHelper extends System
             !is_array($GLOBALS['TL_LANG']['C4G_FORUM']) ||
             (!array_key_exists('DISCUSSION', $GLOBALS['TL_LANG']['C4G_FORUM']) && !array_key_exists('DISCUSSIONS', $GLOBALS['TL_LANG']['C4G_FORUM']))
         ) {
-            System::loadLanguageFile('frontendModules');
+            \Contao\System::loadLanguageFile('frontendModules');
         }
         foreach ($aPosts as $key => $aPost) {
             if (empty($aPosts[$key]['username'])) {
@@ -2120,15 +2120,22 @@ class C4GForumHelper extends System
      *
      * @return bool
      */
-    public function insertPostIntoDBInternal($threadId, $userId, $subject, $post, $tags, $rating = 0, $forumId, $post_number, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id, $recipient, $owner)
+    public function insertPostIntoDBInternal($threadId, $userId, $subject, $post, $tags, $rating = 0, $forumId = 0, $post_number = 0, $linkname = null, $linkurl = null, $loc_geox = null, $loc_geoy = null, $locstyle = null, $loc_label = null, $loc_tooltip = null, $loc_data_content = null, $loc_osm_id = null, $recipient = '', $owner = '')
     {
         $set = [];
         $set2 = [];
         $set['pid'] = $threadId;
         $set['author'] = $userId;
         $set['creation'] = time();
-        $set['text'] = C4GUtils::secure_ugc($post);
-        $set['subject'] = C4GUtils::secure_ugc($subject);
+        $set['text'] = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($post);
+        $set['subject'] = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($subject);
+        if ($forumId === 0) {
+            \Contao\System::getContainer()->get('monolog.logger.contao')->warning("C4GForum insertPostIntoDBInternal: forumId is 0 for thread $threadId. Attempting to determine forumId.");
+            $thread = \Contao\Database::getInstance()->prepare("SELECT pid FROM tl_c4g_forum_thread WHERE id=?")->execute(...[(int)$threadId]);
+            if ($thread->pid) {
+                $forumId = (int)$thread->pid;
+            }
+        }
         $set['forum_id'] = $forumId;
         $set['post_number'] = $post_number;
         $set['tstamp'] = time();
@@ -2138,32 +2145,32 @@ class C4GForumHelper extends System
         $set2['recipient'] = $recipient;
         $set2['owner'] = $owner;
         if ($linkname != null) {
-            $set['linkname'] = C4GUtils::secure_ugc($linkname);
+            $set['linkname'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($linkname);
         }
         if ($linkurl != null) {
-            $set['linkurl'] = C4GUtils::secure_ugc($linkurl);
+            $set['linkurl'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($linkurl);
         }
         if ($loc_geox != null) {
-            $set['loc_geox'] = C4GUtils::secure_ugc($loc_geox);
+            $set['loc_geox'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_geox);
         }
         if ($loc_geoy != null) {
-            $set['loc_geoy'] = C4GUtils::secure_ugc($loc_geoy);
+            $set['loc_geoy'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_geoy);
         }
         if ($locstyle != null) {
             $set['locstyle'] = $locstyle;
         }
         if ($loc_label != null) {
-            $set['loc_label'] = C4GUtils::secure_ugc($loc_label);
+            $set['loc_label'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_label);
         }
         if ($loc_tooltip != null) {
-            $set['loc_tooltip'] = C4GUtils::secure_ugc($loc_tooltip);
+            $set['loc_tooltip'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_tooltip);
         }
         // if ($loc_osm_id!=NULL) {
-        $set['loc_osm_id'] = C4GUtils::secure_ugc($loc_osm_id);
+        $set['loc_osm_id'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_osm_id);
         // }
         if ($loc_data_content != null && $loc_data_content != '') {
             $set['loc_data_type'] = 'geojson';
-            $set['loc_data_content'] = C4GUtils::secure_ugc($loc_data_content);
+            $set['loc_data_content'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_data_content);
         }
 
         if (!empty($tags)) {
@@ -2171,20 +2178,28 @@ class C4GForumHelper extends System
         }
 
         if (empty($rating)) {
-            $rating = 0;
+            $rating = 0.0;
         }
-        $set['rating'] = $rating;
+        $set['rating'] = (double)$rating;
 
-        $sqlSet = [];
+        $fields = [];
+        $placeholders = [];
         $params = [];
         foreach ($set as $k => $v) {
-            $sqlSet[] = "`$k`=?";
+            $fields[] = "`$k`";
+            $placeholders[] = "?";
             $params[] = $v;
         }
 
-        $objInsertStmt = $this->Database->prepare("INSERT INTO tl_c4g_forum_post SET " . implode(', ', $sqlSet))
+        $objInsertStmt = $this->Database->prepare("INSERT INTO tl_c4g_forum_post (" . implode(', ', $fields) . ") VALUES (" . implode(', ', $placeholders) . ")")
                                         ->execute(...$params);
         $result['post_id'] = $objInsertStmt->insertId;
+
+        if (!$result['post_id']) {
+            $error = $this->Database->error;
+            \Contao\System::getContainer()->get('monolog.logger.contao')->error("C4GForum insertPostIntoDBInternal: Failed to insert post. Error: $error. SQL params: " . print_r($params, true));
+            return false;
+        }
 
         $sqlSet2 = [];
         $params2 = [];
@@ -2195,15 +2210,6 @@ class C4GForumHelper extends System
         $params2[] = $threadId;
         $varSQL = $this->Database->prepare("UPDATE tl_c4g_forum_thread SET " . implode(', ', $sqlSet2) . " WHERE id=?")
             ->execute(...$params2);
-
-        if (!$objInsertStmt->affectedRows) {
-            return false;
-        }
-        //update thread and forum
-
-        //update index
-        $this->createIndex('post', $result['post_id']);
-        $this->createIndex('tag', $result['post_id']);
 
         return $result;
     }
@@ -2224,24 +2230,24 @@ class C4GForumHelper extends System
     public function updatePostDB($post, $userId, $subject, $tags, $rating = 0, $postText, $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id)
     {
         $set = [];
-        $set['text'] = C4GUtils::secure_ugc($postText);
-        $set['subject'] = C4GUtils::secure_ugc($subject);
+        $set['text'] = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($postText);
+        $set['subject'] = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($subject);
         $set['edit_count'] = $post['edit_count'] + 1;
         $set['edit_last_author'] = $userId;
         $set['edit_last_time'] = time();
         if ($linkname !== null) {
-            $set['linkname'] = C4GUtils::secure_ugc($linkname);
+            $set['linkname'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($linkname);
         }
         if ($linkurl !== null) {
-            $set['linkurl'] = C4GUtils::secure_ugc($linkurl);
+            $set['linkurl'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($linkurl);
         }
         if ($loc_geox != null) {
-            $set['loc_geox'] = C4GUtils::secure_ugc($loc_geox);
+            $set['loc_geox'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_geox);
         } else {
             $set['loc_geox'] = '';
         }
         if ($loc_geoy != null) {
-            $set['loc_geoy'] = C4GUtils::secure_ugc($loc_geoy);
+            $set['loc_geoy'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_geoy);
         } else {
             $set['loc_geoy'] = '';
         }
@@ -2249,17 +2255,17 @@ class C4GForumHelper extends System
             $set['locstyle'] = $locstyle;
         }
         if ($loc_label != null) {
-            $set['loc_label'] = C4GUtils::secure_ugc($loc_label);
+            $set['loc_label'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_label);
         }
         if ($loc_tooltip != null) {
-            $set['loc_tooltip'] = C4GUtils::secure_ugc($loc_tooltip);
+            $set['loc_tooltip'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_tooltip);
         }
         // if ($loc_osm_id!=NULL) {
-        $set['loc_osm_id'] = C4GUtils::secure_ugc($loc_osm_id);
+        $set['loc_osm_id'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_osm_id);
         // }
         if ($loc_data_content != null && $loc_data_content != '') {
             $set['loc_data_type'] = 'geojson';
-            $set['loc_data_content'] = C4GUtils::secure_ugc($loc_data_content);
+            $set['loc_data_content'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($loc_data_content);
         } else {
             if ($loc_data_content !== null) {
                 $set['loc_data_type'] = '';
@@ -2308,8 +2314,8 @@ class C4GForumHelper extends System
     public function updateThreadDB($thread, $userId, $name, $threaddesc, $sort)
     {
         $set = [];
-        $set['name'] = C4GUtils::secure_ugc($name);
-        $set['threaddesc'] = nl2br(C4GUtils::secure_ugc($threaddesc));
+        $set['name'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($name);
+        $set['threaddesc'] = nl2br(\con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($threaddesc));
         $set['edit_count'] = $thread['edit_count'] + 1;
         $set['edit_last_author'] = $userId;
         $set['edit_last_time'] = time();
@@ -2357,9 +2363,6 @@ class C4GForumHelper extends System
             $params[] = $threadId;
             $this->Database->prepare("UPDATE tl_c4g_forum_thread SET " . implode(', ', $sqlSet) . " WHERE id=?")
                 ->execute(...$params);
-            if (!$this->Database->affectedRows) {
-                return false;
-            }
         }
 
         return true;
@@ -2397,9 +2400,6 @@ class C4GForumHelper extends System
             $params[] = $forumId;
             $this->Database->prepare("UPDATE tl_c4g_forum SET " . implode(', ', $sqlSet) . " WHERE id=?")
                 ->execute(...$params);
-            if (!$this->Database->affectedRows) {
-                return false;
-            }
         }
 
         return true;
@@ -2476,7 +2476,7 @@ class C4GForumHelper extends System
                 'SELECT a.pid AS forum_id, a.posts AS threadposts, b.posts AS forumposts, b.threads AS forumthreads ' .
                 'FROM tl_c4g_forum_thread a, tl_c4g_forum b WHERE ' .
                 'a.id=? AND b.id = a.pid')->execute(...[(int)$threadId]);
-            $result = $this->insertPostIntoDBInternal($threadId, $userId, $subject, $post, $tags, $rating, $thread->forum_id, $thread->threadposts + 1,
+            $result = $this->insertPostIntoDBInternal($threadId, $userId, $subject, $post, $tags, $rating, $thread->forum_id, (int)$thread->threadposts + 1,
                                                       $linkname, $linkurl, $loc_geox, $loc_geoy, $locstyle, $loc_label, $loc_tooltip, $loc_data_content, $loc_osm_id, $recipient, $owner);
             if (!$result) {
                 $this->Database->rollbackTransaction();
@@ -2558,8 +2558,8 @@ class C4GForumHelper extends System
             $set['author'] = $userId;
             $set['creation'] = time();
             $set['sort'] = $sort;
-            $set['name'] = C4GUtils::secure_ugc($threadname);
-            $set['threaddesc'] = C4GUtils::secure_ugc($threaddesc);
+            $set['name'] = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($threadname);
+            $set['threaddesc'] = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($threaddesc);
             $set['recipient'] = $recipient;
             $set['owner'] = $owner;
             $set['tstamp'] = time();
@@ -2575,15 +2575,25 @@ class C4GForumHelper extends System
                 $params[] = $v;
             }
 
-            $objInsertStmt = $this->Database->prepare("INSERT INTO tl_c4g_forum_thread SET " . implode(', ', $sqlSet))
-                                            ->execute(...$params);
+            $fields = [];
+            $placeholders = [];
+            $paramsVal = [];
+            foreach ($set as $k => $v) {
+                $fields[] = "`$k`";
+                $placeholders[] = "?";
+                $paramsVal[] = $v;
+            }
 
-            if (!$objInsertStmt->affectedRows) {
+            $objInsertStmt = $this->Database->prepare("INSERT INTO tl_c4g_forum_thread (" . implode(', ', $fields) . ") VALUES (" . implode(', ', $placeholders) . ")")
+                                            ->execute(...$paramsVal);
+
+            $new_thread_id = $objInsertStmt->insertId;
+
+            if (!$new_thread_id) {
                 $this->Database->rollbackTransaction();
 
                 return false;
             }
-            $new_thread_id = $objInsertStmt->insertId;
 
             $savePost = ($post || $linkname || $linkurl);
 
@@ -2759,7 +2769,7 @@ class C4GForumHelper extends System
         // delete all members that are assigned to at least on group in $memGroups
         // needs to be done, because "groups" is from type "BLOB" -.-'
         foreach ($members as $key => $member) {
-            $groups = StringUtil::deserialize($member['groups'] ?? '', true);
+            $groups = \Contao\StringUtil::deserialize($member['groups'] ?? '', true);
             if (count(array_intersect($groups, $forumGroups)) > 0) {
                 unset($members[$key]);
             }
@@ -2782,7 +2792,7 @@ class C4GForumHelper extends System
         if (!$members || $members['id'] == 0) {
             return false;
         }
-        $groups = StringUtil::deserialize($members['groups'], true);
+        $groups = \Contao\StringUtil::deserialize($members['groups'], true);
         if (!in_array($memGroupId, $groups)) {
             $groups[] = $memGroupId;
             $set['groups'] = serialize($groups);
@@ -3450,11 +3460,11 @@ class C4GForumHelper extends System
      */
     public function performCron($filename)
     {
-        $strPath = System::getContainer()->getParameter('kernel.project_dir') . '/system/tmp/' . $filename . '.tmp';
+        $strPath = \Contao\System::getContainer()->getParameter('kernel.project_dir') . '/system/tmp/' . $filename . '.tmp';
 
         // Read the file content if it exists
         if (file_exists($strPath)) {
-            $cron = StringUtil::deserialize(file_get_contents($strPath), true);
+            $cron = \Contao\StringUtil::deserialize(file_get_contents($strPath), true);
             foreach ($cron as $data) {
                 switch ($data['command']) {
                     case 'sendmail':
@@ -3495,13 +3505,13 @@ class C4GForumHelper extends System
                 )->executeUncached(...[time(), $module->id]);
                 $data['command'] = 'create_sitemap';
                 $data['filename'] = $module->c4g_forum_sitemap_filename;
-                $data['contents'] = StringUtil::deserialize($module->c4g_forum_sitemap_contents, true);
+                $data['contents'] = \Contao\StringUtil::deserialize($module->c4g_forum_sitemap_contents, true);
                 $data['startforum'] = $module->c4g_forum_startforum;
                 $data['param_forum'] = $module->c4g_forum_param_forum;
                 $data['param_forumbox'] = $module->c4g_forum_param_forumbox;
                 $cron[] = $data;
                 $filename = md5(uniqid(mt_rand(), true));
-                $objFile = fopen(System::getContainer()->getParameter('kernel.project_dir') . '/system/tmp/' . $filename . '.tmp', 'wb');
+                $objFile = fopen(\Contao\System::getContainer()->getParameter('kernel.project_dir') . '/system/tmp/' . $filename . '.tmp', 'wb');
                 fputs($objFile, serialize($cron));
                 fclose($objFile);
 
@@ -3654,14 +3664,14 @@ class C4GForumHelper extends System
     public function removeOldFeedsHook()
     {
         $arrFeeds = [];
-        $objSitemaps = Database::getInstance()->prepare("SELECT c4g_forum_sitemap_filename FROM tl_module WHERE type='c4g_forum' AND c4g_forum_sitemap='1' AND c4g_forum_sitemap_filename!=''")
+        $objSitemaps = \Contao\Database::getInstance()->prepare("SELECT c4g_forum_sitemap_filename FROM tl_module WHERE type='c4g_forum' AND c4g_forum_sitemap='1' AND c4g_forum_sitemap_filename!=''")
             ->execute();
 
         while ($objSitemaps->next()) {
             $arrFeeds[] = $objSitemaps->c4g_forum_sitemap_filename;
         }
 
-        Database::getInstance()->prepare("UPDATE tl_module  SET c4g_forum_sitemap_updated=0 WHERE type='c4g_forum' AND c4g_forum_sitemap='1' AND c4g_forum_sitemap_filename!=''")
+        \Contao\Database::getInstance()->prepare("UPDATE tl_module  SET c4g_forum_sitemap_updated=0 WHERE type='c4g_forum' AND c4g_forum_sitemap='1' AND c4g_forum_sitemap_filename!=''")
             ->execute();
 
         return $arrFeeds;
@@ -3694,7 +3704,7 @@ class C4GForumHelper extends System
             !is_array($GLOBALS['TL_LANG']['C4G_FORUM']) ||
             (!array_key_exists('DISCUSSION', $GLOBALS['TL_LANG']['C4G_FORUM']) && !array_key_exists('DISCUSSIONS', $GLOBALS['TL_LANG']['C4G_FORUM']))
         ) {
-            System::loadLanguageFile('frontendModules');
+            \Contao\System::loadLanguageFile('frontendModules');
         }
         $sTitle = $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION'][$lngStrg] ?? ($GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSIONS'][$lngStrg] ?? $lngStrg);
         if ($forumType == 'QUESTIONS' && ($GLOBALS['TL_LANG']['C4G_FORUM']['QUESTIONS'][$lngStrg] ?? null)) {
@@ -3736,9 +3746,9 @@ class C4GForumHelper extends System
     public static function isMemberModeratorOfForum($memberId, $forumId)
     {
         $forumModel = C4gForumModel::findByPk($forumId);
-        $memberModel = MemberModel::findByPk($memberId);
-        $moderatorGroups = StringUtil::deserialize($forumModel->admin_groups, true);
-        $memberGroups = StringUtil::deserialize($memberModel->groups, true);
+        $memberModel = \Contao\MemberModel::findByPk($memberId);
+        $moderatorGroups = \Contao\StringUtil::deserialize($forumModel->admin_groups, true);
+        $memberGroups = \Contao\StringUtil::deserialize($memberModel->groups, true);
 
         foreach ($moderatorGroups as $group) {
             if (in_array($group, $memberGroups)) {

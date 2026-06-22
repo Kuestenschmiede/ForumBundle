@@ -53,7 +53,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
         if ($alias === '') {
             throw new PageNotFoundException();
         }
-        $database = Database::getInstance();
+        $database = \Contao\Database::getInstance();
         $statement = $database->prepare(
             'SELECT * FROM tl_member WHERE login = 1 AND LOWER(username) = ? LIMIT 1'
         );
@@ -61,7 +61,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
         if ($member === false || count($member) === 0) {
             throw new PageNotFoundException();
         }
-        System::loadLanguageFile('frontendModules');
+        \Contao\System::loadLanguageFile('frontendModules');
 
         ResourceLoader::loadCssResource('bundles/con4gisforum/dist/css/c4gForum.min.css');
         ResourceLoader::loadCssResource('bundles/con4giscore/vendor/jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.css');
@@ -84,7 +84,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
             'SELECT COUNT(0) as threads FROM tl_c4g_forum_thread WHERE author = ?'
         );
         $member['threadCount'] = $statement->execute(...[$member['id']])->fetchAssoc()['threads'];
-        $member['avatarUrl'] = StringUtil::deserialize($member['memberImage'], true)[0];
+        $member['avatarUrl'] = \Contao\StringUtil::deserialize($member['memberImage'], true)[0];
 
         switch ($model->c4g_forum_show_realname) {
             case 'UU';
@@ -110,7 +110,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
         $member['lastOnline'] = $this->calculateLastOnline($member['lastLogin']);
 
         if ($model->c4g_forum_show_ranks) {
-            $ranks = StringUtil::deserialize($model->c4g_forum_member_ranks, true);
+            $ranks = \Contao\StringUtil::deserialize($model->c4g_forum_member_ranks, true);
             foreach ($ranks as $rank) {
                 if ($member['postCount'] >= $rank['rank_min']) {
                     $member['rank'] = $rank['rank_name'];
@@ -118,10 +118,10 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
             }
         }
 
-        $stats = StringUtil::deserialize($model->c4g_forum_user_statistics, true);
+        $stats = \Contao\StringUtil::deserialize($model->c4g_forum_user_statistics, true);
         if ($stats !== []) {
             $userStatistics = [];
-            System::loadLanguageFile('tl_member');
+            \Contao\System::loadLanguageFile('tl_member');
             (new \Contao\DcaLoader('tl_member'))->load();
             foreach ($stats as $stat) {
                 $translation = $GLOBALS['TL_DCA']['tl_member']['fields'][$stat]['label'][0] ?:
@@ -140,7 +140,7 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
         );
         $posts = $statement->execute(...[$member['id']])->fetchAllAssoc();
         if ((int) $model->c4g_forum_module_page > 0) {
-            $pageModel = PageModel::findByPk((int) $model->c4g_forum_module_page);
+            $pageModel = \Contao\PageModel::findByPk((int) $model->c4g_forum_module_page);
         } else {
             $pageModel = null;
         }

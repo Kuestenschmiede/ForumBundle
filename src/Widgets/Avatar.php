@@ -64,7 +64,7 @@ class Avatar extends Widget
      */
     public function validator($varInput)
     {
-        $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+        $rootDir = \Contao\System::getContainer()->getParameter('kernel.project_dir');
 
         $strUploadTo = 'system/tmp';
 

@@ -46,11 +46,11 @@ class ReactionApiController extends AbstractController
 
         $reactionId = $request->request->getInt('reactionId');
         $postId = $request->request->getInt('postId');
-        $user = FrontendUser::getInstance();
+        $user = \Contao\FrontendUser::getInstance();
         if ($user->id < 1 || $postId === 0 || $reactionId !== 0) {
             return new JsonResponse([], Response::HTTP_BAD_REQUEST);
         }
-        $database = Database::getInstance();
+        $database = \Contao\Database::getInstance();
         $stmt = $database->prepare(
             'SELECT * FROM tl_c4g_forum_post_reaction WHERE postId = ? AND memberId = ? AND reactionId = ?'
         );

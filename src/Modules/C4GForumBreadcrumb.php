@@ -51,7 +51,7 @@ use Contao\System;
         public function generate()
         {
 
-            if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
+            if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals())) {
                 $objTemplate = new \Contao\BackendTemplate('be_wildcard');
 
                 $objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['FMD']['c4g_forum_breadcrumb'][0] . ' ###';
@@ -72,13 +72,13 @@ use Contao\System;
          */
         protected function compile()
         {
-            $this->Database = Database::getInstance();
-            $this->Session = System::getContainer()->get('request_stack')->getSession();
+            $this->Database = \Contao\Database::getInstance();
+            $this->Session = \Contao\System::getContainer()->get('request_stack')->getSession();
 
             if (trim($this->c4g_forum_language) == '') {
 
                 //language get param or request_uri for language switcher sites
-                $getLang  = Input::get('language');
+                $getLang  = \Contao\Input::get('language');
                 if ($getLang) {
                     $this->c4g_forum_language_temp = $getLang;
                 } else if ($_SERVER["REQUEST_URI"]) {
@@ -91,10 +91,10 @@ use Contao\System;
 
                 if ($this->c4g_forum_language_temp == '') {
                     /** @var PageModel $objPage */
-                    $objPage = System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
+                    $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
 
                     //three other ways to get current language
-                    $pageLang = System::getContainer()->get('contao.insert_tag.parser')->replace('{{page::language}}');
+                    $pageLang = \Contao\System::getContainer()->get('contao.insert_tag.parser')->replace('{{page::language}}');
                     if ($pageLang) {
                         $this->c4g_forum_language_temp = $pageLang;
                     } else if ($objPage && $objPage->language) {
@@ -163,7 +163,7 @@ use Contao\System;
                     $theme = $this->forumModule->c4g_forum_uitheme_css_select;
                     $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
                 } else {
-                    $settings = Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
+                    $settings = \Contao\Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
 
                     if ($settings) {
                         $settings = $settings[0];
@@ -197,7 +197,7 @@ use Contao\System;
         {
 
             $url      = false;
-            $headline = StringUtil::deserialize($this->forumModule->headline, true);
+            $headline = \Contao\StringUtil::deserialize($this->forumModule->headline, true);
             $helper   = new C4GForumHelper($this->Database, null, null, $headline['value']);
             $path     = $helper->getForumPath($forumId, $this->forumModule->c4g_forum_startforum);
 
@@ -244,7 +244,7 @@ use Contao\System;
 
                     } else {
                         $data[] = array(
-                            "url"  => C4GUtils::addParametersToURL($url, array('state' => $action . ':' . $value['id'])),
+                            "url"  => \con4gis\CoreBundle\Classes\C4GUtils::addParametersToURL($url, array('state' => $action . ':' . $value['id'])),
                             "text" => $pathname
                         );
                     }

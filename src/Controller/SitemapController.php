@@ -28,7 +28,7 @@ class SitemapController extends AbstractController
 
     public function returnSitemap(Request $request, string $filename) : Response {
         $template = new FrontendTemplate('forum_sitemap', 'text/xml');
-        $database = Database::getInstance();
+        $database = \Contao\Database::getInstance();
         $statement = $database->prepare(
             'SELECT * FROM tl_module WHERE type = ? AND c4g_forum_sitemap = 1 AND c4g_forum_sitemap_filename = ?'
         );

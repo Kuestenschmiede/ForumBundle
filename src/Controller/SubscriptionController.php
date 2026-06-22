@@ -31,12 +31,12 @@ class SubscriptionController extends AbstractController
     }
 
     public function changeForumSubscriptionAction(Request $request, string $language) {
-        System::loadLanguageFile('subscriptions', $language);
+        \Contao\System::loadLanguageFile('subscriptions', $language);
         try {
-            if (!C4GUtils::isFrontendUserLoggedIn()) {
+            if (!\con4gis\CoreBundle\Classes\C4GUtils::isFrontendUserLoggedIn()) {
                 throw new \Exception("Frontenduser is not logged in.");
             }
-            $userId = FrontendUser::getInstance()->id;
+            $userId = \Contao\FrontendUser::getInstance()->id;
             $forumId = $request->request->get('target');
             $deleteSub = $request->request->get('deletesub') ? true : false;
             $model = C4GForumSubscriptionModel::findByForumAndMember($forumId, $userId);
@@ -75,12 +75,12 @@ class SubscriptionController extends AbstractController
     }
 
     public function changeThreadSubscriptionAction(Request $request, string $language) {
-        System::loadLanguageFile('subscriptions', $language);
+        \Contao\System::loadLanguageFile('subscriptions', $language);
         try {
-            if (!C4GUtils::isFrontendUserLoggedIn()) {
+            if (!\con4gis\CoreBundle\Classes\C4GUtils::isFrontendUserLoggedIn()) {
                 throw new \Exception("Frontenduser is not logged in.");
             }
-            $userId = FrontendUser::getInstance()->id;
+            $userId = \Contao\FrontendUser::getInstance()->id;
             $threadId = $request->request->get('target');
             $deleteSub = $request->request->get('deletesub') ? true : false;
             $model = C4GThreadSubscriptionModel::findByThreadAndMember($threadId, $userId);

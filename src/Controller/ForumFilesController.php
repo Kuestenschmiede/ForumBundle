@@ -42,11 +42,11 @@ class ForumFilesController
      */
     public function serveFile(Request $request, int $fileId): BinaryFileResponse
     {
-        $database = Database::getInstance();
+        $database = \Contao\Database::getInstance();
         $statement = $database->prepare('SELECT * FROM tl_c4g_forum_upload WHERE id = ?');
         $uploadRow = $statement->execute(...[$fileId])->fetchAssoc();
         if ($uploadRow !== false) {
-            $user = FrontendUser::getInstance();
+            $user = \Contao\FrontendUser::getInstance();
             $statement = $database->prepare(
                 'SELECT f.* FROM tl_files f JOIN tl_c4g_forum_upload u ON f.uuid = u.fileUuid WHERE u.id = ?'
             );

@@ -22,9 +22,9 @@ class BackendCallback
 {
     public function getUserStatisticOptions(DataContainer $dc): array
     {
-        System::loadLanguageFile('tl_member');
+        \Contao\System::loadLanguageFile('tl_member');
         (new \Contao\DcaLoader('tl_member'))->load();
-        $database = Database::getInstance();
+        $database = \Contao\Database::getInstance();
         $fields = $database->listFields('tl_member');
         $options = [];
         foreach ($fields as $field) {
@@ -56,7 +56,7 @@ class BackendCallback
 
             try {
                 if (is_string($dcaField['sql'] ?? null)) {
-                    if (C4GUtils::stringContainsAny($dcaField['sql'], ['blob', 'binary', 'text'])) {
+                    if (\con4gis\CoreBundle\Classes\C4GUtils::stringContainsAny($dcaField['sql'], ['blob', 'binary', 'text'])) {
                         continue;
                     }
                 } elseif (is_array($dcaField['sql'] ?? null) && is_string($dcaField['sql']['type'] ?? null)) {

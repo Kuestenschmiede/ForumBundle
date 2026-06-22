@@ -12,7 +12,7 @@ class MemberCallback extends Backend
     public function handleMemberImage($varValue, $dc)
     {
         // Get the member's ID based upon the usage-location of the Widget: BE -> current viewed member, FE -> current logged in frontenduser.
-        if (System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(Request::createFromGlobals()))
+        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(Request::createFromGlobals()))
         {
             $this->import('Contao\FrontendUser', 'User');
             $iMemberId = $this->User->id;

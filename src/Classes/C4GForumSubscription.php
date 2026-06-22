@@ -152,15 +152,15 @@ class C4GForumSubscription
                     'SELECT member_groups, admin_groups FROM tl_c4g_forum WHERE id=?')
                     ->execute(...[(int)$forumId])->fetchAssoc();
 
-                $forumMemGroups = StringUtil::deserialize($forumData['member_groups'], true);
-                $forumAdGroups = StringUtil::deserialize($forumData['admin_groups'], true);
+                $forumMemGroups = \Contao\StringUtil::deserialize($forumData['member_groups'], true);
+                $forumAdGroups = \Contao\StringUtil::deserialize($forumData['admin_groups'], true);
 
                 $groups = array_merge($forumMemGroups, $forumAdGroups);
 
-                $memberModels = MemberModel::findAll();
+                $memberModels = \Contao\MemberModel::findAll();
                 if ($memberModels !== null) {
                     foreach ($memberModels as $memberModel) {
-                        $memberGroups = StringUtil::deserialize($memberModel->groups, true);
+                        $memberGroups = \Contao\StringUtil::deserialize($memberModel->groups, true);
                         foreach ($memberGroups as $memberGroup) {
                             if (in_array($memberGroup, $groups)) {
                                 $subs[$memberModel->id] = [
@@ -181,7 +181,7 @@ class C4GForumSubscription
         $subObjects = [];
         if (!empty($subs)) {
             foreach ($subs as $key => $sub) {
-                $member = MemberModel::findByPk($key);
+                $member = \Contao\MemberModel::findByPk($key);
                 if ($member) {
                     $subObjects[$key] = new Subscription($member, $sub);
                 }
@@ -203,15 +203,20 @@ class C4GForumSubscription
         $threadId = (int)$threadId;
         $subscriptionModels = C4GThreadSubscriptionModel::findBy('pid', $threadId);
         $subs = [];
-        foreach ($subscriptionModels as $model) {
-            $subs[$model->member] = new Subscription(MemberModel::findByPk($model->member), [
-                'newThread',
-                'movedThread',
-                'deletedThread',
-                'newPost',
-                'editedPost',
-                'deletedPost',
-            ]);
+        if ($subscriptionModels !== null) {
+            foreach ($subscriptionModels as $model) {
+                $member = \Contao\MemberModel::findByPk($model->member);
+                if ($member !== null) {
+                    $subs[$model->member] = new Subscription($member, [
+                        'newThread',
+                        'movedThread',
+                        'deletedThread',
+                        'newPost',
+                        'editedPost',
+                        'deletedPost',
+                    ]);
+                }
+            }
         }
 
         return $subs;

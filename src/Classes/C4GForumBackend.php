@@ -36,7 +36,7 @@ class C4GForumBackend extends Backend
      */
     public function __construct()
     {
-        $this->Database = System::getContainer()->get('database_connection');
+        $this->Database = \Contao\System::getContainer()->get('database_connection');
         $this->helper = new C4GForumHelper($this->Database);
     }
 
@@ -47,7 +47,7 @@ class C4GForumBackend extends Backend
     {
         $message = '';
 
-        if (System::getContainer()->get('request_stack')->getCurrentRequest()->request->get('FORM_SUBMIT') == 'tl_c4g_forum_build_index') {
+        if (\Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->request->get('FORM_SUBMIT') == 'tl_c4g_forum_build_index') {
             $this->helper->renewAllTheIndexesFromDB();
         }
 
@@ -69,24 +69,24 @@ class C4GForumBackend extends Backend
             $noIndex = true;
         }
 
-        $environment = System::getContainer()->get('contao.routing.scope_matcher');
-        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+        $environment = \Contao\System::getContainer()->get('contao.routing.scope_matcher');
+        $request = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
 
         // create the form
         $form =
             //back-button
             '
 			<div id="tl_buttons">
-				<a href="' . StringUtil::ampersand(str_replace('&key=build_index', '', $request->getUri())) . '" class="header_back" title="' . \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['backBT']) . '" accesskey="b">' . $GLOBALS['TL_LANG']['MSC']['backBT'] . '</a>
+				<a href="' . \Contao\StringUtil::ampersand(str_replace('&key=build_index', '', $request->getUri())) . '" class="header_back" title="' . \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['backBT']) . '" accesskey="b">' . $GLOBALS['TL_LANG']['MSC']['backBT'] . '</a>
 			</div>' .
             //headline
             '
 			<h2 class="sub_headline">' . $GLOBALS['TL_LANG']['tl_c4g_forum']['headline_index'][0] . '</h2>
-			' . System::getMessages() . '
-			<form action="' . StringUtil::ampersand($request->getUri(), true) . '" id="tl_c4g_forum_build_index" class="tl_form" method="post">
+			' . \Contao\System::getMessages() . '
+			<form action="' . \Contao\StringUtil::ampersand($request->getUri(), true) . '" id="tl_c4g_forum_build_index" class="tl_form" method="post">
 			<div class="tl_formbody_edit">
 				<input type="hidden" name="FORM_SUBMIT" value="tl_c4g_forum_build_index">
-				<input type="hidden" name="REQUEST_TOKEN" value="' . System::getContainer()->get('contao.csrf.token_manager')->getToken(System::getContainer()->getParameter('contao.csrf_token_name'))->getValue() . '">
+				<input type="hidden" name="REQUEST_TOKEN" value="' . \Contao\System::getContainer()->get('contao.csrf.token_manager')->getToken(\Contao\System::getContainer()->getParameter('contao.csrf_token_name'))->getValue() . '">
 			</div>
 			<center>
 			' . $message . '

@@ -39,12 +39,12 @@ class ForumController extends AbstractController
         $response = new JsonResponse();
         $post = $request->request->get('post');
         if ($post) {
-            $post = Input::xssClean($post);
-            $post = C4GUtils::cleanHtml($post, false, ['/<pre(.*?)<\/pre>/is']);
-            $post = C4GUtils::secure_ugc($post);
+            $post = \Contao\Input::xssClean($post);
+            $post = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($post, false, ['/<pre(.*?)<\/pre>/is']);
+            $post = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($post);
             $request->request->set('post', $post);
         }
-        $feUser = FrontendUser::getInstance();
+        $feUser = \Contao\FrontendUser::getInstance();
         if (!isset( $id ) || !is_numeric( $id )) {
             $response->setStatusCode(400);
         }
@@ -62,21 +62,21 @@ class ForumController extends AbstractController
         }
 
         // Show to guests only
-        if ($objModule->guests && C4GUtils::isFrontendUserLoggedIn() && !C4GUtils::isBackendUserLoggedIn() && !$objModule->protected)
+        if ($objModule->guests && \con4gis\CoreBundle\Classes\C4GUtils::isFrontendUserLoggedIn() && !\con4gis\CoreBundle\Classes\C4GUtils::isBackendUserLoggedIn() && !$objModule->protected)
         {
             $response->setData('Forbidden');
             $response->setStatusCode(403);
         }
 
         // Protected element
-        if (!C4GUtils::isBackendUserLoggedIn() && $objModule->protected)
+        if (!\con4gis\CoreBundle\Classes\C4GUtils::isBackendUserLoggedIn() && $objModule->protected)
         {
-            if (!C4GUtils::isFrontendUserLoggedIn())
+            if (!\con4gis\CoreBundle\Classes\C4GUtils::isFrontendUserLoggedIn())
             {
                 $response->setData('Forbidden');
                 $response->setStatusCode(403);
             }
-            $groups = StringUtil::deserialize($objModule->groups, true);
+            $groups = \Contao\StringUtil::deserialize($objModule->groups, true);
             if (!is_array($groups) || count($groups) < 1 || count(array_intersect($groups, $feUser->groups)) < 1)
             {
                 $response->setData('Forbidden');
@@ -102,15 +102,15 @@ class ForumController extends AbstractController
     public function personalMessageAction(Request $request, string $language, string $action, string $modifier)
     {
         $response = new JsonResponse();
-        $feUser = FrontendUser::getInstance();
-        if (!C4GUtils::isFrontendUserLoggedIn()) {
+        $feUser = \Contao\FrontendUser::getInstance();
+        if (!\con4gis\CoreBundle\Classes\C4GUtils::isFrontendUserLoggedIn()) {
             $response->setStatusCode(400);
             return $response;
         }
         if ($language !== 'de' && $language !== 'en') {
             $language = 'de';
         }
-        System::loadLanguageFile('tl_c4g_forum_pn', $language);
+        \Contao\System::loadLanguageFile('tl_c4g_forum_pn', $language);
         try {
             switch($action) {
                 case "modal":
@@ -119,7 +119,7 @@ class ForumController extends AbstractController
                         $aReturn    = array();
                         $sClassName = "con4gis\\ForumBundle\\Classes\\" . ucfirst($sType);
                         if (class_exists($sClassName)) {
-                            $aData = Input::get('data');
+                            $aData = \Contao\Input::get('data');
 
                             $aReturn['template'] = $sClassName::parse($aData);
                         }
@@ -135,8 +135,8 @@ class ForumController extends AbstractController
                     $response->setData(['success' => $res]);
                     return $response;
                 case "mark":
-                    $iStatus = intval(Input::post('status'));
-                    $iId = intval(Input::post('id'));
+                    $iStatus = intval(\Contao\Input::post('status'));
+                    $iId = intval(\Contao\Input::post('id'));
 
                     $oPn = C4gForumPn::getById($iId);
                     $oPn->setStatus($iStatus);
@@ -144,15 +144,15 @@ class ForumController extends AbstractController
                     $response->setData(['success' => true]);
                     return $response;
                 case "send":
-                    $iRecipientId = Input::post('recipient_id');
-                    $sRecipient = Input::post('recipient');
-                    $forumModule = Input::post('target');
+                    $iRecipientId = \Contao\Input::post('recipient_id');
+                    $sRecipient = \Contao\Input::post('recipient');
+                    $forumModule = \Contao\Input::post('target');
                     if (!$forumModule || $forumModule === 'null') {
                         $session = $request->getSession();
                         $forumModule = $session->get('pm-forum-module');
                     }
                     if (!empty($sRecipient)) {
-                        $db = Database::getInstance();
+                        $db = \Contao\Database::getInstance();
                         $stmt = $db->prepare("SELECT * FROM tl_member WHERE username = ? AND NOT disable = ?");
                         $result = $stmt->execute([$sRecipient, 1]);
                         $aRecipient = $result->fetchAssoc();
@@ -161,7 +161,7 @@ class ForumController extends AbstractController
                         }
                         $iRecipientId = $aRecipient['id'];
                     } elseif (!empty($iRecipientId)) {
-                        $db = Database::getInstance();
+                        $db = \Contao\Database::getInstance();
                         $stmt = $db->prepare("SELECT * FROM tl_member WHERE id = ? AND NOT disable = ?");
                         $result = $stmt->execute([$iRecipientId, 1]);
                         $aRecipient = $result->fetchAssoc();
@@ -173,7 +173,7 @@ class ForumController extends AbstractController
                     $message = str_replace(['&lt;div&gt;', '&lt;/div&gt;'], '', $message);
                     $message = trim($message);
                     $aData = array(
-                        "subject"      => Input::post('subject'),
+                        "subject"      => \Contao\Input::post('subject'),
                         "message"      => $message,
                         "sender_id"    => $feUser->id,
                         "recipient_id" => $iRecipientId,
@@ -186,12 +186,12 @@ class ForumController extends AbstractController
                     /** Notification Center */
                     /** Get forum module settings  */
 
-                    $db = Database::getInstance();
+                    $db = \Contao\Database::getInstance();
                     $stmt = $db->prepare("SELECT new_pm_redirect, mail_new_pm FROM tl_module WHERE id = ?");
                     $result = $stmt->execute(...[$forumModule])->fetchAssoc();
                     $this->container->get('contao.framework')->initialize();
                     $route = \Contao\System::getContainer()->get('contao.insert_tag.parser')->replace('{{link_url::' . $result['new_pm_redirect'] . '}}');
-                    $user = FrontendUser::getInstance();
+                    $user = \Contao\FrontendUser::getInstance();
 
                     try {
                         $notification = new C4GForumNotification(C4GForumNotification::MAIL_NEW_PM);

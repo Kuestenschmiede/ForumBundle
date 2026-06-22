@@ -23,22 +23,22 @@
   padding: 15px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0,0,0,.05);
   border: 1px solid #eee;
   margin-top: 15px
 }
 .dataTables_wrapper .dataTable {
-  border-collapse: collapse !important;
-  width: 100% !important;
-  margin: 15px 0 !important;
-  border: none !important
+  border-collapse: collapse!important;
+  width: 100%!important;
+  margin: 15px 0!important;
+  border: none!important
 }
 .dataTables_wrapper .dataTable thead th {
   background-color: #f8f9fa;
   color: #333;
   font-weight: 600;
   padding: 12px 10px;
-  border-bottom: 2px solid #dee2e6 !important;
+  border-bottom: 2px solid #dee2e6!important;
   text-align: left
 }
 .dataTables_wrapper .dataTable tbody td {
@@ -47,10 +47,10 @@
   vertical-align: middle
 }
 .dataTables_wrapper .dataTable tbody tr {
-  transition: background-color 0.2s
+  transition: background-color .2s
 }
 .dataTables_wrapper .dataTable tbody tr:hover {
-  background-color: #f1f4f7 !important
+  background-color: #f1f4f7!important
 }
 .dataTables_wrapper .dataTables_filter {
   margin-bottom: 15px
@@ -59,8 +59,8 @@
   padding: 6px 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  outline: none;
-  transition: border-color 0.2s
+  outline: 0;
+  transition: border-color .2s
 }
 .dataTables_wrapper .dataTables_filter input:focus {
   border-color: #2c3e50
@@ -78,35 +78,35 @@
   padding-top: 15px
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-  padding: 5px 10px !important;
-  margin-left: 5px !important;
-  border: 1px solid #ddd !important;
-  border-radius: 4px !important;
-  background: #fff !important;
-  color: #333 !important;
+  padding: 5px 10px!important;
+  margin-left: 5px!important;
+  border: 1px solid #ddd!important;
+  border-radius: 4px!important;
+  background: #fff!important;
+  color: #333!important;
   cursor: pointer;
-  transition: all 0.2s
+  transition: all .2s
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-  background: #eee !important;
-  border-color: #bbb !important;
-  color: #000 !important
+  background: #eee!important;
+  border-color: #bbb!important;
+  color: #000!important
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-  background: #2c3e50 !important;
-  color: #fff !important;
-  border-color: #2c3e50 !important
+  background: #2c3e50!important;
+  color: #fff!important;
+  border-color: #2c3e50!important
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-  color: #fff !important
+  color: #fff!important
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
-  opacity: 0.5;
+  opacity: .5;
   cursor: default
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
-  background: #fff !important;
-  border-color: #ddd !important
+  background: #fff!important;
+  border-color: #ddd!important
 }
 .mod_c4g_forum .ui-button {
   overflow: visible
