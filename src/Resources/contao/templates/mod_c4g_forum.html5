@@ -25,7 +25,6 @@ if (typeof($)=='undefined') {
         $.getScript('bundles/con4giscore/vendor/jQuery/plugins/chosen/chosen.jquery.min.js');
     }
 	$(document).ready(function() {
-        console.log("con4gis forum c4gdata:", <?php echo json_encode($this->c4gdata); ?>);
         if (typeof(c4g) == 'undefined' || typeof(c4g.projects) == 'undefined' || typeof(c4g.projects.c4gGui) == 'undefined') {
             var el = document.getElementById('<?php echo $this->c4gdata['div']; ?>');
             if (el && el.innerHTML === '') {
