@@ -382,6 +382,7 @@ class C4GForumSubscription
         foreach ($subscriptions as $subscription) {
             $subscriber = $subscription->getMemberModel();
             if (
+                $subscriber !== null &&
                 $subscriber->id != $this->User->id &&
                 (string) $subscriber->email !== '' &&
                 (int) $subscriber->login === 1 &&

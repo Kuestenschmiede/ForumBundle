@@ -18,7 +18,7 @@ class Subscription
     protected $memberModel;
     protected $types = [];
 
-    public function __construct(MemberModel $memberModel, array $types)
+    public function __construct(?MemberModel $memberModel, array $types)
     {
         $this->memberModel = $memberModel;
         $this->types = $types;
@@ -26,13 +26,16 @@ class Subscription
 
     public function isSubscriptionValid(string $type)
     {
+        if ($this->memberModel === null) {
+            return false;
+        }
         return in_array($type, $this->types);
     }
 
     /**
-     * @return MemberModel
+     * @return MemberModel|null
      */
-    public function getMemberModel(): MemberModel
+    public function getMemberModel(): ?MemberModel
     {
         return $this->memberModel;
     }
