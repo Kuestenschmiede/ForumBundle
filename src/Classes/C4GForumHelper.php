@@ -119,6 +119,8 @@ class C4GForumHelper extends System
                                                 ->execute(...$params);
             }
         }
+        $this->Database->prepare("UPDATE tl_c4g_forum_post p SET forum_id = (SELECT pid FROM tl_c4g_forum_thread t WHERE t.id = p.pid) WHERE forum_id <> (SELECT pid FROM tl_c4g_forum_thread t WHERE t.id = p.pid)")
+            ->execute();
     }
 
     /**
@@ -2696,13 +2698,28 @@ class C4GForumHelper extends System
      */
     public function moveThreadDB($threadId, $newForumId)
     {
-        $set['pid'] = $newForumId;
+        $oldForumId = $this->getForumIdForThread($threadId);
+        if ($oldForumId == $newForumId) {
+            return true;
+        }
+        
         $this->Database->prepare("UPDATE tl_c4g_forum_thread SET pid=? WHERE id=?")
             ->execute(...[(int)$newForumId, (int)$threadId]);
-        if (!$this->Database->affectedRows) {
-            $return = false;
-        } else {
+        
+        // In many setups, affectedRows only returns rows that were actually CHANGED.
+        // If the database already had the correct value, it might return 0.
+        // We already checked $oldForumId == $newForumId above, but let's be even more robust.
+        
+        $check = $this->Database->prepare("SELECT pid FROM tl_c4g_forum_thread WHERE id=?")
+            ->execute((int)$threadId)->fetchAssoc();
+        
+        if ($check && $check['pid'] == $newForumId) {
             $return = true;
+        } else {
+            $return = false;
+        }
+
+        if ($return) {
             $this->recalculatePostHelperData(); // update field forum_id
             $this->recalculateForumHelperData();
         }
