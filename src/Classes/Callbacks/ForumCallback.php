@@ -254,7 +254,11 @@ class ForumCallback
         if ($thread && $thread['state'] == 1) {
             $db->update('tl_c4g_forum_thread', ['state' => 2], ['id' => $arrRow['pid']]);
         }
-        return $arrRow['text'];
+
+        $subject = \Contao\StringUtil::stripInsertTags(strip_tags(htmlspecialchars_decode($arrRow['subject'])));
+        $text = \Contao\StringUtil::stripInsertTags(strip_tags(htmlspecialchars_decode($arrRow['text'])));
+
+        return $subject . ($subject && $text ? ', ' : '') . \Contao\StringUtil::substr($text, 48);
     }
 
     public function forumPost($row, $href, $label, $title, $icon)
@@ -293,7 +297,7 @@ class ForumCallback
 
         $result .= sprintf('%04d', $arrRow['id']) . '] ';
         $author = $db->fetchAssociative('SELECT * FROM tl_member WHERE id=?', [$arrRow['author']]);
-        $result .= $arrRow['name'] . ': ';
+        $result .= \Contao\StringUtil::stripInsertTags(strip_tags(htmlspecialchars_decode($arrRow['name']))) . ': ';
         $result .= date($GLOBALS['TL_CONFIG']['dateFormat'], intval($arrRow['tstamp'])) . ' ';
         $result .= date($GLOBALS['TL_CONFIG']['timeFormat'], intval($arrRow['tstamp'])) . ' ';
         $result .= $author ? $author['username'] : '';

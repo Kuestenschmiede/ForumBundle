@@ -40,6 +40,9 @@
     "preferred-install": "dist"
   },
   "extra": {
-    "contao-manager-plugin": "con4gis\\ForumBundle\\ContaoManager\\Plugin"
+    "contao-manager-plugin": "con4gis\\ForumBundle\\ContaoManager\\Plugin",
+    "branch-alias": {
+      "dev-main": "5.0.x-dev"
+    }
   }
 }
