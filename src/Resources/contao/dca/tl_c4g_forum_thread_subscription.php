@@ -42,7 +42,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread_subscription'] = array
         (
             'foreignKey'              => 'tl_c4g_forum_thread.name',
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-            'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
+            'relation'                => array('type'=>'belongsTo','load'=>'lazy')
         ),
         'importId' => array
         (
@@ -53,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread_subscription'] = array
         (
             'sql'                     => "int(10) NOT NULL default '0'",
             'foreignKey'              => 'tl_member.username',
-            'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
+            'relation'                => array('type'=>'belongsTo','load'=>'lazy')
         ),
         'newPost' => array
         (

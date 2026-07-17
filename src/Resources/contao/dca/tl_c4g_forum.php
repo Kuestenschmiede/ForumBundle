@@ -23,13 +23,13 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 		'ctable'                      => array('tl_c4g_forum_thread'),
 		'enableVersioning'            => true,
 	    'onload_callback'			  => array(
-											array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'updateDCA')
+											array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','updateDCA')
 										 ),
 	    'onsubmit_callback'           => array(
-            array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'onSubmit')
+            array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','onSubmit')
         ),
 		'ondelete_callback'			  => array(
-											array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'onDeleteForum')
+											array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','onDeleteForum')
 										 ),
         'sql'                         => array
         (
@@ -65,14 +65,14 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 				'href'				  => 'key=build_index',
 				'class'				  => 'navigation',
                 'icon'                => 'sync.svg',
-				'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="i"'
+				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="i"'
 			),
 			'all' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
 				'href'                => 'act=select',
 				'class'               => 'header_edit_all',
-				'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
 			),
             'remove_bb' => array
             (
@@ -81,7 +81,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'back' => [
                 'href'                => 'key=back',
                 'class'               => 'header_back',
-                'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
+                'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper','back'],
                 'icon'                => 'back.svg',
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
             ],
@@ -105,15 +105,15 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['copyChilds'],
 				'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
 				'icon'                => 'copychilds.svg',
-				'attributes'          => 'onclick="Backend.getScrollOffset();"',
-				'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'copyPageWithSubpages')
+				'attributes'          => 'onclick="Backend.getScrollOffset()"',
+				'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','copyPageWithSubpages')
 			),
 			'cut' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['cut'],
 				'href'                => 'act=paste&amp;mode=cut',
 				'icon'                => 'cut.svg',
-				'attributes'          => 'onclick="Backend.getScrollOffset();"'
+				'attributes'          => 'onclick="Backend.getScrollOffset()"'
 			),
 			'delete' => array
 			(
@@ -133,8 +133,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['toggle'],
 				'icon'                => 'visible.svg',
-				'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
-				'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'toggleIcon')
+				'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s)"',
+				'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','toggleIcon')
 			),
 			'show' => array
 			(
@@ -148,25 +148,10 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('define_groups','define_rights','enable_maps','map_type'),
-		'default'                     => '{general_legend},name,headline,description,published;'.
-                                         '{language_legend:hide},optional_names,optional_headlines,optional_descriptions;'.
-										 '{comfort_legend},box_imagesrc;'.
-										 '{intropage_legend:hide},use_intropage;'.
-										 '{infotext_legend:hide},pretext,posttext;'.
-										 '{additional_legend:hide},tags;'.
-										 '{groups_legend:hide},define_groups;'.
-										 '{rights_legend:hide},define_rights;'.
-										 '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude,auto_subscribe,maxPostsPerThread,charLimitPerPost;',
+		'default'                     => '{general_legend},name,headline,description,published;' . '{language_legend:hide},optional_names,optional_headlines,optional_descriptions;' . '{comfort_legend},box_imagesrc;' . '{intropage_legend:hide},use_intropage;' . '{infotext_legend:hide},pretext,posttext;' . '{additional_legend:hide},tags;' . '{groups_legend:hide},define_groups;' . '{rights_legend:hide},define_rights;' . '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude,auto_subscribe,maxPostsPerThread,charLimitPerPost',
 
 	    // used in updateDCA(), because subpalettes don't work well with TinyMCE fields!!
-		'with_intropage'              => '{general_legend},name,optional_names,headline,optional_headlines,description,optional_descriptions,published;'.
-                                         '{language_legend:hide},optional_names,optional_headlines,optional_descriptions;'.
-										 '{comfort_legend},box_imagesrc;'.
-										 '{intropage_legend},use_intropage,intropage,intropage_forumbtn,intropage_forumbtn_jqui;'.
-										 '{infotext_legend:hide},pretext,posttext;'.
-										 '{groups_legend:hide},define_groups;'.
-										 '{rights_legend:hide},define_rights;'.
-										 '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude,auto_subscribe,maxPostsPerThread,charLimitPerPost;',
+		'with_intropage'              => '{general_legend},name,optional_names,headline,optional_headlines,description,optional_descriptions,published;' . '{language_legend:hide},optional_names,optional_headlines,optional_descriptions;' . '{comfort_legend},box_imagesrc;' . '{intropage_legend},use_intropage,intropage,intropage_forumbtn,intropage_forumbtn_jqui;' . '{infotext_legend:hide},pretext,posttext;' . '{groups_legend:hide},define_groups;' . '{rights_legend:hide},define_rights;' . '{expert_legend:hide},linkurl,link_newwindow,sitemap_exclude,auto_subscribe,maxPostsPerThread,charLimitPerPost',
 
 	),
 
@@ -226,7 +211,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'inputType'               => 'text',
             'search'                  => 'true',
 			'sorting'                 => 'true',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
+			'eval'                    => array('mandatory'=>true,'maxlength'=>255 ),
             'sql'                     => "varchar(255) NOT NULL default ''"
 		),
         'optional_names' => array
@@ -250,8 +235,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'label'                 => &$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_language'],
                         'exclude'               => true,
                         'inputType'             => 'select',
-                        'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getLanguages'],
-                        'eval'                  => array('chosen' => true, 'style'=>'width: 200px')
+                        'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class,'getLanguages'],
+                        'eval'                  => array('chosen' => true,'style'=>'width: 200px')
                     )
                 )
             ),
@@ -263,10 +248,10 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['headline'],
 			'exclude'                 => true,
 			'search'                  => true,
-            'default'                 => array('value'=>'', 'unit'=>'h1'),
+            'default'                 => array('value'=>'','unit'=>'h1'),
 			'inputType'               => 'inputUnit',
-			'options'                 => array('h1', 'h2', 'h3', 'h4', 'h5', 'h6'),
-			'eval'                    => array('maxlength'=>200, 'tl_class'=>'long clr'),
+			'options'                 => array('h1','h2','h3','h4','h5','h6'),
+			'eval'                    => array('maxlength'=>200,'tl_class'=>'long clr'),
             'sql'                     => "varchar(255) NOT NULL default ''"
 		),
         'optional_headlines' => array
@@ -282,18 +267,18 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                     (
                         'label'                 => &$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_headline'],
                         'exclude'               => true,
-                        'default'               => array('value'=>'', 'unit'=>'h1'),
+                        'default'               => array('value'=>'','unit'=>'h1'),
                         'inputType'             => 'inputUnit',
-                        'options'               => array('h1', 'h2', 'h3', 'h4', 'h5', 'h6'),
-                        'eval'                  => array('maxlength'=>200, 'style'=>'width: 250px'),
+                        'options'               => array('h1','h2','h3','h4','h5','h6'),
+                        'eval'                  => array('maxlength'=>200,'style'=>'width: 250px'),
                     ),
                     'optional_headline_language' => array
                     (
                         'label'                 => &$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_language'],
                         'exclude'               => true,
                         'inputType'             => 'select',
-                        'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getLanguages'],
-                        'eval'                  => array('chosen' => true, 'style'=>'width: 200px')
+                        'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class,'getLanguages'],
+                        'eval'                  => array('chosen' => true,'style'=>'width: 200px')
                     )
                 )
             ),
@@ -305,7 +290,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'					=> &$GLOBALS['TL_LANG']['tl_c4g_forum']['description'],
 			'search'				=> true,
 			'inputType'				=> 'textarea',
-			'eval'                  => array('style' => 'height:60px', 'tl_class'=>'long clr'),
+			'eval'                  => array('style' => 'height:60px','tl_class'=>'long clr'),
             'sql'                   => "blob NULL"
 		),
         'optional_descriptions' => array
@@ -329,8 +314,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                         'label'                 => &$GLOBALS['TL_LANG']['tl_c4g_forum']['optional_language'],
                         'exclude'               => true,
                         'inputType'             => 'select',
-                        'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getLanguages'],
-                        'eval'                  => array('chosen' => true, 'tl_class'=>'w50', 'style'=>'width: 200px')
+                        'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class,'getLanguages'],
+                        'eval'                  => array('chosen' => true,'tl_class'=>'w50','style'=>'width: 200px')
                     )
                 )
             ),
@@ -352,7 +337,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['box_imagesrc'],
 			'exclude'                 => true,
 			'inputType'               => 'fileTree',
-			'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,jpg,jpeg,png,svg', 'tl_class'=>'clr', 'mandatory'=>false),
+			'eval'                    => array('fieldType'=>'radio','files'=>true,'extensions'=>'gif,jpg,jpeg,png,svg','tl_class'=>'clr','mandatory'=>false),
             'sql'                     => "binary(16) NULL"
 		),
 
@@ -429,7 +414,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
 			'foreignKey'              => 'tl_member_group.name',
-			'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+			'eval'                    => array('mandatory'=>false,'multiple'=>true),
             'sql'                     => "blob NULL"
 		),
 
@@ -439,7 +424,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
 			'foreignKey'              => 'tl_member_group.name',
-			'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+			'eval'                    => array('mandatory'=>false,'multiple'=>true),
             'sql'                     => "blob NULL"
 		),
 
@@ -460,7 +445,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
 		    'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getGuestRightList'),
-			'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+			'eval'                    => array('mandatory'=>false,'multiple'=>true),
             'sql'                     => "blob NULL"
 		),
 
@@ -470,7 +455,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
 		    'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getRightList'),
-			'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+			'eval'                    => array('mandatory'=>false,'multiple'=>true),
             'sql'                     => "blob NULL"
 		),
 
@@ -480,7 +465,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
 		    'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getRightList'),
-			'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+			'eval'                    => array('mandatory'=>false,'multiple'=>true),
             'sql'                     => "blob NULL"
 		),
 
@@ -498,9 +483,9 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['map_profile'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => ['con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'loadMapProfiles'],
+            'options_callback'        => ['con4gis\ForumBundle\Classes\Callbacks\ForumCallback','loadMapProfiles'],
             'eval'                    => ['tl_class'=>'long',
-                                               'submitOnChange' => true, 'chosen' => true, 'alwaysSave' => true],
+                                               'submitOnChange' => true,'chosen' => true,'alwaysSave' => true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
 		'map_override_locationstyle' => array
@@ -519,7 +504,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'exclude'                 => true,
             'inputType'               => 'checkbox',
             'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getAllLocStyles'),
-            'eval'                    => array('mandatory'=>false, 'multiple'=>true),
+            'eval'                    => array('mandatory'=>false,'multiple'=>true),
             'sql'                     => "blob NULL"
 		),
 
@@ -582,8 +567,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
-			'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'wizard'),
-			'wizard' 				  => array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'pickLinkUrl')),
+			'eval'                    => array('rgxp'=>'url','decodeEntities'=>true,'maxlength'=>255,'tl_class'=>'wizard'),
+			'wizard' 				  => array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','pickLinkUrl')),
             'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 
@@ -639,7 +624,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_forum']['tags'],
             'search'				  => true,
             'inputType'               => 'text',
-            'load_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'decodeTags')),
+            'load_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','decodeTags')),
             'eval'                    => array(),
             'sql'                     => "blob NULL"
 		),

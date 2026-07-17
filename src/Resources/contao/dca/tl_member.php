@@ -17,18 +17,18 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
  */
 
 PaletteManipulator::create()
-    ->addLegend('forum_member_legend', 'groups_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
-    ->addField(array('memberImage','memberSignature','memberPosts','memberHomepageLink','memberFacebookLink','memberTwitterLink','memberGooglePlusLink'), 'forum_member_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
-    ->applyToPalette('default', 'tl_member');
+    ->addLegend('forum_member_legend','groups_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
+    ->addField(array('memberImage','memberSignature','memberPosts','memberHomepageLink','memberFacebookLink','memberTwitterLink','memberGooglePlusLink'),'forum_member_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+    ->applyToPalette('default','tl_member');
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['memberImage'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_member']['memberImage'],
     'exclude'                 => true,
     'inputType'               => 'avatar',
-    'load_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\MemberCallback', 'setUploadFolder')),
-    'save_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\MemberCallback', 'handleMemberImage')),
-    'eval'                    => array('filesOnly'=>true, 'multiple' => false, 'fieldType'=>'radio', 'feEditable'=>true, 'feViewable'=>true, 'feGroup'=>'forum', 'storeFile' => true, 'tl_class'=>'clr'),
+    'load_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\MemberCallback','setUploadFolder')),
+    'save_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\MemberCallback','handleMemberImage')),
+    'eval'                    => array('filesOnly'=>true,'multiple' => false,'fieldType'=>'radio','feEditable'=>true,'feViewable'=>true,'feGroup'=>'forum','storeFile' => true,'tl_class'=>'clr'),
     'sql'                     => "mediumtext NULL"
 );
 
@@ -38,7 +38,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['memberSignature'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'textarea',
-    'eval'                    => array('style'=>'height:60px', 'decodeEntities'=>true, 'tl_class'=>'clr', 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'forum'),
+    'eval'                    => array('style'=>'height:60px','decodeEntities'=>true,'tl_class'=>'clr','feEditable' => true,'feViewable' => true,'feGroup' => 'forum'),
     'sql'                     => "mediumtext NULL"
 );
 
@@ -48,7 +48,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['memberHomepageLink'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
-    'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'fieldType'=>'radio', 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'forum', 'memberLink' => true, 'tl_class'=>'clr w50'),
+    'eval'                    => array('rgxp'=>'url','decodeEntities'=>true,'maxlength'=>255,'fieldType'=>'radio','feEditable' => true,'feViewable' => true,'feGroup' => 'forum','memberLink' => true,'tl_class'=>'clr w50'),
     'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
@@ -58,7 +58,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['memberFacebookLink'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
-    'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'fieldType'=>'radio', 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'forum', 'memberLink' => true, 'tl_class'=>'w50'),
+    'eval'                    => array('rgxp'=>'url','decodeEntities'=>true,'maxlength'=>255,'fieldType'=>'radio','feEditable' => true,'feViewable' => true,'feGroup' => 'forum','memberLink' => true,'tl_class'=>'w50'),
     'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
@@ -68,7 +68,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['memberTwitterLink'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
-    'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'fieldType'=>'radio', 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'forum', 'memberLink' => true, 'tl_class'=>'clr w50'),
+    'eval'                    => array('rgxp'=>'url','decodeEntities'=>true,'maxlength'=>255,'fieldType'=>'radio','feEditable' => true,'feViewable' => true,'feGroup' => 'forum','memberLink' => true,'tl_class'=>'clr w50'),
     'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
@@ -78,7 +78,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['memberGooglePlusLink'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
-    'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'fieldType'=>'radio', 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'forum', 'memberLink' => true, 'tl_class'=>'w50'),
+    'eval'                    => array('rgxp'=>'url','decodeEntities'=>true,'maxlength'=>255,'fieldType'=>'radio','feEditable' => true,'feViewable' => true,'feGroup' => 'forum','memberLink' => true,'tl_class'=>'w50'),
     'sql'                     => "varchar(255) NOT NULL default ''"
 );
 $GLOBALS['TL_DCA']['tl_member']['fields']['tstampLastAction'] = array

@@ -55,7 +55,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
-                'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+                'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
             )
         ),
         'operations' => array
@@ -104,7 +104,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
     'palettes' => array
     (
         '__selector__'                => array(''),
-        'default'                     => '{title_legend},title, price;{description_legend},description,subject,text,state;'
+        'default'                     => '{title_legend},title, price;{description_legend},description,subject,text,state'
     ),
 
     // Subpalettes

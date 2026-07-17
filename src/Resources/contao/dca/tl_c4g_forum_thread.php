@@ -31,7 +31,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             )
         ),
         'onsubmit_callback' =>array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','saveDefaultThread')),
-        'onload_callback'   =>array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback', 'getThreadDatasets'))
+        'onload_callback'   =>array(array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getThreadDatasets'))
     ),
     'list' => array
     (
@@ -54,12 +54,12 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
-                'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+                'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
             ]/*,
             'back' => [
                 'href'                => 'key=back',
                 'class'               => 'header_back',
-                'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper', 'back'],
+                'button_callback'     => ['\con4gis\CoreBundle\Classes\Helper\DcaHelper','back'],
                 'icon'                => 'back.svg',
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['backBT'],
             ],*/
@@ -117,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
     'palettes' => array
     (
         '__selector__'                => array(''),
-        'default'                     => '{title_legend},title,price;description,name,recipient,owner,state,creation;'
+        'default'                     => '{title_legend},title,price;description,name,recipient,owner,state,creation'
     ),
 
     // Subpalettes
@@ -149,7 +149,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'exclude'                 => true,
             'search'                  => true,
             'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255 ),
+            'eval'                    => array('mandatory'=>true,'maxlength'=>255 ),
             'sql'                     => "varchar(255) NOT NULL default ''"
         ),
         'state' => array
@@ -160,7 +160,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
             'options_callback'        => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','getThreadOptions'),
 //            'filter'                  => true,
             'search'                  => true,
-            'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-'),
+            'eval'                    => array('includeBlankOption' => true,'blankOptionLabel' => '-'),
             'sql'                     => "int(10) default '0'"
         ),
         'sort' => array
@@ -182,7 +182,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
 //            'filter'                  => true,
             'search'                  => true,
             'foreignKey'              => 'tl_member.username',
-            'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
+            'eval'                    => array('maxlength'=>255,'includeBlankOption'=>true,'multiple'=>true,'chosen'=>true),
             'sql'                     => "blob NULL"
         ),
         'recipient' => array(
@@ -192,7 +192,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_thread'] = array
 //            'filter'                  => true,
             'search'                  => true,
             'foreignKey'              => 'tl_member.username',
-            'eval'                    => array('maxlength'=>255, 'includeBlankOption'=>true, 'multiple'=>true, 'chosen'=>true),
+            'eval'                    => array('maxlength'=>255,'includeBlankOption'=>true,'multiple'=>true,'chosen'=>true),
             'sql'                     => "blob NULL",
         ),
         'concerning' => array(

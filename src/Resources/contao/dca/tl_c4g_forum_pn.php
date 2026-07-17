@@ -21,7 +21,7 @@
             'dataContainer'               => \Contao\DC_Table::class,
             'enableVersioning'            => true,
 //            'onsubmit_callback'             => array(
-//                array('\c4g\Core\C4GAutomator', 'purgeApiCache')
+//                array('\c4g\Core\C4GAutomator','purgeApiCache')
 //            ),
             'sql' => array
             (
@@ -54,7 +54,7 @@
                     'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                     'href'                => 'act=select',
                     'class'               => 'header_edit_all',
-                    'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+                    'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
                 )
             ),
             'operations' => array
@@ -103,7 +103,7 @@
         'palettes' => array
         (
             '__selector__'                => array(''),
-            'default'                     => '{title_legend},title;'
+            'default'                     => '{title_legend},title'
         ),
 
         // Subpalettes

@@ -9,37 +9,19 @@
  * @link https://www.con4gis.org
  */
 $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum'] =
-    '{title_legend},name,headline,type;' .
-    '{c4g_forum_general_legend},c4g_forum_type,c4g_forum_startforum,c4g_forum_navigation,c4g_forum_boxlength,c4g_forum_threadclick,c4g_forum_postsort,c4g_forum_collapsible_posts,c4g_forum_breadcrumb,c4g_forum_hide_intropages,c4g_forum_jumpTo,c4g_forum_language,c4g_forum_multilingual,c4g_forum_tooltip,c4g_forum_show_last_post_on_new,c4g_forum_threads_perpage_selection,ticketredirectsite;' .
-    '{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_rating_enabled,c4g_forum_rating_color,c4g_forum_reaction_enabled,c4g_forum_show_post_count,c4g_forum_show_avatars,c4g_forum_show_online_status,c4g_forum_show_ranks,c4g_forum_show_pn_button,c4g_forum_sub_title,c4g_forum_user_statistics,c4g_forum_user_profile_page;'.
-    '{c4g_forum_sizes_legend:hide},c4g_forum_size,c4g_forum_scroll;' .
-    '{c4g_forum_search_legend:hide},c4g_forum_search_onlythreads, c4g_forum_search_wholewords, c4g_forum_use_tags_in_search, c4g_forum_search_forums, c4g_forum_search_displayonly;' .
-    '{c4g_forum_boxes_legend:hide},c4g_forum_boxes_text,c4g_forum_boxes_subtext,c4g_forum_boxes_lastpost,c4g_forum_boxes_lastthread,c4g_forum_boxes_center;' .
-    '{c4g_forum_jqui_legend:hide},c4g_forum_jqui;' .
-    '{c4g_forum_lib_legend:hide},c4g_forum_jquery_lib,c4g_forum_jqtable_lib,c4g_forum_jqhistory_lib,c4g_forum_jqtooltip_lib,c4g_forum_jqscrollpane_lib;' .
-    '{c4g_forum_sitemap_legend:hide},c4g_forum_sitemap;' .
-    '{c4g_forum_notifications:hide},sub_new_thread,sub_deleted_thread,sub_moved_thread,sub_new_post,sub_deleted_post,sub_edited_post,mail_new_pm,new_pm_redirect;' .
-    '{c4g_editor_legend:hide},c4g_editor_options;'.
-    '{expert_legend:hide},guests,cssID,space,c4g_forum_remove_lastperson,c4g_forum_remove_lastdate,c4g_forum_remove_createperson,c4g_forum_remove_createdate,c4g_forum_remove_count,c4g_forum_move_all,c4g_forum_param_forumbox,c4g_forum_param_forum;';
+    '{title_legend},name,headline,type;' . '{c4g_forum_general_legend},c4g_forum_type,c4g_forum_startforum,c4g_forum_navigation,c4g_forum_boxlength,c4g_forum_threadclick,c4g_forum_postsort,c4g_forum_collapsible_posts,c4g_forum_breadcrumb,c4g_forum_hide_intropages,c4g_forum_jumpTo,c4g_forum_language,c4g_forum_multilingual,c4g_forum_tooltip,c4g_forum_show_last_post_on_new,c4g_forum_threads_perpage_selection,ticketredirectsite;' . '{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_rating_enabled,c4g_forum_rating_color,c4g_forum_reaction_enabled,c4g_forum_show_post_count,c4g_forum_show_avatars,c4g_forum_show_online_status,c4g_forum_show_ranks,c4g_forum_show_pn_button,c4g_forum_sub_title,c4g_forum_user_statistics,c4g_forum_user_profile_page;' . '{c4g_forum_sizes_legend:hide},c4g_forum_size,c4g_forum_scroll;' . '{c4g_forum_search_legend:hide},c4g_forum_search_onlythreads, c4g_forum_search_wholewords, c4g_forum_use_tags_in_search, c4g_forum_search_forums, c4g_forum_search_displayonly;' . '{c4g_forum_boxes_legend:hide},c4g_forum_boxes_text,c4g_forum_boxes_subtext,c4g_forum_boxes_lastpost,c4g_forum_boxes_lastthread,c4g_forum_boxes_center;' . '{c4g_forum_jqui_legend:hide},c4g_forum_jqui;' . '{c4g_forum_lib_legend:hide},c4g_forum_jquery_lib,c4g_forum_jqtable_lib,c4g_forum_jqhistory_lib,c4g_forum_jqtooltip_lib,c4g_forum_jqscrollpane_lib;' . '{c4g_forum_sitemap_legend:hide},c4g_forum_sitemap;' . '{c4g_forum_notifications:hide},sub_new_thread,sub_deleted_thread,sub_moved_thread,sub_new_post,sub_deleted_post,sub_edited_post,mail_new_pm,new_pm_redirect;' . '{c4g_editor_legend:hide},c4g_editor_options;' . '{expert_legend:hide},guests,cssID,space,c4g_forum_remove_lastperson,c4g_forum_remove_lastdate,c4g_forum_remove_createperson,c4g_forum_remove_createdate,c4g_forum_remove_count,c4g_forum_move_all,c4g_forum_param_forumbox,c4g_forum_param_forum';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_breadcrumb'] =
-    '{title_legend},name,type;' .
-    '{c4g_forum_breadcrumb_legend},c4g_forum_breadcrumb_jumpTo;' .
-    '{protected_legend:hide},protected;' .
-    '{expert_legend:hide},guests,cssID,space';
+    '{title_legend},name,type;' . '{c4g_forum_breadcrumb_legend},c4g_forum_breadcrumb_jumpTo;' . '{protected_legend:hide},protected;' . '{expert_legend:hide},guests,cssID,space';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_pncenter'] =
-    '{title_legend},name,headline,type;{pm_center_forum_module_legend},pm_center_forum_module;{c4g_forum_jqui_legend},c4g_forum_uitheme_css_select,c4g_appearance_themeroller_css;';
+    '{title_legend},name,headline,type;{pm_center_forum_module_legend},pm_center_forum_module;{c4g_forum_jqui_legend},c4g_forum_uitheme_css_select,c4g_appearance_themeroller_css';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['c4g_forum_subscription'] =
-    '{title_legend},name,type,headline;' .
-    '{subforum_sub_legend},sub_forum_headline,sub_forum_change_sub_caption,sub_forum_delete_sub_caption;' .
-    '{thread_sub_legend},thread_headline,thread_change_sub_caption,thread_delete_sub_caption;'.
-    '{misc_legend},no_subs_text';
+    '{title_legend},name,type,headline;' . '{subforum_sub_legend},sub_forum_headline,sub_forum_change_sub_caption,sub_forum_delete_sub_caption;' . '{thread_sub_legend},thread_headline,thread_change_sub_caption,thread_delete_sub_caption;' . '{misc_legend},no_subs_text';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['profile_page_module'] =
-    '{title_legend},name,type;{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_show_ranks,c4g_forum_user_statistics;'.
-    '{c4g_forum_page_legend},c4g_forum_module_page';
+    '{title_legend},name,type;{c4g_forum_user_legend},c4g_forum_show_realname,c4g_forum_show_ranks,c4g_forum_user_statistics;' . '{c4g_forum_page_legend},c4g_forum_module_page';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_jqui';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][]  = 'c4g_forum_sitemap';
@@ -59,7 +41,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_type'] = array
 (
     'exclude'   => true,
     'inputType' => 'select',
-    'options'   => array('DISCUSSIONS', 'QUESTIONS', 'TICKET'),
+    'options'   => array('DISCUSSIONS','QUESTIONS','TICKET'),
     'default'   => 'DISCUSSIONS',
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['c4g_references'],
     'sql'       => "varchar(12) NOT NULL default 'DISCUSSIONS'"
@@ -70,7 +52,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_size'] = array
 (
     'exclude'   => true,
     'inputType' => 'imageSize',
-    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getImageSizes'],
+    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class,'getImageSizes'],
     'eval'      => array('rgxp' => 'digit','mandatory'=> false,'includeBlankOption' => true),
     'sql'       => "varchar(100) NOT NULL default ''"
 );
@@ -79,7 +61,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_scroll'] = array
 (
     'exclude'   => true,
     'inputType' => 'imageSize',
-    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getImageSizes'],
+    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class,'getImageSizes'],
     'eval'      => array('rgxp' => 'digit','mandatory'=> false,'includeBlankOption' => true),
     'sql'       => "varchar(100) NOT NULL default ''"
 );
@@ -89,7 +71,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_startforum'] = array
     'exclude'    => true,
     'inputType'  => 'select',
     'foreignKey' => 'tl_c4g_forum.name',
-    'eval'       => array('includeBlankOption' => true, 'blankOptionLabel' => '-'),
+    'eval'       => array('includeBlankOption' => true,'blankOptionLabel' => '-'),
     'sql'        => "int(10) unsigned NOT NULL default '0'"
 );
 
@@ -139,7 +121,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threads_perpage_selection']
     'exclude'   => true,
     'default'   => '10',
     'inputType' => 'select',
-    'options'   => ['10', '25', '50', '100', '-1'],
+    'options'   => ['10','25','50','100','-1'],
     'reference' => [
         '10' => '10',
         '25' => '25',
@@ -169,7 +151,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_user_statistics'] = array
     'exclude'   => true,
     'default'   => serialize([]),
     'inputType' => 'checkboxWizard',
-    'options_callback' => [\con4gis\ForumBundle\Classes\BackendCallback::class, 'getUserStatisticOptions'],
+    'options_callback' => [\con4gis\ForumBundle\Classes\BackendCallback::class,'getUserStatisticOptions'],
     'eval' => [
         'multiple' => true
     ],
@@ -196,7 +178,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_navigation'] = array
 (
     'exclude'   => true,
     'inputType' => 'select',
-    'options'   => array('BOXES', 'TREE'),
+    'options'   => array('BOXES','TREE'),
     'default'   => 'BOXES',
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['c4g_references'],
     'sql'       => "varchar(10) NOT NULL default 'BOXES'"
@@ -206,7 +188,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_boxlength'] = array
 (
     'inputType' => 'text',
     'default'   => '30',
-    'eval'      => array('rgxp' => 'digit', 'nospace' => true),
+    'eval'      => array('rgxp' => 'digit','nospace' => true),
     'sql'       => "int(4) unsigned NOT NULL default '30'"
 );
 
@@ -215,7 +197,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_threadclick'] = array
 (
     'exclude'   => true,
     'inputType' => 'select',
-    'options'   => array('THREAD', 'FPOST', 'LPOST'),
+    'options'   => array('THREAD','FPOST','LPOST'),
     'default'   => 'THREAD',
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['c4g_references'],
     'sql'       => "char(6) NOT NULL default 'THREAD'"
@@ -225,7 +207,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_show_realname'] = array
 (
     'exclude'   => true,
     'inputType' => 'radio',
-    'options'   => array('UU', 'FF', 'LL', 'FL', 'LF'),
+    'options'   => array('UU','FF','LL','FL','LF'),
     'default'   => 'UU',
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['c4g_references'],
     'sql'       => "char(2) NOT NULL default 'UU'"
@@ -235,7 +217,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_postsort'] = array
 (
     'exclude'   => true,
     'inputType' => 'radio',
-    'options'   => array('UP', 'DN'),
+    'options'   => array('UP','DN'),
     'default'   => 'UP',
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['c4g_references'],
     'sql'       => "char(2) NOT NULL default 'UP'"
@@ -245,7 +227,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_collapsible_posts'] = array
 (
     'exclude'   => true,
     'inputType' => 'radio',
-    'options'   => array('NC', 'CO', 'CC', 'CF', 'CL'),
+    'options'   => array('NC','CO','CC','CF','CL'),
     'default'   => 'NC',
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['c4g_references'],
     'sql'       => "char(2) NOT NULL default 'NC'"
@@ -280,7 +262,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_rating_color'] = array
 (
     'exclude'   => true,
     'inputType' => 'text',
-    'eval'      => array('maxlength'=>6, 'multiple'=>false, 'size'=>1, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'wizard'),
+    'eval'      => array('maxlength'=>6,'multiple'=>false,'size'=>1,'colorpicker'=>true,'isHexColor'=>true,'decodeEntities'=>true,'tl_class'=>'wizard'),
     'sql'       => "varchar(64) NOT NULL default ''",
 );
 
@@ -313,7 +295,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_avatar_size'] = array
 (
     'exclude'   => true,
     'inputType' => 'imageSize',
-    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getImageSizes'],
+    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class,'getImageSizes'],
     'eval'      => array('rgxp' => 'digit','includeBlankOption' => true),
     'sql'       => "varchar(100) NOT NULL default ''"
 );
@@ -332,7 +314,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_member_online_time'] = arra
     'exclude'   => true,
     'default'   => '500',
     'inputType' => 'text',
-    'eval'      => array('rgxp' => 'digit', 'maxlength' => 5),
+    'eval'      => array('rgxp' => 'digit','maxlength' => 5),
     'sql'       => "int(10) unsigned NOT NULL default '500'"
 );
 
@@ -358,7 +340,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_member_ranks'] = array
                 'label'                 => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_min'],
                 'exclude'               => true,
                 'inputType'             => 'text',
-                'eval' 			        => array('rgxp' => 'digit', 'style' => 'width: 100px')
+                'eval' 			        => array('rgxp' => 'digit','style' => 'width: 100px')
             ),
             'rank_name' => array
             (
@@ -372,8 +354,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_member_ranks'] = array
                 'label'                 => &$GLOBALS['TL_LANG']['tl_module']['c4g_forum_rank_language'],
                 'exclude'               => true,
                 'inputType'             => 'select',
-                'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getLanguages'],
-                'eval'                  => array('chosen' => true, 'style' => 'width: 120px')
+                'options_callback'      => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class,'getLanguages'],
+                'eval'                  => array('chosen' => true,'style' => 'width: 120px')
 
             )
         )
@@ -404,7 +386,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_language'] = array
     'exclude'   => true,
     'default'   => '',
     'inputType' => 'text',
-    'eval'      => array('maxlength' => 10, "style" => 'width: 100px'),
+    'eval'      => array('maxlength' => 10,"style" => 'width: 100px'),
     'sql'       => "char(5) NOT NULL default ''"
 );
 
@@ -422,8 +404,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_multilingual_languages'] = 
     'exclude'    => true,
     'default'    => array('de','en'),
     'inputType'  => 'select',
-    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getLanguages'],
-    'eval'       => array('multiple' => true, 'chosen' => true, 'style' => 'width: 120px'),
+    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class,'getLanguages'],
+    'eval'       => array('multiple' => true,'chosen' => true,'style' => 'width: 120px'),
     'sql'        => "blob NULL"
 );
 
@@ -529,7 +511,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_uitheme_css_select'] = arra
     'default'                 => 'settings',
     'inputType'               => 'radio',
     'options'                 => array('settings','base','black-tie','blitzer','cupertino','dark-hive','dot-luv','eggplant','excite-bike','flick','hot-sneaks','humanity','le-frog','mint-choc','overcast','pepper-grinder','redmond','smoothness','south-street','start','sunny','swanky-purse','trontastic','ui-darkness','ui-lightness','vader'),
-    'eval'                    => array('mandatory'=>true, 'submitOnChange' => true),
+    'eval'                    => array('mandatory'=>true,'submitOnChange' => true),
     'reference'               => &$GLOBALS['TL_LANG']['tl_module']['c4g_references'],
     'sql'                     => "char(100) NOT NULL default 'settings'"
 );
@@ -538,7 +520,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_uitheme_css_src'] = array
 (
     'exclude'   => true,
     'inputType' => 'fileTree',
-    'eval'      => array('fieldType' => 'radio', 'files' => true, 'extensions' => 'css'),
+    'eval'      => array('fieldType' => 'radio','files' => true,'extensions' => 'css'),
     'sql'       => "binary(16) NULL"
 );
 
@@ -546,7 +528,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_dialogsize'] = array
 (
     'exclude'   => true,
     'inputType' => 'imageSize',
-    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class, 'getImageSizes'],
+    'options_callback' => [\con4gis\ForumBundle\Classes\Callbacks\ModuleCallback::class,'getImageSizes'],
     'eval'      => array('rgxp' => 'digit','includeBlankOption' => true),
     'sql'       => "varchar(100) NOT NULL default ''"
 );
@@ -667,7 +649,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap'] = array
     'default'       => '',
     'inputType'     => 'checkbox',
     'eval'          => array('submitOnChange' => true),
-    'save_callback' => array(array('con4gis\ForumBundle\Classes\Callbacks\ModuleCallback', 'updateSitemap')),
+    'save_callback' => array(array('con4gis\ForumBundle\Classes\Callbacks\ModuleCallback','updateSitemap')),
     'sql'           => "char(1) NOT NULL default ''"
 );
 
@@ -675,8 +657,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_filename'] = array
 (
     'exclude'       => true,
     'inputType'     => 'text',
-    'eval'          => array('mandatory' => true, 'maxlength' => 30),
-    'save_callback' => array(array('con4gis\ForumBundle\Classes\Callbacks\ModuleCallback', 'updateSitemap')),
+    'eval'          => array('mandatory' => true,'maxlength' => 30),
+    'save_callback' => array(array('con4gis\ForumBundle\Classes\Callbacks\ModuleCallback','updateSitemap')),
     'sql'           => "varchar(30) NOT NULL default ''"
 );
 
@@ -684,10 +666,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_sitemap_contents'] = array
 (
     'exclude'       => true,
     'inputType'     => 'checkbox',
-    'options'       => array('THREADS', 'FORUMS', 'INTROS'),
+    'options'       => array('THREADS','FORUMS','INTROS'),
     'reference'     => &$GLOBALS['TL_LANG']['tl_module']['c4g_references'],
     'eval'          => array('multiple' => true),
-    'save_callback' => array(array('con4gis\ForumBundle\Classes\Callbacks\ModuleCallback', 'updateSitemap')),
+    'save_callback' => array(array('con4gis\ForumBundle\Classes\Callbacks\ModuleCallback','updateSitemap')),
     'sql'           => "blob NULL"
 );
 
@@ -703,7 +685,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_appearance_themeroller_css'] = ar
 (
     'exclude'   => true,
     'inputType' => 'fileTree',
-    'eval'      => array('tl_class'=>'w50 wizard', 'fieldType'=>'radio', 'files'=>true, 'extensions'=>'css'),
+    'eval'      => array('tl_class'=>'w50 wizard','fieldType'=>'radio','files'=>true,'extensions'=>'css'),
     'sql'       => "binary(16) NULL"
 );
 
@@ -714,7 +696,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_breadcrumb_jumpTo'] = array
 (
     'exclude'   => true,
     'inputType' => 'pageTree',
-    'eval'      => array('fieldType' => 'radio', 'mandatory' => true),
+    'eval'      => array('fieldType' => 'radio','mandatory' => true),
     'sql'       => "int(10) unsigned NOT NULL default '0'"
 );
 
@@ -740,7 +722,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_param_forumbox'] = array
     'exclude'       => true,
     'default'       => 'forumbox',
     'inputType'     => 'text',
-    'eval'          => array('mandatory' => true, 'maxlength' => 42),
+    'eval'          => array('mandatory' => true,'maxlength' => 42),
     'sql'           => "varchar(30) NOT NULL default 'forumbox'"
 );
 
@@ -749,7 +731,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_forum_param_forum'] = array
     'exclude'       => true,
     'default'       => 'forum',
     'inputType'     => 'text',
-    'eval'          => array('mandatory' => true, 'maxlength' => 42),
+    'eval'          => array('mandatory' => true,'maxlength' => 42),
     'sql'           => "varchar(30) NOT NULL default 'forum'"
 );
 
@@ -804,9 +786,9 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['ticketredirectsite'] = array
     'exclude'                 => true,
     'inputType'               => 'pageTree',
     'foreignKey'              => 'tl_page.title',
-    'eval'                    => array('mandatory'=>false, 'fieldType'=>'radio', 'tl_class'=>'clr'),
+    'eval'                    => array('mandatory'=>false,'fieldType'=>'radio','tl_class'=>'clr'),
     'sql'                     => "int(10) unsigned NOT NULL default '0'",
-    'relation'                => array('type'=>'hasOne', 'load'=>'lazy')
+    'relation'                => array('type'=>'hasOne','load'=>'lazy')
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['sub_new_thread'] = array
@@ -874,10 +856,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['new_pm_redirect'] = array
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_editor_options'] = array
 (
-    'default'                 => ['h2', 'h3', 'href'],
+    'default'                 => ['h2','h3','href'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
-    'options'                 => ['h2', 'h3', 'href', 'attach'],
+    'options'                 => ['h2','h3','href','attach'],
     'reference'               => &$GLOBALS['TL_LANG']['tl_module']['c4g_editor_options'],
     'eval'                    => array('multiple' => true,),
     'sql'                     => "TEXT NOT NULL default ''"
@@ -891,7 +873,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['pm_center_forum_module'] = array
 (
     'inputType'               => 'select',
     'foreignKey'              => 'tl_module.name',
-    'eval'                    => array('includeBlankOption' => true, 'blankOptionLabel' => '-',),
+    'eval'                    => array('includeBlankOption' => true,'blankOptionLabel' => '-',),
     'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
 
