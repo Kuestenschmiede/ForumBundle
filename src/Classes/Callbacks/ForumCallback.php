@@ -40,6 +40,13 @@ class ForumCallback
 
     public function copyPageWithSubpages($row, $href, $label, $title, $icon, $attributes, $table)
     {
+            if (is_array($title)) {
+                $title = $title[0] ?? '';
+            }
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
         $db = \Contao\System::getContainer()->get('database_connection');
         $id = $db->fetchOne("SELECT id FROM tl_c4g_forum WHERE pid=?", [$row['id']]);
 
@@ -102,6 +109,14 @@ class ForumCallback
 
     public function get_label($row, $label, DataContainer $dc, $args)
     {
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
         if (is_array($args) && isset($args[0])) {
             return $args[0];
         }
@@ -110,6 +125,13 @@ class ForumCallback
 
     public function remove_bb($row, $href, $label, $title, $icon, $attributes)
     {
+            if (is_array($title)) {
+                $title = $title[0] ?? '';
+            }
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
         return '';
     }
 
@@ -120,12 +142,26 @@ class ForumCallback
 
     public function forumThread($row, $href, $label, $title, $icon)
     {
+            if (is_array($title)) {
+                $title = $title[0] ?? '';
+            }
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
         $href .= "&amp;id=" . $row['id'];
         return '<a href="' . \Contao\Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '">' . Image::getHtml($icon, $label) . '</a> ';
     }
 
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
+            if (is_array($title)) {
+                $title = $title[0] ?? '';
+            }
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
         $tid = \Contao\Input::get('tid');
         if (strlen($tid)) {
             $this->toggleVisibility($tid, (\Contao\Input::get('state') == 1));
@@ -263,6 +299,13 @@ class ForumCallback
 
     public function forumPost($row, $href, $label, $title, $icon)
     {
+            if (is_array($title)) {
+                $title = $title[0] ?? '';
+            }
+            if (is_array($label)) {
+                $label = $label[0] ?? '';
+            }
+
         $href .= "&amp;id=" . $row['id'];
         return '<a href="' . \Contao\Backend::addToUrl($href) . '" title="' . \Contao\StringUtil::specialchars($title) . '">' . Image::getHtml($icon, $label) . '</a> ';
     }
