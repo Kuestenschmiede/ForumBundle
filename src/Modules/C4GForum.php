@@ -2745,6 +2745,8 @@ class C4GForum extends \Contao\Module
                 $this->putVars['thread'] = $this->putVars['thread_' . $this->c4g_forum_language_temp];
             }
         }
+        $recipient = '';
+        $user = \Contao\FrontendUser::getInstance();
         if (isset($this->putVars['recipient_member'])) {
             $recipient = serialize($this->putVars['recipient_member']);
         } else if (isset($this->putVars['recipient_group'])) {
@@ -2759,14 +2761,27 @@ class C4GForum extends \Contao\Module
             }
             $recipient = serialize($recipient);
         }
-        if ($this->putVars['id']) {
-            $result = $this->helper->insertThreadIntoDB((int)$forumId, $this->putVars['thread'], (int)$this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
-                $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
-                $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient, (int)$user->id, (int)$this->putVars['id']);
+        $id = $this->putVars['id'] ?? null;
+        $thread = $this->putVars['thread'] ?? '';
+        $post = $this->putVars['post'] ?? '';
+        $tags = $this->putVars['tags'] ?? '';
+        $linkname = $this->putVars['linkname'] ?? '';
+        $linkurl = $this->putVars['linkurl'] ?? '';
+        $geox = $this->putVars['geox'] ?? '';
+        $geoy = $this->putVars['geoy'] ?? '';
+        $locstyle = $this->putVars['locstyle'] ?? 0;
+        $label = $this->putVars['label'] ?? '';
+        $tooltip = $this->putVars['tooltip'] ?? '';
+        $geodata = $this->putVars['geodata'] ?? '';
+        $osmId = $this->putVars['osmId'] ?? '';
+        if ($id) {
+            $result = $this->helper->insertThreadIntoDB((int)$forumId, $thread, (int)$this->User->id, $threaddesc, $sort, $post, $tags,
+                $linkname, $linkurl, $geox, $geoy, $locstyle,
+                $label, $tooltip, $geodata, $osmId, $recipient, (int)$user->id, (int)$id);
         } else {
-            $result = $this->helper->insertThreadIntoDB((int)$forumId, $this->putVars['thread'], (int)$this->User->id, $threaddesc, $sort, $this->putVars['post'], $this->putVars['tags'],
-                $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'], $this->putVars['locstyle'],
-                $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId'], $recipient, (int)$user->id);
+            $result = $this->helper->insertThreadIntoDB((int)$forumId, $thread, (int)$this->User->id, $threaddesc, $sort, $post, $tags,
+                $linkname, $linkurl, $geox, $geoy, $locstyle,
+                $label, $tooltip, $geodata, $osmId, $recipient, (int)$user->id);
         }
 
         if (!$result) {

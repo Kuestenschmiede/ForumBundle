@@ -93,6 +93,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.svg',
+                'primary'             => true,
 			),
 			'copy' => array
 			(
@@ -121,13 +122,15 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
                 'href'                => 'act=delete',
                 'icon'                => 'delete.svg',
                 'attributes'          => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\')) return false;Backend.getScrollOffset()"',
+                'primary'             => true,
 			),
 			'thread' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['thread'],
                 'href'                => 'do=c4g_forum_thread',
                 'icon'	 		      => 'tablewizard.svg',
-                'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','forumThread')
+                'button_callback'     => array('con4gis\ForumBundle\Classes\Callbacks\ForumCallback','forumThread'),
+                'primary'             => true,
             ),
 			'toggle' => array
 			(
@@ -140,7 +143,8 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_c4g_forum']['show'],
 				'href'                => 'act=show',
-				'icon'                => 'show.svg'
+				'icon'                => 'show.svg',
+                'primary'             => true,
 			)
 		)
 	),
@@ -357,7 +361,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'					=> &$GLOBALS['TL_LANG']['tl_c4g_forum']['intropage'],
 			'search'				=> true,
 			'inputType'				=> 'textarea',
-			'eval'					=> array('rte'=>'tinyMCE'),
+			'eval'					=> array('rte'=>'tinyMCE', 'allowHtml' => true),
             'sql'                   => "text NULL"
 		),
 
@@ -385,7 +389,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'					=> &$GLOBALS['TL_LANG']['tl_c4g_forum']['pretext'],
 			'search'				=> true,
 			'inputType'				=> 'textarea',
-			'eval'					=> array('rte'=>'tinyMCE'),
+			'eval'					=> array('rte'=>'tinyMCE', 'allowHtml' => true),
             'sql'                   => "text NULL"
 		),
 
@@ -394,7 +398,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum'] = array
 			'label'					=> &$GLOBALS['TL_LANG']['tl_c4g_forum']['posttext'],
             'search'				=> true,
 			'inputType'				=> 'textarea',
-			'eval'					=> array('rte'=>'tinyMCE'),
+			'eval'					=> array('rte'=>'tinyMCE', 'allowHtml' => true),
             'sql'                   => "text NULL"
 		),
 

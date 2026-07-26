@@ -134,7 +134,7 @@ $GLOBALS['TL_DCA']['tl_c4g_forum_post'] = array
             'label'					  => &$GLOBALS['TL_LANG']['tl_c4g_forum_post']['text'],
             'search'				  => true,
             'inputType'				  => 'textarea',
-            'eval'					  => array('rte'=>'tinyMCE'),
+            'eval'					  => array('rte'=>'tinyMCE', 'allowHtml' => true),
             'sql'                     => "mediumtext NULL"
         ),
         'subject' => array

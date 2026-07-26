@@ -423,7 +423,7 @@ class C4GForumHelper extends System
         if (!$sImage) {
             return null;
         }
-        $sImagePath = \Contao\Controller::replaceInsertTags('{{image::' . $sImage . '?width=' . $aSize[0] . '&height=' . $aSize[1] . '&mode=crop}}');
+        $sImagePath = \Contao\System::getContainer()->get('contao.insert_tag.parser')->replace('{{image::' . $sImage . '?width=' . $aSize[0] . '&height=' . $aSize[1] . '&mode=crop}}');
 
         return $sImagePath;
     }
@@ -721,7 +721,8 @@ class C4GForumHelper extends System
                 'LEFT JOIN tl_member b ON b.id = a.author ' .
                 'LEFT JOIN tl_c4g_forum_post c ON c.id = a.last_post_id ' .
                 'LEFT JOIN tl_member d ON d.id = c.author ' .
-                'WHERE a.pid IN(' . $forumIdMarkers . ')');
+                'WHERE a.pid IN(' . $forumIdMarkers . ') ' .
+                'ORDER BY c.creation DESC');
         $threads = $this->dbExecute($threads, $idArray);
         if (
             !is_array($GLOBALS['TL_LANG'] ?? null) ||
