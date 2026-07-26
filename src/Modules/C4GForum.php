@@ -872,6 +872,19 @@ class C4GForum extends \Contao\Module
             $data['bJQueryUI'] = true;
         }
 
+        $data['bStateSave'] = true;
+        if ($this->c4g_forum_rating_enabled) {
+            $data['aaSorting'] = array(
+                array(11, 'desc'),
+                array(5, 'desc')
+            );
+        } else {
+            $data['aaSorting'] = array(
+                array(10, 'desc'),
+                array(4, 'desc')
+            );
+        }
+
         $scroll = \Contao\StringUtil::deserialize($this->c4g_forum_scroll, true);
         if ($scroll[0] != 0) {
             $data['sScrollX'] = $scroll[0] . $scroll[2];
