@@ -418,12 +418,14 @@ class C4GForumHelper extends System
         $aSize[0] = ($aSize[0] > 0) ? $aSize[0] : 100;
         $aSize[1] = ($aSize[1] > 0) ? $aSize[1] : 100;
 
-        $aImage = \Contao\StringUtil::deserialize(C4gForumMember::getAvatarByMemberId($iMemberId), true);
-        $sImage = $aImage[0] ?? null;
+        $sImage = C4gForumMember::getAvatarByMemberId($iMemberId);
         if (!$sImage) {
             return null;
         }
         $sImagePath = \Contao\System::getContainer()->get('contao.insert_tag.parser')->replace('{{image::' . $sImage . '?width=' . $aSize[0] . '&height=' . $aSize[1] . '&mode=crop}}');
+        if (preg_match('/src="([^"]+)"/i', $sImagePath, $matches)) {
+            $sImagePath = $matches[1];
+        }
 
         return $sImagePath;
     }

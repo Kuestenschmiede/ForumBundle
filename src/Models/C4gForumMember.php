@@ -36,12 +36,38 @@ class C4gForumMember extends Model
      */
     public static function getAvatarByMemberId($iMemberId)
     {
+        if (!$iMemberId) {
+            return '';
+        }
         $t = static::$sTable;
         $oDatabase = \Contao\Database::getInstance();
-        $aMemberImage = $oDatabase->prepare("SELECT memberImage FROM $t WHERE id=?")->execute(...[$iMemberId])->fetchAssoc();
-        $sMemberImagePath = $aMemberImage['memberImage'] ?? '';
+        $res = $oDatabase->prepare("SELECT memberImage, avatar FROM $t WHERE id=?")->execute($iMemberId);
+        if ($res->numRows < 1) {
+            return '';
+        }
+        $sMemberImagePath = $res->memberImage;
+        if (!$sMemberImagePath) {
+            $sMemberImagePath = $res->avatar;
+        }
+        if (!$sMemberImagePath) {
+            return '';
+        }
 
-        return $sMemberImagePath;
+        $val = \Contao\StringUtil::deserialize($sMemberImagePath);
+        if (is_array($val)) {
+            $val = $val[0];
+        }
+
+        if ($val !== '' && \strlen($val) === 16) {
+            $objFile = \Contao\FilesModel::findByUuid($val);
+            if ($objFile) {
+                return $objFile->path;
+            }
+
+            return \Contao\StringUtil::binToUuid($val);
+        }
+
+        return (string) $val;
     }
 
 }

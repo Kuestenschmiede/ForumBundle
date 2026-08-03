@@ -4,6 +4,7 @@ namespace con4gis\ForumBundle\Classes\Callbacks;
 
 use con4gis\ForumBundle\Models\C4gForumMember;
 use Contao\Backend;
+use Contao\StringUtil;
 use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -11,25 +12,42 @@ class MemberCallback extends Backend
 {
     public function handleMemberImage($varValue, $dc)
     {
-        // Get the member's ID based upon the usage-location of the Widget: BE -> current viewed member, FE -> current logged in frontenduser.
-        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(Request::createFromGlobals()))
+        $iMemberId = 0;
+        $container = System::getContainer();
+        $requestStack = $container->get('request_stack');
+        $request = $requestStack->getCurrentRequest() ?? Request::createFromGlobals();
+
+        if ($container->get('contao.routing.scope_matcher')->isFrontendRequest($request))
         {
-            $this->import('Contao\FrontendUser', 'User');
-            $iMemberId = $this->User->id;
+            $user = $container->get('security.helper')->getUser();
+            if ($user instanceof \Contao\FrontendUser) {
+                $iMemberId = $user->id;
+            }
         }
         else
         {
-            $iMemberId = $dc->id;
+            $iMemberId = (int)$dc->id;
+            if (!$iMemberId && $dc->activeRecord) {
+                $iMemberId = (int)$dc->activeRecord->id;
+            }
+            if (!$iMemberId) {
+                $iMemberId = (int)$request->query->get('id');
+            }
         }
 
-        $sImagePathFromDatabase = C4gForumMember::getAvatarByMemberId($iMemberId);
+        if (is_string($varValue) && StringUtil::isSerialized($varValue)) {
+            return $varValue;
+        }
 
-        $deseralized_value = unserialize($varValue);
-        if (empty($deseralized_value) && (!empty($sImagePathFromDatabase)))
-        {
-            if ($sImagePathFromDatabase)
-            {
-                $varValue = $sImagePathFromDatabase;
+        if (is_array($varValue) && !empty($varValue)) {
+            return serialize(array_values($varValue));
+        }
+
+        if ($iMemberId > 0 && ($varValue === null || $varValue === '' || $varValue === [])) {
+            $db = \Contao\Database::getInstance();
+            $res = $db->prepare("SELECT memberImage FROM tl_member WHERE id=?")->execute($iMemberId);
+            if ($res->numRows > 0 && ($res->memberImage ?? '') !== '') {
+                return $res->memberImage;
             }
         }
 
@@ -39,7 +57,20 @@ class MemberCallback extends Backend
     public function setUploadFolder($varValue, $dc)
     {
         $uploadFolder = "files/userimages";
-        $iMemberId = $dc->id;
+        $iMemberId = $dc->id ?? ($dc->activeRecord->id ?? 0);
+
+        if ($iMemberId <= 0) {
+            $container = System::getContainer();
+            $requestStack = $container->get('request_stack');
+            $request = $requestStack->getCurrentRequest() ?? Request::createFromGlobals();
+
+            if ($container->get('contao.routing.scope_matcher')->isFrontendRequest($request)) {
+                $user = $container->get('security.helper')->getUser();
+                if ($user instanceof \Contao\FrontendUser) {
+                    $iMemberId = $user->id;
+                }
+            }
+        }
 
         if ($iMemberId > 0)
         {

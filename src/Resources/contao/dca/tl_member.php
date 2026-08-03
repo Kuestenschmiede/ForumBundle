@@ -25,11 +25,9 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['memberImage'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_member']['memberImage'],
     'exclude'                 => true,
-    'inputType'               => 'avatar',
-    'load_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\MemberCallback','setUploadFolder')),
-    'save_callback'           => array(array('con4gis\ForumBundle\Classes\Callbacks\MemberCallback','handleMemberImage')),
-    'eval'                    => array('filesOnly'=>true,'multiple' => false,'fieldType'=>'radio','feEditable'=>true,'feViewable'=>true,'feGroup'=>'forum','storeFile' => true,'tl_class'=>'clr'),
-    'sql'                     => "mediumtext NULL"
+    'inputType'               => (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Contao\System::getContainer()->get('request_stack')->getCurrentRequest() ?? \Symfony\Component\HttpFoundation\Request::createFromGlobals()) ? 'fileTree' : 'avatar'),
+    'eval'                    => array('filesOnly'=>true, 'multiple'=>false, 'fieldType'=>'radio', 'feEditable'=>true, 'feViewable'=>true, 'feGroup'=>'forum', 'tl_class'=>'clr'),
+    'sql'                     => "blob NULL"
 );
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['memberSignature'] = array

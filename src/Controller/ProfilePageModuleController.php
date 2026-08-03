@@ -84,7 +84,15 @@ class ProfilePageModuleController extends AbstractFrontendModuleController
             'SELECT COUNT(0) as threads FROM tl_c4g_forum_thread WHERE author = ?'
         );
         $member['threadCount'] = $statement->execute(...[$member['id']])->fetchAssoc()['threads'];
-        $member['avatarUrl'] = \Contao\StringUtil::deserialize($member['memberImage'], true)[0];
+        $val = \Contao\StringUtil::deserialize($member['memberImage']);
+        if (is_array($val)) {
+            $val = $val[0];
+        }
+        if ($val !== '' && (\Contao\Validator::isUuid($val) || \strlen($val) === 16)) {
+            $objFile = \Contao\FilesModel::findByUuid($val);
+            $val = $objFile ? $objFile->path : '';
+        }
+        $member['avatarUrl'] = $val;
 
         switch ($model->c4g_forum_show_realname) {
             case 'UU';

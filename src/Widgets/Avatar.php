@@ -13,8 +13,10 @@ namespace con4gis\ForumBundle\Widgets;
 use con4gis\ForumBundle\Classes\C4GForumHelper;
 use con4gis\ForumBundle\Classes\C4gForumSingleFileUpload;
 use Contao\Folder;
+use Contao\StringUtil;
 use Contao\System;
 use Contao\Widget;
+use Symfony\Component\HttpFoundation\Request;
 
 class Avatar extends Widget
 {
@@ -64,32 +66,39 @@ class Avatar extends Widget
      */
     public function validator($varInput)
     {
-        $rootDir = \Contao\System::getContainer()->getParameter('kernel.project_dir');
+        $container = System::getContainer();
+        $requestStack = $container->get('request_stack');
+        $request = $requestStack->getCurrentRequest() ?? Request::createFromGlobals();
+        $rootDir = $container->getParameter('kernel.project_dir');
 
         $strUploadTo = 'system/tmp';
 
         // No file specified
-        if (!isset($_FILES[$this->strName]['name'][0]))
+        if (!isset($_FILES[$this->strName]['name'][0]) || $_FILES[$this->strName]['name'][0] === '')
         {
-            return;
+            $varExisting = $request->request->get($this->strName . '_existing');
+            if (\Contao\Validator::isUuid($varExisting)) {
+                return \Contao\StringUtil::uuidToBin($varExisting);
+            }
+            return $varExisting;
         }
 
         // Specify the target folder in the DCA (eval)
         if (isset($this->arrConfiguration['uploadFolder'])) {
             $strUploadTo = $this->arrConfiguration['uploadFolder'];
-
-            // Add user-based subfolder to target folder to prevent overwriting files with duplicate names.
         }
 
-        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals()))
+        if ($container->get('contao.routing.scope_matcher')->isFrontendRequest($request))
         {
-            $this->import('frontenduser');
-            $strUploadTo = 'files/userimages/user_' . $this->frontenduser->id;
+            $user = $container->get('security.helper')->getUser();
+            if ($user instanceof \Contao\FrontendUser) {
+                $strUploadTo = 'files/userimages/user_' . $user->id;
+            }
         }
 
         if (!$strUploadTo)
         {
-           return;
+           return null;
         }
 
         // Create the folder if it does not exist.
@@ -98,7 +107,13 @@ class Avatar extends Widget
             new Folder($strUploadTo);
         }
 
-        return $this->objUploader->uploadTo($strUploadTo);
+        $files = $this->objUploader->uploadTo($strUploadTo);
+        if (is_array($files) && !empty($files)) {
+            $objFile = \Contao\Dbafs::addResource($files[0]);
+            return $objFile->uuid;
+        }
+
+        return null;
     }
 
 
@@ -110,18 +125,26 @@ class Avatar extends Widget
     {
         $iMemberId = 0;
         $sReturn = '';
+        $container = System::getContainer();
+        $requestStack = $container->get('request_stack');
+        $request = $requestStack->getCurrentRequest() ?? Request::createFromGlobals();
 
         // Get the member's ID based upon the usage-location of the Widget: BE -> current viewed member, FE -> current logged in frontenduser.
-        if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals()))
+        if ($container->get('contao.routing.scope_matcher')->isFrontendRequest($request))
         {
-            $this->import('frontenduser');
-            $iMemberId = $this->frontenduser->id;
+            $user = $container->get('security.helper')->getUser();
+            if ($user instanceof \Contao\FrontendUser) {
+                $iMemberId = $user->id;
+            }
         }
         else
         {
-            if (\Contao\System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals()))
+            if ($container->get('contao.routing.scope_matcher')->isBackendRequest($request))
             {
-                $iMemberId = $this->currentRecord;
+                $iMemberId = (int)$this->currentRecord;
+                if (!$iMemberId) {
+                    $iMemberId = (int)$request->query->get('id');
+                }
             }
         }
 
@@ -129,8 +152,14 @@ class Avatar extends Widget
         $sImage = C4GForumHelper::getAvatarByMemberId($iMemberId);
         if ($sImage)
         {
-            $sReturn = '<img src="' . $sImage . '">';
+            $sReturn = '<img src="' . $sImage . '" style="max-width: 200px; display: block; margin-bottom: 10px;">';
         }
+
+        $val = $this->varValue;
+        if (\Contao\Validator::isUuid($val)) {
+            $val = \Contao\StringUtil::binToUuid($val);
+        }
+        $sReturn .= '<input type="hidden" name="'.$this->strName.'_existing" value="'.StringUtil::specialchars($val).'">';
 
         $sReturn .= ltrim($this->objUploader->generateMarkup());
 
