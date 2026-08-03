@@ -26,20 +26,3 @@ services:
   con4gis\ForumBundle\Controller\ForumFilesController:
     public: true
     class: con4gis\ForumBundle\Controller\ForumFilesController
-
-  con4gis\ForumBundle\Controller\ProfilePageModuleController:
-    tags:
-      -
-        name: contao.frontend_module
-        category: con4gis
-        renderer: forward
-        template: mod_c4g_forum_profile_page
-
-  con4gis\ForumBundle\Controller\PMModuleController:
-    tags:
-      -
-        name: contao.frontend_module
-        type: c4g_forum_pncenter
-        category: con4gis
-        renderer: forward
-        template: mod_c4g_forum_pncenter

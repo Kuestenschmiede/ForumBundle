@@ -84,6 +84,8 @@ class C4GForum extends \Contao\Module
      */
     protected $plainhtml = false;
 
+    protected $isCompiling = false;
+
     /**
      * @var string
      */
@@ -194,6 +196,7 @@ class C4GForum extends \Contao\Module
      */
     public function compile()
     {
+        $this->isCompiling = true;
         $this->setTempLanguage();
 
         if (\con4gis\CoreBundle\Classes\C4GUtils::isFrontendUserLoggedIn()) {
@@ -562,6 +565,7 @@ class C4GForum extends \Contao\Module
         }
 
         $this->Template->c4gdata = $data;
+        $this->isCompiling = false;
     }
 
 
@@ -1580,14 +1584,10 @@ class C4GForum extends \Contao\Module
         if ($oMember && $this->c4g_forum_user_profile_page) {
             $page = \Contao\PageModel::findByPk($this->c4g_forum_user_profile_page);
             if ($page !== null) {
-                $url = $page->getAbsoluteUrl();
+                $pageUrlService = new \con4gis\ForumBundle\Classes\PageUrlService();
+                $pageUrlService->setPageUrl($page->getAbsoluteUrl());
                 $alias = strtolower($oMember->username);
-                if (\con4gis\CoreBundle\Classes\C4GUtils::endsWith($url, '.html')) {
-                    $url = str_replace('.html', "/$alias.html", $url);
-                } else {
-                    $url = $url."/$alias";
-                }
-                $oUserDataTemplate->userProfileLink = $url;
+                $oUserDataTemplate->userProfileLink = $pageUrlService->getPageUrlForAlias($alias);
             }
         }
         $oUserDataTemplate->iUserPostCount = $iUserPostCount;
@@ -6928,7 +6928,7 @@ class C4GForum extends \Contao\Module
             }
         }
 
-        if ($this->plainhtml) {
+        if ($this->plainhtml || $this->isCompiling) {
             return $result;
         } else {
             $json = json_encode($result);

@@ -12,6 +12,8 @@
 /**
  * Frontend modules
  */
+$GLOBALS['TL_AUTO_ITEM'][] = 'item';
+$GLOBALS['TL_AUTO_ITEM'][] = 'auto_item';
 $GLOBALS['FE_MOD']['con4gis']['c4g_forum'] = 'con4gis\ForumBundle\Modules\C4GForum';
 $GLOBALS['FE_MOD']['con4gis']['c4g_forum_breadcrumb'] = 'con4gis\ForumBundle\Modules\C4GForumBreadcrumb';
 $GLOBALS['FE_MOD']['con4gis']['c4g_forum_subscription'] = 'con4gis\ForumBundle\Modules\C4GSubscriptions';

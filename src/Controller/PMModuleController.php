@@ -13,45 +13,53 @@ namespace con4gis\ForumBundle\Controller;
 
 use con4gis\ForumBundle\Models\C4gForumPn;
 use con4gis\ProjectsBundle\Classes\jQuery\C4GJQueryGUI;
-use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
-use Contao\CoreBundle\Twig\FragmentTemplate;
-use Contao\Database;
-use Contao\ModuleModel;
+use Contao\Module;
 use Contao\System;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Response;
 
-class PMModuleController extends AbstractFrontendModuleController
+class PMModuleController extends Module
 {
-    private RequestStack $requestStack;
+    protected $strTemplate = 'mod_c4g_forum_pncenter';
 
-    public function __construct(RequestStack $requestStack)
+    public function generate()
     {
-        $this->requestStack = $requestStack;
-    }
+        if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest())) {
+            $objTemplate = new \Contao\BackendTemplate('be_wildcard');
+            $objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['FMD']['c4g_forum_pncenter'][0] . ' ###';
+            $objTemplate->title = $this->headline;
+            $objTemplate->id = $this->id;
+            $objTemplate->link = $this->name;
+            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
 
-    protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
-    {
-        if (!$this->requestStack || !method_exists($this->requestStack, 'getSession')) {
-            $session = \Contao\System::getContainer()->get('session');
-        } else {
-            $session = $this->requestStack->getSession();
+            return $objTemplate->parse();
         }
 
-        $session->set('pm-forum-module', $model->pm_center_forum_module);
-        $template->c4g_forum_module = $model->pm_center_forum_module;
+        return parent::generate();
+    }
 
-        \Contao\System::loadLanguageFile("tl_c4g_forum_pn");
+    protected function compile()
+    {
+        $requestStack = System::getContainer()->get('request_stack');
+        $request = $requestStack->getCurrentRequest();
+        
+        if (!method_exists($requestStack, 'getSession')) {
+            $session = System::getContainer()->get('session');
+        } else {
+            $session = $requestStack->getSession();
+        }
+
+        $session->set('pm-forum-module', $this->pm_center_forum_module);
+        $this->Template->c4g_forum_module = $this->pm_center_forum_module;
+
+        System::loadLanguageFile("tl_c4g_forum_pn");
         $aUser = \Contao\FrontendUser::getInstance()->getData();
         $iCountAll = C4gForumPn::countBy($aUser['id'],"status" , true);
         $iCountUnread = C4gForumPn::countBy($aUser['id'],"status" , 0);
 
-        $template->count_all = $iCountAll;
-        $template->count_unread = $iCountUnread;
+        $this->Template->count_all = $iCountAll;
+        $this->Template->count_unread = $iCountUnread;
         $sJsLang = $this::getClientLangVars();
 
-        $template->c4g_pn_js = $sJsLang;
+        $this->Template->c4g_pn_js = $sJsLang;
         $data = [];
 
         global $objPage;
@@ -62,10 +70,10 @@ class PMModuleController extends AbstractFrontendModuleController
 
         if (!array_key_exists('c4g_forum_fmd', $_GET) || !$_GET['c4g_forum_fmd']) {
             // try to get parameters from referer, if they don't exist
-            $session = $request->getSession()->all();
+            $sessionData = $request->getSession()->all();
 
-            if (is_array($session['referer']) && array_key_exists('current', $session['referer'])) {
-                list($urlpart, $qspart) = array_pad(explode('?', $session['referer']['current'], 2), 2, '');
+            if (is_array($sessionData['referer']) && array_key_exists('current', $sessionData['referer'])) {
+                list($urlpart, $qspart) = array_pad(explode('?', $sessionData['referer']['current'], 2), 2, '');
                 parse_str($qspart, $qsvars);
                 if ($qsvars['c4g_forum_fmd']) {
                     $_GET['c4g_forum_fmd'] = $qsvars['c4g_forum_fmd'];
@@ -77,8 +85,9 @@ class PMModuleController extends AbstractFrontendModuleController
         }
 
         $database = \Contao\Database::getInstance();
+        $forumModule = null;
         if (array_key_exists('c4g_forum_fmd', $_GET)) {
-            $this->forumModule = $database->prepare("SELECT * FROM tl_module WHERE id=?")
+            $forumModule = $database->prepare("SELECT * FROM tl_module WHERE id=?")
                 ->limit(1)
                 ->execute(...[$_GET['c4g_forum_fmd']]);
         }
@@ -97,21 +106,21 @@ class PMModuleController extends AbstractFrontendModuleController
             true
             );
 
-        $data['id']             = $model->id;
+        $data['id']             = $this->id;
         $data['div']            = 'mod_c4g_forum_pncenter';
         $data['initData']       = json_encode([]);
 
-        if ($model->c4g_appearance_themeroller_css) {
-            $objFile = \FilesModel::findByUuid($model->c4g_appearance_themeroller_css);
+        if ($this->c4g_appearance_themeroller_css) {
+            $objFile = \FilesModel::findByUuid($this->c4g_appearance_themeroller_css);
             $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
         } else if(!empty($this->c4g_forum_uitheme_css_select) && ($this->c4g_forum_uitheme_css_select != 'settings')) {
             $theme = $this->c4g_forum_uitheme_css_select;
             $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
-        } else if ($this->forumModule && $this->forumModule->c4g_forum_uitheme_css_src) {
-            $objFile = \FilesModel::findByUuid($this->forumModule->c4g_forum_uitheme_css_src);
+        } else if ($forumModule && $forumModule->c4g_forum_uitheme_css_src) {
+            $objFile = \FilesModel::findByUuid($forumModule->c4g_forum_uitheme_css_src);
             $GLOBALS['TL_CSS']['c4g_jquery_ui'] = $objFile->path;
-        } else if($this->forumModule && !empty($this->forumModule->c4g_forum_uitheme_css_select) && ($this->forumModule->c4g_forum_uitheme_css_select != 'settings')) {
-            $theme = $this->forumModule->c4g_forum_uitheme_css_select;
+        } else if($forumModule && !empty($forumModule->c4g_forum_uitheme_css_select) && ($forumModule->c4g_forum_uitheme_css_select != 'settings')) {
+            $theme = $forumModule->c4g_forum_uitheme_css_select;
             $GLOBALS['TL_CSS']['c4g_jquery_ui'] = 'bundles/con4giscore/vendor/jQuery/ui-themes/themes/' . $theme . '/jquery-ui.css';
         } else {
             $settings = \Contao\Database::getInstance()->execute("SELECT * FROM tl_c4g_settings LIMIT 1")->fetchAllAssoc();
@@ -130,9 +139,7 @@ class PMModuleController extends AbstractFrontendModuleController
             }
         }
 
-        $template->c4gData = $data;
-
-        return $template->getResponse();
+        $this->Template->c4gData = $data;
     }
 
     /**
