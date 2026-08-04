@@ -52,10 +52,11 @@ class ForumFilesController
             );
             $fileRow = $statement->execute(...[$fileId])->fetchAssoc();
             if ($fileRow !== false) {
+                $projectDir = \Contao\System::getContainer()->getParameter('kernel.project_dir');
                 if ($user->id > 0) {
-                    return new BinaryFileResponse('../'.$fileRow['path']);
+                    return new BinaryFileResponse($projectDir.'/'.$fileRow['path']);
                 } else {
-                    throw new RedirectResponseException('../../'.$fileRow['path']);
+                    throw new RedirectResponseException($fileRow['path']);
                 }
             }
         }
