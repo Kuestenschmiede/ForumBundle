@@ -155,7 +155,7 @@ class ProfilePageModuleController extends Module
             foreach ($stats as $stat) {
                 $translation = $GLOBALS['TL_DCA']['tl_member']['fields'][$stat]['label'][0] ?:
                     $GLOBALS['TL_LANG']['tl_member'][$stat][0] ?: '';
-                if ($translation !== '' && (string) $member[$stat] !== '') {
+                if ($translation !== '' && isset($member[$stat]) && (string) $member[$stat] !== '') {
                     $userStatistics[$translation] = (string) $member[$stat];
                 }
             }
@@ -197,6 +197,7 @@ class ProfilePageModuleController extends Module
         unset($member['password']);
         unset($member['secret']);
         unset($member['memberImage']);
+        unset($member['avatar']);
         unset($member['session']);
         unset($member['locked']);
         unset($member['firstname']);

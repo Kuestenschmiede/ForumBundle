@@ -35,6 +35,7 @@ class BackendCallback
                 case 'secret':
                 case 'PRIMARY':
                 case 'memberImage':
+                case 'avatar':
                 case 'memberSignature':
                 case 'memberHomepageLink':
                 case 'memberFacebookLink':

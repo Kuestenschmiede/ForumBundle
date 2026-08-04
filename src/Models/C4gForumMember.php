@@ -41,12 +41,16 @@ class C4gForumMember extends Model
         }
         $t = static::$sTable;
         $oDatabase = \Contao\Database::getInstance();
-        $res = $oDatabase->prepare("SELECT memberImage, avatar FROM $t WHERE id=?")->execute($iMemberId);
+        $sQuery = "SELECT memberImage";
+        if ($oDatabase->fieldExists('avatar', $t)) {
+            $sQuery .= ", avatar";
+        }
+        $res = $oDatabase->prepare("$sQuery FROM $t WHERE id=?")->execute($iMemberId);
         if ($res->numRows < 1) {
             return '';
         }
         $sMemberImagePath = $res->memberImage;
-        if (!$sMemberImagePath) {
+        if (!$sMemberImagePath && isset($res->avatar)) {
             $sMemberImagePath = $res->avatar;
         }
         if (!$sMemberImagePath) {
