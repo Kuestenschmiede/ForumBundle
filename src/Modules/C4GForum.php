@@ -1275,7 +1275,7 @@ class C4GForum extends \Contao\Module
                 $data = '<div class="c4gForumThreadHeader c4gGuiAccordion ui-widget ui-widget-header ui-corner-all">';
                 $data .= '<h3><a href="#">' . $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADDESC'] . '</a></h3>';
                 $data .= '<div class="c4gForumThreadHeaderDesc">' .
-                    $this->repInsertTags($thread['threaddesc']);
+                    $this->repInsertTags(html_entity_decode($thread['threaddesc'], ENT_QUOTES, 'UTF-8'));
 
                 if ($this->c4g_forum_rating_enabled) {
 
@@ -1310,7 +1310,7 @@ class C4GForum extends \Contao\Module
                 $data = '<div class="c4gForumThreadHeader c4gForumThreadHeaderNoJqui">';
                 $data .= '<h2>' . $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADDESC'] . '</h2>';
                 $data .= '<div class="c4gForumThreadHeaderDesc">' .
-                    $this->repInsertTags($thread['threaddesc']);
+                    $this->repInsertTags(html_entity_decode($thread['threaddesc'], ENT_QUOTES, 'UTF-8'));
 
                 $data .= '</div>';
                 $data .= '</div><hr>';
@@ -1526,7 +1526,11 @@ class C4GForum extends \Contao\Module
         }
 
         $text = $post['text'];
-        $text = html_entity_decode($text);
+        \Contao\System::getContainer()->get('monolog.logger.contao')->info("generatePostAsHtml: id=" . $post['id'] . " text_before=" . $text);
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+        $text = $this->repInsertTags($text);
+        \Contao\System::getContainer()->get('monolog.logger.contao')->info("generatePostAsHtml: id=" . $post['id'] . " text_after=" . $text);
 
         $text = str_replace('/lib', '/assets/vendor', $text);
 
@@ -2396,7 +2400,7 @@ class C4GForum extends \Contao\Module
         $data .= '<div class="c4gForumNewPost">' .
             '<div class="c4gForumNewPostSubject">' .
             $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBJECT'] . ':<br/>' .
-            '<input name="subject" value="' . $threadname . '" type="text" class="formdata ui-corner-all" size="80" maxlength="255" /><br />' .
+            '<input name="subject" value="' . \Contao\StringUtil::specialchars($threadname) . '" type="text" class="formdata ui-corner-all" size="80" maxlength="255" /><br />' .
             '</div>';
         $data .= $this->getTagForm('c4gForumNewPostPostTags', $aPost, 'newpost');
 
@@ -2553,7 +2557,9 @@ class C4GForum extends \Contao\Module
         }
 
         $this->putVars['osmId'] = ($this->putVars['osmIdType'] ?? '') . '.' . ($this->putVars['osmId'] ?? '');
-        $result = $this->helper->insertPostIntoDB($threadId, $this->User->id, $this->putVars['subject'] ?? '', $this->putVars['post'] ?? '', $this->putVars['tags'] ?? '', $this->putVars['rating'] ?? 0,
+        $this->putVars['subject'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($this->putVars['subject'] ?? '');
+        $this->putVars['post'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($this->putVars['post'] ?? '');
+        $result = $this->helper->insertPostIntoDB($threadId, $this->User->id, $this->putVars['subject'], $this->putVars['post'], $this->putVars['tags'] ?? '', $this->putVars['rating'] ?? 0,
             $this->putVars['linkname'] ?? '', $this->putVars['linkurl'] ?? '', $this->putVars['geox'] ?? '', $this->putVars['geoy'] ?? '',
             $this->putVars['locstyle'] ?? '', $this->putVars['label'] ?? '', $this->putVars['tooltip'] ?? '', $this->putVars['geodata'] ?? '', $this->putVars['osmId'] ?? '', $this->putVars['recipient'] ?? '', $this->putVars['owner'] ?? '');
 
@@ -2624,10 +2630,10 @@ class C4GForum extends \Contao\Module
         $post['username'] = $this->User->username;
         $post['authorid'] = $this->User->id;
         $post['creation'] = time();
-        $post['subject'] = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($this->putVars['subject'] ?? '');
-        $post['text'] = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($this->putVars['post'] ?? '');
-        $post['linkname'] = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($this->putVars['linkname'] ?? '');
-        $post['linkurl'] = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($this->putVars['linkurl'] ?? '');
+        $post['subject'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($this->putVars['subject'] ?? '');
+        $post['text'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($this->putVars['post'] ?? '');
+        $post['linkname'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($this->putVars['linkname'] ?? '');
+        $post['linkurl'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($this->putVars['linkurl'] ?? '');
         $data = $this->generatePostAsHtml($post, false, true);
 
         $return = array(
@@ -4035,12 +4041,13 @@ class C4GForum extends \Contao\Module
         }
 
 
-        $this->putVars['osmId'] = $this->putVars['osmIdType'] . '.' . $this->putVars['osmId'];
+        $this->putVars['osmId'] = ($this->putVars['osmIdType'] ?? '') . '.' . ($this->putVars['osmId'] ?? '');
         $this->putVars['tags'] = \Contao\Input::xssClean($this->putVars['tags'] ?? '');
         $this->putVars['rating'] = \Contao\Input::xssClean($this->putVars['rating'] ?? '');
-        $result = $this->helper->updatePostDB($post, $this->User->id, $this->putVars['subject'], $this->putVars['tags'], $this->putVars['rating'], $this->putVars['post'],
-            $this->putVars['linkname'], $this->putVars['linkurl'], $this->putVars['geox'], $this->putVars['geoy'],
-            $this->putVars['locstyle'], $this->putVars['label'], $this->putVars['tooltip'], $this->putVars['geodata'], $this->putVars['osmId']);
+        $this->putVars['post'] = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($this->putVars['post'] ?? '');
+        $result = $this->helper->updatePostDB($post, $this->User->id, $this->putVars['subject'] ?? '', $this->putVars['tags'], $this->putVars['rating'], $this->putVars['post'],
+            $this->putVars['linkname'] ?? '', $this->putVars['linkurl'] ?? '', $this->putVars['geox'] ?? '', $this->putVars['geoy'] ?? '',
+            $this->putVars['locstyle'] ?? '', $this->putVars['label'] ?? '', $this->putVars['tooltip'] ?? '', $this->putVars['geodata'] ?? '', $this->putVars['osmId']);
 
 
         if (!$result) {
@@ -4211,7 +4218,7 @@ class C4GForum extends \Contao\Module
                 '<div class="' . $divname . '">' .
                 '<a href="#" data-action="postlink:' . $forumid . ':' . $dialogId . '" class="c4gGuiAction' . $addClass . '">' .
                 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['EDIT_POST_LINK'] . '</a>' .
-                '<input name="linkname" id="' . $dialogId . '_linkname" value="' . $linkname . '" type="text" disabled class="formdata ui-corner-all" size="60">' .
+                '<input name="linkname" id="' . $dialogId . '_linkname" value="' . \Contao\StringUtil::specialchars($linkname) . '" type="text" disabled class="formdata ui-corner-all" size="60">' .
                 '<input name="linkurl" id="' . $dialogId . '_linkurl" value="' . $linkurl . '" type="hidden" class="formdata" ><br/>' .
                 '</div>';
         } else {
@@ -4451,10 +4458,10 @@ class C4GForum extends \Contao\Module
                         sprintf($butText,
                             ($forum['map_location_label'] ? $forum['map_location_label'] : $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['LOCATION'])
                         ) . '</a>' .
-                        '<input name="geox" id="' . $dialogId . '_geox" value="' . $geox . '" type="text" disabled="disabled" class="formdata">' .
-                        '<input name="geoy" id="' . $dialogId . '_geoy" value="' . $geoy . '" type="text" disabled="disabled" class="formdata">' .
+                        '<input name="geox" id="' . $dialogId . '_geox" value="' . \Contao\StringUtil::specialchars($geox) . '" type="text" disabled="disabled" class="formdata">' .
+                        '<input name="geoy" id="' . $dialogId . '_geoy" value="' . \Contao\StringUtil::specialchars($geoy) . '" type="text" disabled="disabled" class="formdata">' .
                         '<br>' .
-                        '<input name="geodata" id="' . $dialogId . '_geodata" value=\'' . $geodata . '\' type="hidden" class="formdata">' .
+                        '<input name="geodata" id="' . $dialogId . '_geodata" value="' . \Contao\StringUtil::specialchars($geodata) . '" type="hidden" class="formdata">' .
                         '<input name="locstyle" id="' . $dialogId . '_locstyle" value="' . $locstyle . '" type="hidden" class="formdata">' .
                         '<input name="label" id="' . $dialogId . '_label" value="' . $label . '" type="hidden" class="formdata">' .
                         '<input name="tooltip" id="' . $dialogId . '_tooltip" value="' . $tooltip . '" type="hidden" disabled class="formdata">' .
@@ -4483,7 +4490,7 @@ class C4GForum extends \Contao\Module
             return
                 '<div class="' . $divname . '">' .
                 $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['THREADSORT'] . ':<br/>' .
-                '<input name="sort" id="' . $dialogId . '_sortid" value="' . $sortId . '" type="text" class="formdata ui-corner-all" size="3" ></input><br />' .
+                '<input name="sort" id="' . $dialogId . '_sortid" value="' . \Contao\StringUtil::specialchars($sortId) . '" type="text" class="formdata ui-corner-all" size="3" ></input><br />' .
                 '</div>';
         } else {
             return '';
@@ -4563,7 +4570,7 @@ class C4GForum extends \Contao\Module
         $data .= '<div class="c4gForumEditPost">' .
             '<div class="c4gForumEditPostSubject">' .
             $GLOBALS['TL_LANG']['C4G_FORUM']['DISCUSSION']['SUBJECT'] . ':<br/>' .
-            '<input name="subject" value="' . $post['subject'] . '" type="text" class="formdata ui-corner-all" size="80" maxlength="100" /><br />' .
+            '<input name="subject" value="' . \Contao\StringUtil::specialchars($post['subject']) . '" type="text" class="formdata ui-corner-all" size="80" maxlength="100" /><br />' .
             '</div>';
         $data .= $this->getTagForm('c4gForumEditPostTags', $post, $dialogId);
 
@@ -4596,7 +4603,7 @@ class C4GForum extends \Contao\Module
             '<input type="hidden" name="REQUEST_TOKEN" class="formdata" value="' . $this->getRequestToken() . '">' .
             '<input type="hidden" name="site" class="formdata" value="' . $sCurrentSite . '">' .
             '<input type="hidden" name="hsite" class="formdata" value="' . $sCurrentSiteHashed . '">' .
-            '<input id="editor_editpost_'.$postId.'" type="hidden" name="post" class="formdata" value="'.$post['text'].'">'.
+            '<input id="editor_editpost_'.$postId.'" type="hidden" name="post" class="formdata" value="'.\Contao\StringUtil::specialchars(html_entity_decode($post['text'], ENT_QUOTES, 'UTF-8')).'">'.
             '<trix-editor input="editor_editpost_'.$postId.'" class="ui-corner-all ui-widget ui-widget-content" style="min-height: 200px; border: 1px solid #ccc;"></trix-editor>'.
             '</div>';
 
@@ -4680,21 +4687,21 @@ class C4GForum extends \Contao\Module
                     }
                     $lgthreadname = $this->helper->translateThreadField($thread['id'] ?? $thread['threadid'], 'name', $language, $initialValue);
                     $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type, 'THREAD', $language) . ':<br/>' .
-                        '<input name="thread_' . $language . '" value="' . $lgthreadname . '" type="text" class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
+                        '<input name="thread_' . $language . '" value="' . \Contao\StringUtil::specialchars($lgthreadname) . '" type="text" class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
                 }
             }
         }
 
         if (!$inputThreadname) {
             $inputThreadname .= C4GForumHelper::getTypeText($this->c4g_forum_type, 'THREAD') . ':<br/>' .
-                '<input name="thread" type="text"  value="' . $threadname . '" class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
+                '<input name="thread" type="text"  value="' . \Contao\StringUtil::specialchars($threadname) . '" class="formdata ui-corner-all" size="80" maxlength="255" /><br />';
         }
 
 
         $data = '<div class="c4gForumEditThread">' .
             '<div class="c4gForumEditThreadName">' .
             $inputThreadname;
-        $data .= $this->getThreadDescForForm('c4gForumEditThreadDesc', $thread['forumid'], 'editthread', $thread['threaddesc']);
+        $data .= $this->getThreadDescForForm('c4gForumEditThreadDesc', $thread['forumid'], 'editthread', \Contao\StringUtil::specialchars(html_entity_decode($thread['threaddesc'], ENT_QUOTES, 'UTF-8')));
         $data .= '</div>';
         $data .= $this->getThreadSortForForm('c4gForumEditThreadSort', $thread['forumid'], 'editthread', $thread['sort']);
         $data .= '</div>';

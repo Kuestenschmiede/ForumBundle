@@ -16,7 +16,7 @@ use Contao\Database;
 use Contao\Dbafs;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ForumUploadController
 {
@@ -27,32 +27,24 @@ class ForumUploadController
         $this->uploadController = $uploadController;
     }
 
-    /**
-     * @Route(
-     *     "/c4g_forum/upload/image",
-     *     name="c4g_forum_upload_image",
-     *     methods={"POST"},
-     *     requirements={"threadId"="\d+"}
-     * )
-     * @param Request $request
-     * @return JsonResponse
-     */
+    #[Route(
+        path: '/c4g_forum/upload/image',
+        name: 'c4g_forum_upload_image',
+        methods: ['POST'],
+        requirements: ['threadId' => '\d+']
+    )]
     public function imageUploadAction(Request $request): JsonResponse
     {
         $response =  $this->uploadController->imageUploadAction($request);
         return $this->insertFileReferenceAndUpdateResponseUrl($response);
     }
 
-    /**
-     * @Route(
-     *     "/c4g_forum/upload/file",
-     *     name="c4g_forum_upload_file",
-     *     methods={"POST"},
-     *     requirements={"threadId"="\d+"}
-     * )
-     * @param Request $request
-     * @return JsonResponse
-     */
+    #[Route(
+        path: '/c4g_forum/upload/file',
+        name: 'c4g_forum_upload_file',
+        methods: ['POST'],
+        requirements: ['threadId' => '\d+']
+    )]
     public function fileUploadAction(Request $request): JsonResponse
     {
         $response =  $this->uploadController->fileUploadAction($request);
@@ -62,10 +54,19 @@ class ForumUploadController
     private function insertFileReferenceAndUpdateResponseUrl(JsonResponse $response): JsonResponse
     {
         $data = json_decode($response->getContent(), true);
-        if ($data['url']) {
+        if (isset($data['url']) && $data['url']) {
             $fileId = $this->insertFileReferenceByUrl($data['url']);
             if ($fileId !== 0) {
-                $data['url'] = explode('files', $data['url'])[0] . 'c4g_forum/file/' . $fileId;
+                $pos = strpos($data['url'], 'files/');
+                $baseUrl = '/';
+                if ($pos !== false) {
+                    $potentialBase = substr($data['url'], 0, $pos);
+                    if ($potentialBase !== '') {
+                        $baseUrl = $potentialBase;
+                    }
+                }
+                $filename = basename($data['url']);
+                $data['url'] = $baseUrl . 'c4g_forum/file/' . $fileId . '/' . $filename;
                 $response->setData($data);
             }
         }
@@ -74,21 +75,27 @@ class ForumUploadController
 
     private function insertFileReferenceByUrl(string $url): int
     {
-        Dbafs::syncFiles();
-        $relativeUrl = 'files'.explode('files', $url)[1];
-        $database = \Contao\Database::getInstance();
-        $statement = $database->prepare('SELECT uuid FROM tl_files WHERE path = ?');
-        $result = $statement->execute(...[$relativeUrl])->fetchAssoc();
+        $pos = strpos($url, 'files/');
+        if ($pos !== false) {
+            $relativeUrl = substr($url, $pos);
+        } else {
+            $relativeUrl = $url;
+        }
+
+        \Contao\System::getContainer()->get('monolog.logger.contao')->info("ForumUploadController: Attempting to add resource $relativeUrl to DBAFS.");
+        $result = Dbafs::addResource($relativeUrl);
         if ($result !== false) {
+            \Contao\System::getContainer()->get('monolog.logger.contao')->info("ForumUploadController: Added resource $relativeUrl. UUID: " . bin2hex($result->uuid));
             $database = \Contao\Database::getInstance();
             $statement = $database->prepare(
-                'INSERT INTO tl_c4g_forum_upload (fileUuid) VALUES (?)'
+                'INSERT INTO tl_c4g_forum_upload (tstamp, fileUuid) VALUES (?, ?)'
             );
-            $statement->execute(...[$result['uuid']]);
+            $statement->execute(...[time(), $result->uuid]);
             $statement = $database->prepare('SELECT LAST_INSERT_ID() as id');
             $result = $statement->execute()->fetchAssoc();
             return (int) $result['id'];
         }
+        \Contao\System::getContainer()->get('monolog.logger.contao')->error("ForumUploadController: Failed to add resource $relativeUrl to DBAFS.");
         return 0;
     }
 }

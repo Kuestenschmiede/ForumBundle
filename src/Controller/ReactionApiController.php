@@ -17,7 +17,7 @@ use Contao\Database;
 use Contao\FrontendUser;
 use Contao\System;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -26,16 +26,12 @@ class ReactionApiController extends AbstractController
 {
     private $csrfTokenManager;
 
-    /**
-     * @Route(
-     *     "/c4g_forum/reaction",
-     *     name="c4g_forum_reaction",
-     *     methods={"POST"},
-     *     defaults={"_token_check": true}
-     * )
-     * @param Request $request
-     * @return JsonResponse
-     */
+    #[Route(
+        path: '/c4g_forum/reaction',
+        name: 'c4g_forum_reaction',
+        methods: ['POST'],
+        defaults: ['_token_check' => true]
+    )]
     public function reaction(Request $request) : JsonResponse {
         $framework = $this->get('contao.framework');
         $framework->initialize();

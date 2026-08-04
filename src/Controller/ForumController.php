@@ -42,7 +42,6 @@ class ForumController extends AbstractController
         if ($post) {
             $post = \Contao\Input::xssClean($post);
             $post = \con4gis\CoreBundle\Classes\C4GUtils::cleanHtml($post, false, ['/<pre(.*?)<\/pre>/is']);
-            $post = \con4gis\CoreBundle\Classes\C4GUtils::secure_ugc($post);
             $request->request->set('post', $post);
         }
         $feUser = \Contao\FrontendUser::getInstance();

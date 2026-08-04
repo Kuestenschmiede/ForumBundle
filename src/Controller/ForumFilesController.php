@@ -13,14 +13,14 @@ namespace con4gis\ForumBundle\Controller;
 
 use con4gis\ForumBundle\Classes\C4GForumHelper;
 use Contao\CoreBundle\Exception\PageNotFoundException;
-use Contao\CoreBundle\Exception\RedirectResponseException;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Database;
 use Contao\FrontendUser;
 use Contao\StringUtil;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ForumFilesController
 {
@@ -29,17 +29,13 @@ class ForumFilesController
         $framework->initialize();
     }
 
-    /**
-     * @Route(
-     *     "/c4g_forum/file/{fileId}",
-     *     name="c4g_forum_file",
-     *     methods={"GET"},
-     *     requirements={"fileId"="\d+"}
-     * )
-     * @param Request $request
-     * @param int $fileId
-     * @return BinaryFileResponse
-     */
+    #[Route(
+        path: '/c4g_forum/file/{fileId}/{filename}',
+        name: 'c4g_forum_file',
+        methods: ['GET'],
+        requirements: ['fileId' => '\d+'],
+        defaults: ['filename' => 'image.png']
+    )]
     public function serveFile(Request $request, int $fileId): BinaryFileResponse
     {
         $database = \Contao\Database::getInstance();
@@ -53,11 +49,9 @@ class ForumFilesController
             $fileRow = $statement->execute(...[$fileId])->fetchAssoc();
             if ($fileRow !== false) {
                 $projectDir = \Contao\System::getContainer()->getParameter('kernel.project_dir');
-                if ($user->id > 0) {
-                    return new BinaryFileResponse($projectDir.'/'.$fileRow['path']);
-                } else {
-                    throw new RedirectResponseException($fileRow['path']);
-                }
+                $response = new BinaryFileResponse($projectDir.'/'.$fileRow['path']);
+                $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $fileRow['name']);
+                return $response;
             }
         }
 

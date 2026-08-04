@@ -2227,6 +2227,8 @@ class C4GForumHelper extends System
             return false;
         }
 
+        $this->linkUploadsToPost((int)$result['post_id'], $set['text']);
+
         $sqlSet2 = [];
         $params2 = [];
         foreach ($set2 as $k => $v) {
@@ -2322,6 +2324,8 @@ class C4GForumHelper extends System
         if (!$objUpdateStmt->affectedRows) {
             return false;
         }
+
+        $this->linkUploadsToPost((int)$post['id'], $set['text']);
 
         //update index
         $this->createIndex('post', $post['id']);
@@ -3798,5 +3802,17 @@ class C4GForumHelper extends System
         }
 
         return false;
+    }
+
+    private function linkUploadsToPost(int $postId, string $text)
+    {
+        if (preg_match_all('/c4g_forum\/file\/(\d+)/', $text, $matches)) {
+            $uploadIds = array_unique(array_map('intval', $matches[1]));
+            if (!empty($uploadIds)) {
+                $database = \Contao\Database::getInstance();
+                $statement = $database->prepare('UPDATE tl_c4g_forum_upload SET pid = ? WHERE id IN (' . implode(',', $uploadIds) . ')');
+                $statement->execute(...[$postId]);
+            }
+        }
     }
 }
