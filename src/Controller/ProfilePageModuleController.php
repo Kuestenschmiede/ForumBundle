@@ -69,8 +69,7 @@ class ProfilePageModuleController extends Module
         }
 
         if ($alias === '') {
-            $this->Template->member = null;
-            return;
+            throw new PageNotFoundException();
         }
 
         $database = \Contao\Database::getInstance();
