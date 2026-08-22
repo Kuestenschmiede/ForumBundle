@@ -3,6 +3,11 @@ services:
     autowire: true
     autoconfigure: true
 
+  con4gis\ForumBundle\NotificationType\:
+    resource: '../../NotificationType'
+    autoconfigure: true
+    autowire: true
+
   con4gis\ForumBundle\Controller\ForumController:
     public: true
     class: con4gis\ForumBundle\Controller\ForumController
