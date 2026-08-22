@@ -33,13 +33,17 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
         ),
         'c4g_forum_thread' => array
         (
-            'tables'        => array('tl_c4g_forum_thread'),
-            'icon'	 		=> 'bundles/con4gisforum/images/be-icons/forumthreads.svg'
+            'brick'            => 'forum',
+            'tables'           => array('tl_c4g_forum_thread'),
+            'icon'	 		=> 'bundles/con4gisforum/images/be-icons/forumthreads.svg',
+            'hideInNavigation' => true
         ),
         'c4g_forum_post' => array
         (
-            'tables'        => array('tl_c4g_forum_post'),
-            'icon'	 		=> 'bundles/con4gisforum/images/be-icons/forumthreads.svg'
+            'brick'            => 'forum',
+            'tables'           => array('tl_c4g_forum_post'),
+            'icon'	 		=> 'bundles/con4gisforum/images/be-icons/forumthreads.svg',
+            'hideInNavigation' => true
         )
     ]
 );
