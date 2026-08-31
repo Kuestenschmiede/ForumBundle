@@ -389,14 +389,23 @@ class C4GForum extends \Contao\Module
                 $data['buttons'] = $decoded['dialogbuttons'];
                 // Move buttons to postcontent so they appear below the thread in main content
                 $buttonHtml = '<div class="c4gGuiButtons">';
-                foreach ($data['buttons'] as $button) {
-                    $class = ($button['class'] ?? '') . ' c4gGuiButton c4g__btn c4g__btn-primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only';
+                foreach ($data['buttons'] as &$button) {
+                    if (strpos($button['action'] ?? '', 'closedialog:') === 0) {
+                        if (!empty($decoded['dialogstate'])) {
+                            $parts = explode(';', $decoded['dialogstate']);
+                            if (count($parts) > 1 && !empty($parts[0])) {
+                                $button['action'] = $parts[0];
+                            }
+                        }
+                    }
+                    $class = ($button['class'] ?? '') . ' c4gGuiButton c4gGuiAction c4g__btn c4g__btn-primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only';
                     $buttonHtml .= '<a href="#" class="' . $class . '" data-action="' . $button['action'] . '" role="button"';
                     if (!empty($button['onclick'])) {
                         $buttonHtml .= ' onclick="' . htmlspecialchars($button['onclick']) . '; return false;"';
                     }
                     $buttonHtml .= '><span class="ui-button-text">' . ($button['text'] ?? '') . '</span></a> ';
                 }
+                unset($button);
                 $buttonHtml .= '</div>';
             }
 
@@ -6881,10 +6890,19 @@ class C4GForum extends \Contao\Module
                                             $result['buttons'] = $r['dialogbuttons'];
                                             // Move buttons to postcontent so they appear below the thread in main content
                                             $buttonHtml = '<div class="c4gGuiButtons">';
-                                            foreach ($result['buttons'] as $button) {
-                                                $class = ($button['class'] ?? '') . ' c4gGuiButton c4g__btn c4g__btn-primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only';
+                                            foreach ($result['buttons'] as &$button) {
+                                                if (strpos($button['action'] ?? '', 'closedialog:') === 0) {
+                                                    if (!empty($r['dialogstate'])) {
+                                                        $parts = explode(';', $r['dialogstate']);
+                                                        if (count($parts) > 1 && !empty($parts[0])) {
+                                                            $button['action'] = $parts[0];
+                                                        }
+                                                    }
+                                                }
+                                                $class = ($button['class'] ?? '') . ' c4gGuiButton c4gGuiAction c4g__btn c4g__btn-primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only';
                                                 $buttonHtml .= '<a href="#" class="' . $class . '" data-action="' . $button['action'] . '" role="button"><span class="ui-button-text">' . $button['text'] . '</span></a> ';
                                             }
+                                            unset($button);
                                             $buttonHtml .= '</div>';
                                             $sPostContent = ($result['postcontent'] ?? '') . $buttonHtml;
                                             unset($result['buttons']);
