@@ -154,7 +154,7 @@ class ForumController extends AbstractController
                     if (!empty($sRecipient)) {
                         $db = \Contao\Database::getInstance();
                         $stmt = $db->prepare("SELECT * FROM tl_member WHERE username = ? AND NOT disable = ?");
-                        $result = $stmt->execute([$sRecipient, 1]);
+                        $result = $stmt->execute($sRecipient, 1);
                         $aRecipient = $result->fetchAssoc();
                         if (empty($aRecipient)) {
                             throw new \Exception($GLOBALS['TL_LANG']['tl_c4g_forum_pn']['member_not_found']);
@@ -163,7 +163,7 @@ class ForumController extends AbstractController
                     } elseif (!empty($iRecipientId)) {
                         $db = \Contao\Database::getInstance();
                         $stmt = $db->prepare("SELECT * FROM tl_member WHERE id = ? AND NOT disable = ?");
-                        $result = $stmt->execute([$iRecipientId, 1]);
+                        $result = $stmt->execute($iRecipientId, 1);
                         $aRecipient = $result->fetchAssoc();
                         if (empty($aRecipient)) {
                             throw new \Exception($GLOBALS['TL_LANG']['tl_c4g_forum_pn']['member_not_found']);

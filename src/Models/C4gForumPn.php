@@ -279,7 +279,7 @@ namespace con4gis\ForumBundle\Models;
          * @return \Database\Result
          */
         private static function getByField($field, $value){
-            return \Contao\Contao\Database::getInstance()->prepare('SELECT * FROM '.self::$sTable." WHERE ".$field." = ? ORDER BY dt_created DESC;")->execute(...[$value]);
+            return \Contao\Database::getInstance()->prepare('SELECT * FROM '.self::$sTable." WHERE ".$field." = ? ORDER BY dt_created DESC;")->execute(...[$value]);
         }
 
 
@@ -364,7 +364,7 @@ namespace con4gis\ForumBundle\Models;
          */
         public static function getField($id, $field)
         {
-            return \Contao\Contao\Database::getInstance()->prepare('SELECT ' . $field . ' FROM ' . self::$sTable . " WHERE id= ?;")->execute(...[$id])->fetchAssoc();
+            return \Contao\Database::getInstance()->prepare('SELECT ' . $field . ' FROM ' . self::$sTable . " WHERE id= ?;")->execute(...[$id])->fetchAssoc();
         }
 
 
@@ -381,7 +381,7 @@ namespace con4gis\ForumBundle\Models;
                 $operator = "!=";
             }
 
-            $aResult = \Contao\Contao\Database::getInstance()->prepare('SELECT COUNT(id) as cnt FROM ' . self::$sTable . " WHERE recipient_id = ? AND ".$field." ".$operator." ?;")->execute(...[$user_id, $value])->fetchAssoc();
+            $aResult = \Contao\Database::getInstance()->prepare('SELECT COUNT(id) as cnt FROM ' . self::$sTable . " WHERE recipient_id = ? AND ".$field." ".$operator." ?;")->execute(...[$user_id, $value])->fetchAssoc();
             if(!isset($aResult['cnt'])){
                 $aResult['cnt'] = 0;
             }

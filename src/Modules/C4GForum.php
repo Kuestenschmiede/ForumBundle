@@ -348,6 +348,9 @@ class C4GForum extends \Contao\Module
         $data['forumAjaxUrl'] = "con4gis/forumService";
         $objPage = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest()->attributes->get('pageModel');
 
+        $GLOBALS['TL_HEAD'][] = "<script>var pnApiBaseUrl = 'con4gis/forumPnService/".
+            ($objPage->language ?: "de")
+            ."';</script>";
 
         // $data['ajaxData'] = "action=fmd&id=".$this->id."&language=".$GLOBALS['TL_LANGUAGE']."&page=".$objPage->id;
         $data['ajaxData'] = $this->id;
@@ -4335,7 +4338,7 @@ class C4GForum extends \Contao\Module
     {
         $sReturn = "";
         $aTagsResult = \Contao\Database::getInstance()->prepare(
-            "SELECT tags, pid FROM tl_c4g_forum WHERE pid = ?"
+            "SELECT tags, pid, id FROM tl_c4g_forum WHERE pid = ?"
         )->execute(...[(int)$sForumId]);
         $aTags = $aTagsResult->row();
         if (empty($aTags)) {

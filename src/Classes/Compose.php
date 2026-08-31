@@ -27,7 +27,7 @@ namespace con4gis\ForumBundle\Classes;
             $oUser = \Contao\FrontendUser::getInstance();
             $aPns = C4gForumPn::getByRecipient($oUser->id);
 
-            $oTemplate = new \FrontendTemplate(self::$sTemplate);
+            $oTemplate = new \Contao\FrontendTemplate(self::$sTemplate);
             $oTemplate->recipient_id = '';
             if (isset($data['recipient_id'])) {
                 $oTemplate->recipient_id = $data['recipient_id'];

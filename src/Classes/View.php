@@ -27,7 +27,7 @@ namespace con4gis\ForumBundle\Classes;
             $oUser = \Contao\FrontendUser::getInstance();
             $oPn = C4gForumPn::getById($aData['id']);
 
-            $oTemplate = new \FrontendTemplate(self::$sTemplate);
+            $oTemplate = new \Contao\FrontendTemplate(self::$sTemplate);
             $oPn->setMessage($oPn->getMessage());
             $oTemplate->pn = $oPn;
 

@@ -2,7 +2,7 @@
     <script src="bundles/con4gisforum/dist/js/c4g.pn.js"></script>
     <link rel="stylesheet" href="bundles/con4gisforum/dist/css/c4g.pn.min.css">
     <link rel="stylesheet" href="bundles/con4gisprojects/dist/css/trix.min.css">
-    <link rel="stylesheet" href="bundles/con4giscore/vendor/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="bundles/con4giscore/dist/css/fontawesome.min.css">
     <div class="mod_article first last block" id="linke-spalte">
 
         <!-- indexer::stop -->
@@ -27,7 +27,7 @@
         (function($) {
             if (typeof($)=='undefined') {
                 window.setTimeout( function() {
-                    var el = document.getElementById('<?php echo $this->c4gdata['div']; ?>');
+                    var el = document.getElementById('<?php echo $this->c4gData['div']; ?>');
                     if (el && el.innerHTML === '') {
                         el.innerHTML = '<h1>jQuery missing</h1>';
                     }
@@ -35,15 +35,15 @@
                 return;
             } else {
               $(document).ready(function() {
-                    <?php if ($this->c4gdata['div']!='') {
+                    <?php if ($this->c4gData['div']!='') {
                         echo "c4g.projects = c4g.projects || {};";
                         echo "var gui = new c4g.projects.c4gGui({".
-                        "id: ".$this->c4gdata['id'].", ".
-                        "initData: " . $this->c4gdata['initData'] .", ".
+                        "id: ".$this->c4gData['id'].", ".
+                        "initData: " . $this->c4gData['initData'] .", ".
                         "jquiButtons: false, ".
                         "jquiEmbeddedDialogs: false, ".
                         "navPanel: false, ".
-                        "mainDiv: $('div.". $this->c4gdata['div']."' )" .
+                        "mainDiv: $('div.". $this->c4gData['div']."' )" .
                         "});";
                   echo "gui.setup();";
                   echo "c4g.projects.C4GGui = gui;";

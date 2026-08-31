@@ -26,7 +26,7 @@ class Inbox
         $oUser = \Contao\FrontendUser::getInstance();
         $aPns = C4gForumPn::getByRecipient($oUser->id);
 
-        $oTemplate = new \FrontendTemplate(self::$sTemplate);
+        $oTemplate = new \Contao\FrontendTemplate(self::$sTemplate);
         $oTemplate->pns = $aPns;
 
         return $oTemplate->parse();

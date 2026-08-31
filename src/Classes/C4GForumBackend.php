@@ -55,14 +55,14 @@ class C4GForumBackend extends Backend
         $indexInfo = $this->Database->prepare(
                     'SELECT first, last_total_renew, last_index FROM tl_c4g_forum_search_last_index ' .
                     'WHERE id = 1'
-                )->execute()->fetchAllAssoc();
+                )->execute()->fetchAllAssociative();
 
         //check if there was an index before
         if (isset($indexInfo[0])) {
             $wordCount = $this->Database->prepare(
                         'SELECT COUNT(*) AS count FROM tl_c4g_forum_search_word'
-                    )->execute()->fetchAssoc();
-            $wordCount = $wordCount['count'];
+                    )->execute()->fetchAllAssociative();
+            $wordCount = (int) ($wordCount[0]['count'] ?? 0);
             $noIndex = false;
         } else {
             $wordCount = 0;
@@ -82,7 +82,7 @@ class C4GForumBackend extends Backend
             //headline
             '
 			<h2 class="sub_headline">' . $GLOBALS['TL_LANG']['tl_c4g_forum']['headline_index'][0] . '</h2>
-			' . \Contao\System::getMessages() . '
+			' . \Contao\Message::generate() . '
 			<form action="' . \Contao\StringUtil::ampersand($request->getUri(), true) . '" id="tl_c4g_forum_build_index" class="tl_form" method="post">
 			<div class="tl_formbody_edit">
 				<input type="hidden" name="FORM_SUBMIT" value="tl_c4g_forum_build_index">
