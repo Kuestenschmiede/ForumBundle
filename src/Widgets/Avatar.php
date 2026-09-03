@@ -15,10 +15,11 @@ use con4gis\ForumBundle\Classes\C4gForumSingleFileUpload;
 use Contao\Folder;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\UploadableWidgetInterface;
 use Contao\Widget;
 use Symfony\Component\HttpFoundation\Request;
 
-class Avatar extends Widget
+class Avatar extends Widget implements UploadableWidgetInterface
 {
     /**
      * Submit user input
@@ -71,8 +72,6 @@ class Avatar extends Widget
         $request = $requestStack->getCurrentRequest() ?? Request::createFromGlobals();
         $rootDir = $container->getParameter('kernel.project_dir');
 
-        $strUploadTo = 'system/tmp';
-
         // No file specified
         if (!isset($_FILES[$this->strName]['name'][0]) || $_FILES[$this->strName]['name'][0] === '')
         {
@@ -83,16 +82,27 @@ class Avatar extends Widget
             return $varExisting;
         }
 
+        $strUploadTo = null;
+
         // Specify the target folder in the DCA (eval)
         if (isset($this->arrConfiguration['uploadFolder'])) {
             $strUploadTo = $this->arrConfiguration['uploadFolder'];
-        }
-
-        if ($container->get('contao.routing.scope_matcher')->isFrontendRequest($request))
-        {
+        } elseif ($container->get('contao.routing.scope_matcher')->isFrontendRequest($request)) {
             $user = $container->get('security.helper')->getUser();
             if ($user instanceof \Contao\FrontendUser) {
                 $strUploadTo = 'files/userimages/user_' . $user->id;
+            } else {
+                // When registering, the member does not exist in the database yet.
+                // The upload will be handled in the createNewUser hook once the member ID is known.
+                return null;
+            }
+        } elseif ($container->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
+            $iMemberId = (int)$this->currentRecord;
+            if (!$iMemberId) {
+                $iMemberId = (int)$request->query->get('id');
+            }
+            if ($iMemberId > 0) {
+                $strUploadTo = 'files/userimages/user_' . $iMemberId;
             }
         }
 

@@ -62,6 +62,7 @@ $GLOBALS['BE_FFL']['avatar'] = 'con4gis\ForumBundle\Widgets\Avatar';
  * Hooks
  */
 $GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('con4gis\ForumBundle\Classes\C4GForumHelper','removeOldFeedsHook');
+$GLOBALS['TL_HOOKS']['createNewUser'][] = array('con4gis\ForumBundle\Classes\Callbacks\MemberCallback', 'createNewUser');
 
 /**
  * CSS

@@ -4,8 +4,12 @@ namespace con4gis\ForumBundle\Classes\Callbacks;
 
 use con4gis\ForumBundle\Models\C4gForumMember;
 use Contao\Backend;
+use Contao\Dbafs;
+use Contao\Folder;
+use Contao\MemberModel;
 use Contao\StringUtil;
 use Contao\System;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class MemberCallback extends Backend
@@ -80,5 +84,46 @@ class MemberCallback extends Backend
         $GLOBALS['TL_DCA']['tl_member']['fields']['memberImage']['eval']['uploadFolder'] = $uploadFolder;
         
         return $varValue;
+    }
+
+    public function createNewUser($intUser, $arrData, $module = null)
+    {
+        $container = System::getContainer();
+        $requestStack = $container->get('request_stack');
+        $request = $requestStack->getCurrentRequest() ?? Request::createFromGlobals();
+
+        $uploadedFile = $request ? ($request->files->get('memberImage') ?? $request->files->get('avatar')) : null;
+
+        if (is_array($uploadedFile)) {
+            $uploadedFile = $uploadedFile[0] ?? null;
+        }
+
+        if ($uploadedFile instanceof UploadedFile && $uploadedFile->isValid()) {
+            $projectDir = $container->getParameter('kernel.project_dir');
+            $targetDir = 'files/userimages/user_' . $intUser;
+
+            if (!is_dir($projectDir . '/' . $targetDir)) {
+                new Folder($targetDir);
+            }
+
+            $originalName = $uploadedFile->getClientOriginalName();
+            $newFileName = StringUtil::sanitizeFileName($originalName);
+            $uploadedFile->move($projectDir . '/' . $targetDir, $newFileName);
+
+            $newFileModel = Dbafs::addResource($targetDir . '/' . $newFileName);
+            if ($newFileModel !== null) {
+                $objMember = MemberModel::findById($intUser);
+                if ($objMember !== null) {
+                    if (isset($objMember->memberImage)) {
+                        $objMember->memberImage = $newFileModel->uuid;
+                    } elseif (isset($objMember->avatar)) {
+                        $objMember->avatar = $newFileModel->uuid;
+                    } else {
+                        $objMember->memberImage = $newFileModel->uuid;
+                    }
+                    $objMember->save();
+                }
+            }
+        }
     }
 }
